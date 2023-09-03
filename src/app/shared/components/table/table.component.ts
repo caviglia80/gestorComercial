@@ -4,7 +4,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 
-
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
