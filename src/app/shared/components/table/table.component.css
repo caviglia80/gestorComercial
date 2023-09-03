@@ -1,0 +1,17 @@
+.custom-paginator {
+  padding-bottom: 5px;
+}
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.table-container table .data-row:hover {
+  color: #212529;
+  background-color: rgba(0, 0, 0, 0.075);
+}

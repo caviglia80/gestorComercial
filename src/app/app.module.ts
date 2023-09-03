@@ -22,6 +22,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
+import { TableComponent } from './shared/components/table/table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +45,8 @@ import { MatIconModule } from '@angular/material/icon';
     ReportsComponent,
     BillingComponent,
     ConfigurationComponent,
-    SidenavComponent
+    SidenavComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +54,10 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
