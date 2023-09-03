@@ -17,6 +17,11 @@ import { ReportsComponent } from '@routes/reports/reports.component';
 import { BillingComponent } from '@routes/billing/billing.component';
 import { ConfigurationComponent } from '@routes/configuration/configuration.component';
 
+import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,12 +35,16 @@ import { ConfigurationComponent } from '@routes/configuration/configuration.comp
     InventoryComponent,
     ReportsComponent,
     BillingComponent,
-    ConfigurationComponent
+    ConfigurationComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

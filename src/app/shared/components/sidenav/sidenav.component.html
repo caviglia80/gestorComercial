@@ -1,0 +1,141 @@
+<nav class="navbar">
+  <div class="backgroundColor"></div>
+  <button class="toggle-button" mat-icon-button (click)="toggleSidenav()">
+    <mat-icon>{{ sidenavOpened ? 'arrow_back_ios' : 'menu' }}</mat-icon>
+  </button>
+  <div class="logo-container">
+    <img src="./assets/logo.png" alt="Logo">
+  </div>
+</nav>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" [opened]="sidenavOpened">
+    <mat-nav-list>
+
+      <div class="background">
+        <div class="backgroundColor"></div>
+      </div>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/dashboard" (click)="toggleSidenav()">
+        <mat-icon>dashboard</mat-icon>
+        <span>Panel</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/ingresos" (click)="toggleSidenav()">
+        <mat-icon>attach_money</mat-icon>
+        <span>Ingresos</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/egresos" (click)="toggleSidenav()">
+        <mat-icon>money_off</mat-icon>
+        <span>Egresos</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/inventory" (click)="toggleSidenav()">
+        <mat-icon>playlist_add_check</mat-icon>
+        <span>Inventario</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/billing" (click)="toggleSidenav()">
+        <mat-icon>list_alt</mat-icon>
+        <span>Facturación</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/reports" (click)="toggleSidenav()">
+        <mat-icon>show_chart</mat-icon>
+        <span>Reportes</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/configuration" (click)="toggleSidenav()">
+        <mat-icon>settings</mat-icon>
+        <span>Configuración</span>
+      </mat-list-item>
+
+      <mat-list-item class="exit">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>Salir</span>
+      </mat-list-item>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="backgroundColor"></div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
+
+
+
+
+
+<!--
+
+<mat-sidenav-container class="sidenav-container">
+
+
+
+<div class="toggleSidenav">
+
+  <button mat-icon-button class="toggle-button" (mouseenter)="setHoverState(true)" (mouseleave)="setHoverState(false)">
+    <mat-icon>{{ hoverActive ? 'menu_open' : 'menu' }}</mat-icon>
+  </button>
+
+
+
+
+
+
+  <mat-sidenav #sidenav mode="side" [opened]="hoverActive" >
+    <mat-nav-list>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/dashboard">
+        <mat-icon>dashboard</mat-icon>
+        <span>Panel</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/ingresos">
+        <mat-icon>attach_money</mat-icon>
+        <span>Ingresos</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/egresos">
+        <mat-icon>money_off</mat-icon>
+        <span>Egresos</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/inventory">
+        <mat-icon>view_list</mat-icon>
+        <span>Inventario</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/billing">
+        <mat-icon>list_alt</mat-icon>
+        <span>Facturacion</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/reports">
+        <mat-icon>show_chart</mat-icon>
+        <span>Reportes</span>
+      </mat-list-item>
+
+      <mat-list-item routerLinkActive="active-link" routerLink="/configuration">
+        <mat-icon>settings</mat-icon>
+        <span>Configuracion</span>
+      </mat-list-item>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+</div>
+
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+ -->

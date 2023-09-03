@@ -1,4 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+  --content-Background-color: blue;
+  --content-Background-opacity: .04;
+
+  --sidebar-exitButton: red;
+  --sidebar-background-image: url(./assets/sidebar-1.jpg);
+  --sideBar-background-image-opacity: .05;
+  --sideBar-Background-color: blue;
+  --sideBar-Background-opacity: .3;
+  --sideBar-ActiveButton: blue;
+
+  --navBar-Background-color: blue;
+  --navBar-Background-opacity: .4;
+}
+
+* {
+  user-select: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

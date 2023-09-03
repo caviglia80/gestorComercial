@@ -1,0 +1,131 @@
+.sidenav-container {
+  display: flex;
+  height: 95vh;
+}
+
+mat-sidenav {
+  background-color: var(--color-sideBarBackgroundSolid);
+  width: 250px;
+  z-index: 1;
+}
+
+mat-sidenav-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+mat-sidenav-content .backgroundColor {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  display: block;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center center;
+  background-color: var(--content-Background-color);
+  opacity: var(--content-Background-opacity);
+}
+
+mat-nav-list .background {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  display: block;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center center;
+  background-image: var(--sidebar-background-image);
+  opacity: var(--sideBar-background-image-opacity);
+}
+
+mat-nav-list .background .backgroundColor {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  display: block;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center center;
+  background-color: var(--sideBar-Background-color);
+  opacity: var(--sideBar-Background-opacity);
+}
+
+mat-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 16px;
+  font-size: 18px;
+  line-height: 18px;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.active-link span,
+.active-link mat-icon,
+.navbar .toggle-button :hover {
+  color: var(--sideBar-ActiveButton);
+  fill: var(--sideBar-ActiveButton);
+}
+
+.exit:hover mat-icon,
+.exit:hover span {
+  color: var(--sidebar-exitButton);
+  fill: var(--sidebar-exitButton);
+}
+
+nav {
+  z-index: 1;
+  padding: .2rem;
+}
+
+nav .backgroundColor {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  display: block;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center center;
+  background-color: var(--navBar-Background-color);
+  opacity: var(--navBar-Background-opacity);
+}
+
+nav .toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+}
+
+nav .toggle-button mat-icon {
+  font-size: 24px;
+  width: 25px;
+  height: 25px;
+  margin: 0;
+  padding: .1rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.logo-container img {
+  width: 40px;
+  height: auto;
+}
