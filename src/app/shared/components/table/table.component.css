@@ -15,3 +15,12 @@ table {
   color: #212529;
   background-color: rgba(0, 0, 0, 0.075);
 }
+
+#sinDatos{
+  background-color: white;
+}
+
+#sinDatos p{
+ margin: 0;
+ padding: 20px;
+}
