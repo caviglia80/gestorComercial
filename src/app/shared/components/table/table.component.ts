@@ -34,14 +34,11 @@ export class TableComponent implements AfterViewInit {
     this.sendQueryToServer();
   }
 
-  applyFilter(filterValue: string) {
+  public applyFilter(filterValue: string) {
     filterValue = filterValue.trim().toLowerCase();
 
-    if (filterValue === '') {
-      this.dataSource.filter = ''; // Restablecer el filtro
-    } else {
-      this.dataSource.filter = filterValue; // Aplicar el filtro
-    }
+    if (filterValue === '') this.dataSource.filter = ''; else
+      this.dataSource.filter = filterValue;
   }
 
   /* no borrar, por si cambio a consultas desde backend */
@@ -62,7 +59,7 @@ export class TableComponent implements AfterViewInit {
     } */
 
   // Metodo para enviar la consulta al servidor
-  sendQueryToServer() {
+  public sendQueryToServer() {
     this.http.get<Product[]>(GobalVars.host + 'db2.php?q=' + encodeURIComponent(this.query))
       .subscribe({
         next: (response) => {

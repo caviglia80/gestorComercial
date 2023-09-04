@@ -66,3 +66,10 @@
   background: var(--scroll-Background);
   border-radius: 10px;
 }
+
+
+.elemento-invisible {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+}
