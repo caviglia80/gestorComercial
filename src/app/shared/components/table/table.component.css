@@ -53,16 +53,16 @@
   background-image: linear-gradient(to top, var(--color-1) 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
 }
 
-.table-container::-webkit-scrollbar {
+.table-container .table-wrapper::-webkit-scrollbar {
   width: 10px;
 }
 
-.table-container::-webkit-scrollbar-track {
+.table-container .table-wrapper::-webkit-scrollbar-track {
   background-color: #f1f1f1;
   border-radius: 10px;
 }
 
-.table-container::-webkit-scrollbar-thumb {
-  background-color: var(--color-2);
+.table-container .table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--scroll-Background);
   border-radius: 10px;
 }

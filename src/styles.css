@@ -20,6 +20,8 @@
   /* title */
   --title-background: linear-gradient(60deg, var(--color-1), var(--color-2));
   --title-box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px var(--color-1);
+  /* scroll */
+  --scroll-Background: linear-gradient(60deg, var(--color-1), var(--color-2), var(--color-1));
 }
 
 * {
