@@ -22,8 +22,7 @@ export class TableComponent implements AfterViewInit {
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private cdr: ChangeDetectorRef,
-    private http: HttpClient,
-
+    private http: HttpClient
   ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

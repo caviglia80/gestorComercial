@@ -9,7 +9,11 @@
     </button>
   </div>
 
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+  <div class="table-wrapper">
+
+
+
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
     class="mat-elevation-z8">
 
     <ng-container matColumnDef="id">
@@ -68,6 +72,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="data-row"></tr>
   </table>
+
+
+  </div>
+
+
 
   <!-- {{ dataSource.data | json }} -->
 
