@@ -1,22 +1,23 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectorRef, Input } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
-
+import { GobalVars } from '@app/app.component';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
+
 export class TableComponent implements AfterViewInit {
   public displayedColumns: string[] = ['id', 'name', 'buyPrice', 'sellPrice', 'stock', 'ventasRealizadas', 'observacion'];
   /*   public dataSource = new MatTableDataSource<Product>(ELEMENT_DATA); */
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
-  private host: string = 'https://francisco-caviglia.com.ar/';
+  @Input() public query: string = '';
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -30,20 +31,48 @@ export class TableComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.loadDatabaseData();
+    /*     this.loadDatabaseData(); */
+    this.sendQueryToServer();
   }
 
-  loadDatabaseData() {
-    this.http.get<Product[]>(this.host + 'francisco-caviglia/get_data_from_db.php')
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim().toLowerCase();
+
+    if (filterValue === '') {
+      this.dataSource.filter = ''; // Restablecer el filtro
+    } else {
+      this.dataSource.filter = filterValue; // Aplicar el filtro
+    }
+  }
+
+  /* no borrar, por si cambio a consultas desde backend */
+  /*   loadDatabaseData() {
+      this.http.get<Product[]>(GobalVars.host + 'get_data_from_db.php')
+        .subscribe({
+          next: (response) => {
+            this.dataSource.data = response || [];
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            console.error(JSON.stringify(error, null, 2))
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          }
+        });
+    } */
+
+  // Metodo para enviar la consulta al servidor
+  sendQueryToServer() {
+    this.http.get<Product[]>(GobalVars.host + 'db2.php?q=' + encodeURIComponent(this.query))
       .subscribe({
         next: (response) => {
-          /* console.log(JSON.stringify(response, null, 2)) */
           this.dataSource.data = response || [];
           this.isLoading = false;
           this.cdr.detectChanges();
         },
         error: (error) => {
-          console.error(JSON.stringify(error, null, 2))
+          console.error(JSON.stringify(error, null, 2));
           this.isLoading = false;
           this.cdr.detectChanges();
         }

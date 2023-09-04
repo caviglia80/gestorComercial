@@ -30,10 +30,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { CurrencyWithSymbolPipe } from './core/pipes/currencyWithSymbol/currency-with-symbol.pipe';
 import { TruncatePipe } from './core/pipes/truncate/truncate.pipe';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { TitleComponent } from './shared/components/title/title.component';
-
 
 
 @NgModule({

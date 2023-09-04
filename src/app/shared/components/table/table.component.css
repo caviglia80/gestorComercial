@@ -18,22 +18,32 @@ table {
   background-color: rgba(0, 0, 0, 0.075);
 }
 
-#sinDatos {
+.sinDatos {
   background-color: white;
+  color: #ccc;
 }
 
-#sinDatos p {
+.sinDatos p {
   margin: 0;
   padding: 20px;
 }
 
+.input-group button {
+  background-color: white;
+  border: 1px solid #ccc;
+}
 
+.input-group input {
+  border-radius: 5px 5px 0 0;
+  font-size: 12px;
+  transition: all 3s ease-out;
+}
 
-
-
-
-
-
+.input-group input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  background-image: linear-gradient(to top,var(--color-1) 2px,rgba(156,39,176,0) 2px),linear-gradient(to top,#d2d2d2 1px,rgba(210,210,210,0) 1px);
+}
 
 
 

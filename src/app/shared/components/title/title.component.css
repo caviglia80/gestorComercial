@@ -1,7 +1,7 @@
 .card [class*=card-header-]:not(.card-header-text) {
   border-radius: 3px;
   padding: 15px;
-  margin-bottom: -5px;
+  margin-bottom: 5px;
 }
 
 .card .card-header-danger:not(.card-header-icon):not(.card-header-text) {
@@ -16,7 +16,7 @@
 }
 
 .card [class*=card-header-] {
-  margin: 0 15px;
+  margin: 0 -5px;
   padding: 0;
   position: relative;
   color: #fff;

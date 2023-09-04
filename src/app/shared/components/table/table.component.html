@@ -1,6 +1,14 @@
 <app-title [title]="'Inventario'"></app-title>
 
 <div class="mat-elevation-z8 table-container">
+
+  <div class="input-group no-border">
+    <input matInput #searchInput (keyup.enter)="applyFilter(searchInput.value)" class="form-control no-border"
+      placeholder="Buscar.." type="text" value="">
+    <button mat-button (click)="applyFilter(searchInput.value)"><i class="material-icons">search</i>
+    </button>
+  </div>
+
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
     class="mat-elevation-z8">
 
@@ -67,8 +75,12 @@
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>
 
-  <div id="sinDatos" class="text-center " *ngIf="dataSource.data.length === 0">
-    <p><mat-icon>error_outline</mat-icon><br> Sin datos </p>
+  <div class="text-center sinDatos" *ngIf="dataSource.data.length === 0 && !isLoading">
+    <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
+  </div>
+
+  <div class="text-center sinDatos" *ngIf="dataSource.data.length === 0 && isLoading">
+    <p><mat-icon>hourglass_empty</mat-icon><br> Cargando..</p>
   </div>
 
   <mat-paginator class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons

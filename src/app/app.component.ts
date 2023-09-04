@@ -12,20 +12,27 @@ export class AppComponent {
   title = 'gestorComercial';
   /* private host: string = 'https://francisco-caviglia.com.ar/'; */ /* host Prod: localhost */
 
-/*   constructor(private http: HttpClient) { }
+  /*   constructor(private http: HttpClient) { }
 
-  checkDatabaseConnection() {
-    this.http.get(this.host + 'francisco-caviglia/db_connection.php')
-      .pipe(
-        catchError(error => {
-          console.error(error);
-          return of(null);
-        })
-      )
-      .subscribe(response => {
-        if (response) {
-          console.log(response);
-        }
-      });
-  } */
+    checkDatabaseConnection() {
+      this.http.get(this.host + 'francisco-caviglia/db_connection.php')
+        .pipe(
+          catchError(error => {
+            console.error(error);
+            return of(null);
+          })
+        )
+        .subscribe(response => {
+          if (response) {
+            console.log(response);
+          }
+        });
+    } */
 }
+
+export class GobalVars {
+  public static host: string = 'https://francisco-caviglia.com.ar/francisco-caviglia/';
+}
+
+
+
