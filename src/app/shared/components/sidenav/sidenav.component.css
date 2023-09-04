@@ -95,7 +95,7 @@ nav .backgroundColor {
   left: 0;
   background-size: cover;
   background-position: center center;
-  background-color: var(--navBar-Background-color);
+  background: var(--navBar-Background);
   opacity: var(--navBar-Background-opacity);
 }
 

@@ -26,8 +26,13 @@ import { TableComponent } from './shared/components/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { HttpClientModule } from '@angular/common/http';
+import { CurrencyWithSymbolPipe } from './core/pipes/currencyWithSymbol/currency-with-symbol.pipe';
+import { TruncatePipe } from './core/pipes/truncate/truncate.pipe';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import { TitleComponent } from './shared/components/title/title.component';
 
 
 
@@ -46,7 +51,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     BillingComponent,
     ConfigurationComponent,
     SidenavComponent,
-    TableComponent
+    TableComponent,
+    CurrencyWithSymbolPipe,
+    TruncatePipe,
+    TitleComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +66,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    HttpClientModule,
+    MatTooltipModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

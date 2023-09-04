@@ -1,8 +1,10 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-table',
@@ -10,53 +12,80 @@ import { MatSort, Sort } from '@angular/material/sort';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements AfterViewInit {
-  public displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  public dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  public displayedColumns: string[] = ['id', 'name', 'buyPrice', 'sellPrice', 'stock', 'ventasRealizadas', 'observacion'];
+  /*   public dataSource = new MatTableDataSource<Product>(ELEMENT_DATA); */
+  public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
+  private host: string = 'https://francisco-caviglia.com.ar/';
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) { }
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient,
+
+  ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.isLoading = false;
+    this.loadDatabaseData();
   }
 
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
+  loadDatabaseData() {
+    this.http.get<Product[]>(this.host + 'francisco-caviglia/get_data_from_db.php')
+      .subscribe({
+        next: (response) => {
+          /* console.log(JSON.stringify(response, null, 2)) */
+          this.dataSource.data = response || [];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error(JSON.stringify(error, null, 2))
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        }
+      });
+  }
+
+  public announceSortChange(sortState: Sort) {
+    if (sortState.direction)
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`); else
       this._liveAnnouncer.announce('Sorting cleared');
-    }
   }
 }
 
-export interface PeriodicElement {
+export interface Product {
+  id: number;
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  stock: number;
+  buyPrice: number;
+  sellPrice: number;
+  observacion: string;
+  ventasRealizadas: number;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  { position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
-  { position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
-  { position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
-  { position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
-  { position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
-  { position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
-  { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
-];
+
+/* const ELEMENT_DATA: Product[] = [
+  {
+    id: 1,
+    name: 'Product 1',
+    stock: 50,
+    buyPrice: 10.50,
+    sellPrice: 15.99,
+    observacion: 'Observation for Product 1',
+    ventasRealizadas: 100
+  },
+  {
+    id: 2,
+    name: 'Product 2',
+    stock: 30,
+    buyPrice: 8.75,
+    sellPrice: 12.49,
+    observacion: 'Observation for Product 2',
+    ventasRealizadas: 75
+  },
+]; */
 

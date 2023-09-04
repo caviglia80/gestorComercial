@@ -1,18 +1,27 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 :root {
+  /* global */
+  --color-1: #846bf3;
+  --color-2: #4c28ec;
+/*   --color-3: ; */
+  /* fondo del contenido */
   --content-Background-color: blue;
   --content-Background-opacity: .04;
-
+  /* sideBar */
   --sidebar-exitButton: red;
   --sidebar-background-image: url(./assets/sidebar-1.jpg);
-  --sideBar-background-image-opacity: .05;
-  --sideBar-Background-color: blue;
+  --sideBar-background-image-opacity: .1;
+  --sideBar-Background-color: var(--color-1);
   --sideBar-Background-opacity: .3;
-  --sideBar-ActiveButton: blue;
-
-  --navBar-Background-color: blue;
-  --navBar-Background-opacity: .4;
+  --sideBar-ActiveButton: var(--color-2);
+  /* navBar */
+  --navBar-Background: linear-gradient(60deg, var(--color-1), var(--color-2));
+  ;
+  --navBar-Background-opacity: 1;
+  /* title */
+  --title-background: linear-gradient(60deg, var(--color-1), var(--color-2));
+  --title-box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgba(95, 54, 244, 0.4);
 }
 
 * {
@@ -26,5 +35,11 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+h4 {
+  font-size: 1.125rem;
+  line-height: 1.4em;
+  font-weight: 300;
 }

@@ -5,6 +5,8 @@
 .table-container {
   overflow-x: auto;
   max-width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 table {
@@ -16,11 +18,24 @@ table {
   background-color: rgba(0, 0, 0, 0.075);
 }
 
-#sinDatos{
+#sinDatos {
   background-color: white;
 }
 
-#sinDatos p{
- margin: 0;
- padding: 20px;
+#sinDatos p {
+  margin: 0;
+  padding: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
