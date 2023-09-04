@@ -7,12 +7,12 @@ import { HttpClient } from '@angular/common/http';
 import { GobalVars } from '@app/app.component';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  selector: 'app-t-inventario',
+  templateUrl: './t-inventario.component.html',
+  styleUrls: ['./t-inventario.component.css']
 })
 
-export class TableComponent implements AfterViewInit {
+export class TInventarioComponent implements AfterViewInit {
   public displayedColumns: string[] = ['id', 'name', 'buyPrice', 'sellPrice', 'stock', 'ventasRealizadas', 'observacion'];
   /*   public dataSource = new MatTableDataSource<Product>(ELEMENT_DATA); */
   public dataSource = new MatTableDataSource<Product>;
