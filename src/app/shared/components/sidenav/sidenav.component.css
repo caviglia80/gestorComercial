@@ -69,9 +69,13 @@ mat-icon {
 
 .active-link span,
 .active-link mat-icon,
-.navbar .toggle-button :hover {
-  color: var(--sideBar-ActiveButton);
-  fill: var(--sideBar-ActiveButton);
+.navbar .toggle-button:hover {
+  color: var(--sideBar-ActiveButton) !important;
+  fill: var(--sideBar-ActiveButton) !important;
+}
+
+.navbar .toggle-button:hover {
+  filter: brightness(1.4);
 }
 
 .exit:hover mat-icon,

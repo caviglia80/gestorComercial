@@ -17,7 +17,6 @@
   --sideBar-ActiveButton: var(--color-2);
   /* navBar */
   --navBar-Background: linear-gradient(60deg, var(--color-1), var(--color-2));
-  ;
   --navBar-Background-opacity: 1;
   /* title */
   --title-background: linear-gradient(60deg, var(--color-1), var(--color-2));
