@@ -11,6 +11,7 @@ export class AppComponent {
 
 export class GobalVars {
   public static host: string = 'https://francisco-caviglia.com.ar/francisco-caviglia/'; /* localhost/ */
+  public static proxyUrl: string = 'https://cors-anywhere.herokuapp.com/'; // Use the CORS Anywhere proxy
 }
 
 

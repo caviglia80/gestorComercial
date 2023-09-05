@@ -72,3 +72,31 @@
   left: -9999px;
   top: -9999px;
 }
+
+.actions-cell {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.actions-container {
+  display: flex;
+  gap: 0;
+}
+
+.actions-container button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  padding-top: 5px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.actions-container button mat-icon {
+  font-size: 20px;
+  color: #7e7e7e;  /* #AAAAAA */
+}
+
+.actions-container button:hover mat-icon{
+  color: var(--color-1);
+}

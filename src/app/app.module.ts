@@ -33,6 +33,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { TitleComponent } from './shared/components/title/title.component';
 import { TInventarioComponent } from './shared/components/tables/t-inventario/t-inventario.component';
+import { DetalleComponent } from './shared/components/detalle/detalle.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { TInventarioComponent } from './shared/components/tables/t-inventario/t-
     CurrencyWithSymbolPipe,
     TruncatePipe,
     TitleComponent,
-    TInventarioComponent
+    TInventarioComponent,
+    DetalleComponent
   ],
   imports: [
     BrowserModule,

@@ -13,11 +13,11 @@ import { GobalVars } from '@app/app.component';
 })
 
 export class TInventarioComponent implements AfterViewInit {
-  public displayedColumns: string[] = ['id', 'name', 'buyPrice', 'sellPrice', 'stock', 'ventasRealizadas', 'observacion'];
+  public displayedColumns: string[] = ['id', 'name', 'buyPrice', 'sellPrice', 'stock', 'ventasRealizadas', 'observacion', 'actions'];
   /*   public dataSource = new MatTableDataSource<Product>(ELEMENT_DATA); */
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
-  public query: string = 'SELECT * FROM inventario';
+  public selectQuery: string = 'SELECT * FROM inventario';
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -31,7 +31,7 @@ export class TInventarioComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     /*     this.loadDatabaseData(); */
-    this.sendQueryToServer();
+    this.sendQueryToServer(this.selectQuery, 'get');
   }
 
   public applyFilter(filterValue: string) {
@@ -47,38 +47,90 @@ export class TInventarioComponent implements AfterViewInit {
         .subscribe({
           next: (response) => {
             this.dataSource.data = response || [];
-            this.isLoading = false;
-            this.cdr.detectChanges();
+this.loading();
           },
           error: (error) => {
             console.error(JSON.stringify(error, null, 2))
-            this.isLoading = false;
-            this.cdr.detectChanges();
+this.loading();
           }
         });
     } */
 
-  // Metodo para enviar la consulta al servidor
-  public sendQueryToServer() {
-    this.http.get<Product[]>(GobalVars.host + 'db2.php?q=' + encodeURIComponent(this.query))
-      .subscribe({
-        next: (response) => {
-          this.dataSource.data = response || [];
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          console.error(JSON.stringify(error, null, 2));
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        }
-      });
+  public sendQueryToServer(query: string, action: string) {
+    const apiUrl = GobalVars.host + 'db2.php?q=' + encodeURIComponent(query);
+
+    const requestUrl = GobalVars.proxyUrl + apiUrl; /* CORS */
+
+    if (action === 'get') {
+      this.http.get<Product[]>(requestUrl)
+        .subscribe({
+          next: (response) => {
+            this.dataSource.data = response || [];
+            this.loading();
+          },
+          error: (error) => {
+            console.error(JSON.stringify(error, null, 2));
+            this.loading();
+          }
+        });
+    } else if (action === 'delete') {
+      this.http.delete(apiUrl)
+        .subscribe({
+          next: () => {
+            // Item deleted successfully, refresh the data
+            this.sendQueryToServer(this.selectQuery, 'get');
+          },
+          error: (error) => {
+            console.error(JSON.stringify(error, null, 2));
+            this.sendQueryToServer(this.selectQuery, 'get'); /* por el CORS */
+          }
+        });
+    } else if (action === 'post') {
+      this.http.post(apiUrl, {}) // Use an empty object as the request body
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+            // Duplicated item successfully, refresh the data
+            this.sendQueryToServer(this.selectQuery, 'select');
+          },
+          error: (error) => {
+            console.error(JSON.stringify(error, null, 2));
+            this.sendQueryToServer(this.selectQuery, 'select'); /* por el CORS */
+          }
+        });
+    }
+  }
+
+  private loading() {
+    this.isLoading = false;
+    this.cdr.detectChanges();
   }
 
   public announceSortChange(sortState: Sort) {
     if (sortState.direction)
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`); else
       this._liveAnnouncer.announce('Sorting cleared');
+  }
+
+  public viewItem(item: Product) {
+    // Implement the logic to view the item
+  }
+
+  public editItem(item: Product) {
+    // Implement the logic to edit the item
+  }
+
+  public duplicateItem(item: Product) {
+    const duplicateQuery = `
+    INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
+    SELECT name, buyPrice, sellPrice, stock, ventasRealizadas, observacion FROM inventario
+    WHERE id = ${item.id};
+  `;
+    this.sendQueryToServer(duplicateQuery, 'post');
+  }
+
+  public deleteItem(item: Product) {
+    this.sendQueryToServer(`DELETE FROM inventario WHERE id = ${item.id};`, 'delete');
   }
 }
 

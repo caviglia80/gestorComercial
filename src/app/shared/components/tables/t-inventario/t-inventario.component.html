@@ -9,7 +9,7 @@
     </button>
   </div>
 
-  <div class="table-wrapper"  [ngClass]="{'elemento-invisible': dataSource.data.length === 0 || isLoading }">
+  <div class="table-wrapper" [ngClass]="{'elemento-invisible': dataSource.data.length === 0 || isLoading }">
 
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
       class="mat-elevation-z8">
@@ -67,10 +67,29 @@
         <td mat-cell *matCellDef="let element"> {{element.ventasRealizadas}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Operaciones </th>
+        <td mat-cell *matCellDef="let element" class="actions-cell">
+          <div class="actions-container">
+            <button mat-icon-button [matTooltip]="'Ver'" (click)="viewItem(element)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button [matTooltip]="'Editar'" (click)="editItem(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button [matTooltip]="'Duplicar'" (click)="duplicateItem(element)">
+              <mat-icon>file_copy</mat-icon>
+            </button>
+            <button mat-icon-button [matTooltip]="'Borrar'" (click)="deleteItem(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="data-row"></tr>
     </table>
-
 
   </div>
 
@@ -92,15 +111,6 @@
     <p><mat-icon>hourglass_empty</mat-icon><br>
       Cargando..</p>
   </div>
-
-
-  <!--   <div class="loading-overlay">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </div>
-
-  <div class="text-center sinDatos">
-    <p><mat-icon>hourglass_empty</mat-icon><br> Cargando..</p>
-  </div> -->
 
   <mat-paginator class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons
     aria-label="Select page of periodic elements">
