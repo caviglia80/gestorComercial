@@ -100,3 +100,7 @@
 .actions-container button:hover mat-icon{
   color: var(--color-1);
 }
+
+th {
+  white-space: nowrap;
+}

@@ -121,11 +121,12 @@ this.loading();
   }
 
   public duplicateItem(item: Product) {
+    const newName = 'Duplicado - ' + item.name;
     const duplicateQuery = `
     INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
-    SELECT name, buyPrice, sellPrice, stock, ventasRealizadas, observacion FROM inventario
+    SELECT '${newName}', buyPrice, sellPrice, stock, ventasRealizadas, observacion FROM inventario
     WHERE id = ${item.id};
-  `;
+    `;
     this.sendQueryToServer(duplicateQuery, 'post');
   }
 

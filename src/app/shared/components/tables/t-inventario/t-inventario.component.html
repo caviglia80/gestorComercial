@@ -25,8 +25,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
           Nombre
         </th>
-        <td [matTooltip]="element.name" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"> {{element.name |
-          truncate:12 }}
+        <td [matTooltip]="element.name" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"> 
+          {{element.name | truncate:15 }}
         </td>
       </ng-container>
 
