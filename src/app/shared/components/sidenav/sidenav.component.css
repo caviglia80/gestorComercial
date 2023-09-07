@@ -1,6 +1,6 @@
 .sidenav-container {
   display: flex;
-  height: 95vh;
+  height: 93vh !important;
 }
 
 mat-sidenav {
@@ -15,7 +15,8 @@ mat-sidenav-content {
   overflow-y: auto;
 }
 
-mat-sidenav-content .backgroundColor {
+/* el fondo se corta a 100vh */
+/* mat-sidenav-content .backgroundColor{
   position: absolute;
   z-index: -1;
   height: 100%;
@@ -27,11 +28,11 @@ mat-sidenav-content .backgroundColor {
   background-position: center center;
   background-color: var(--content-Background-color);
   opacity: var(--content-Background-opacity);
-}
+} */
 
 mat-nav-list .background {
   position: absolute;
-  z-index: -1;
+  z-index: -1 !important;
   height: 100%;
   width: 100%;
   display: block;
@@ -85,13 +86,15 @@ mat-icon {
 }
 
 nav {
-  z-index: 1;
+  position: relative;
+  z-index: 1 !important;
   padding: .2rem;
+  height: 7vh !important;
 }
 
 nav .backgroundColor {
   position: absolute;
-  z-index: -1;
+  z-index: -1 !important;
   height: 100%;
   width: 100%;
   display: block;
@@ -133,3 +136,4 @@ nav .toggle-button mat-icon {
   width: 40px;
   height: auto;
 }
+
