@@ -1,4 +1,5 @@
-<app-title [title]="'Inventario'"></app-title>
+<div class="tableResultados">
+  <app-title [title]="'Inventario'"></app-title>
 
 <div class="mat-elevation-z8 table-container">
 
@@ -25,7 +26,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
           Nombre
         </th>
-        <td [matTooltip]="element.name" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"> 
+        <td [matTooltip]="element.name" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element">
           {{element.name | truncate:15 }}
         </td>
       </ng-container>
@@ -92,13 +93,7 @@
     </table>
 
   </div>
-
-
-
   <!-- {{ dataSource.data | json }} -->
-
-
-
   <div class="loading-overlay" *ngIf="isLoading">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>
@@ -116,3 +111,8 @@
     aria-label="Select page of periodic elements">
   </mat-paginator>
 </div>
+</div>
+
+
+<!-- mandar el elemento y con un ngfor visualizar todo por key - value -->
+<!-- <app-detalle *ngIf=""></app-detalle> -->
