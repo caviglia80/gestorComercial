@@ -126,7 +126,7 @@ this.loading();
     INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
     SELECT '${newName}', buyPrice, sellPrice, stock, ventasRealizadas, observacion FROM inventario
     WHERE id = ${item.id};
-    `;
+   `;
     this.sendQueryToServer(duplicateQuery, 'post');
   }
 
