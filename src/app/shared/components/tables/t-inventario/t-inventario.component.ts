@@ -5,6 +5,9 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { GobalVars } from '@app/app.component';
+import { Product } from '@models/product';
+
+/* src\app\shared\models\product.ts */
 
 @Component({
   selector: 'app-t-inventario',
@@ -14,15 +17,26 @@ import { GobalVars } from '@app/app.component';
 
 export class TInventarioComponent implements AfterViewInit {
   public displayedColumns: string[] = ['id', 'name', 'buyPrice', 'sellPrice', 'stock', 'ventasRealizadas', 'observacion', 'actions'];
+  public propertyAliases: { [key: string]: string } = {
+    id: 'ID',
+    name: 'Name',
+    buyPrice: 'Buy Price',
+    sellPrice: 'Sell Price',
+    stock: 'Stock',
+    ventasRealizadas: 'Sales',
+    observacion: 'Observation',
+    actions: 'Actions',
+  };
   /*   public dataSource = new MatTableDataSource<Product>(ELEMENT_DATA); */
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
   public selectQuery: string = 'SELECT * FROM inventario';
+  public selectedItem: { key: string; value: any }[] | null = null;
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private cdr: ChangeDetectorRef,
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -113,7 +127,7 @@ this.loading();
   }
 
   public viewItem(item: Product) {
-    // Implement the logic to view the item
+    this.selectedItem = Object.entries(item).map(([key, value]) => ({ key, value }));
   }
 
   public editItem(item: Product) {
@@ -133,9 +147,26 @@ this.loading();
   public deleteItem(item: Product) {
     this.sendQueryToServer(`DELETE FROM inventario WHERE id = ${item.id};`, 'delete');
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
-export interface Product {
+/* export interface Product {
   id: number;
   name: string;
   stock: number;
@@ -143,7 +174,9 @@ export interface Product {
   sellPrice: number;
   observacion: string;
   ventasRealizadas: number;
-}
+} */
+
+
 
 
 

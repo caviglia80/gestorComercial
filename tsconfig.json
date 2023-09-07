@@ -29,7 +29,7 @@
       "@services/*": ["src/app/shared/services/*"],
       "@environments/*": ["src/environments/*"],
       "@routes/*": ["src/app/routes/*"],
-      "@models/*": ["src/app/models/*"]
+      "@models/*": ["src/app/shared/models/*"]
     }
   },
   "angularCompilerOptions": {

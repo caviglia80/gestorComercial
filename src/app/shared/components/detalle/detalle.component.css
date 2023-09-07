@@ -12,19 +12,13 @@ table {
   width: 100%;
 }
 
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
 th, td {
   padding: 8px;
   text-align: left;
 }
 
 tr {
-  border-bottom: 1px solid #ccc; /* Agrega una línea separadora en la parte inferior de cada fila */
+  border-bottom: 1px solid #ccc;
 }
 
 thead {

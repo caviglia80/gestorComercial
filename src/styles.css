@@ -44,3 +44,17 @@ h4 {
   line-height: 1.4em;
   font-weight: 300;
 }
+
+.table-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background-color: #f1f1f1 !important;
+  border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--scroll-Background) !important;
+  border-radius: 10px;
+}
