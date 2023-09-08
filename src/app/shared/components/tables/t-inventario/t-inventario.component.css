@@ -120,8 +120,3 @@ th {
 .verDetalle tr {
   border-bottom: 1px solid #ccc;
 }
-
-.verDetalle th {
-  background-color: #ddd;
-  font-weight: bold;
-}

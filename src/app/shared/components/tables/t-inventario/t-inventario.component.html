@@ -126,17 +126,11 @@
   <div class="mat-elevation-z8 table-container">
     <div class="table-wrapper">
       <table>
-        <tr>
-          <th>Property</th>
-          <th>Value</th>
-        </tr>
         <tr *ngFor="let item of selectedItem">
-          <td>{{ item.key }}</td>
+          <td style="font-weight: bold;">{{ item.key }}</td>
           <td>{{ item.value }}</td>
         </tr>
       </table>
     </div>
   </div>
-
-
 </div>
