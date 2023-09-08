@@ -16,12 +16,9 @@ import { InventoryComponent } from '@routes/inventory/inventory.component';
 import { ReportsComponent } from '@routes/reports/reports.component';
 import { BillingComponent } from '@routes/billing/billing.component';
 import { ConfigurationComponent } from '@routes/configuration/configuration.component';
-
-import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -34,6 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TitleComponent } from './shared/components/title/title.component';
 import { TInventarioComponent } from './shared/components/tables/t-inventario/t-inventario.component';
 import { DetalleComponent } from './shared/components/detalle/detalle.component';
+import { NavComponent } from './shared/components/nav/nav.component';
 
 
 @NgModule({
@@ -50,12 +48,12 @@ import { DetalleComponent } from './shared/components/detalle/detalle.component'
     ReportsComponent,
     BillingComponent,
     ConfigurationComponent,
-    SidenavComponent,
     CurrencyWithSymbolPipe,
     TruncatePipe,
     TitleComponent,
     TInventarioComponent,
-    DetalleComponent
+    DetalleComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
