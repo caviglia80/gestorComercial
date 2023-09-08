@@ -11,7 +11,7 @@ export class SharedService {
     return this.dataRow.asObservable();
   }
 
-  public actualizarVariable(valor: string) {
+  public actualizarVariable(valor: any) {
     this.dataRow.next(valor);
   }
 }
