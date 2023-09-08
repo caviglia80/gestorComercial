@@ -7,4 +7,11 @@ import { Component, Input } from '@angular/core';
 })
 export class TitleComponent {
   @Input() public title: string = '';
+  @Input() hijo: any;
+
+  public cambiarValor() {
+    console.log(this.hijo);
+    this.hijo = null;
+    console.log(this.hijo);
+  }
 }

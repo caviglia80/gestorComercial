@@ -1,37 +1,61 @@
-.card [class*=card-header-]:not(.card-header-text) {
+/* .card [class*=card-header-] {
   border-radius: 3px;
   padding: 15px;
-  margin-bottom: 5px;
-}
-
-.card .card-header-danger:not(.card-header-icon):not(.card-header-text) {
-  box-shadow: var(--title-box-shadow);
-}
-
-.card .card-header-danger:not(.card-header-icon):not(.card-header-text),
-.card.bg-danger,
-.card.card-rotate.bg-danger .back,
-.card.card-rotate.bg-danger .front {
-  background: var(--title-background);
-}
-
-.card [class*=card-header-] {
   margin: 0 -5px;
-  padding: 0;
   position: relative;
   color: #fff;
 }
 
-.card .card-header {
-  z-index: 3 !important;
+.card .card-header-danger:not(.card-header-text) {
+  box-shadow: var(--title-box-shadow);
+  background: var(--title-background);
+  z-index: 3;
   border-bottom: none;
+  margin-bottom: 5px;
 }
 
 .card {
-  border: none !important;
-  background: none !important;
+  border: none;
+  background: none;
 }
 
 .card-title {
-  margin: 0;
+  margin: 2px;
+  overflow: hidden;
+} */
+
+
+.card [class*=card-header-] {
+  border-radius: 3px;
+  padding: 15px;
+  margin: 0 -5px;
+  position: relative;
+  color: #fff;
+  display: flex; /* Utiliza flexbox para alinear elementos en la misma línea */
+  justify-content: space-between; /* Espacio entre elementos, uno a la izquierda y otro a la derecha */
+  align-items: center; /* Centra verticalmente los elementos */
+}
+
+.card .card-header-danger:not(.card-header-text) {
+  box-shadow: var(--title-box-shadow);
+  background: var(--title-background);
+  z-index: 3;
+  border-bottom: none;
+  margin-bottom: 5px;
+}
+
+.card {
+  border: none;
+  background: none;
+}
+
+.card-title {
+  margin: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+h4 {
+  font-size: 19px;
+  letter-spacing: 0.11rem;
 }
