@@ -1,6 +1,6 @@
 .sidenav-container {
   display: flex;
-  height: 93vh !important;
+  height: 95vh !important;
 }
 
 mat-sidenav {
@@ -89,7 +89,7 @@ nav {
   position: relative;
   z-index: 1 !important;
   padding: .2rem;
-  height: 7vh !important;
+  height: 5vh !important;
 }
 
 nav .backgroundColor {
