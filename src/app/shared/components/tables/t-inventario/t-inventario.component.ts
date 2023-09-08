@@ -6,8 +6,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { GobalVars } from '@app/app.component';
 import { Product } from '@models/product';
+import { SharedService } from '@services/shared.service';
 
-/* src\app\shared\models\product.ts */
 
 @Component({
   selector: 'app-t-inventario',
@@ -37,6 +37,7 @@ export class TInventarioComponent implements AfterViewInit {
     private _liveAnnouncer: LiveAnnouncer,
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
+    public sharedService: SharedService
   ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -46,6 +47,7 @@ export class TInventarioComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
     /*     this.loadDatabaseData(); */
     this.sendQueryToServer(this.selectQuery, 'get');
+    this.sharedService.getDataRow().subscribe((valor: any) => { this.selectedItem = valor; });
   }
 
   public applyFilter(filterValue: string) {
@@ -128,6 +130,7 @@ this.loading();
 
   public viewItem(item: Product) {
     this.selectedItem = Object.entries(item).map(([key, value]) => ({ key, value }));
+    this.sharedService.setDataRow(this.selectedItem);
   }
 
   public editItem(item: Product) {

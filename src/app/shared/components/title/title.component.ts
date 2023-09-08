@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { SharedService } from '@services/shared.service';
 
 @Component({
   selector: 'app-title',
@@ -7,11 +8,13 @@ import { Component, Input } from '@angular/core';
 })
 export class TitleComponent {
   @Input() public title: string = '';
-  @Input() hijo: any;
+
+  constructor(
+    private sharedService: SharedService
+  ) { }
 
   public cambiarValor() {
-    console.log(this.hijo);
-    this.hijo = null;
-    console.log(this.hijo);
+    this.sharedService.setDataRow(null);
   }
 }
+

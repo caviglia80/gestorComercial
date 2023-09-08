@@ -1,4 +1,4 @@
-<div class="tableResultados" *ngIf="selectedItem === null">
+<div class="tableResultados" [ngClass]="{'noVisible': selectedItem !== null}">
   <app-title [title]="'Inventario'"></app-title>
 
   <div class="mat-elevation-z8 table-container">
@@ -10,7 +10,7 @@
       </button>
     </div>
 
-    <div class="table-wrapper" [ngClass]="{'elemento-invisible': dataSource.data.length === 0 || isLoading }">
+    <div class="table-wrapper" [ngClass]="{'noVisible': dataSource.data.length === 0 || isLoading }">
 
       <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
         class="mat-elevation-z8">
@@ -118,7 +118,7 @@
 <!-- <app-detalle></app-detalle> -->
 
 
-<div class="verDetalle" *ngIf="selectedItem !== null">
+<div class="verDetalle" [ngClass]="{'noVisible': selectedItem === null}">
 
 
 

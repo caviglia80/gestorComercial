@@ -7,11 +7,11 @@ import { BehaviorSubject } from 'rxjs';
 export class SharedService {
   private dataRow: any = new BehaviorSubject<any>(null);
 
-  public getVariableCompartida() {
+  public getDataRow() {
     return this.dataRow.asObservable();
   }
 
-  public actualizarVariable(valor: any) {
+  public setDataRow(valor: any) {
     this.dataRow.next(valor);
   }
 }
