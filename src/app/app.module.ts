@@ -30,7 +30,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { TitleComponent } from './shared/components/title/title.component';
 import { TInventarioComponent } from './shared/components/tables/t-inventario/t-inventario.component';
-import { DetalleComponent } from './shared/components/detalle/detalle.component';
 import { NavComponent } from './shared/components/nav/nav.component';
 
 
@@ -52,7 +51,6 @@ import { NavComponent } from './shared/components/nav/nav.component';
     TruncatePipe,
     TitleComponent,
     TInventarioComponent,
-    DetalleComponent,
     NavComponent
   ],
   imports: [
