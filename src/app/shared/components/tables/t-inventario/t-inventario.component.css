@@ -1,4 +1,4 @@
-/* tabla principal */
+/* tabla principal section */
 
 .custom-paginator {
   padding-bottom: 5px;
@@ -95,7 +95,7 @@ th {
   white-space: nowrap;
 }
 
-/* seccion detalle */
+/* detalle section */
 
 .verDetalle table {
   display: table;
@@ -119,4 +119,64 @@ th {
 
 .verDetalle tr {
   border-bottom: 1px solid #ccc;
+}
+
+/* title section */
+.title .card [class*=card-header-] {
+  border-radius: 3px;
+  padding: 15px;
+  margin: 0 -5px;
+  position: relative;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title .card .card-header-danger:not(.card-header-text) {
+  box-shadow: var(--title-box-shadow);
+  background: var(--title-background);
+  z-index: 3;
+  border-bottom: none;
+  margin-bottom: 5px;
+}
+
+.title .card {
+  border: none;
+  background: none;
+}
+
+.title .card-title {
+  margin: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.title h4 {
+  font-size: 19px;
+  letter-spacing: 0.11rem;
+}
+
+.title .card button {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+  fill: currentColor;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  z-index: 0;
+  overflow: visible;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  transition: all .2s ease-in-out;
+}
+
+.title .card button:active {
+  transform: scale(1.1);
 }

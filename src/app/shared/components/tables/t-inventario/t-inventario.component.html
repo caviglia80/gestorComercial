@@ -1,5 +1,14 @@
 <div class="tableResultados" [ngClass]="{'noVisible': selectedItem !== null}">
-  <app-title [title]="'Inventario'"></app-title>
+
+  <div class="title">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header-danger">
+          <h4 class="card-title">Inventario</h4>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="mat-elevation-z8 table-container">
 
@@ -113,14 +122,19 @@
   </div>
 </div>
 
-
-<!-- mandar el elemento y con un ngfor visualizar todo por key - value -->
-<!-- <app-detalle></app-detalle> -->
-
-
-<div class="verDetalle" [ngClass]="{'noVisible': selectedItem === null}">
-
-  <app-title [title]="'Detalle'"></app-title>
+<div class="verDetalle noVisible" [ngClass]="{'noVisible': selectedItem === null}">
+  <div class="title">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header-danger">
+          <h4 class="card-title">Detalle</h4>
+          <button (click)="quitarSeleccion()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="mat-elevation-z8 table-container">
     <div class="table-wrapper">

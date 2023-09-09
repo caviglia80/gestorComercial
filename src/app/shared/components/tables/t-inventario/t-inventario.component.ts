@@ -17,16 +17,16 @@ import { SharedService } from '@services/shared.service';
 
 export class TInventarioComponent implements AfterViewInit {
   public displayedColumns: string[] = ['id', 'name', 'buyPrice', 'sellPrice', 'stock', 'ventasRealizadas', 'observacion', 'actions'];
-  public propertyAliases: { [key: string]: string } = {
-    id: 'ID',
-    name: 'Name',
-    buyPrice: 'Buy Price',
-    sellPrice: 'Sell Price',
-    stock: 'Stock',
-    ventasRealizadas: 'Sales',
-    observacion: 'Observation',
-    actions: 'Actions',
-  };
+  /*   public propertyAliases: { [key: string]: string } = {
+      id: 'ID',
+      name: 'Name',
+      buyPrice: 'Buy Price',
+      sellPrice: 'Sell Price',
+      stock: 'Stock',
+      ventasRealizadas: 'Sales',
+      observacion: 'Observation',
+      actions: 'Actions',
+    }; */
   /*   public dataSource = new MatTableDataSource<Product>(ELEMENT_DATA); */
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
@@ -50,6 +50,7 @@ export class TInventarioComponent implements AfterViewInit {
     this.sharedService.getDataRow().subscribe((valor: any) => { this.selectedItem = valor; });
   }
 
+  /* hacer global con service */
   public applyFilter(filterValue: string) {
     filterValue = filterValue.trim().toLowerCase();
 
@@ -72,6 +73,7 @@ this.loading();
         });
     } */
 
+  /* hacer global con service */
   public sendQueryToServer(query: string, action: string) {
     const apiUrl = GobalVars.host + 'db2.php?q=' + encodeURIComponent(query);
 
@@ -122,6 +124,7 @@ this.loading();
     this.cdr.detectChanges();
   }
 
+  /* hacer global con service */
   public announceSortChange(sortState: Sort) {
     if (sortState.direction)
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`); else
@@ -151,7 +154,9 @@ this.loading();
     this.sendQueryToServer(`DELETE FROM inventario WHERE id = ${item.id};`, 'delete');
   }
 
-
+  public quitarSeleccion() {
+    this.selectedItem = null;
+  }
 
 
 
