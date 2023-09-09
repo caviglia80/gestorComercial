@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { GobalVars } from '@app/app.component';
 import { Product } from '@models/product';
 import { SharedService } from '@services/shared.service';
+import { NotificationService } from '@services/notification.service';
 
 
 @Component({
@@ -47,7 +48,8 @@ export class TInventarioComponent implements AfterViewInit {
     private _liveAnnouncer: LiveAnnouncer,
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private notificationService: NotificationService
   ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -60,10 +62,24 @@ export class TInventarioComponent implements AfterViewInit {
     this.sharedService.getDataRow().subscribe((valor: any) => { this.selectedItem = valor; });
   }
 
+  /* hacerlo componente compartido */
+  copyToClipboard(text: string) {
+    const el = document.createElement('textarea');
+    el.value = text;
+    document.body.appendChild(el);
+    el.select();
+
+    try {
+      document.execCommand('copy');
+      this.notificationService.show('Texto copiado !');
+    } finally {
+      document.body.removeChild(el);
+    }
+  }
+
   /* hacer global con service */
   public applyFilter(filterValue: string) {
     filterValue = filterValue.trim().toLowerCase();
-
     if (filterValue === '') this.dataSource.filter = ''; else
       this.dataSource.filter = filterValue;
   }
@@ -167,14 +183,6 @@ this.loading();
   public quitarSeleccion() {
     this.selectedItem = null;
   }
-
-
-
-
-
-
-
-
 
 
 

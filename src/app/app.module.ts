@@ -30,6 +30,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { TInventarioComponent } from './shared/components/tables/t-inventario/t-inventario.component';
 import { NavComponent } from './shared/components/nav/nav.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { NavComponent } from './shared/components/nav/nav.component';
     MatProgressBarModule,
     HttpClientModule,
     MatTooltipModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

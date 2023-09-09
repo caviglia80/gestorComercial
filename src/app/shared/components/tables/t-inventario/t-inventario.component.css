@@ -38,22 +38,30 @@
   background-color: white;
 }
 
+.input-group button,
+.input-group input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background-color: white;
+}
+
 .input-group input {
   border-radius: 5px 5px 0 0;
   font-size: 12px;
-  transition: all 3s ease-out;
 }
 
 .input-group button {
-  background-color: white;
-  border: 1px solid #ccc;
   border-radius: 0 5px 0 0;
 }
 
 .input-group input:focus {
   outline: none !important;
   box-shadow: none !important;
-  background-image: linear-gradient(to top, var(--color-1) 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
+  background-image: linear-gradient(to top, var(--color-1) 2px, rgba(156, 39, 176, 0) 2px);
+}
+
+.input-group input:focus + button {
+  background-image: linear-gradient(to top, var(--color-1) 2px, rgba(156, 39, 176, 0) 2px);
 }
 
 .noVisible {
