@@ -1,7 +1,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 :root {
-  /* global */
+  /* colores globales - de mas claro a mas oscuro */
   --color-0: #ab9bf1;
   --color-1: #846bf3;
   --color-2: #4c28ec;

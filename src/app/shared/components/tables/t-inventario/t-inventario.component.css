@@ -178,5 +178,5 @@ th {
 }
 
 .title .card button:active {
-  transform: scale(1.1);
+  transform: scaleY(.8);
 }
