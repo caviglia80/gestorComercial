@@ -140,7 +140,7 @@
     <div class="table-wrapper">
       <table>
         <tr *ngFor="let item of selectedItem">
-          <td style="font-weight: bold;">{{ item.key }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ propertyAliases[item.key] }}</td>
           <td>{{ item.value }}</td>
         </tr>
       </table>

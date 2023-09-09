@@ -16,17 +16,27 @@ import { SharedService } from '@services/shared.service';
 })
 
 export class TInventarioComponent implements AfterViewInit {
-  public displayedColumns: string[] = ['id', 'name', 'buyPrice', 'sellPrice', 'stock', 'ventasRealizadas', 'observacion', 'actions'];
-  /*   public propertyAliases: { [key: string]: string } = {
-      id: 'ID',
-      name: 'Name',
-      buyPrice: 'Buy Price',
-      sellPrice: 'Sell Price',
-      stock: 'Stock',
-      ventasRealizadas: 'Sales',
-      observacion: 'Observation',
-      actions: 'Actions',
-    }; */
+  public displayedColumns: string[] = [
+    'id',
+    'name',
+    'buyPrice',
+    'sellPrice',
+    'stock',
+    'ventasRealizadas',
+    'observacion',
+    'actions'
+  ];
+  public propertyAliases: { [key: string]: string } = {
+    id: 'ID',
+    name: 'Nombre',
+    buyPrice: 'Precio compra',
+    sellPrice: 'Precio venta',
+    stock: 'Stock',
+    ventasRealizadas: 'Ventas realizadas',
+    observacion: 'Observación',
+    actions: 'Operaciones'
+  };
+
   /*   public dataSource = new MatTableDataSource<Product>(ELEMENT_DATA); */
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
