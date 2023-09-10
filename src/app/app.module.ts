@@ -31,6 +31,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { TInventarioComponent } from './shared/components/tables/t-inventario/t-inventario.component';
 import { NavComponent } from './shared/components/nav/nav.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -66,7 +69,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     MatTooltipModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

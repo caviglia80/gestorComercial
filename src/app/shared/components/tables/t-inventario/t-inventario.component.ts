@@ -27,6 +27,7 @@ export class TInventarioComponent implements AfterViewInit {
     'observacion',
     'actions'
   ];
+
   public propertyAliases: { [key: string]: string } = {
     id: 'ID',
     name: 'Nombre',
@@ -38,11 +39,15 @@ export class TInventarioComponent implements AfterViewInit {
     actions: 'Operaciones'
   };
 
-  /*   public dataSource = new MatTableDataSource<Product>(ELEMENT_DATA); */
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
   public selectQuery: string = 'SELECT * FROM inventario';
-  public selectedItem: { key: string; value: any }[] | null = null;
+  /* public selectedItem: { key: string; value: any }[] | null = null; */
+  public newRecord: any = {};
+  public create: boolean = false;
+  public edit: boolean = false;
+  public double: boolean = false;
+  public detail: boolean = false;
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -59,7 +64,7 @@ export class TInventarioComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
     /*     this.loadDatabaseData(); */
     this.sendQueryToServer(this.selectQuery, 'get');
-    this.sharedService.getDataRow().subscribe((valor: any) => { this.selectedItem = valor; });
+    /* this.sharedService.getDataRow().subscribe((valor: any) => { this.selectedItem = valor; }); */
   }
 
   /* hacerlo componente compartido */
@@ -101,12 +106,12 @@ this.loading();
 
   /* hacer global con service */
   public sendQueryToServer(query: string, action: string) {
-    const apiUrl = GobalVars.host + 'db2.php?q=' + encodeURIComponent(query);
 
+    const apiUrl = GobalVars.host + 'db2.php?q=' + encodeURIComponent(query);
     const requestUrl = GobalVars.proxyUrl + apiUrl; /* CORS */
 
     if (action === 'get') {
-      this.http.get<Product[]>(requestUrl)
+      this.http.get<Product[]>(apiUrl)
         .subscribe({
           next: (response) => {
             this.dataSource.data = response || [];
@@ -158,31 +163,129 @@ this.loading();
   }
 
   public viewItem(item: Product) {
-    this.selectedItem = Object.entries(item).map(([key, value]) => ({ key, value }));
-    this.sharedService.setDataRow(this.selectedItem);
+    this.Detail(true);
+    this.rellenarRecord(item);
   }
 
   public editItem(item: Product) {
-    // Implement the logic to edit the item
+    this.Edit(true);
+    this.rellenarRecord(item);
   }
 
   public duplicateItem(item: Product) {
-    const newName = 'Duplicado - ' + item.name;
-    const duplicateQuery = `
-    INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
-    SELECT '${newName}', buyPrice, sellPrice, stock, ventasRealizadas, observacion FROM inventario
-    WHERE id = ${item.id};
-   `;
-    this.sendQueryToServer(duplicateQuery, 'post');
+    this.Double(true);
+    const originalName: string = item.name;
+    item.name = 'Duplicado - ' + item.name;
+    this.rellenarRecord(item);
+    item.name = originalName;
   }
 
   public deleteItem(item: Product) {
     this.sendQueryToServer(`DELETE FROM inventario WHERE id = ${item.id};`, 'delete');
   }
 
-  public quitarSeleccion() {
-    this.selectedItem = null;
+  public Detail(visible: boolean) {
+    this.newRecord = {};
+    this.detail = visible;
   }
+
+/*   public quitarSeleccion() {
+    this.selectedItem = null;
+  } */
+
+  public Create(visible: boolean) {
+    this.newRecord = {};
+    this.create = visible;
+  }
+
+  public rellenarRecord(item: Product) {
+    this.newRecord = {};
+    this.newRecord['id'] = item.id;
+    this.newRecord['name'] = item.name;
+    this.newRecord['buyPrice'] = item.buyPrice;
+    this.newRecord['sellPrice'] = item.sellPrice;
+    this.newRecord['stock'] = item.stock;
+    this.newRecord['ventasRealizadas'] = item.ventasRealizadas;
+    this.newRecord['observacion'] = item.observacion;
+  }
+
+  public saveNewRecord() {
+    try {
+      const Query = `
+      INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
+      VALUES ('${this.newRecord['name']}',
+       '${this.newRecord['buyPrice']}',
+        '${this.newRecord['sellPrice']}',
+         '${this.newRecord['stock']}',
+          '${this.newRecord['ventasRealizadas']}',
+           '${this.newRecord['observacion']}');
+     `;
+      this.sendQueryToServer(Query, 'post');
+      this.notificationService.show('Creado: ' + this.newRecord['name']);
+    } catch (error) {
+      this.notificationService.show('Se ha producido un error.');
+      console.error('Se ha producido un error:', error);
+    } finally {
+      this.Create(false);
+    }
+  }
+
+  public Edit(visible: boolean) {
+    this.newRecord = {};
+    this.edit = visible;
+  }
+
+  public editRecord() {
+    try {
+      const Query = `
+      UPDATE inventario
+      SET
+      name='${this.newRecord['name']}',
+      buyPrice='${this.newRecord['buyPrice']}',
+      sellPrice='${this.newRecord['sellPrice']}',
+      stock='${this.newRecord['stock']}',
+      ventasRealizadas='${this.newRecord['ventasRealizadas']}',
+      observacion='${this.newRecord['observacion']}'
+      WHERE id='${this.newRecord['id']}';
+     `;
+      this.sendQueryToServer(Query, 'post');
+      this.notificationService.show('Editado: ' + this.newRecord['name']);
+    } catch (error) {
+      this.notificationService.show('Se ha producido un error.');
+      console.error('Se ha producido un error:', error);
+    } finally {
+      this.Edit(false);
+    }
+  }
+
+  public Double(visible: boolean) {
+    this.newRecord = {};
+    this.double = visible;
+  }
+
+  public doubleRecord() {
+    try {
+      const Query = `
+      INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
+      VALUES ('${this.newRecord['name']}',
+       '${this.newRecord['buyPrice']}',
+        '${this.newRecord['sellPrice']}',
+         '${this.newRecord['stock']}',
+          '${this.newRecord['ventasRealizadas']}',
+           '${this.newRecord['observacion']}');
+     `;
+      this.sendQueryToServer(Query, 'post');
+      this.notificationService.show('Duplicado: ' + this.newRecord['name']);
+    } catch (error) {
+      this.notificationService.show('Se ha producido un error.');
+      console.error('Se ha producido un error:', error);
+    } finally {
+      this.Double(false);
+    }
+  }
+
+
+
 
 
 
@@ -192,38 +295,8 @@ this.loading();
 
 }
 
-/* export interface Product {
-  id: number;
-  name: string;
-  stock: number;
-  buyPrice: number;
-  sellPrice: number;
-  observacion: string;
-  ventasRealizadas: number;
-} */
 
 
 
 
-
-/* const ELEMENT_DATA: Product[] = [
-  {
-    id: 1,
-    name: 'Product 1',
-    stock: 50,
-    buyPrice: 10.50,
-    sellPrice: 15.99,
-    observacion: 'Observation for Product 1',
-    ventasRealizadas: 100
-  },
-  {
-    id: 2,
-    name: 'Product 2',
-    stock: 30,
-    buyPrice: 8.75,
-    sellPrice: 12.49,
-    observacion: 'Observation for Product 2',
-    ventasRealizadas: 75
-  },
-]; */
 

@@ -1,12 +1,12 @@
-<!-- tableResultados -->
-<div class="tableResultados" [ngClass]="{'noVisible': selectedItem !== null}">
+<!-- Vista de Resultados -->
+<div class="tableResultados" [ngClass]="{'noVisible': detail || create  || edit || double}">
 
   <div class="title">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header-danger">
           <h4 class="card-title">Inventario</h4>
-          <button (click)="quitarSeleccion()">
+          <button (click)="Create(true)">
             <mat-icon>add</mat-icon>
           </button>
         </div>
@@ -17,10 +17,8 @@
   <div class="mat-elevation-z8 table-container">
 
     <div class="input-group no-border">
-      <input matInput #searchInput
-      (keyup.enter)="applyFilter(searchInput.value)"
-      (keyup.backspace)="applyFilter(searchInput.value)"
-      (keyup.delete)="applyFilter(searchInput.value)"
+      <input matInput #searchInput (keyup.enter)="applyFilter(searchInput.value)"
+        (keyup.backspace)="applyFilter(searchInput.value)" (keyup.delete)="applyFilter(searchInput.value)"
         class="form-control no-border" placeholder="Buscar.." type="text" value="">
       <button mat-button (click)="applyFilter(searchInput.value)">
         <i class="material-icons">search</i>
@@ -135,14 +133,64 @@
   </div>
 </div>
 
-<!-- verDetalle -->
-<div class="verDetalle noVisible" [ngClass]="{'noVisible': selectedItem === null}">
+<!-- Vista de Detalle -->
+<div class="verDetalle" *ngIf="detail">
   <div class="title">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header-danger">
           <h4 class="card-title">Detalle</h4>
-          <button (click)="quitarSeleccion()">
+          <button (click)="Detail(false)">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mat-elevation-z8 table-container">
+    <div class="table-wrapper">
+      <table>
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">{{ propertyAliases['id'] }}</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['id'])">{{ newRecord['id'] }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">{{ propertyAliases['name'] }}</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['name'])">{{ newRecord['name'] }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">{{ propertyAliases['stock'] }}</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['stock'])">{{ newRecord['stock'] }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">{{ propertyAliases['buyPrice'] }}</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['buyPrice'])">{{ newRecord['buyPrice'] }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">{{ propertyAliases['sellPrice'] }}</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['sellPrice'])">{{ newRecord['sellPrice'] }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">{{ propertyAliases['ventasRealizadas'] }}</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['ventasRealizadas'])">{{ newRecord['ventasRealizadas'] }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">{{ propertyAliases['observacion'] }}</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['observacion'])">{{ newRecord['observacion'] }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Vista de creación de registros -->
+<div class="crearRegistro" *ngIf="create">
+  <div class="title">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header-danger">
+          <h4 class="card-title">Crear</h4>
+          <button (click)="Create(false)">
             <mat-icon>arrow_back_ios</mat-icon>
           </button>
         </div>
@@ -150,14 +198,131 @@
     </div>
   </div>
 
-  <div class="mat-elevation-z8 table-container">
-    <div class="table-wrapper">
-      <table>
-        <tr *ngFor="let item of selectedItem">
-          <td style="font-weight: bold; white-space: nowrap;">{{ propertyAliases[item.key] }}</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(item.value)">{{ item.value }}</td>
-        </tr>
-      </table>
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['name'] }} <span class="red-asterisk">*</span></p>
+    <input matInput placeholder="{{ propertyAliases['name'] }}" [(ngModel)]="newRecord.name" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['buyPrice'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['buyPrice'] }}" [(ngModel)]="newRecord.buyPrice">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['sellPrice'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['sellPrice'] }}" [(ngModel)]="newRecord.sellPrice">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['stock'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['stock'] }}" [(ngModel)]="newRecord.stock">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['ventasRealizadas'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['ventasRealizadas'] }}" [(ngModel)]="newRecord.ventasRealizadas">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['observacion'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['observacion'] }}" [(ngModel)]="newRecord.observacion">
+  </mat-form-field>
+
+  <button mat-button (click)="saveNewRecord()" [disabled]="!newRecord.name">Guardar</button>
+</div>
+
+<!-- Vista de edicion de registros -->
+<div class="editarRegistro" *ngIf="edit">
+  <div class="title">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header-danger">
+          <h4 class="card-title">Editar</h4>
+          <button (click)="Edit(false)">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['name'] }} <span class="red-asterisk">*</span></p>
+    <input matInput placeholder="{{ propertyAliases['name'] }}" [(ngModel)]="newRecord.name" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['buyPrice'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['buyPrice'] }}" [(ngModel)]="newRecord.buyPrice">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['sellPrice'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['sellPrice'] }}" [(ngModel)]="newRecord.sellPrice">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['stock'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['stock'] }}" [(ngModel)]="newRecord.stock">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['ventasRealizadas'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['ventasRealizadas'] }}" [(ngModel)]="newRecord.ventasRealizadas">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['observacion'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['observacion'] }}" [(ngModel)]="newRecord.observacion">
+  </mat-form-field>
+
+  <button mat-button (click)="editRecord()" [disabled]="!newRecord.name">Guardar</button>
+</div>
+
+<!-- Vista de duplicado de registros -->
+<div class="editarRegistro" *ngIf="double">
+  <div class="title">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header-danger">
+          <h4 class="card-title">Duplicar</h4>
+          <button (click)="Double(false)">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['name'] }} <span class="red-asterisk">*</span></p>
+    <input matInput placeholder="{{ propertyAliases['name'] }}" [(ngModel)]="newRecord.name" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['buyPrice'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['buyPrice'] }}" [(ngModel)]="newRecord.buyPrice">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['sellPrice'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['sellPrice'] }}" [(ngModel)]="newRecord.sellPrice">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['stock'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['stock'] }}" [(ngModel)]="newRecord.stock">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['ventasRealizadas'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['ventasRealizadas'] }}" [(ngModel)]="newRecord.ventasRealizadas">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese {{ propertyAliases['observacion'] }}</p>
+    <input matInput placeholder="{{ propertyAliases['observacion'] }}" [(ngModel)]="newRecord.observacion">
+  </mat-form-field>
+
+  <button mat-button (click)="doubleRecord()" [disabled]="!newRecord.name">Guardar</button>
 </div>
