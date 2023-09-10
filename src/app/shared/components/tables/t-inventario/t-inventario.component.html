@@ -146,38 +146,38 @@
       </div>
     </div>
   </div>
-  <div class="mat-elevation-z8 table-container">
+  <div class="table-container mt-3">
     <div class="table-wrapper">
       <table>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['id'] }}</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['id'])">{{ newRecord['id'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['id'] }}:</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['id'])">{{ Item['id'] }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['name'] }}</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['name'])">{{ newRecord['name'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['name'] }}:</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['name'])">{{ Item['name'] }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['stock'] }}</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['stock'])">{{ newRecord['stock'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['stock'] }}:</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['stock'])">{{ Item['stock'] }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['buyPrice'] }}</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['buyPrice'])">{{ newRecord['buyPrice'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['buyPrice'] }}:</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['buyPrice'])">{{ Item['buyPrice'] }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['sellPrice'] }}</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['sellPrice'])">{{ newRecord['sellPrice'] }}
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['sellPrice'] }}:</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['sellPrice'])">{{ Item['sellPrice'] }}
           </td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['ventasRealizadas'] }}</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['ventasRealizadas'])">{{
-            newRecord['ventasRealizadas'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['ventasRealizadas'] }}:</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['ventasRealizadas'])">{{
+            Item['ventasRealizadas'] }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['observacion'] }}</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(newRecord['observacion'])">{{ newRecord['observacion'] }}
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['observacion'] }}:</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['observacion'])">{{ Item['observacion'] }}
           </td>
         </tr>
       </table>
@@ -201,29 +201,29 @@
   </div>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['name'] }} <span class="red-asterisk">*</span></p>
-    <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="newRecord.name" required>
+    <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['buyPrice'] }}</p>
-    <input matInput placeholder="{{ Columns['buyPrice'] }}" [(ngModel)]="newRecord.buyPrice">
+    <input matInput placeholder="{{ Columns['buyPrice'] }}" [(ngModel)]="Item.buyPrice">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['sellPrice'] }}</p>
-    <input matInput placeholder="{{ Columns['sellPrice'] }}" [(ngModel)]="newRecord.sellPrice">
+    <input matInput placeholder="{{ Columns['sellPrice'] }}" [(ngModel)]="Item.sellPrice">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['stock'] }}</p>
-    <input matInput placeholder="{{ Columns['stock'] }}" [(ngModel)]="newRecord.stock">
+    <input matInput placeholder="{{ Columns['stock'] }}" [(ngModel)]="Item.stock">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['ventasRealizadas'] }}</p>
-    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="newRecord.ventasRealizadas">
+    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="Item.ventasRealizadas">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['observacion'] }}</p>
-    <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="newRecord.observacion">
+    <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="Item.observacion">
   </mat-form-field>
-  <button mat-button (click)="createRecord()" [disabled]="!newRecord.name">Guardar</button>
+  <button mat-button (click)="createRecord()" [disabled]="!Item.name">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -242,29 +242,29 @@
   </div>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['name'] }} <span class="red-asterisk">*</span></p>
-    <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="newRecord.name" required>
+    <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['buyPrice'] }}</p>
-    <input matInput placeholder="{{ Columns['buyPrice'] }}" [(ngModel)]="newRecord.buyPrice">
+    <input matInput placeholder="{{ Columns['buyPrice'] }}" [(ngModel)]="Item.buyPrice">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['sellPrice'] }}</p>
-    <input matInput placeholder="{{ Columns['sellPrice'] }}" [(ngModel)]="newRecord.sellPrice">
+    <input matInput placeholder="{{ Columns['sellPrice'] }}" [(ngModel)]="Item.sellPrice">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['stock'] }}</p>
-    <input matInput placeholder="{{ Columns['stock'] }}" [(ngModel)]="newRecord.stock">
+    <input matInput placeholder="{{ Columns['stock'] }}" [(ngModel)]="Item.stock">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['ventasRealizadas'] }}</p>
-    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="newRecord.ventasRealizadas">
+    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="Item.ventasRealizadas">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['observacion'] }}</p>
-    <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="newRecord.observacion">
+    <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="Item.observacion">
   </mat-form-field>
-  <button mat-button (click)="editRecord()" [disabled]="!newRecord.name">Guardar</button>
+  <button mat-button (click)="editRecord()" [disabled]="!Item.name">Guardar</button>
 </div>
 
 <!-- Vista de duplicado de registros -->
@@ -283,27 +283,27 @@
   </div>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['name'] }} <span class="red-asterisk">*</span></p>
-    <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="newRecord.name" required>
+    <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['buyPrice'] }}</p>
-    <input matInput placeholder="{{ Columns['buyPrice'] }}" [(ngModel)]="newRecord.buyPrice">
+    <input matInput placeholder="{{ Columns['buyPrice'] }}" [(ngModel)]="Item.buyPrice">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['sellPrice'] }}</p>
-    <input matInput placeholder="{{ Columns['sellPrice'] }}" [(ngModel)]="newRecord.sellPrice">
+    <input matInput placeholder="{{ Columns['sellPrice'] }}" [(ngModel)]="Item.sellPrice">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['stock'] }}</p>
-    <input matInput placeholder="{{ Columns['stock'] }}" [(ngModel)]="newRecord.stock">
+    <input matInput placeholder="{{ Columns['stock'] }}" [(ngModel)]="Item.stock">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['ventasRealizadas'] }}</p>
-    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="newRecord.ventasRealizadas">
+    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="Item.ventasRealizadas">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['observacion'] }}</p>
-    <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="newRecord.observacion">
+    <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="Item.observacion">
   </mat-form-field>
-  <button mat-button (click)="doubleRecord()" [disabled]="!newRecord.name">Guardar</button>
+  <button mat-button (click)="doubleRecord()" [disabled]="!Item.name">Guardar</button>
 </div>

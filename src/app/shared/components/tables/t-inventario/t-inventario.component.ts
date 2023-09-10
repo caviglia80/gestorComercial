@@ -31,7 +31,7 @@ export class TInventarioComponent implements AfterViewInit {
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
   public selectQuery: string = 'SELECT * FROM inventario';
-  public newRecord: any = {};
+  public Item: any = {};
   public create: boolean = false;
   public edit: boolean = false;
   public double: boolean = false;
@@ -177,39 +177,39 @@ this.loading();
   }
 
   public Detail(visible: boolean) {
-    this.newRecord = {};
+    this.Item = {};
     this.detail = visible;
   }
 
   public Create(visible: boolean) {
-    this.newRecord = {};
+    this.Item = {};
     this.create = visible;
   }
 
   public rellenarRecord(item: Product) {
-    this.newRecord = {};
-    this.newRecord['id'] = item.id;
-    this.newRecord['name'] = item.name;
-    this.newRecord['buyPrice'] = item.buyPrice;
-    this.newRecord['sellPrice'] = item.sellPrice;
-    this.newRecord['stock'] = item.stock;
-    this.newRecord['ventasRealizadas'] = item.ventasRealizadas;
-    this.newRecord['observacion'] = item.observacion;
+    this.Item = {};
+    this.Item['id'] = item.id;
+    this.Item['name'] = item.name;
+    this.Item['buyPrice'] = item.buyPrice;
+    this.Item['sellPrice'] = item.sellPrice;
+    this.Item['stock'] = item.stock;
+    this.Item['ventasRealizadas'] = item.ventasRealizadas;
+    this.Item['observacion'] = item.observacion;
   }
 
   public createRecord() {
     try {
       const Query = `
       INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
-      VALUES ('${this.newRecord['name']}',
-       '${this.newRecord['buyPrice']}',
-        '${this.newRecord['sellPrice']}',
-         '${this.newRecord['stock']}',
-          '${this.newRecord['ventasRealizadas']}',
-           '${this.newRecord['observacion']}');
+      VALUES ('${this.Item['name']}',
+       '${this.Item['buyPrice']}',
+        '${this.Item['sellPrice']}',
+         '${this.Item['stock']}',
+          '${this.Item['ventasRealizadas']}',
+           '${this.Item['observacion']}');
      `;
       this.sendQueryToServer(Query, 'post');
-      this.notificationService.show('Creado: ' + this.newRecord['name']);
+      this.notificationService.show('Creado: ' + this.Item['name']);
     } catch (error) {
       this.notificationService.show('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
@@ -219,7 +219,7 @@ this.loading();
   }
 
   public Edit(visible: boolean) {
-    this.newRecord = {};
+    this.Item = {};
     this.edit = visible;
   }
 
@@ -228,16 +228,16 @@ this.loading();
       const Query = `
       UPDATE inventario
       SET
-      name='${this.newRecord['name']}',
-      buyPrice='${this.newRecord['buyPrice']}',
-      sellPrice='${this.newRecord['sellPrice']}',
-      stock='${this.newRecord['stock']}',
-      ventasRealizadas='${this.newRecord['ventasRealizadas']}',
-      observacion='${this.newRecord['observacion']}'
-      WHERE id='${this.newRecord['id']}';
+      name='${this.Item['name']}',
+      buyPrice='${this.Item['buyPrice']}',
+      sellPrice='${this.Item['sellPrice']}',
+      stock='${this.Item['stock']}',
+      ventasRealizadas='${this.Item['ventasRealizadas']}',
+      observacion='${this.Item['observacion']}'
+      WHERE id='${this.Item['id']}';
      `;
       this.sendQueryToServer(Query, 'post');
-      this.notificationService.show('Editado: ' + this.newRecord['name']);
+      this.notificationService.show('Editado: ' + this.Item['name']);
     } catch (error) {
       this.notificationService.show('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
@@ -247,7 +247,7 @@ this.loading();
   }
 
   public Double(visible: boolean) {
-    this.newRecord = {};
+    this.Item = {};
     this.double = visible;
   }
 
@@ -255,15 +255,15 @@ this.loading();
     try {
       const Query = `
       INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
-      VALUES ('${this.newRecord['name']}',
-       '${this.newRecord['buyPrice']}',
-        '${this.newRecord['sellPrice']}',
-         '${this.newRecord['stock']}',
-          '${this.newRecord['ventasRealizadas']}',
-           '${this.newRecord['observacion']}');
+      VALUES ('${this.Item['name']}',
+       '${this.Item['buyPrice']}',
+        '${this.Item['sellPrice']}',
+         '${this.Item['stock']}',
+          '${this.Item['ventasRealizadas']}',
+           '${this.Item['observacion']}');
      `;
       this.sendQueryToServer(Query, 'post');
-      this.notificationService.show('Duplicado: ' + this.newRecord['name']);
+      this.notificationService.show('Duplicado: ' + this.Item['name']);
     } catch (error) {
       this.notificationService.show('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
