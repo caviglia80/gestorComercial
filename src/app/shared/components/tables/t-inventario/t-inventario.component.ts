@@ -6,9 +6,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { GobalVars } from '@app/app.component';
 import { Product } from '@models/product';
-import { SharedService } from '@services/shared.service';
+/* import { SharedService } from '@services/shared.service'; */
 import { NotificationService } from '@services/notification.service';
-
 
 @Component({
   selector: 'app-t-inventario',
@@ -42,7 +41,6 @@ export class TInventarioComponent implements AfterViewInit {
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
   public selectQuery: string = 'SELECT * FROM inventario';
-  /* public selectedItem: { key: string; value: any }[] | null = null; */
   public newRecord: any = {};
   public create: boolean = false;
   public edit: boolean = false;
@@ -53,9 +51,9 @@ export class TInventarioComponent implements AfterViewInit {
     private _liveAnnouncer: LiveAnnouncer,
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
-    public sharedService: SharedService,
+/*     public sharedService: SharedService, */
     private notificationService: NotificationService
-  ) { }
+  ) {  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -155,7 +153,7 @@ this.loading();
     this.cdr.detectChanges();
   }
 
-  /* hacer global con service */
+  /* hacer global con pipe? */
   public announceSortChange(sortState: Sort) {
     if (sortState.direction)
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`); else
@@ -189,10 +187,6 @@ this.loading();
     this.detail = visible;
   }
 
-/*   public quitarSeleccion() {
-    this.selectedItem = null;
-  } */
-
   public Create(visible: boolean) {
     this.newRecord = {};
     this.create = visible;
@@ -209,7 +203,7 @@ this.loading();
     this.newRecord['observacion'] = item.observacion;
   }
 
-  public saveNewRecord() {
+  public createRecord() {
     try {
       const Query = `
       INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
