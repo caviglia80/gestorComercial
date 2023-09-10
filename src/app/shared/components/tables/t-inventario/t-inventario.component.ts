@@ -16,18 +16,8 @@ import { NotificationService } from '@services/notification.service';
 })
 
 export class TInventarioComponent implements AfterViewInit {
-  public displayedColumns: string[] = [
-    'id',
-    'name',
-    'buyPrice',
-    'sellPrice',
-    'stock',
-    'ventasRealizadas',
-    'observacion',
-    'actions'
-  ];
 
-  public propertyAliases: { [key: string]: string } = {
+  public Columns: { [key: string]: string } = {
     id: 'ID',
     name: 'Nombre',
     buyPrice: 'Precio compra',
@@ -63,6 +53,10 @@ export class TInventarioComponent implements AfterViewInit {
     /*     this.loadDatabaseData(); */
     this.sendQueryToServer(this.selectQuery, 'get');
     /* this.sharedService.getDataRow().subscribe((valor: any) => { this.selectedItem = valor; }); */
+  }
+
+  getColumnsKeys() {
+    return Object.keys(this.Columns);
   }
 
   /* hacerlo componente compartido */
