@@ -64,7 +64,7 @@ mat-icon {
   margin-right: 16px;
   font-size: 18px;
   line-height: 18px;
-  fill: currentColor;
+/*   fill: currentColor; */
   overflow: hidden;
 }
 
@@ -126,6 +126,18 @@ nav .toggle-button mat-icon {
   padding: .1rem;
 }
 
+nav .toggle-button mat-icon{
+  font-size: 24px;
+  width: 25px;
+  height: 25px;
+  margin: 0;
+  padding: .1rem;
+}
+
+nav .toggle-button .toggleIcon-on-open {
+  color: white;
+}
+
 .logo-container {
   display: flex;
   align-items: center;
@@ -136,4 +148,6 @@ nav .toggle-button mat-icon {
   width: 40px;
   height: auto;
 }
+
+
 
