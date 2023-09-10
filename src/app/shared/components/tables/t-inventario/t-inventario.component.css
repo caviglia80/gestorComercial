@@ -177,13 +177,30 @@ th {
   user-select: none;
   z-index: 0;
   overflow: visible;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border: none;
   border-radius: 50%;
   transition: all .2s ease-in-out;
 }
 
+.title .card button:hover {
+  transform: scale(1.1);
+}
+
 .title .card button:active {
   transform: scale(.9);
 }
+
+.title .card button mat-icon {
+  overflow: visible;
+  font-size: xx-large;
+}
+
+
+
+
+
+
+
+
