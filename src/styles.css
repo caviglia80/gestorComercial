@@ -125,7 +125,7 @@ h4 {
 }
 
 .title .card button:hover {
-  transform: scale(1.1);
+  transform: scale(1.1) translate(-1px, -1px);
 }
 
 .title .card button:active {
