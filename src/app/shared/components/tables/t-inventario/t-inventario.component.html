@@ -6,6 +6,9 @@
       <div class="card">
         <div class="card-header-danger">
           <h4 class="card-title">Inventario</h4>
+          <button (click)="quitarSeleccion()">
+            <mat-icon class="">add</mat-icon>
+          </button>
         </div>
       </div>
     </div>
@@ -122,7 +125,7 @@
     </div>
 
     <div class="text-center sinDatos" *ngIf="dataSource.data.length === 0 && isLoading">
-      <p><mat-icon>hourglass_empty</mat-icon><br>
+      <p><mat-icon class="spin">hourglass_empty</mat-icon><br>
         Cargando..</p>
     </div>
 

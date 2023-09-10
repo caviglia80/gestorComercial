@@ -92,7 +92,6 @@
 .actions-container button mat-icon {
   font-size: 20px;
   color: #7e7e7e;
-  /* #AAAAAA */
 }
 
 .actions-container button:hover mat-icon {
@@ -186,5 +185,5 @@ th {
 }
 
 .title .card button:active {
-  transform: scaleY(.8);
+  transform: scale(.9);
 }
