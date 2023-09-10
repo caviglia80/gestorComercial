@@ -1,12 +1,11 @@
 import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { GobalVars } from '@app/app.component';
 import { Product } from '@models/product';
-/* import { SharedService } from '@services/shared.service'; */
+import { SharedService } from '@services/shared.service';
 import { NotificationService } from '@services/notification.service';
 
 @Component({
@@ -38,12 +37,12 @@ export class TInventarioComponent implements AfterViewInit {
   public detail: boolean = false;
 
   constructor(
-    private _liveAnnouncer: LiveAnnouncer,
+    /* private _liveAnnouncer: LiveAnnouncer, */
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
-/*     public sharedService: SharedService, */
+    public sharedService: SharedService,
     private notificationService: NotificationService
-  ) {  }
+  ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -52,7 +51,6 @@ export class TInventarioComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
     /*     this.loadDatabaseData(); */
     this.sendQueryToServer(this.selectQuery, 'get');
-    /* this.sharedService.getDataRow().subscribe((valor: any) => { this.selectedItem = valor; }); */
   }
 
   getColumnsKeys() {
@@ -73,28 +71,6 @@ export class TInventarioComponent implements AfterViewInit {
       document.body.removeChild(el);
     }
   }
-
-  /* hacer global con service */
-  public applyFilter(filterValue: string) {
-    filterValue = filterValue.trim().toLowerCase();
-    if (filterValue === '') this.dataSource.filter = ''; else
-      this.dataSource.filter = filterValue;
-  }
-
-  /* no borrar, por si cambio a consultas desde backend */
-  /*   loadDatabaseData() {
-      this.http.get<Product[]>(GobalVars.host + 'get_data_from_db.php')
-        .subscribe({
-          next: (response) => {
-            this.dataSource.data = response || [];
-this.loading();
-          },
-          error: (error) => {
-            console.error(JSON.stringify(error, null, 2))
-this.loading();
-          }
-        });
-    } */
 
   /* hacer global con service */
   public sendQueryToServer(query: string, action: string) {
@@ -147,12 +123,27 @@ this.loading();
     this.cdr.detectChanges();
   }
 
-  /* hacer global con pipe? */
-  public announceSortChange(sortState: Sort) {
-    if (sortState.direction)
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`); else
-      this._liveAnnouncer.announce('Sorting cleared');
+  /* hacer global con service */
+  public applyFilter(filterValue: string) {
+    filterValue = filterValue.trim().toLowerCase();
+    if (filterValue === '') this.dataSource.filter = ''; else
+      this.dataSource.filter = filterValue;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   public viewItem(item: Product) {
     this.Detail(true);

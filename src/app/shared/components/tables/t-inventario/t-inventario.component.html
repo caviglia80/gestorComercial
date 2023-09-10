@@ -27,8 +27,7 @@
 
     <div class="table-wrapper" [ngClass]="{'noVisible': dataSource.data.length === 0 || isLoading }">
 
-      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-        class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id">
@@ -163,11 +162,13 @@
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['buyPrice'] }}:</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['buyPrice'])">{{ Item['buyPrice'] }}</td>
+          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['buyPrice'])">{{ Item['buyPrice'] |
+            currencyWithSymbol }}</td>
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['sellPrice'] }}:</td>
-          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['sellPrice'])">{{ Item['sellPrice'] }}
+          <td style="width: 100%;" (dblclick)="copyToClipboard(Item['sellPrice'])">{{ Item['sellPrice'] |
+            currencyWithSymbol }}
           </td>
         </tr>
         <tr>

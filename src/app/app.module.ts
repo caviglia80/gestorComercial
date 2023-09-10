@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { LoginComponent } from '@routes/login/login.component';
 import { RegisterComponent } from '@routes/register/register.component';
 import { LandingPageComponent } from '@routes/landing-page/landing-page.component';
@@ -24,12 +22,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HttpClientModule } from '@angular/common/http';
-import { CurrencyWithSymbolPipe } from './core/pipes/currencyWithSymbol/currency-with-symbol.pipe';
-import { TruncatePipe } from './core/pipes/truncate/truncate.pipe';
+import { CurrencyWithSymbolPipe } from '@pipes/currencyWithSymbol/currency-with-symbol.pipe';
+import { TruncatePipe } from '@pipes/truncate/truncate.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { TInventarioComponent } from './shared/components/tables/t-inventario/t-inventario.component';
-import { NavComponent } from './shared/components/nav/nav.component';
+import { TInventarioComponent } from '@components/tables/t-inventario/t-inventario.component';
+import { NavComponent } from '@components/nav/nav.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
