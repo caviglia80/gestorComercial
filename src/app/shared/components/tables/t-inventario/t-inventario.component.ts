@@ -3,11 +3,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
-import { GobalVars } from '@app/app.component';
+/* import { GobalVars } from '@app/app.component'; */
 import { Product } from '@models/product';
 import { SharedService } from '@services/shared.service';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+/* import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators'; */
 
 @Component({
   selector: 'app-t-inventario',
@@ -30,7 +30,6 @@ export class TInventarioComponent implements AfterViewInit {
 
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
-  /*   private selectQuery: string = 'SELECT * FROM inventario'; */
   public Item: any = {};
   public create: boolean = false;
   public edit: boolean = false;
@@ -85,52 +84,6 @@ export class TInventarioComponent implements AfterViewInit {
 
 
 
-
-  /* hacer global con service */
-  /*  public sendQueryToServer(query: string, action: string) {
-
-     const apiUrl = GobalVars.host + 'inventario2.php?q=' + encodeURIComponent(query);
-     const requestUrl = GobalVars.proxyUrl + apiUrl;
-
-     if (action === 'get') {
-       this.http.get<Product[]>(apiUrl)
-         .subscribe({
-           next: (response) => {
-             this.dataSource.data = response || [];
-             this.loading(false);
-           },
-           error: (error) => {
-             console.error(JSON.stringify(error, null, 2));
-             this.loading(false);
-           }
-         });
-     } else if (action === 'delete') {
-       this.http.delete(apiUrl)
-         .subscribe({
-           next: () => {
-
-             this.sendQueryToServer(this.selectQuery, 'get');
-           },
-           error: (error) => {
-             console.error(JSON.stringify(error, null, 2));
-             this.sendQueryToServer(this.selectQuery, 'get');
-           }
-         });
-     } else if (action === 'post') {
-       this.http.post(apiUrl, {})
-         .subscribe({
-           next: (response) => {
-             console.log(response);
-
-             this.sendQueryToServer(this.selectQuery, 'select');
-           },
-           error: (error) => {
-             console.error(JSON.stringify(error, null, 2));
-             this.sendQueryToServer(this.selectQuery, 'select');
-           }
-         });
-     }
-   } */
 
 
 
