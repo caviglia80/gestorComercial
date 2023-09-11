@@ -122,7 +122,7 @@ export class TInventarioComponent implements AfterViewInit {
   public createRecord() {
     try {
       const body: any = {
-        name: this.Item.name,
+        name: this.Item.name != 0 ? this.Item.name : " ",
         buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
         sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
         stock: this.Item.stock !== undefined ? this.Item.stock : 0,
@@ -143,7 +143,7 @@ export class TInventarioComponent implements AfterViewInit {
     try {
       const body: any = {
         id: this.Item.id,
-        name: this.Item.name,
+        name: this.Item.name != 0 ? this.Item.name : " ",
         buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
         sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
         stock: this.Item.stock !== undefined ? this.Item.stock : 0,
@@ -163,7 +163,7 @@ export class TInventarioComponent implements AfterViewInit {
   public doubleRecord() {
     try {
       const body: any = {
-        name: this.Item.name,
+        name: this.Item.name != 0 ? this.Item.name : " ",
         buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
         sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
         stock: this.Item.stock !== undefined ? this.Item.stock : 0,

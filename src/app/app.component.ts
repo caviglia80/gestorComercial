@@ -8,10 +8,3 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'gestorComercial';
 }
-
-export class GobalVars {
-
-}
-
-
-
