@@ -139,11 +139,9 @@ h4 {
 
 /*  */
 
-/* tabla principal */
 
-.custom-paginator {
-  padding-bottom: 5px;
-}
+
+/* tabla principal */
 
 .table-container {
   border-radius: 5px 5px 10px 10px;
@@ -152,6 +150,10 @@ h4 {
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+.table-container .custom-paginator {
+  padding-bottom: 5px;
 }
 
 .table-container table .data-row:hover {
@@ -216,12 +218,12 @@ h4 {
   justify-content: flex-start;
 }
 
-.actions-container {
+.table-wrapper table .actions-container {
   display: flex;
   gap: 0;
 }
 
-.actions-container button {
+.table-wrapper table .actions-container button {
   width: 30px;
   height: 30px;
   padding: 0;
@@ -230,12 +232,12 @@ h4 {
   overflow: hidden;
 }
 
-.actions-container button mat-icon {
+.table-wrapper table .actions-container button mat-icon {
   font-size: 20px;
   color: #7e7e7e;
 }
 
-.actions-container button:hover mat-icon {
+.table-wrapper table .actions-container button:hover mat-icon {
   color: var(--color-1);
 }
 
@@ -277,13 +279,12 @@ th {
   margin-bottom: 10px;
 }
 
-.form-field-description {
+mat-form-field .form-field-description {
   font-size: 14px;
   color: #777;
   margin-top: 5px;
 }
 
-.form-field-description .red-asterisk {
+mat-form-field .form-field-description .red-asterisk {
   color: rgba(145, 0, 0, 0.886);
 }
-
