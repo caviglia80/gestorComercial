@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { GobalVars } from '@app/app.component';
 import { Product } from '@models/product';
 import { SharedService } from '@services/shared.service';
-import { NotificationService } from '@services/notification.service';
 
 @Component({
   selector: 'app-t-inventario',
@@ -29,7 +28,7 @@ export class TInventarioComponent implements AfterViewInit {
 
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
-  public selectQuery: string = 'SELECT * FROM inventario';
+  private selectQuery: string = 'SELECT * FROM inventario';
   public Item: any = {};
   public create: boolean = false;
   public edit: boolean = false;
@@ -37,11 +36,9 @@ export class TInventarioComponent implements AfterViewInit {
   public detail: boolean = false;
 
   constructor(
-    /* private _liveAnnouncer: LiveAnnouncer, */
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
     public sharedService: SharedService,
-    private notificationService: NotificationService
   ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -53,24 +50,37 @@ export class TInventarioComponent implements AfterViewInit {
     this.sendQueryToServer(this.selectQuery, 'get');
   }
 
-  getColumnsKeys() {
+  private loading() {
+    this.isLoading = false;
+    this.cdr.detectChanges();
+  }
+
+  public searchFilter(filterValue: string) {
+    filterValue = filterValue.trim().toLowerCase();
+    if (filterValue === '') this.dataSource.filter = ''; else
+      this.dataSource.filter = filterValue;
+  }
+
+  public getColumnsKeys() {
     return Object.keys(this.Columns);
   }
 
-  /* hacerlo componente compartido */
-  copyToClipboard(text: string) {
-    const el = document.createElement('textarea');
-    el.value = text;
-    document.body.appendChild(el);
-    el.select();
 
-    try {
-      document.execCommand('copy');
-      this.notificationService.show('Texto copiado !');
-    } finally {
-      document.body.removeChild(el);
-    }
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /* hacer global con service */
   public sendQueryToServer(query: string, action: string) {
@@ -118,32 +128,39 @@ export class TInventarioComponent implements AfterViewInit {
     }
   }
 
-  private loading() {
-    this.isLoading = false;
-    this.cdr.detectChanges();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public Detail(visible: boolean) {
+    this.Item = {};
+    this.detail = visible;
   }
 
-  /* hacer global con service */
-  public applyFilter(filterValue: string) {
-    filterValue = filterValue.trim().toLowerCase();
-    if (filterValue === '') this.dataSource.filter = ''; else
-      this.dataSource.filter = filterValue;
+  public Edit(visible: boolean) {
+    this.Item = {};
+    this.edit = visible;
   }
 
+  public Double(visible: boolean) {
+    this.Item = {};
+    this.double = visible;
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  public Create(visible: boolean) {
+    this.Item = {};
+    this.create = visible;
+  }
 
   public viewItem(item: Product) {
     this.Detail(true);
@@ -167,17 +184,7 @@ export class TInventarioComponent implements AfterViewInit {
     this.sendQueryToServer(`DELETE FROM inventario WHERE id = ${item.id};`, 'delete');
   }
 
-  public Detail(visible: boolean) {
-    this.Item = {};
-    this.detail = visible;
-  }
-
-  public Create(visible: boolean) {
-    this.Item = {};
-    this.create = visible;
-  }
-
-  public rellenarRecord(item: Product) {
+  private rellenarRecord(item: Product) {
     this.Item = {};
     this.Item['id'] = item.id;
     this.Item['name'] = item.name;
@@ -200,18 +207,13 @@ export class TInventarioComponent implements AfterViewInit {
            '${this.Item['observacion']}');
      `;
       this.sendQueryToServer(Query, 'post');
-      this.notificationService.show('Creado: ' + this.Item['name']);
+      this.sharedService.message('Creado: ' + this.Item['name']);
     } catch (error) {
-      this.notificationService.show('Se ha producido un error.');
+      this.sharedService.message('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
     }
-  }
-
-  public Edit(visible: boolean) {
-    this.Item = {};
-    this.edit = visible;
   }
 
   public editRecord() {
@@ -228,18 +230,13 @@ export class TInventarioComponent implements AfterViewInit {
       WHERE id='${this.Item['id']}';
      `;
       this.sendQueryToServer(Query, 'post');
-      this.notificationService.show('Editado: ' + this.Item['name']);
+       this.sharedService.message('Editado: ' + this.Item['name']);
     } catch (error) {
-      this.notificationService.show('Se ha producido un error.');
+       this.sharedService.message('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
     } finally {
       this.Edit(false);
     }
-  }
-
-  public Double(visible: boolean) {
-    this.Item = {};
-    this.double = visible;
   }
 
   public doubleRecord() {
@@ -254,9 +251,9 @@ export class TInventarioComponent implements AfterViewInit {
            '${this.Item['observacion']}');
      `;
       this.sendQueryToServer(Query, 'post');
-      this.notificationService.show('Duplicado: ' + this.Item['name']);
+       this.sharedService.message('Duplicado: ' + this.Item['name']);
     } catch (error) {
-      this.notificationService.show('Se ha producido un error.');
+       this.sharedService.message('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
     } finally {
       this.Double(false);
