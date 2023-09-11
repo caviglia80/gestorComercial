@@ -2,10 +2,10 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { HttpClient } from '@angular/common/http';
 /* import { GobalVars } from '@app/app.component'; */
 import { Product } from '@models/product';
 import { SharedService } from '@services/shared.service';
+import { DataService } from '@services/data.service';
 /* import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators'; */
 
@@ -38,8 +38,8 @@ export class TInventarioComponent implements AfterViewInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private http: HttpClient,
     public sharedService: SharedService,
+    public dataService: DataService
   ) { }
 
   private loading(state: boolean) {
@@ -63,11 +63,11 @@ export class TInventarioComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.sharedService.data$.subscribe(data => {
+    this.dataService.data$.subscribe(data => {
       this.dataSource.data = data;
       this.loading(false);
     });
-    this.sharedService.fetchData('SELECT * FROM inventario', 'GET');
+    this.dataService.fetchInventario_safe('GET');
   }
 
 
@@ -138,7 +138,7 @@ export class TInventarioComponent implements AfterViewInit {
   }
 
   public deleteItem(item: Product) {
-    this.sharedService.fetchData(`DELETE FROM inventario WHERE id =${item.id}`, 'DELETE');
+    this.dataService.fetchInventario_safe('DELETE', `?id=${item.id}`);
   }
 
   private rellenarRecord(item: Product) {
@@ -163,7 +163,7 @@ export class TInventarioComponent implements AfterViewInit {
           '${this.Item['ventasRealizadas']}',
            '${this.Item['observacion']}');
      `;
-      this.sharedService.fetchData(Query, 'POST');
+      this.dataService.fetchInventario_safe('POST', Query);
       this.sharedService.message('Creado: ' + this.Item['name']);
     } catch (error) {
       this.sharedService.message('Se ha producido un error.');
@@ -186,7 +186,7 @@ export class TInventarioComponent implements AfterViewInit {
       observacion='${this.Item['observacion']}'
       WHERE id='${this.Item['id']}';
      `;
-      this.sharedService.fetchData(Query, 'PUT');
+      this.dataService.fetchInventario_safe('PUT', Query);
       this.sharedService.message('Editado: ' + this.Item['name']);
     } catch (error) {
       this.sharedService.message('Se ha producido un error.');
@@ -207,7 +207,7 @@ export class TInventarioComponent implements AfterViewInit {
           '${this.Item['ventasRealizadas']}',
            '${this.Item['observacion']}');
      `;
-      this.sharedService.fetchData(Query, 'POST');
+      this.dataService.fetchInventario_safe('POST', Query);
       this.sharedService.message('Duplicado: ' + this.Item['name']);
     } catch (error) {
       this.sharedService.message('Se ha producido un error.');
