@@ -107,8 +107,6 @@
           </td>
         </ng-container>
 
-        <!--         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="data-row"></tr> -->
         <tr mat-header-row *matHeaderRowDef="getColumnsKeys()"></tr>
         <tr mat-row *matRowDef="let row; columns: getColumnsKeys()" class="data-row"></tr>
       </table>
@@ -118,7 +116,7 @@
     <div class="loading-overlay" *ngIf="isLoading">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
-    <div class="text-center sinDatos" *ngIf="dataSource.data.length === 0 && !isLoading">
+    <div class="text-center sinDatos" *ngIf="dataSource.data.length === 0 && !isLoading || dataSource.filteredData.length === 0">
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
     <div class="text-center sinDatos" *ngIf="dataSource.data.length === 0 && isLoading">
