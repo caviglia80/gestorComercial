@@ -2,12 +2,9 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-/* import { GobalVars } from '@app/app.component'; */
 import { Product } from '@models/product';
 import { SharedService } from '@services/shared.service';
 import { DataService } from '@services/data.service';
-/* import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators'; */
 
 @Component({
   selector: 'app-t-inventario',
@@ -16,6 +13,13 @@ import { map, catchError } from 'rxjs/operators'; */
 })
 
 export class TInventarioComponent implements AfterViewInit {
+  public dataSource = new MatTableDataSource<Product>;
+  public isLoading = true;
+  public Item: any = {};
+  public create: boolean = false;
+  public edit: boolean = false;
+  public double: boolean = false;
+  public detail: boolean = false;
 
   public Columns: { [key: string]: string } = {
     id: 'ID',
@@ -28,34 +32,11 @@ export class TInventarioComponent implements AfterViewInit {
     actions: 'Operaciones'
   };
 
-  public dataSource = new MatTableDataSource<Product>;
-  public isLoading = true;
-  public Item: any = {};
-  public create: boolean = false;
-  public edit: boolean = false;
-  public double: boolean = false;
-  public detail: boolean = false;
-
   constructor(
     private cdr: ChangeDetectorRef,
     public sharedService: SharedService,
     public dataService: DataService
   ) { }
-
-  private loading(state: boolean) {
-    this.isLoading = state;
-    this.cdr.detectChanges();
-  }
-
-  public searchFilter(filterValue: string) {
-    filterValue = filterValue.trim().toLowerCase();
-    if (filterValue === '') this.dataSource.filter = ''; else
-      this.dataSource.filter = filterValue;
-  }
-
-  public getColumnsKeys() {
-    return Object.keys(this.Columns);
-  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -70,34 +51,20 @@ export class TInventarioComponent implements AfterViewInit {
     this.dataService.fetchInventario_safe('GET');
   }
 
+  private loading(state: boolean) {
+    this.isLoading = state;
+    this.cdr.detectChanges();
+  }
 
+  public getColumnsKeys() {
+    return Object.keys(this.Columns);
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  public searchFilter(filterValue: string) {
+    filterValue = filterValue.trim().toLowerCase();
+    if (filterValue === '') this.dataSource.filter = ''; else
+      this.dataSource.filter = filterValue;
+  }
 
   public Detail(visible: boolean) {
     this.Item = {};
@@ -143,13 +110,13 @@ export class TInventarioComponent implements AfterViewInit {
 
   private rellenarRecord(item: Product) {
     this.Item = {};
-    this.Item['id'] = item.id;
-    this.Item['name'] = item.name;
-    this.Item['buyPrice'] = item.buyPrice;
-    this.Item['sellPrice'] = item.sellPrice;
-    this.Item['stock'] = item.stock;
-    this.Item['ventasRealizadas'] = item.ventasRealizadas;
-    this.Item['observacion'] = item.observacion;
+    this.Item.id = item.id;
+    this.Item.name = item.name;
+    this.Item.buyPrice = item.buyPrice;
+    this.Item.sellPrice = item.sellPrice;
+    this.Item.stock = item.stock;
+    this.Item.ventasRealizadas = item.ventasRealizadas;
+    this.Item.observacion = item.observacion;
   }
 
   public createRecord() {
@@ -162,10 +129,6 @@ export class TInventarioComponent implements AfterViewInit {
         ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
         observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
       };
-
-      console.log(this.Item.buyPrice);
-      console.log(this.Item.observacion);
-
       this.dataService.fetchInventario_safe('POST', body);
       this.sharedService.message('Creado: ' + this.Item.name);
     } catch (error) {

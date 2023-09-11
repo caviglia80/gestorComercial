@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GobalVars } from '@app/app.component';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class DataService {
   public fetchInventario_safe(method: string = '', body: any = {}, proxy: boolean = false): void {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    console.log(body);
-    let url = GobalVars.host + 'inventario2.php';
+    if (!environment.production) console.log(body);
+    let url = GobalVars.host + 'inventario.php';
     if (proxy) url = GobalVars.proxyUrl + url;
 
     if (method === 'GET') {
@@ -28,7 +29,7 @@ export class DataService {
             this.dataSubject.next(data);
           },
           error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
+            if (!environment.production) console.error(JSON.stringify(error, null, 2));
           }
         });
     } else if (method === 'DELETE') {
@@ -38,7 +39,7 @@ export class DataService {
             this.fetchInventario_safe('GET');
           },
           error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
+            if (!environment.production) console.error(JSON.stringify(error, null, 2));
           }
         });
     } else if (method === 'POST') {
@@ -48,7 +49,7 @@ export class DataService {
             this.fetchInventario_safe('GET');
           },
           error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
+            if (!environment.production) console.error(JSON.stringify(error, null, 2));
           }
         });
     } else if (method === 'PUT') {
@@ -58,7 +59,7 @@ export class DataService {
             this.fetchInventario_safe('GET');
           },
           error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
+            if (!environment.production) console.error(JSON.stringify(error, null, 2));
           }
         });
     }
