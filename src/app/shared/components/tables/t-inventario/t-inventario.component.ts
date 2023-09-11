@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { GobalVars } from '@app/app.component';
 import { Product } from '@models/product';
 import { SharedService } from '@services/shared.service';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-t-inventario',
@@ -41,17 +43,8 @@ export class TInventarioComponent implements AfterViewInit {
     public sharedService: SharedService,
   ) { }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    /*     this.loadDatabaseData(); */
-    this.sendQueryToServer(this.selectQuery, 'get');
-  }
-
-  private loading() {
-    this.isLoading = false;
+  private loading(state: boolean) {
+    this.isLoading = state;
     this.cdr.detectChanges();
   }
 
@@ -64,6 +57,38 @@ export class TInventarioComponent implements AfterViewInit {
   public getColumnsKeys() {
     return Object.keys(this.Columns);
   }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.DB('GET');
+  }
+
+  private DB(method: string, params: string = '') {
+    this.sharedService.request(method, params).subscribe({
+      next: (data: Product[]) => {
+        this.dataSource.data = data;
+        this.loading(false);
+      },
+      error: (error) => {
+        console.error(JSON.stringify(error, null, 2));
+      }
+    });
+
+/*     if (method === 'DELETE') {
+      this.DB('GET');
+    } */
+  }
+
+
+
+
+
+
+
+
 
 
 
@@ -85,7 +110,7 @@ export class TInventarioComponent implements AfterViewInit {
   /* hacer global con service */
   public sendQueryToServer(query: string, action: string) {
 
-    const apiUrl = GobalVars.host + 'db2.php?q=' + encodeURIComponent(query);
+    const apiUrl = GobalVars.host + 'inventario2.php?q=' + encodeURIComponent(query);
     const requestUrl = GobalVars.proxyUrl + apiUrl; /* CORS */
 
     if (action === 'get') {
@@ -93,11 +118,11 @@ export class TInventarioComponent implements AfterViewInit {
         .subscribe({
           next: (response) => {
             this.dataSource.data = response || [];
-            this.loading();
+            this.loading(false);
           },
           error: (error) => {
             console.error(JSON.stringify(error, null, 2));
-            this.loading();
+            this.loading(false);
           }
         });
     } else if (action === 'delete') {
@@ -181,7 +206,10 @@ export class TInventarioComponent implements AfterViewInit {
   }
 
   public deleteItem(item: Product) {
-    this.sendQueryToServer(`DELETE FROM inventario WHERE id = ${item.id};`, 'delete');
+    this.DB('DELETE', `?id=${item.id}`);
+
+
+    /*     this.sendQueryToServer(`DELETE FROM inventario WHERE id = ${item.id};`, 'delete'); */
   }
 
   private rellenarRecord(item: Product) {
@@ -230,9 +258,9 @@ export class TInventarioComponent implements AfterViewInit {
       WHERE id='${this.Item['id']}';
      `;
       this.sendQueryToServer(Query, 'post');
-       this.sharedService.message('Editado: ' + this.Item['name']);
+      this.sharedService.message('Editado: ' + this.Item['name']);
     } catch (error) {
-       this.sharedService.message('Se ha producido un error.');
+      this.sharedService.message('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
     } finally {
       this.Edit(false);
@@ -251,9 +279,9 @@ export class TInventarioComponent implements AfterViewInit {
            '${this.Item['observacion']}');
      `;
       this.sendQueryToServer(Query, 'post');
-       this.sharedService.message('Duplicado: ' + this.Item['name']);
+      this.sharedService.message('Duplicado: ' + this.Item['name']);
     } catch (error) {
-       this.sharedService.message('Se ha producido un error.');
+      this.sharedService.message('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
     } finally {
       this.Double(false);
