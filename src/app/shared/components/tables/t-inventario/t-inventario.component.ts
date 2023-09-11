@@ -30,7 +30,7 @@ export class TInventarioComponent implements AfterViewInit {
 
   public dataSource = new MatTableDataSource<Product>;
   public isLoading = true;
-  private selectQuery: string = 'SELECT * FROM inventario';
+  /*   private selectQuery: string = 'SELECT * FROM inventario'; */
   public Item: any = {};
   public create: boolean = false;
   public edit: boolean = false;
@@ -63,34 +63,13 @@ export class TInventarioComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.DB('GET');
-  }
 
-  private DB(method: string, params: string = '') {
-    this.sharedService.request(method, params).subscribe({
-      next: (data: Product[]) => {
-        this.dataSource.data = data;
-        this.loading(false);
-      },
-      error: (error) => {
-        console.error(JSON.stringify(error, null, 2));
-      }
+    this.sharedService.data$.subscribe(data => {
+      this.dataSource.data = data;
+      this.loading(false);
     });
-
-/*     if (method === 'DELETE') {
-      this.DB('GET');
-    } */
+    this.sharedService.fetchData('SELECT * FROM inventario', 'GET');
   }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -108,50 +87,50 @@ export class TInventarioComponent implements AfterViewInit {
 
 
   /* hacer global con service */
-  public sendQueryToServer(query: string, action: string) {
+  /*  public sendQueryToServer(query: string, action: string) {
 
-    const apiUrl = GobalVars.host + 'inventario2.php?q=' + encodeURIComponent(query);
-    const requestUrl = GobalVars.proxyUrl + apiUrl; /* CORS */
+     const apiUrl = GobalVars.host + 'inventario2.php?q=' + encodeURIComponent(query);
+     const requestUrl = GobalVars.proxyUrl + apiUrl;
 
-    if (action === 'get') {
-      this.http.get<Product[]>(apiUrl)
-        .subscribe({
-          next: (response) => {
-            this.dataSource.data = response || [];
-            this.loading(false);
-          },
-          error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
-            this.loading(false);
-          }
-        });
-    } else if (action === 'delete') {
-      this.http.delete(apiUrl)
-        .subscribe({
-          next: () => {
-            // Item deleted successfully, refresh the data
-            this.sendQueryToServer(this.selectQuery, 'get');
-          },
-          error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
-            this.sendQueryToServer(this.selectQuery, 'get'); /* por el CORS */
-          }
-        });
-    } else if (action === 'post') {
-      this.http.post(apiUrl, {}) // Use an empty object as the request body
-        .subscribe({
-          next: (response) => {
-            console.log(response);
-            // Duplicated item successfully, refresh the data
-            this.sendQueryToServer(this.selectQuery, 'select');
-          },
-          error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
-            this.sendQueryToServer(this.selectQuery, 'select'); /* por el CORS */
-          }
-        });
-    }
-  }
+     if (action === 'get') {
+       this.http.get<Product[]>(apiUrl)
+         .subscribe({
+           next: (response) => {
+             this.dataSource.data = response || [];
+             this.loading(false);
+           },
+           error: (error) => {
+             console.error(JSON.stringify(error, null, 2));
+             this.loading(false);
+           }
+         });
+     } else if (action === 'delete') {
+       this.http.delete(apiUrl)
+         .subscribe({
+           next: () => {
+
+             this.sendQueryToServer(this.selectQuery, 'get');
+           },
+           error: (error) => {
+             console.error(JSON.stringify(error, null, 2));
+             this.sendQueryToServer(this.selectQuery, 'get');
+           }
+         });
+     } else if (action === 'post') {
+       this.http.post(apiUrl, {})
+         .subscribe({
+           next: (response) => {
+             console.log(response);
+
+             this.sendQueryToServer(this.selectQuery, 'select');
+           },
+           error: (error) => {
+             console.error(JSON.stringify(error, null, 2));
+             this.sendQueryToServer(this.selectQuery, 'select');
+           }
+         });
+     }
+   } */
 
 
 
@@ -206,10 +185,7 @@ export class TInventarioComponent implements AfterViewInit {
   }
 
   public deleteItem(item: Product) {
-    this.DB('DELETE', `?id=${item.id}`);
-
-
-    /*     this.sendQueryToServer(`DELETE FROM inventario WHERE id = ${item.id};`, 'delete'); */
+    this.sharedService.fetchData(`DELETE FROM inventario WHERE id =${item.id}`, 'DELETE');
   }
 
   private rellenarRecord(item: Product) {
@@ -234,7 +210,7 @@ export class TInventarioComponent implements AfterViewInit {
           '${this.Item['ventasRealizadas']}',
            '${this.Item['observacion']}');
      `;
-      this.sendQueryToServer(Query, 'post');
+      this.sharedService.fetchData(Query, 'POST');
       this.sharedService.message('Creado: ' + this.Item['name']);
     } catch (error) {
       this.sharedService.message('Se ha producido un error.');
@@ -257,7 +233,7 @@ export class TInventarioComponent implements AfterViewInit {
       observacion='${this.Item['observacion']}'
       WHERE id='${this.Item['id']}';
      `;
-      this.sendQueryToServer(Query, 'post');
+      this.sharedService.fetchData(Query, 'PUT');
       this.sharedService.message('Editado: ' + this.Item['name']);
     } catch (error) {
       this.sharedService.message('Se ha producido un error.');
@@ -278,7 +254,7 @@ export class TInventarioComponent implements AfterViewInit {
           '${this.Item['ventasRealizadas']}',
            '${this.Item['observacion']}');
      `;
-      this.sendQueryToServer(Query, 'post');
+      this.sharedService.fetchData(Query, 'POST');
       this.sharedService.message('Duplicado: ' + this.Item['name']);
     } catch (error) {
       this.sharedService.message('Se ha producido un error.');
