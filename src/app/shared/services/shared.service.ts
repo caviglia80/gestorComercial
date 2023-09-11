@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedService {
-
+  public static isProduction = environment.production;
+  public static host: string = 'https://francisco-caviglia.com.ar/francisco-caviglia/'; /* localhost/ */
+  public static proxy: string = 'https://cors-anywhere.herokuapp.com/'; // Use the CORS Anywhere proxy
 
   constructor(
     private snackBar: MatSnackBar

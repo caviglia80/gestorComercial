@@ -179,16 +179,6 @@ export class TInventarioComponent implements AfterViewInit {
       this.Double(false);
     }
   }
-
-
-
-
-
-
-
-
-
-
 }
 
 

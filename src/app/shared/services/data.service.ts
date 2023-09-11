@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GobalVars } from '@app/app.component';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { SharedService } from '@services/shared.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +17,9 @@ export class DataService {
   public fetchInventario_safe(method: string = '', body: any = {}, proxy: boolean = false): void {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    if (!environment.production) console.log(body);
-    let url = GobalVars.host + 'inventario.php';
-    if (proxy) url = GobalVars.proxyUrl + url;
+    if (!SharedService.isProduction) console.log(body);
+    let url = SharedService.host + 'inventario.php';
+    if (proxy) url = SharedService.proxy + url;
 
     if (method === 'GET') {
       this.http.get<any[]>(url)
@@ -29,7 +28,7 @@ export class DataService {
             this.dataSubject.next(data);
           },
           error: (error) => {
-            if (!environment.production) console.error(JSON.stringify(error, null, 2));
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
           }
         });
     } else if (method === 'DELETE') {
@@ -39,7 +38,7 @@ export class DataService {
             this.fetchInventario_safe('GET');
           },
           error: (error) => {
-            if (!environment.production) console.error(JSON.stringify(error, null, 2));
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
           }
         });
     } else if (method === 'POST') {
@@ -49,7 +48,7 @@ export class DataService {
             this.fetchInventario_safe('GET');
           },
           error: (error) => {
-            if (!environment.production) console.error(JSON.stringify(error, null, 2));
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
           }
         });
     } else if (method === 'PUT') {
@@ -59,7 +58,7 @@ export class DataService {
             this.fetchInventario_safe('GET');
           },
           error: (error) => {
-            if (!environment.production) console.error(JSON.stringify(error, null, 2));
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
           }
         });
     }
