@@ -14,8 +14,11 @@ export class DataService {
     private http: HttpClient
   ) { }
 
-  /* public fetchInventario( method: string = '',params: string = '', proxy: boolean = false): void {
-    let url = GobalVars.host + 'inventario.php?q=' + encodeURIComponent(params);
+  public fetchInventario_safe(method: string = '', body: any = {}, proxy: boolean = false): void {
+    body = JSON.stringify(body);
+    const headers: {} = { 'Content-Type': 'application/json' }
+    console.log(body);
+    let url = GobalVars.host + 'inventario2.php';
     if (proxy) url = GobalVars.proxyUrl + url;
 
     if (method === 'GET') {
@@ -29,54 +32,7 @@ export class DataService {
           }
         });
     } else if (method === 'DELETE') {
-      this.http.delete<any[]>(url)
-        .subscribe({
-          next: () => {
-            this.fetchInventario('SELECT * FROM inventario', 'GET');
-          },
-          error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
-          }
-        });
-    } else if (method === 'POST') {
-      this.http.post<any[]>(url, {})
-        .subscribe({
-          next: () => {
-            this.fetchInventario('SELECT * FROM inventario', 'GET');
-          },
-          error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
-          }
-        });
-    } else if (method === 'PUT') {
-      this.http.put<any[]>(url, {})
-        .subscribe({
-          next: () => {
-            this.fetchInventario('SELECT * FROM inventario', 'GET');
-          },
-          error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
-          }
-        });
-    }
-  } */
-
-  public fetchInventario_safe(method: string = '', params: string = '', proxy: boolean = false): void {
-    let url = GobalVars.host + 'inventario2.php' + params;
-    if (proxy) url = GobalVars.proxyUrl + url;
-
-    if (method === 'GET') {
-      this.http.get<any[]>(url)
-        .subscribe({
-          next: (data) => {
-            this.dataSubject.next(data);
-          },
-          error: (error) => {
-            console.error(JSON.stringify(error, null, 2));
-          }
-        });
-    } else if (method === 'DELETE') {
-      this.http.delete<any[]>(url)
+      this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
             this.fetchInventario_safe('GET');
@@ -86,7 +42,7 @@ export class DataService {
           }
         });
     } else if (method === 'POST') {
-      this.http.post<any[]>(url, {})
+      this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: () => {
             this.fetchInventario_safe('GET');
@@ -96,7 +52,7 @@ export class DataService {
           }
         });
     } else if (method === 'PUT') {
-      this.http.put<any[]>(url, {})
+      this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
             this.fetchInventario_safe('GET');

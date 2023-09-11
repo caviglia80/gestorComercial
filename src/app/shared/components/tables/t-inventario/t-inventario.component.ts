@@ -138,7 +138,7 @@ export class TInventarioComponent implements AfterViewInit {
   }
 
   public deleteItem(item: Product) {
-    this.dataService.fetchInventario_safe('DELETE', `?id=${item.id}`);
+    this.dataService.fetchInventario_safe('DELETE', { id: item.id });
   }
 
   private rellenarRecord(item: Product) {
@@ -154,17 +154,20 @@ export class TInventarioComponent implements AfterViewInit {
 
   public createRecord() {
     try {
-      const Query = `
-      INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
-      VALUES ('${this.Item['name']}',
-       '${this.Item['buyPrice']}',
-        '${this.Item['sellPrice']}',
-         '${this.Item['stock']}',
-          '${this.Item['ventasRealizadas']}',
-           '${this.Item['observacion']}');
-     `;
-      this.dataService.fetchInventario_safe('POST', Query);
-      this.sharedService.message('Creado: ' + this.Item['name']);
+      const body: any = {
+        name: this.Item.name,
+        buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
+        sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
+        stock: this.Item.stock !== undefined ? this.Item.stock : 0,
+        ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
+        observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
+      };
+
+      console.log(this.Item.buyPrice);
+      console.log(this.Item.observacion);
+
+      this.dataService.fetchInventario_safe('POST', body);
+      this.sharedService.message('Creado: ' + this.Item.name);
     } catch (error) {
       this.sharedService.message('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
@@ -175,18 +178,16 @@ export class TInventarioComponent implements AfterViewInit {
 
   public editRecord() {
     try {
-      const Query = `
-      UPDATE inventario
-      SET
-      name='${this.Item['name']}',
-      buyPrice='${this.Item['buyPrice']}',
-      sellPrice='${this.Item['sellPrice']}',
-      stock='${this.Item['stock']}',
-      ventasRealizadas='${this.Item['ventasRealizadas']}',
-      observacion='${this.Item['observacion']}'
-      WHERE id='${this.Item['id']}';
-     `;
-      this.dataService.fetchInventario_safe('PUT', Query);
+      const body: any = {
+        id: this.Item.id,
+        name: this.Item.name,
+        buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
+        sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
+        stock: this.Item.stock !== undefined ? this.Item.stock : 0,
+        ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
+        observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
+      };
+      this.dataService.fetchInventario_safe('PUT', body);
       this.sharedService.message('Editado: ' + this.Item['name']);
     } catch (error) {
       this.sharedService.message('Se ha producido un error.');
@@ -198,16 +199,15 @@ export class TInventarioComponent implements AfterViewInit {
 
   public doubleRecord() {
     try {
-      const Query = `
-      INSERT INTO inventario (name, buyPrice, sellPrice, stock, ventasRealizadas, observacion)
-      VALUES ('${this.Item['name']}',
-       '${this.Item['buyPrice']}',
-        '${this.Item['sellPrice']}',
-         '${this.Item['stock']}',
-          '${this.Item['ventasRealizadas']}',
-           '${this.Item['observacion']}');
-     `;
-      this.dataService.fetchInventario_safe('POST', Query);
+      const body: any = {
+        name: this.Item.name,
+        buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
+        sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
+        stock: this.Item.stock !== undefined ? this.Item.stock : 0,
+        ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
+        observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
+      };
+      this.dataService.fetchInventario_safe('POST', body);
       this.sharedService.message('Duplicado: ' + this.Item['name']);
     } catch (error) {
       this.sharedService.message('Se ha producido un error.');
