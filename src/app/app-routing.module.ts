@@ -11,7 +11,10 @@ import { EgresosComponent } from '@routes/egresos/egresos.component';
 import { InventoryComponent } from '@routes/inventory/inventory.component';
 import { ReportsComponent } from '@routes/reports/reports.component';
 import { BillingComponent } from '@routes/billing/billing.component';
-import { ConfigurationComponent } from '@routes/configuration/configuration.component';
+import { ProveedoresComponent } from '@routes/proveedores/proveedores.component';
+import { ConfiguracionGeneralComponent } from '@routes/configuracion-general/configuracion-general.component';
+import { UsuariosComponent } from '@routes/usuarios/usuarios.component';
+import { RolesComponent } from '@routes/roles/roles.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,9 +25,12 @@ const routes: Routes = [
   { path: 'ingresos', component: IngresosComponent },
   { path: 'egresos', component: EgresosComponent },
   { path: 'inventory', component: InventoryComponent },
+  { path: 'proveedores', component: ProveedoresComponent },
   { path: 'reports', component: ReportsComponent },
   { path: 'billing', component: BillingComponent },
-  { path: 'configuration', component: ConfigurationComponent }
+  { path: 'configuracionGeneral', component: ConfiguracionGeneralComponent },
+  { path: 'usuarios', component: UsuariosComponent },
+  { path: 'roles', component: RolesComponent }
 ];
 
 @NgModule({

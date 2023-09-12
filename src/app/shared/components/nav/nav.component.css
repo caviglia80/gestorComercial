@@ -64,7 +64,7 @@ mat-icon {
   margin-right: 16px;
   font-size: 18px;
   line-height: 18px;
-/*   fill: currentColor; */
+  /*   fill: currentColor; */
   overflow: hidden;
 }
 
@@ -126,7 +126,7 @@ nav .toggle-button mat-icon {
   padding: .1rem;
 }
 
-nav .toggle-button mat-icon{
+nav .toggle-button mat-icon {
   font-size: 24px;
   width: 25px;
   height: 25px;
@@ -149,5 +149,20 @@ nav .toggle-button .toggleIcon-on-open {
   height: auto;
 }
 
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+  background: transparent;
+}
 
+mat-expansion-panel .subMenu {
+  padding-left: 1px;
+  padding-right: 0;
+}
 
+mat-expansion-panel mat-list-item mat-icon {
+  font-size: 15px;
+}
+
+mat-expansion-panel-header {
+  padding: 0;
+}

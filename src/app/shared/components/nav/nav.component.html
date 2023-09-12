@@ -36,6 +36,11 @@
         <span>Inventario</span>
       </mat-list-item>
 
+      <mat-list-item routerLinkActive="active-link" routerLink="/proveedores" (click)="toggleSidenav()">
+        <mat-icon>assignment_ind</mat-icon>
+        <span>Proveedores</span>
+      </mat-list-item>
+
       <mat-list-item routerLinkActive="active-link" routerLink="/billing" (click)="toggleSidenav()">
         <mat-icon>list_alt</mat-icon>
         <span>Facturación</span>
@@ -46,10 +51,34 @@
         <span>Reportes</span>
       </mat-list-item>
 
-      <mat-list-item routerLinkActive="active-link" routerLink="/configuration" (click)="toggleSidenav()">
-        <mat-icon>settings</mat-icon>
-        <span>Configuración</span>
-      </mat-list-item>
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-list-item>
+              <mat-icon>settings</mat-icon>
+              <span>Configuración</span>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+
+          <mat-list-item class="subMenu" routerLinkActive="active-link" routerLink="/configuracionGeneral"
+            (click)="toggleSidenav()">
+            <mat-icon>build</mat-icon>
+            <span>General</span>
+          </mat-list-item>
+
+          <mat-list-item class="subMenu" routerLinkActive="active-link" routerLink="/usuarios"
+            (click)="toggleSidenav()">
+            <mat-icon>group</mat-icon>
+            <span>Usuarios</span>
+          </mat-list-item>
+
+          <mat-list-item class="subMenu" routerLinkActive="active-link" routerLink="/roles" (click)="toggleSidenav()">
+            <mat-icon>verified_user</mat-icon>
+            <span>Roles</span>
+          </mat-list-item>
+
+        </mat-expansion-panel>
+      </mat-accordion>
 
       <mat-list-item class="exit">
         <mat-icon>power_settings_new</mat-icon>
@@ -60,7 +89,6 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <!--     <div class="backgroundColor"></div> -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

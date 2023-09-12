@@ -26,12 +26,16 @@ import { CurrencyWithSymbolPipe } from '@pipes/currencyWithSymbol/currency-with-
 import { TruncatePipe } from '@pipes/truncate/truncate.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { TInventarioComponent } from '@components/tables/t-inventario/t-inventario.component';
 import { NavComponent } from '@components/nav/nav.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ProveedoresComponent } from './routes/proveedores/proveedores.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { ConfiguracionGeneralComponent } from './routes/configuracion-general/configuracion-general.component';
+import { UsuariosComponent } from './routes/usuarios/usuarios.component';
+import { RolesComponent } from './routes/roles/roles.component';
 
 @NgModule({
   declarations: [
@@ -49,8 +53,11 @@ import { MatInputModule } from '@angular/material/input';
     ConfigurationComponent,
     CurrencyWithSymbolPipe,
     TruncatePipe,
-    TInventarioComponent,
-    NavComponent
+    NavComponent,
+    ProveedoresComponent,
+    ConfiguracionGeneralComponent,
+    UsuariosComponent,
+    RolesComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +76,8 @@ import { MatInputModule } from '@angular/material/input';
     MatSnackBarModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
