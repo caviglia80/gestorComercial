@@ -15,21 +15,6 @@ mat-sidenav-content {
   overflow-y: auto;
 }
 
-/* el fondo se corta a 100vh */
-/* mat-sidenav-content .backgroundColor{
-  position: absolute;
-  z-index: -1;
-  height: 100%;
-  width: 100%;
-  display: block;
-  top: 0;
-  left: 0;
-  background-size: cover;
-  background-position: center center;
-  background-color: var(--content-Background-color);
-  opacity: var(--content-Background-opacity);
-} */
-
 mat-nav-list .background {
   position: absolute;
   z-index: -1 !important;
@@ -166,3 +151,8 @@ mat-expansion-panel mat-list-item mat-icon {
 mat-expansion-panel-header {
   padding: 0;
 }
+
+
+
+
+
