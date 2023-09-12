@@ -31,11 +31,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ProveedoresComponent } from './routes/proveedores/proveedores.component';
+import { ProveedoresComponent } from '@routes/proveedores/proveedores.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { ConfiguracionGeneralComponent } from './routes/configuracion-general/configuracion-general.component';
-import { UsuariosComponent } from './routes/usuarios/usuarios.component';
-import { RolesComponent } from './routes/roles/roles.component';
+import { ConfiguracionGeneralComponent } from '@routes/configuracion-general/configuracion-general.component';
+import { UsuariosComponent } from '@routes/usuarios/usuarios.component';
+import { RolesComponent } from '@routes/roles/roles.component';
 
 @NgModule({
   declarations: [

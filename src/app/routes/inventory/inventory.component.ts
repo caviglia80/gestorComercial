@@ -2,9 +2,9 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { Product } from '@models/product';
-import { SharedService } from '@services/shared.service';
-import { DataService } from '@services/data.service';
+import { Product } from '@models/product/product';
+import { SharedService } from '@services/shared/shared.service';
+import { DataService } from '@services/data/data.service';
 
 @Component({
   selector: 'app-inventory',
