@@ -155,7 +155,7 @@ nav .toggle-button .toggleIcon-on-open {
 }
 
 mat-expansion-panel .subMenu {
-  padding-left: 1px;
+  padding-left: 5px;
   padding-right: 0;
 }
 
