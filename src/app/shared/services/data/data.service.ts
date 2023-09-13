@@ -7,8 +7,8 @@ import { SharedService } from '@services/shared/shared.service';
   providedIn: 'root'
 })
 export class DataService {
-  private dataSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  public data$: Observable<any[]> = this.dataSubject.asObservable();
+  private dataSubjectInventario: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public dataInventario$: Observable<any[]> = this.dataSubjectInventario.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -16,7 +16,6 @@ export class DataService {
   ) { }
 
   public fetchInventario_safe(method: string = '', body: any = {}, proxy: boolean = false): void {
-    const ID: any = body.id;
     const NAME: any = body.name;
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -28,7 +27,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.dataSubject.next(data);
+            this.dataSubjectInventario.next(data);
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -39,7 +38,7 @@ export class DataService {
       this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
-            this.sharedService.message('Registro ' + ID + ' eliminado.');
+            this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
             this.fetchInventario_safe('GET');
           },
           error: (error) => {

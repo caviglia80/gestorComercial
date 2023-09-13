@@ -47,7 +47,7 @@ export class InventoryComponent implements AfterViewInit {
   }
 
   private dataInit() {
-    this.dataService.data$.subscribe({
+    this.dataService.dataInventario$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
         this.loading(false);
@@ -113,7 +113,7 @@ export class InventoryComponent implements AfterViewInit {
   }
 
   public deleteItem(item: Product) {
-    this.dataService.fetchInventario_safe('DELETE', { id: item.id });
+    this.dataService.fetchInventario_safe('DELETE', { id: item.id, name: item.name });
   }
 
   private rellenarRecord(item: Product) {
