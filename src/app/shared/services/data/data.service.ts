@@ -7,15 +7,15 @@ import { SharedService } from '@services/shared/shared.service';
   providedIn: 'root'
 })
 export class DataService {
-  private dataSubject_Inventario: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  public data_Inventario$: Observable<any[]> = this.dataSubject_Inventario.asObservable();
+  private ds_Inventario: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public Inventario$: Observable<any[]> = this.ds_Inventario.asObservable();
 
   constructor(
     private http: HttpClient,
     public sharedService: SharedService
   ) { }
 
-  public fetchInventario_safe(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchInventario(method: string = '', body: any = {}, proxy: boolean = false): void {
     const NAME: any = body.name;
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -27,7 +27,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.dataSubject_Inventario.next(data);
+            this.ds_Inventario.next(data);
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -39,7 +39,7 @@ export class DataService {
         .subscribe({
           next: () => {
             this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
-            this.fetchInventario_safe('GET');
+            this.fetchInventario('GET');
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -51,7 +51,7 @@ export class DataService {
         .subscribe({
           next: () => {
             this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
-            this.fetchInventario_safe('GET');
+            this.fetchInventario('GET');
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -63,7 +63,7 @@ export class DataService {
         .subscribe({
           next: () => {
             this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
-            this.fetchInventario_safe('GET');
+            this.fetchInventario('GET');
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));

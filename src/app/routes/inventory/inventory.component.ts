@@ -47,7 +47,7 @@ export class InventoryComponent implements AfterViewInit {
   }
 
   private dataInit() {
-    this.dataService.data_Inventario$.subscribe({
+    this.dataService.Inventario$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
         this.loading(false);
@@ -56,7 +56,7 @@ export class InventoryComponent implements AfterViewInit {
         this.loading(false);
       }
     });
-    this.dataService.fetchInventario_safe('GET');
+    this.dataService.fetchInventario('GET');
   }
 
   private loading(state: boolean) {
@@ -113,7 +113,7 @@ export class InventoryComponent implements AfterViewInit {
   }
 
   public deleteItem(item: Product) {
-    this.dataService.fetchInventario_safe('DELETE', { id: item.id, name: item.name });
+    this.dataService.fetchInventario('DELETE', { id: item.id, name: item.name });
   }
 
   private rellenarRecord(item: Product) {
@@ -138,7 +138,7 @@ export class InventoryComponent implements AfterViewInit {
         ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
         observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
       };
-      this.dataService.fetchInventario_safe('POST', body);
+      this.dataService.fetchInventario('POST', body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
@@ -157,7 +157,7 @@ export class InventoryComponent implements AfterViewInit {
         ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
         observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
       };
-      this.dataService.fetchInventario_safe('PUT', body);
+      this.dataService.fetchInventario('PUT', body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
@@ -176,7 +176,7 @@ export class InventoryComponent implements AfterViewInit {
         ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
         observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
       };
-      this.dataService.fetchInventario_safe('POST', body);
+      this.dataService.fetchInventario('POST', body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
