@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { Product } from '@models/mainClasses/main-classes';
+import { User } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 
@@ -13,22 +13,20 @@ import { DataService } from '@services/data/data.service';
 })
 
 export class UsuariosComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<Product>;
+  public dataSource = new MatTableDataSource<User>;
   public isLoading = true;
   public Item: any = {};
   public create: boolean = false;
   public edit: boolean = false;
-  public double: boolean = false;
   public detail: boolean = false;
 
   public Columns: { [key: string]: string } = {
     id: 'ID',
-    name: 'Nombre',
-    buyPrice: 'Precio compra',
-    sellPrice: 'Precio venta',
-    stock: 'Stock',
-    ventasRealizadas: 'Ventas realizadas',
-    observacion: 'Observación',
+    username: 'Usuario',
+    fullname: 'Nombre completo',
+    cellphone: 'Teléfono',
+    email: 'Correo',
+    password: 'Contraseña',
     actions: 'Operaciones'
   };
 
@@ -47,7 +45,7 @@ export class UsuariosComponent implements AfterViewInit {
   }
 
   private dataInit() {
-    this.dataService.Inventario$.subscribe({
+    this.dataService.Usuarios$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
         this.loading(false);
@@ -56,7 +54,7 @@ export class UsuariosComponent implements AfterViewInit {
         this.loading(false);
       }
     });
-    this.dataService.fetchInventario('GET');
+    this.dataService.fetchUsuarios('GET');
   }
 
   private loading(state: boolean) {
@@ -84,61 +82,46 @@ export class UsuariosComponent implements AfterViewInit {
     this.edit = visible;
   }
 
-  public Double(visible: boolean) {
-    this.Item = {};
-    this.double = visible;
-  }
-
   public Create(visible: boolean) {
     this.Item = {};
     this.create = visible;
   }
 
-  public viewItem(item: Product) {
+  public viewItem(item: User) {
     this.Detail(true);
     this.rellenarRecord(item);
   }
 
-  public editItem(item: Product) {
+  public editItem(item: User) {
     this.Edit(true);
     this.rellenarRecord(item);
   }
 
-  public duplicateItem(item: Product) {
-    this.Double(true);
-    const originalName: string = item.name;
-    item.name = 'Duplicado - ' + item.name;
-    this.rellenarRecord(item);
-    item.name = originalName;
+  public deleteItem(item: User) {
+    this.dataService.fetchUsuarios('DELETE', { id: item.id, username: item.username });
   }
 
-  public deleteItem(item: Product) {
-    this.dataService.fetchInventario('DELETE', { id: item.id, name: item.name });
-  }
-
-  private rellenarRecord(item: Product) {
+  private rellenarRecord(item: User) {
     this.Item = {};
     this.Item.id = item.id;
-    this.Item.name = item.name;
-    this.Item.buyPrice = item.buyPrice;
-    this.Item.sellPrice = item.sellPrice;
-    this.Item.stock = item.stock;
-    this.Item.ventasRealizadas = item.ventasRealizadas;
-    this.Item.observacion = item.observacion;
+    this.Item.username = item.username;
+    this.Item.fullname = item.fullname;
+    this.Item.cellphone = item.cellphone;
+    this.Item.email = item.email;
+    this.Item.password = item.password;
   }
 
   public createRecord() {
     try {
       const body: any = {
         id: this.Item.id,
-        name: this.Item.name != 0 ? this.Item.name : " ",
-        buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
-        sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
-        stock: this.Item.stock !== undefined ? this.Item.stock : 0,
-        ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
-        observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
+        username: this.Item.username != 0 ? this.Item.username : " ",
+        fullname: this.Item.fullname != 0 ? this.Item.fullname : " ",
+        cellphone: this.Item.cellphone != 0 ? this.Item.cellphone : " ",
+        email: this.Item.email != 0 ? this.Item.email : " ",
+        password: this.Item.password != 0 ? this.Item.password : " "
       };
-      this.dataService.fetchInventario('POST', body);
+      this.dataService.fetchUsuarios('POST', body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
@@ -150,37 +133,17 @@ export class UsuariosComponent implements AfterViewInit {
     try {
       const body: any = {
         id: this.Item.id,
-        name: this.Item.name != 0 ? this.Item.name : " ",
-        buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
-        sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
-        stock: this.Item.stock !== undefined ? this.Item.stock : 0,
-        ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
-        observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
+        username: this.Item.username != 0 ? this.Item.username : " ",
+        fullname: this.Item.fullname != 0 ? this.Item.fullname : " ",
+        cellphone: this.Item.cellphone != 0 ? this.Item.cellphone : " ",
+        email: this.Item.email != 0 ? this.Item.email : " ",
+        password: this.Item.password != 0 ? this.Item.password : " "
       };
-      this.dataService.fetchInventario('PUT', body);
+      this.dataService.fetchUsuarios('PUT', body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
       this.Edit(false);
-    }
-  }
-
-  public doubleRecord() {
-    try {
-      const body: any = {
-        id: this.Item.id,
-        name: this.Item.name != 0 ? this.Item.name : " ",
-        buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
-        sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
-        stock: this.Item.stock !== undefined ? this.Item.stock : 0,
-        ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
-        observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
-      };
-      this.dataService.fetchInventario('POST', body);
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
-      this.Double(false);
     }
   }
 }

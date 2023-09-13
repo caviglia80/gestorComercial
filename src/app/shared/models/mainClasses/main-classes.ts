@@ -28,23 +28,23 @@ export class Product {
 
 export class User {
   id: number;
-  name: string;
-  surname: string;
+  username: string;
+  fullname: string;
   cellphone: string;
   email: string;
   password: string
 
   constructor(
     id: number = 0,
-    name: string = '',
-    surname: string = '',
+    username: string = '',
+    fullname: string = '',
     cellphone: string = '',
     email: string = '',
     password: string = ''
   ) {
     this.id = id;
-    this.name = name;
-    this.surname = surname;
+    this.username = username;
+    this.fullname = fullname;
     this.cellphone = cellphone;
     this.email = email;
     this.password = password;
