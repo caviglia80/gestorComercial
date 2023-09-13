@@ -34,8 +34,8 @@ export class InventoryComponent implements AfterViewInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    public sharedService: SharedService,
-    public dataService: DataService
+    public dataService: DataService,
+    public sharedService: SharedService
   ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -43,10 +43,18 @@ export class InventoryComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataInit();
+  }
 
-    this.dataService.data$.subscribe(data => {
-      this.dataSource.data = data;
-      this.loading(false);
+  private dataInit() {
+    this.dataService.data$.subscribe({
+      next: (data) => {
+        this.dataSource.data = data;
+        this.loading(false);
+      },
+      error: () => {
+        this.loading(false);
+      }
     });
     this.dataService.fetchInventario_safe('GET');
   }
@@ -122,6 +130,7 @@ export class InventoryComponent implements AfterViewInit {
   public createRecord() {
     try {
       const body: any = {
+        id: this.Item.id,
         name: this.Item.name != 0 ? this.Item.name : " ",
         buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
         sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
@@ -130,9 +139,7 @@ export class InventoryComponent implements AfterViewInit {
         observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
       };
       this.dataService.fetchInventario_safe('POST', body);
-      this.sharedService.message('Creado: ' + this.Item.name);
     } catch (error) {
-      this.sharedService.message('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
@@ -151,9 +158,7 @@ export class InventoryComponent implements AfterViewInit {
         observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
       };
       this.dataService.fetchInventario_safe('PUT', body);
-      this.sharedService.message('Editado: ' + this.Item['name']);
     } catch (error) {
-      this.sharedService.message('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
     } finally {
       this.Edit(false);
@@ -163,6 +168,7 @@ export class InventoryComponent implements AfterViewInit {
   public doubleRecord() {
     try {
       const body: any = {
+        id: this.Item.id,
         name: this.Item.name != 0 ? this.Item.name : " ",
         buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
         sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
@@ -171,9 +177,7 @@ export class InventoryComponent implements AfterViewInit {
         observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
       };
       this.dataService.fetchInventario_safe('POST', body);
-      this.sharedService.message('Duplicado: ' + this.Item['name']);
     } catch (error) {
-      this.sharedService.message('Se ha producido un error.');
       console.error('Se ha producido un error:', error);
     } finally {
       this.Double(false);

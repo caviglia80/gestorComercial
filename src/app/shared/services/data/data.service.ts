@@ -11,10 +11,13 @@ export class DataService {
   public data$: Observable<any[]> = this.dataSubject.asObservable();
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    public sharedService: SharedService
   ) { }
 
   public fetchInventario_safe(method: string = '', body: any = {}, proxy: boolean = false): void {
+    const ID: any = body.id;
+    const NAME: any = body.name;
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     if (!SharedService.isProduction) console.log(body);
@@ -29,36 +32,43 @@ export class DataService {
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar obtener registros.');
           }
         });
     } else if (method === 'DELETE') {
       this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
+            this.sharedService.message('Registro ' + ID + ' eliminado.');
             this.fetchInventario_safe('GET');
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar borrar el registro.');
           }
         });
     } else if (method === 'POST') {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: () => {
+            this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
             this.fetchInventario_safe('GET');
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar guardar el registro.');
           }
         });
     } else if (method === 'PUT') {
       this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
+            this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
             this.fetchInventario_safe('GET');
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar editar el registro.');
           }
         });
     }
