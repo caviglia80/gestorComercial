@@ -60,8 +60,13 @@ h4 {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .spin {
@@ -196,13 +201,15 @@ h4 {
 }
 
 .input-group input:focus {
-  outline: none !important;
-  box-shadow: none !important;
+  border: none;
+  outline: none;
+  box-shadow: none;
   background-image: linear-gradient(to top, var(--color-1) 2px, rgba(156, 39, 176, 0) 2px);
 }
 
-.input-group input:focus + button {
+.input-group input:focus+button {
   background-image: linear-gradient(to top, var(--color-1) 2px, rgba(156, 39, 176, 0) 2px);
+  border: none;
 }
 
 .noVisible {
