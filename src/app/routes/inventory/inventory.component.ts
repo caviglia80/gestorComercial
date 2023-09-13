@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { Product } from '@models/product/product';
+import { Product } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 
