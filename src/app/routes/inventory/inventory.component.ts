@@ -47,7 +47,7 @@ export class InventoryComponent implements AfterViewInit {
   }
 
   private dataInit() {
-    this.dataService.dataInventario$.subscribe({
+    this.dataService.data_Inventario$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
         this.loading(false);

@@ -7,8 +7,8 @@ import { SharedService } from '@services/shared/shared.service';
   providedIn: 'root'
 })
 export class DataService {
-  private dataSubjectInventario: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  public dataInventario$: Observable<any[]> = this.dataSubjectInventario.asObservable();
+  private dataSubject_Inventario: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public data_Inventario$: Observable<any[]> = this.dataSubject_Inventario.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -27,7 +27,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.dataSubjectInventario.next(data);
+            this.dataSubject_Inventario.next(data);
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
