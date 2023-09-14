@@ -108,7 +108,7 @@ export class UsuariosComponent implements AfterViewInit {
     this.Item.fullname = item.fullname;
     this.Item.cellphone = item.cellphone;
     this.Item.email = item.email;
-    this.Item.password = item.password;
+    this.Item.password = '';
   }
 
   public createRecord() {
