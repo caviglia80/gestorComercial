@@ -50,3 +50,25 @@ export class User {
     this.password = password;
   }
 }
+
+export class Role {
+  id: number;
+  name: string;
+  menus: string;
+  permits: string;
+  observation: string;
+
+  constructor(
+    id: number = 0,
+    name: string = '',
+    menus: string = '',
+    permits: string = '',
+    observation: string = ''
+  ) {
+    this.id = id;
+    this.name = name;
+    this.menus = menus;
+    this.permits = permits;
+    this.observation = observation;
+  }
+}
