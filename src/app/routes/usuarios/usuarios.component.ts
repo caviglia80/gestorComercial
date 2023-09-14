@@ -21,7 +21,7 @@ export class UsuariosComponent implements AfterViewInit {
   public detail: boolean = false;
 
   public Columns: { [key: string]: string } = {
-    id: 'ID',
+    /*     id: 'ID', */
     username: 'Usuario',
     fullname: 'Nombre completo',
     cellphone: 'Teléfono',

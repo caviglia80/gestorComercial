@@ -135,10 +135,10 @@
   <div class="table-container mt-3">
     <div class="table-wrapper">
       <table>
-        <tr>
+        <!--         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['id'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['id'])">{{ Item['id'] }}</td>
-        </tr>
+        </tr> -->
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['username'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['username'])">{{ Item['username'] }}</td>
@@ -158,7 +158,7 @@
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['password'] }}:</td>
-          <td style="width: 100%;">{{ '*'.repeat(8) }}
+          <td style="width: 100%;">{{ '*'.repeat(12) }}
             <!-- <td style="width: 100%;" (dblclick)="sharedService.copy(Item['password'])">{{ Item['password'] }} -->
           </td>
         </tr>
