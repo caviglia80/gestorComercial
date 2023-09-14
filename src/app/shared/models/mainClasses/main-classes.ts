@@ -56,19 +56,19 @@ export class Role {
   name: string;
   menus: string;
   permits: string;
-  observation: string;
+  description: string;
 
   constructor(
     id: number = 0,
     name: string = '',
     menus: string = '',
     permits: string = '',
-    observation: string = ''
+    description: string = ''
   ) {
     this.id = id;
     this.name = name;
     this.menus = menus;
     this.permits = permits;
-    this.observation = observation;
+    this.description = description;
   }
 }

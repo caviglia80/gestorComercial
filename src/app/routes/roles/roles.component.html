@@ -63,12 +63,12 @@
             (dblclick)="sharedService.copy(element.permits)"> {{element.permits | truncate:15 }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="observation">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by observation">
-            {{ Columns['observation'] }}
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
+            {{ Columns['description'] }}
           </th>
-          <td [matTooltip]="element.observation" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.observation)"> {{element.observation | truncate:15 }} </td>
+          <td [matTooltip]="element.description" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.description)"> {{element.description | truncate:15 }} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -145,8 +145,8 @@
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['permits'])">{{ Item['permits'] }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['observation'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['observation'])">{{ Item['observation'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['description'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['description'])">{{ Item['description'] }}</td>
         </tr>
       </table>
     </div>
@@ -188,9 +188,9 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['observation'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['observation'] }}" [(ngModel)]="Item.observation" required>
+    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description" required>
   </mat-form-field>
 
   <!--   <mat-form-field class="full-width">
@@ -237,9 +237,9 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['observation'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['observation'] }}" [(ngModel)]="Item.observation" required>
+    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description" required>
   </mat-form-field>
 
 <!--   <mat-form-field class="full-width">
@@ -278,8 +278,8 @@
     <input matInput placeholder="{{ Columns['permits'] }}" [(ngModel)]="Item.permits" type="number">
   </mat-form-field>
  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['observation'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['observation'] }}" [(ngModel)]="Item.observation" type="number">
+    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }}</p>
+    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description" type="number">
   </mat-form-field>
  <!--   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['ventasRealizadas'] | lowercase }}</p>

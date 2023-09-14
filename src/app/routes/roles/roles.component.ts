@@ -26,7 +26,7 @@ export class RolesComponent implements AfterViewInit {
     name: 'Nombre',
     menus: 'Menús',
     permits: 'Permisos',
-    observation: 'Observacion',
+    description: 'Descripción',
     actions: 'Operaciones'
   };
 
@@ -120,7 +120,7 @@ export class RolesComponent implements AfterViewInit {
     this.Item.name = item.name;
     this.Item.menus = item.menus;
     this.Item.permits = item.permits;
-    this.Item.observation = item.observation;
+    this.Item.description = item.description;
   }
 
   public createRecord() {
@@ -130,7 +130,7 @@ export class RolesComponent implements AfterViewInit {
         name: this.Item.name != 0 ? this.Item.name : " ",
         menus: this.Item.menus != 0 ? this.Item.menus : " ",
         permits: this.Item.permits != 0 ? this.Item.permits : " ",
-        observation: this.Item.observation != 0 ? this.Item.observation : " "
+        description: this.Item.description != 0 ? this.Item.description : " "
       };
       this.dataService.fetchRoles('POST', body);
     } catch (error) {
@@ -147,7 +147,7 @@ export class RolesComponent implements AfterViewInit {
         name: this.Item.name != 0 ? this.Item.name : " ",
         menus: this.Item.menus != 0 ? this.Item.menus : " ",
         permits: this.Item.permits != 0 ? this.Item.permits : " ",
-        observation: this.Item.observation != 0 ? this.Item.observation : " "
+        description: this.Item.description != 0 ? this.Item.description : " "
       };
       this.dataService.fetchRoles('PUT', body);
     } catch (error) {
@@ -164,7 +164,7 @@ export class RolesComponent implements AfterViewInit {
         name: this.Item.name != 0 ? this.Item.name : " ",
         menus: this.Item.menus != 0 ? this.Item.menus : " ",
         permits: this.Item.permits != 0 ? this.Item.permits : " ",
-        observation: this.Item.observation != 0 ? this.Item.observation : " "
+        description: this.Item.description != 0 ? this.Item.description : " "
       };
       this.dataService.fetchRoles('POST', body);
     } catch (error) {
