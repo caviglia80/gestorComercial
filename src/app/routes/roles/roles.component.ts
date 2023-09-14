@@ -22,6 +22,15 @@ export class RolesComponent implements AfterViewInit {
   public detail: boolean = false;
 
   public Columns: { [key: string]: string } = {
+     id: 'ID',
+    name: 'Nombre',
+    menus: 'Menús',
+    permits: 'Permisos',
+    description: 'Descripción',
+    actions: 'Operaciones'
+  };
+
+/*   public ColumnsAlias: { [key: string]: string } = {
     id: 'ID',
     name: 'Nombre',
     menus: 'Menús',
@@ -29,6 +38,15 @@ export class RolesComponent implements AfterViewInit {
     description: 'Descripción',
     actions: 'Operaciones'
   };
+
+  public displayedColumns: string[] = [
+    'id',
+    'name',
+    'menus',
+    'permits',
+    'description',
+    'actions'
+  ]; */
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -103,6 +121,9 @@ export class RolesComponent implements AfterViewInit {
   }
 
   public duplicateItem(item: Role) {
+
+    console.log(item);
+
     this.Double(true);
     const originalName: string = item.name;
     item.name = 'Duplicado - ' + item.name;

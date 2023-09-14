@@ -75,18 +75,23 @@
           <th mat-header-cell *matHeaderCellDef> Operaciones </th>
           <td mat-cell *matCellDef="let element" class="actions-cell">
             <div class="actions-container">
+
               <button mat-icon-button [matTooltip]="'Ver'" (click)="viewItem(element)">
                 <mat-icon>visibility</mat-icon>
               </button>
+
               <button mat-icon-button [matTooltip]="'Editar'" (click)="editItem(element)">
                 <mat-icon>edit</mat-icon>
               </button>
+
               <button mat-icon-button [matTooltip]="'Duplicar'" (click)="duplicateItem(element)">
                 <mat-icon>file_copy</mat-icon>
               </button>
+
               <button mat-icon-button [matTooltip]="'Borrar'" (click)="deleteItem(element)">
                 <mat-icon>delete</mat-icon>
               </button>
+
             </div>
           </td>
         </ng-container>
@@ -136,14 +141,17 @@
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['name'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['name'])">{{ Item['name'] }}</td>
         </tr>
+
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['menus'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['menus'])">{{ Item['menus'] }}</td>
         </tr>
+
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['permits'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['permits'])">{{ Item['permits'] }}</td>
         </tr>
+
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['description'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['description'])">{{ Item['description'] }}</td>
@@ -167,6 +175,7 @@
       </div>
     </div>
   </div>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['name'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
@@ -179,8 +188,6 @@
     <input matInput placeholder="{{ Columns['menus'] }}" [(ngModel)]="Item.menus" required>
   </mat-form-field>
 
-
-
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['permits'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
@@ -188,16 +195,11 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }} <span
+        class="red-asterisk">*</span>
     </p>
     <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description" required>
   </mat-form-field>
-
-  <!--   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['password'] | lowercase }} <span class="red-asterisk">*</span>
-    </p>
-    <input matInput placeholder="{{ Columns['password'] }}" [(ngModel)]="Item.password" required>
-  </mat-form-field> -->
 
   <button mat-button (click)="createRecord()" [disabled]="!Item.name">Guardar</button>
 </div>
@@ -228,8 +230,6 @@
     <input matInput placeholder="{{ Columns['menus'] }}" [(ngModel)]="Item.menus" required>
   </mat-form-field>
 
-
-
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['permits'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
@@ -237,18 +237,13 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }} <span
+        class="red-asterisk">*</span>
     </p>
     <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description" required>
   </mat-form-field>
 
-<!--   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['password'] | lowercase }} <span class="red-asterisk">*</span>
-    </p>
-    <input matInput placeholder="{{ Columns['password'] }}" [(ngModel)]="Item.password" required>
-  </mat-form-field> -->
-
-    <button mat-button (click)="editRecord()" [disabled]="!Item.name">Guardar</button>
+  <button mat-button (click)="editRecord()" [disabled]="!Item.name">Guardar</button>
 </div>
 
 <!-- Vista de duplicado de registros -->
@@ -265,29 +260,26 @@
       </div>
     </div>
   </div>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['name'] | lowercase }} <span class="red-asterisk">*</span></p>
     <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['menus'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['menus'] }}" [(ngModel)]="Item.menus" type="number">
+    <input matInput placeholder="{{ Columns['menus'] }}" [(ngModel)]="Item.menus">
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['permits'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['permits'] }}" [(ngModel)]="Item.permits" type="number">
+    <input matInput placeholder="{{ Columns['permits'] }}" [(ngModel)]="Item.permits">
   </mat-form-field>
- <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description" type="number">
-  </mat-form-field>
- <!--   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['ventasRealizadas'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="Item.ventasRealizadas" type="number">
-  </mat-form-field>
+
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['observacion'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="Item.observacion">
-  </mat-form-field> -->
+    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }}</p>
+    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description">
+  </mat-form-field>
+
   <button mat-button (click)="doubleRecord()" [disabled]="!Item.name">Guardar</button>
 </div>

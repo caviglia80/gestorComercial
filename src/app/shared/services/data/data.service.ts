@@ -149,6 +149,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
+            console.log(data);
             this.ds_Roles.next(data);
           },
           error: (error) => {
