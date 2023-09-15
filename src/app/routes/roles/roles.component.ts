@@ -36,9 +36,6 @@ export class RolesComponent implements AfterViewInit {
     public sharedService: SharedService
   ) { }
 
-
-
-
   public menusHabilitacion: { id: string, name: string, habilitado: boolean }[] = [
     { id: 'xxx', name: 'Panel', habilitado: true },
     { id: 'xxx', name: 'Ingresos', habilitado: true },
@@ -57,24 +54,6 @@ export class RolesComponent implements AfterViewInit {
       this.menusHabilitacion[i].habilitado = true;
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
