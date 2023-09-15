@@ -42,7 +42,7 @@
           </th>
           <td [matTooltip]="element.name" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.name)">
-            {{element.name | truncate:15 }}
+            {{element.name | truncate:30 }}
           </td>
         </ng-container>
 
@@ -68,7 +68,7 @@
             {{ Columns['description'] }}
           </th>
           <td [matTooltip]="element.description" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.description)"> {{element.description | truncate:15 }} </td>
+            (dblclick)="sharedService.copy(element.description)"> {{element.description | truncate:60 }} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -141,22 +141,32 @@
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['name'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['name'])">{{ Item['name'] }}</td>
         </tr>
-
-        <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['menus'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['menus'])">{{ Item['menus'] }}</td>
-        </tr>
-
-        <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['permits'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['permits'])">{{ Item['permits'] }}</td>
-        </tr>
-
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['description'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['description'])">{{ Item['description'] }}</td>
         </tr>
       </table>
+
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th>Menú</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let menu of menusHabilitacion; let i = index">
+            <td>{{ menu.name }}</td>
+            <td>
+              <mat-slide-toggle disabled [(ngModel)]="menu.habilitado">
+                <span *ngIf="menu.habilitado">Habilitado</span>
+                <span *ngIf="!menu.habilitado">Deshabilitado</span>
+              </mat-slide-toggle>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
     </div>
   </div>
 </div>
@@ -182,23 +192,25 @@
     <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['menus'] | lowercase }} <span class="red-asterisk">*</span>
-    </p>
-    <input matInput placeholder="{{ Columns['menus'] }}" [(ngModel)]="Item.menus" required>
-  </mat-form-field>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Menú</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let menu of menusHabilitacion; let i = index">
+        <td>{{ menu.name }}</td>
+        <td> <mat-slide-toggle [(ngModel)]="menu.habilitado"></mat-slide-toggle> </td>
+      </tr>
+    </tbody>
+  </table>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['permits'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }}
     </p>
-    <input matInput placeholder="{{ Columns['permits'] }}" [(ngModel)]="Item.permits" required>
-  </mat-form-field>
-
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }} <span
-        class="red-asterisk">*</span>
-    </p>
-    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description" required>
+    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description">
   </mat-form-field>
 
   <button mat-button (click)="createRecord()" [disabled]="!Item.name">Guardar</button>
@@ -218,29 +230,32 @@
       </div>
     </div>
   </div>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['name'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
     <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['menus'] | lowercase }} <span class="red-asterisk">*</span>
-    </p>
-    <input matInput placeholder="{{ Columns['menus'] }}" [(ngModel)]="Item.menus" required>
-  </mat-form-field>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Menú</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let menu of menusHabilitacion; let i = index">
+        <td>{{ menu.name }}</td>
+        <td> <mat-slide-toggle [(ngModel)]="menu.habilitado"></mat-slide-toggle> </td>
+      </tr>
+    </tbody>
+  </table>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['permits'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }}
     </p>
-    <input matInput placeholder="{{ Columns['permits'] }}" [(ngModel)]="Item.permits" required>
-  </mat-form-field>
-
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }} <span
-        class="red-asterisk">*</span>
-    </p>
-    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description" required>
+    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description">
   </mat-form-field>
 
   <button mat-button (click)="editRecord()" [disabled]="!Item.name">Guardar</button>
@@ -262,22 +277,29 @@
   </div>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['name'] | lowercase }} <span class="red-asterisk">*</span></p>
+    <p class="form-field-description">Ingrese {{ Columns['name'] | lowercase }} <span class="red-asterisk">*</span>
+    </p>
     <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['menus'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['menus'] }}" [(ngModel)]="Item.menus">
-  </mat-form-field>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Menú</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let menu of menusHabilitacion; let i = index">
+        <td>{{ menu.name }}</td>
+        <td> <mat-slide-toggle [(ngModel)]="menu.habilitado"></mat-slide-toggle> </td>
+      </tr>
+    </tbody>
+  </table>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['permits'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['permits'] }}" [(ngModel)]="Item.permits">
-  </mat-form-field>
-
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }}</p>
+    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }}
+    </p>
     <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description">
   </mat-form-field>
 

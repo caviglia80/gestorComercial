@@ -36,6 +36,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { ConfiguracionGeneralComponent } from '@routes/configuracion-general/configuracion-general.component';
 import { UsuariosComponent } from '@routes/usuarios/usuarios.component';
 import { RolesComponent } from '@routes/roles/roles.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { RolesComponent } from '@routes/roles/roles.component';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
