@@ -232,7 +232,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['username'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['username'] }}" [(ngModel)]="Item.username" required>
+    <input matInput placeholder="{{ Columns['username'] }}" [(ngModel)]="Item.username" required disabled>
   </mat-form-field>
 
   <mat-form-field class="full-width">
