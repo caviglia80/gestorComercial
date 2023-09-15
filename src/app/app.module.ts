@@ -13,7 +13,6 @@ import { EgresosComponent } from '@routes/egresos/egresos.component';
 import { InventoryComponent } from '@routes/inventory/inventory.component';
 import { ReportsComponent } from '@routes/reports/reports.component';
 import { BillingComponent } from '@routes/billing/billing.component';
-import { ConfigurationComponent } from '@routes/configuration/configuration.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -51,7 +50,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     InventoryComponent,
     ReportsComponent,
     BillingComponent,
-    ConfigurationComponent,
     CurrencyWithSymbolPipe,
     TruncatePipe,
     NavComponent,
