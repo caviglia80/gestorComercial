@@ -19,6 +19,12 @@ export class DataService {
   private ds_Proveedores: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Proveedores$: Observable<any[]> = this.ds_Proveedores.asObservable();
 
+  private ds_Ingresos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public Ingresos$: Observable<any[]> = this.ds_Ingresos.asObservable();
+
+  private ds_Egresos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public Egresos$: Observable<any[]> = this.ds_Egresos.asObservable();
+
 
   constructor(
     private http: HttpClient,
@@ -257,5 +263,142 @@ export class DataService {
         });
     }
   }
+
+  public fetchIngresos(method: string = '', body: any = {}, proxy: boolean = false): void {
+    const NAME: any = body.name;
+    body = JSON.stringify(body);
+    const headers: {} = { 'Content-Type': 'application/json' }
+    if (!SharedService.isProduction) console.log(body);
+    let url = SharedService.host + 'ingresos.php';
+    if (proxy) url = SharedService.proxy + url;
+
+    if (method === 'GET') {
+      this.http.get<any[]>(url)
+        .subscribe({
+          next: (data) => {
+            this.ds_Ingresos.next(data);
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar obtener registros.');
+          }
+        });
+    } else if (method === 'DELETE') {
+      this.http.delete<any[]>(url, { body: body })
+        .subscribe({
+          next: () => {
+            this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
+            this.fetchIngresos('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar borrar el registro.');
+          }
+        });
+    } else if (method === 'POST') {
+      this.http.post<any[]>(url, body, headers)
+        .subscribe({
+          next: () => {
+            this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
+            this.fetchIngresos('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar guardar el registro.');
+          }
+        });
+    } else if (method === 'PUT') {
+      this.http.put<any[]>(url, body, headers)
+        .subscribe({
+          next: () => {
+            this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
+            this.fetchIngresos('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar editar el registro.');
+          }
+        });
+    }
+  }
+
+  public fetchEgresos(method: string = '', body: any = {}, proxy: boolean = false): void {
+    const NAME: any = body.name;
+    body = JSON.stringify(body);
+    const headers: {} = { 'Content-Type': 'application/json' }
+    if (!SharedService.isProduction) console.log(body);
+    let url = SharedService.host + 'egresos.php';
+    if (proxy) url = SharedService.proxy + url;
+
+    if (method === 'GET') {
+      this.http.get<any[]>(url)
+        .subscribe({
+          next: (data) => {
+            this.ds_Egresos.next(data);
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar obtener registros.');
+          }
+        });
+    } else if (method === 'DELETE') {
+      this.http.delete<any[]>(url, { body: body })
+        .subscribe({
+          next: () => {
+            this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
+            this.fetchEgresos('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar borrar el registro.');
+          }
+        });
+    } else if (method === 'POST') {
+      this.http.post<any[]>(url, body, headers)
+        .subscribe({
+          next: () => {
+            this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
+            this.fetchEgresos('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar guardar el registro.');
+          }
+        });
+    } else if (method === 'PUT') {
+      this.http.put<any[]>(url, body, headers)
+        .subscribe({
+          next: () => {
+            this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
+            this.fetchEgresos('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar editar el registro.');
+          }
+        });
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

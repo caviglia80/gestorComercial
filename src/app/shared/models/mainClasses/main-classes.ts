@@ -112,3 +112,68 @@ export class supplier {
     this.observation = observation;
   }
 }
+
+export class moneyIncome {
+  id: number;
+  date: string;
+  currency: string;
+  amount: number;
+  paymentMethod: string;
+  category: string;
+  invoice: string;
+  description: string;
+
+  constructor(
+    id: number = 0,
+    date: string = '',
+    currency: string = '',
+    amount: number = 0,
+    paymentMethod: string = '',
+    category: string = '',
+    invoice: string = '',
+    description: string = ''
+  ) {
+    this.id = id;
+    this.date = date;
+    this.currency = currency;
+    this.amount = amount;
+    this.paymentMethod = paymentMethod;
+    this.category = category;
+    this.invoice = invoice;
+    this.description = description;
+  }
+}
+
+export class moneyOutlays {
+  id: number;
+  date: string;
+  currency: string;
+  amount: number;
+  expenseMethod: string;
+  category: string;
+  invoice: string;
+  beneficiary_provider: string;
+  description: string;
+
+  constructor(
+    id: number = 0,
+    date: string = '',
+    currency: string = '',
+    amount: number = 0,
+    expenseMethod: string = '',
+    category: string = '',
+    invoice: string = '',
+    beneficiary_provider: string = '',
+    description: string = ''
+  ) {
+    this.id = id;
+    this.date = date;
+    this.currency = currency;
+    this.amount = amount;
+    this.expenseMethod = expenseMethod;
+    this.category = category;
+    this.invoice = invoice;
+    this.beneficiary_provider = beneficiary_provider;
+    this.description = description;
+  }
+}
