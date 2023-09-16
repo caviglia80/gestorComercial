@@ -33,7 +33,7 @@ export class User {
   position: string;
   phone: string;
   email: string;
-  password: string
+  password: string;
 
   constructor(
     id: number = 0,
@@ -73,5 +73,42 @@ export class Role {
     this.menus = menus;
     this.permits = permits;
     this.description = description;
+  }
+}
+
+export class supplier {
+  id: number;
+  company: string;
+  contactFullname: string;
+  phone: string;
+  email: string;
+  address: string;
+  website: string;
+  accountNumber: string;
+  supply: string;
+  observation: string;
+
+  constructor(
+    id: number = 0,
+    company: string = '',
+    contactFullname: string = '',
+    phone: string = '',
+    email: string = '',
+    address: string = '',
+    website: string = '',
+    accountNumber: string = '',
+    supply: string = '',
+    observation: string = ''
+  ) {
+    this.id = id;
+    this.company = company;
+    this.contactFullname = contactFullname;
+    this.phone = phone;
+    this.email = email;
+    this.address = address;
+    this.website = website;
+    this.accountNumber = accountNumber;
+    this.supply = supply;
+    this.observation = observation;
   }
 }
