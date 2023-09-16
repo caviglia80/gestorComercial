@@ -64,12 +64,12 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="cellphone">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cellphone">
-            {{ Columns['cellphone'] }}
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by phone">
+            {{ Columns['phone'] }}
           </th>
-          <td [matTooltip]="element.cellphone" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.cellphone)"> {{element.cellphone | truncate:15 }} </td>
+          <td [matTooltip]="element.phone" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.phone)"> {{element.phone | truncate:15 }} </td>
         </ng-container>
 
         <ng-container matColumnDef="email">
@@ -164,8 +164,8 @@
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['cellphone'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['cellphone'])">{{ Item['cellphone'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['phone'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['phone'])">{{ Item['phone'] }}</td>
         </tr>
 
         <tr>
@@ -225,9 +225,9 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['cellphone'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['phone'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['cellphone'] }}" [(ngModel)]="Item.cellphone" required>
+    <input matInput placeholder="{{ Columns['phone'] }}" [(ngModel)]="Item.phone" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -237,7 +237,7 @@
   </mat-form-field>
 
   <button mat-button (click)="createRecord()"
-    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.cellphone || !Item.password">Guardar</button>
+    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -279,9 +279,9 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['cellphone'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['phone'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['cellphone'] }}" [(ngModel)]="Item.cellphone" required>
+    <input matInput placeholder="{{ Columns['phone'] }}" [(ngModel)]="Item.phone" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -291,5 +291,5 @@
   </mat-form-field>
 
   <button mat-button (click)="editRecord()"
-    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.cellphone || !Item.password">Guardar</button>
+    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password">Guardar</button>
 </div>
