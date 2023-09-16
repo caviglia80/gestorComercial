@@ -30,6 +30,7 @@ export class User {
   id: number;
   username: string;
   fullname: string;
+  position: string;
   cellphone: string;
   email: string;
   password: string
@@ -38,6 +39,7 @@ export class User {
     id: number = 0,
     username: string = '',
     fullname: string = '',
+    position: string = '',
     cellphone: string = '',
     email: string = '',
     password: string = ''
@@ -45,6 +47,7 @@ export class User {
     this.id = id;
     this.username = username;
     this.fullname = fullname;
+    this.position = position;
     this.cellphone = cellphone;
     this.email = email;
     this.password = password;

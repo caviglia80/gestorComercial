@@ -24,9 +24,10 @@ export class UsuariosComponent implements AfterViewInit {
     /*     id: 'ID', */
     username: 'Usuario',
     fullname: 'Nombre completo',
+    position: 'Cargo',
     cellphone: 'Teléfono',
     email: 'Correo',
-    password: 'Contraseña',
+/*     password: 'Contraseña', */
     actions: 'Operaciones'
   };
 
@@ -106,6 +107,7 @@ export class UsuariosComponent implements AfterViewInit {
     this.Item.id = item.id;
     this.Item.username = item.username;
     this.Item.fullname = item.fullname;
+    this.Item.position = item.position;
     this.Item.cellphone = item.cellphone;
     this.Item.email = item.email;
     this.Item.password = '';
@@ -117,6 +119,7 @@ export class UsuariosComponent implements AfterViewInit {
         id: this.Item.id,
         username: this.Item.username != 0 ? this.Item.username : " ",
         fullname: this.Item.fullname != 0 ? this.Item.fullname : " ",
+        position: this.Item.position != 0 ? this.Item.position : " ",
         cellphone: this.Item.cellphone != 0 ? this.Item.cellphone : " ",
         email: this.Item.email != 0 ? this.Item.email : " ",
         password: this.Item.password != 0 ? this.Item.password : " "
@@ -135,6 +138,7 @@ export class UsuariosComponent implements AfterViewInit {
         id: this.Item.id,
         username: this.Item.username != 0 ? this.Item.username : " ",
         fullname: this.Item.fullname != 0 ? this.Item.fullname : " ",
+        position: this.Item.position != 0 ? this.Item.position : " ",
         cellphone: this.Item.cellphone != 0 ? this.Item.cellphone : " ",
         email: this.Item.email != 0 ? this.Item.email : " ",
         password: this.Item.password != 0 ? this.Item.password : " "
