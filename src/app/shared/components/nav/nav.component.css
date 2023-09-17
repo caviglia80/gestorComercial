@@ -1,6 +1,6 @@
 .sidenav-container {
   display: flex;
-  height: 95vh !important;
+  height: 94vh !important;
 }
 
 mat-sidenav {
@@ -85,7 +85,7 @@ nav .backgroundColor {
 
 .navbar {
   position: relative;
-  height: 44px;
+  height: 50px;
   transition: all .8s ease-out;
 }
 
@@ -139,7 +139,7 @@ mat-expansion-panel-header {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 9999;
+  z-index: 5;
   display: none;
 }
 

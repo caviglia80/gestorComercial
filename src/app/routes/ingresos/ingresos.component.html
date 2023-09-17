@@ -153,10 +153,10 @@
   <div class="table-container mt-3">
     <div class="table-wrapper">
       <table>
-        <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['id'] }}:</td>
+<!--         <tr>
+          <td style="font-weight: bold; white-space: nowrap;">ID:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['id'])">{{ Item['id'] }}</td>
-        </tr>
+        </tr> -->
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['date'] }}:</td>
@@ -175,7 +175,7 @@
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['paymentMethod'] }}:</td>
+          <td style="font-weight: bold; white-space: nowrap;">Método de pago:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['paymentMethod'])">{{ Item['paymentMethod'] }}
           </td>
         </tr>
@@ -187,13 +187,13 @@
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['invoice'] }}:</td>
+          <td style="font-weight: bold; white-space: nowrap;">Comprobante:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['invoice'])">{{
             Item['invoice'] }}</td>
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['description'] }}:</td>
+          <td style="font-weight: bold; white-space: nowrap;">Descripción:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['description'])">{{ Item['description'] }}
           </td>
         </tr>
@@ -235,8 +235,8 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['paymentMethod'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['paymentMethod'] }}" [(ngModel)]="Item.paymentMethod">
+    <p class="form-field-description">Ingrese método de pago</p>
+    <input matInput placeholder="Método de Pago" [(ngModel)]="Item.paymentMethod">
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -245,13 +245,13 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['invoice'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['invoice'] }}" [(ngModel)]="Item.invoice">
+    <p class="form-field-description">Ingrese comprobante</p>
+    <input matInput placeholder="Comprobante" [(ngModel)]="Item.invoice">
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description">
+    <p class="form-field-description">Ingrese descripción</p>
+    <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
   <button mat-button (click)="createRecord()" [disabled]="!Item.date || !Item.amount">Guardar</button>
@@ -289,8 +289,8 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['paymentMethod'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['paymentMethod'] }}" [(ngModel)]="Item.paymentMethod">
+    <p class="form-field-description">Ingrese método de Pago</p>
+    <input matInput placeholder="Método de Pago" [(ngModel)]="Item.paymentMethod">
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -299,13 +299,13 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['invoice'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['invoice'] }}" [(ngModel)]="Item.invoice">
+    <p class="form-field-description">Ingrese comprobante</p>
+    <input matInput placeholder="Comprobante" [(ngModel)]="Item.invoice">
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['description'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description">
+    <p class="form-field-description">Ingrese descripción</p>
+    <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
   <button mat-button (click)="editRecord()" [disabled]="!Item.date || !Item.amount">Guardar</button>
