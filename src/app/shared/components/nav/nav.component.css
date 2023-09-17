@@ -6,7 +6,7 @@
 mat-sidenav {
   background-color: var(--color-sideBarBackgroundSolid);
   width: 250px;
-  z-index: 1;
+  z-index: 4 !important;
 }
 
 mat-sidenav-content {
@@ -148,3 +148,13 @@ mat-expansion-panel-header {
     display: block;
   }
 }
+
+
+
+
+
+
+
+
+
+

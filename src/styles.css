@@ -50,12 +50,12 @@ h4 {
 }
 
 .table-wrapper::-webkit-scrollbar-track {
-  background-color: #f1f1f1 !important;
+  background-color: #f1f1f1;
   border-radius: 10px;
 }
 
 .table-wrapper::-webkit-scrollbar-thumb {
-  background: var(--scroll-Background) !important;
+  background: var(--scroll-Background);
   border-radius: 10px;
 }
 

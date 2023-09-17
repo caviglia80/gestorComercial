@@ -89,7 +89,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div class="overlay" [ngClass]="{'showOverlay': sidenavOpened}"></div>
+    <div class="overlay" [ngClass]="{'showOverlay': sidenavOpened}" (click)="toggleSidenav()"></div>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
