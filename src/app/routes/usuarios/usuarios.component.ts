@@ -115,7 +115,7 @@ export class UsuariosComponent implements AfterViewInit {
 
   public createRecord() {
     try {
-      const body: any = {
+      const body: User = {
         id: this.Item.id,
         username: this.Item.username != 0 ? this.Item.username : " ",
         fullname: this.Item.fullname != 0 ? this.Item.fullname : " ",
@@ -134,7 +134,7 @@ export class UsuariosComponent implements AfterViewInit {
 
   public editRecord() {
     try {
-      const body: any = {
+      const body: User = {
         id: this.Item.id,
         username: this.Item.username != 0 ? this.Item.username : " ",
         fullname: this.Item.fullname != 0 ? this.Item.fullname : " ",

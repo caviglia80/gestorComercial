@@ -129,7 +129,7 @@ export class InventoryComponent implements AfterViewInit {
 
   public createRecord() {
     try {
-      const body: any = {
+      const body: Product = {
         id: this.Item.id,
         name: this.Item.name != 0 ? this.Item.name : " ",
         buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
@@ -148,7 +148,7 @@ export class InventoryComponent implements AfterViewInit {
 
   public editRecord() {
     try {
-      const body: any = {
+      const body: Product = {
         id: this.Item.id,
         name: this.Item.name != 0 ? this.Item.name : " ",
         buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
@@ -167,7 +167,7 @@ export class InventoryComponent implements AfterViewInit {
 
   public doubleRecord() {
     try {
-      const body: any = {
+      const body: Product = {
         id: this.Item.id,
         name: this.Item.name != 0 ? this.Item.name : " ",
         buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,

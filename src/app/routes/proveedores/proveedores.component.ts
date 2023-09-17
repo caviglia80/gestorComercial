@@ -121,7 +121,7 @@ export class ProveedoresComponent implements AfterViewInit {
 
   public createRecord() {
     try {
-      const body: any = {
+      const body: supplier = {
         id: this.Item.id,
         company: this.Item.company,
         contactFullname: this.Item.contactFullname,
@@ -143,7 +143,7 @@ export class ProveedoresComponent implements AfterViewInit {
 
   public editRecord() {
     try {
-      const body: any = {
+      const body: supplier = {
         id: this.Item.id,
         company: this.Item.company,
         contactFullname: this.Item.contactFullname,

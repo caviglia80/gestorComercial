@@ -117,7 +117,7 @@ export class IngresosComponent implements AfterViewInit {
 
   public createRecord() {
     try {
-      const body: any = {
+      const body: moneyIncome = {
         id: this.Item.id,
         date: this.Item.date != 0 ? this.Item.date : " ",
         currency: this.Item.currency !== undefined ? this.Item.currency : " ",
@@ -137,7 +137,7 @@ export class IngresosComponent implements AfterViewInit {
 
   public editRecord() {
     try {
-      const body: any = {
+      const body: moneyIncome = {
         id: this.Item.id,
         date: this.Item.date != 0 ? this.Item.date : " ",
         currency: this.Item.currency !== undefined ? this.Item.currency : " ",
