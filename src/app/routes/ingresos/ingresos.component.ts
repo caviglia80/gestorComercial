@@ -21,14 +21,14 @@ export class IngresosComponent implements AfterViewInit {
   public detail: boolean = false;
 
   public Columns: { [key: string]: string } = {
-    id: 'ID',
+/*     id: 'ID', */
     date: 'Fecha',
     currency: 'Moneda',
     amount: 'Monto',
-    paymentMethod: 'Método de Pago',
+/*     paymentMethod: 'Método de Pago', */
     category: 'Rubro',
-    invoice: 'Comprobante',
-    description: 'Descripción',
+/*     invoice: 'Comprobante', */
+/*     description: 'Descripción', */
     actions: 'Operaciones'
   };
 
