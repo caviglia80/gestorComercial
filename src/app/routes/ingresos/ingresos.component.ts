@@ -118,13 +118,13 @@ export class IngresosComponent implements AfterViewInit {
     try {
       const body: moneyIncome = {
         id: this.Item.id,
-        date: this.Item.date != 0 ? this.Item.date : " ",
-        currency: this.Item.currency !== undefined ? this.Item.currency : " ",
-        amount: this.Item.amount !== undefined ? this.Item.amount : 0,
-        paymentMethod: this.Item.paymentMethod !== undefined ? this.Item.paymentMethod : " ",
-        category: this.Item.category !== undefined ? this.Item.category : " ",
-        invoice: this.Item.invoice !== undefined ? this.Item.invoice : " ",
-        description: this.Item.description !== undefined ? this.Item.description : " "
+        date: this.Item.date,
+        currency: this.Item.currency,
+        amount: this.Item.amount,
+        paymentMethod: this.Item.paymentMethod,
+        category:  this.Item.category,
+        invoice: this.Item.invoice,
+        description: this.Item.description
       };
       this.dataService.fetchIngresos('POST', body);
     } catch (error) {
@@ -138,13 +138,13 @@ export class IngresosComponent implements AfterViewInit {
     try {
       const body: moneyIncome = {
         id: this.Item.id,
-        date: this.Item.date != 0 ? this.Item.date : " ",
-        currency: this.Item.currency !== undefined ? this.Item.currency : " ",
-        amount: this.Item.amount !== undefined ? this.Item.amount : 0,
-        paymentMethod: this.Item.paymentMethod !== undefined ? this.Item.paymentMethod : " ",
-        category: this.Item.category !== undefined ? this.Item.category : " ",
-        invoice: this.Item.invoice !== undefined ? this.Item.invoice : " ",
-        description: this.Item.description !== undefined ? this.Item.description : " "
+        date: this.Item.date,
+        currency: this.Item.currency,
+        amount: this.Item.amount,
+        paymentMethod: this.Item.paymentMethod,
+        category:  this.Item.category,
+        invoice: this.Item.invoice,
+        description: this.Item.description
       };
       this.dataService.fetchIngresos('PUT', body);
     } catch (error) {
