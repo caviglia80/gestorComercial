@@ -21,14 +21,14 @@ export class IngresosComponent implements AfterViewInit {
   public detail: boolean = false;
 
   public Columns: { [key: string]: string } = {
-/*     id: 'ID', */
+    /*     id: 'ID', */
     date: 'Fecha',
     currency: 'Moneda',
     amount: 'Monto',
-/*     paymentMethod: 'Método de Pago', */
+    /*     paymentMethod: 'Método de Pago', */
     category: 'Rubro',
-/*     invoice: 'Comprobante', */
-/*     description: 'Descripción', */
+    /*     invoice: 'Comprobante', */
+    /*     description: 'Descripción', */
     actions: 'Operaciones'
   };
 
@@ -114,7 +114,7 @@ export class IngresosComponent implements AfterViewInit {
     this.Item.description = item.description;
   }
 
-  public createRecord() {
+  public record(method: string) {
     try {
       const body: moneyIncome = {
         id: this.Item.id,
@@ -122,38 +122,18 @@ export class IngresosComponent implements AfterViewInit {
         currency: this.Item.currency,
         amount: this.Item.amount,
         paymentMethod: this.Item.paymentMethod,
-        category:  this.Item.category,
+        category: this.Item.category,
         invoice: this.Item.invoice,
         description: this.Item.description
       };
-      this.dataService.fetchIngresos('POST', body);
+      this.dataService.fetchIngresos(method, body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
-    }
-  }
-
-  public editRecord() {
-    try {
-      const body: moneyIncome = {
-        id: this.Item.id,
-        date: this.Item.date,
-        currency: this.Item.currency,
-        amount: this.Item.amount,
-        paymentMethod: this.Item.paymentMethod,
-        category:  this.Item.category,
-        invoice: this.Item.invoice,
-        description: this.Item.description
-      };
-      this.dataService.fetchIngresos('PUT', body);
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
       this.Edit(false);
     }
   }
-
 }
 
 

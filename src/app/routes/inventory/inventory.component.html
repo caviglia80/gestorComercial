@@ -224,7 +224,7 @@
     <p class="form-field-description">Ingrese {{ Columns['observacion'] | lowercase }}</p>
     <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="Item.observacion">
   </mat-form-field>
-  <button mat-button (click)="createRecord()" [disabled]="!Item.name">Guardar</button>
+  <button mat-button (click)="record('POST')" [disabled]="!Item.name">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -265,7 +265,7 @@
     <p class="form-field-description">Ingrese {{ Columns['observacion'] | lowercase }}</p>
     <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="Item.observacion">
   </mat-form-field>
-  <button mat-button (click)="editRecord()" [disabled]="!Item.name">Guardar</button>
+  <button mat-button (click)="record('PUT')" [disabled]="!Item.name">Guardar</button>
 </div>
 
 <!-- Vista de duplicado de registros -->
@@ -306,5 +306,5 @@
     <p class="form-field-description">Ingrese {{ Columns['observacion'] | lowercase }}</p>
     <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="Item.observacion">
   </mat-form-field>
-  <button mat-button (click)="doubleRecord()" [disabled]="!Item.name">Guardar</button>
+  <button mat-button (click)="record('POST')" [disabled]="!Item.name">Guardar</button>
 </div>

@@ -145,53 +145,21 @@ export class RolesComponent implements AfterViewInit {
     this.Item.description = item.description;
   }
 
-  public createRecord() {
+  public record(method: string) {
     try {
       const body: Role = {
-        id: 0,
-        name: this.Item.name != 0 ? this.Item.name : " ",
+        id: this.Item.id,
+        name: this.Item.name,
         menus: JSON.stringify(this.menusHabilitacion),
-        permits: JSON.stringify(" "),
+        permits: this.Item.permits,
         description: this.Item.description
       };
-      this.dataService.fetchRoles('POST', body);
+      this.dataService.fetchRoles(method, body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
-    }
-  }
-
-  public editRecord() {
-    try {
-      const body: Role = {
-        id: this.Item.id,
-        name: this.Item.name != 0 ? this.Item.name : " ",
-        menus: JSON.stringify(this.menusHabilitacion),
-        permits: JSON.stringify(" "),
-        description: this.Item.description
-      };
-      this.dataService.fetchRoles('PUT', body);
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
       this.Edit(false);
-    }
-  }
-
-  public doubleRecord() {
-    try {
-      const body: Role = {
-        id: this.Item.id,
-        name: this.Item.name != 0 ? this.Item.name : " ",
-        menus: JSON.stringify(this.menusHabilitacion),
-        permits: JSON.stringify(" "),
-        description: this.Item.description
-      };
-      this.dataService.fetchRoles('POST', body);
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
       this.Double(false);
     }
   }

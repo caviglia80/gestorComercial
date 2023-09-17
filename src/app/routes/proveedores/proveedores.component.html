@@ -292,7 +292,7 @@
     <input matInput placeholder="Observación" [(ngModel)]="Item.observation">
   </mat-form-field>
 
-  <button mat-button (click)="createRecord()" [disabled]="!Item.contactFullname">Guardar</button>
+  <button mat-button (click)="record('POST')" [disabled]="!Item.contactFullname">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -358,5 +358,5 @@
     <input matInput placeholder="Observación" [(ngModel)]="Item.observation">
   </mat-form-field>
 
-  <button mat-button (click)="editRecord()" [disabled]="!Item.contactFullname">Guardar</button>
+  <button mat-button (click)="record('PUT')" [disabled]="!Item.contactFullname">Guardar</button>
 </div>

@@ -116,48 +116,27 @@ export class EgresosComponent implements AfterViewInit {
     this.Item.description = item.description;
   }
 
-  public createRecord() {
+  public record(method: string) {
     try {
       const body: moneyOutlays = {
         id: this.Item.id,
-        date: this.Item.date !== undefined ? this.Item.date : " ",
-        currency: this.Item.currency !== undefined ? this.Item.currency : " ",
-        amount: this.Item.amount !== undefined ? this.Item.amount : 0,
-        expenseMethod: this.Item.expenseMethod !== undefined ? this.Item.expenseMethod : " ",
-        category: this.Item.category !== undefined ? this.Item.category : " ",
-        invoice: this.Item.invoice !== undefined ? this.Item.invoice : " ",
-        beneficiary_provider: this.Item.beneficiary_provider !== undefined ? this.Item.beneficiary_provider : " ",
-        description: this.Item.description !== undefined ? this.Item.description : " "
+        date: this.Item.date,
+        currency: this.Item.currency,
+        amount: this.Item.amount,
+        expenseMethod: this.Item.expenseMethod,
+        category: this.Item.category,
+        invoice: this.Item.invoice,
+        beneficiary_provider: this.Item.beneficiary_provider,
+        description: this.Item.description
       };
-      this.dataService.fetchEgresos('POST', body);
+      this.dataService.fetchEgresos(method, body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
-    }
-  }
-
-  public editRecord() {
-    try {
-      const body: moneyOutlays = {
-        id: this.Item.id,
-        date: this.Item.date !== undefined ? this.Item.date : " ",
-        currency: this.Item.currency !== undefined ? this.Item.currency : " ",
-        amount: this.Item.amount !== undefined ? this.Item.amount : 0,
-        expenseMethod: this.Item.expenseMethod !== undefined ? this.Item.expenseMethod : " ",
-        category: this.Item.category !== undefined ? this.Item.category : " ",
-        invoice: this.Item.invoice !== undefined ? this.Item.invoice : " ",
-        beneficiary_provider: this.Item.beneficiary_provider !== undefined ? this.Item.beneficiary_provider : " ",
-        description: this.Item.description !== undefined ? this.Item.description : " "
-      };
-      this.dataService.fetchEgresos('PUT', body);
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
       this.Edit(false);
     }
   }
-
 }
 
 

@@ -118,7 +118,7 @@ export class ProveedoresComponent implements AfterViewInit {
     this.Item.observation = item.observation;
   }
 
-  public createRecord() {
+  public record(method: string) {
     try {
       const body: supplier = {
         id: this.Item.id,
@@ -132,32 +132,11 @@ export class ProveedoresComponent implements AfterViewInit {
         supply: this.Item.supply,
         observation: this.Item.observation
       };
-      this.dataService.fetchProveedores('POST', body);
+      this.dataService.fetchProveedores(method, body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
-    }
-  }
-
-  public editRecord() {
-    try {
-      const body: supplier = {
-        id: this.Item.id,
-        company: this.Item.company,
-        contactFullname: this.Item.contactFullname,
-        phone: this.Item.phone,
-        email: this.Item.email,
-        address: this.Item.address,
-        website: this.Item.website,
-        accountNumber: this.Item.accountNumber,
-        supply: this.Item.supply,
-        observation: this.Item.observation
-      };
-      this.dataService.fetchProveedores('PUT', body);
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
       this.Edit(false);
     }
   }

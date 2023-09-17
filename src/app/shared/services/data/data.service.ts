@@ -34,9 +34,9 @@ export class DataService {
 
   public fetchInventario(method: string = '', body: any = {}, proxy: boolean = false): void {
     const NAME: any = body.name;
+    if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    if (!SharedService.isProduction) console.log(body);
     let url = SharedService.host + 'inventario.php';
     if (proxy) url = SharedService.proxy + url;
 
@@ -92,9 +92,9 @@ export class DataService {
 
   public fetchUsuarios(method: string = '', body: any = {}, proxy: boolean = false): void {
     const NAME: any = body.name;
+    if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    if (!SharedService.isProduction) console.log(body);
     let url = SharedService.host + 'usuarios.php';
     if (proxy) url = SharedService.proxy + url;
 
@@ -150,9 +150,9 @@ export class DataService {
 
   public fetchRoles(method: string = '', body: any = {}, proxy: boolean = false): void {
     const NAME: any = body.name;
+    if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    if (!SharedService.isProduction) console.log(body);
     let url = SharedService.host + 'roles.php';
     if (proxy) url = SharedService.proxy + url;
 
@@ -208,9 +208,9 @@ export class DataService {
 
   public fetchProveedores(method: string = '', body: any = {}, proxy: boolean = false): void {
     const NAME: any = body.name;
+    if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    if (!SharedService.isProduction) console.log(body);
     let url = SharedService.host + 'proveedores.php';
     if (proxy) url = SharedService.proxy + url;
 
@@ -266,9 +266,9 @@ export class DataService {
 
   public fetchIngresos(method: string = '', body: any = {}, proxy: boolean = false): void {
     const NAME: any = body.name;
+    if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    if (!SharedService.isProduction) console.log(body);
     let url = SharedService.host + 'ingresos.php';
     if (proxy) url = SharedService.proxy + url;
 
@@ -324,9 +324,9 @@ export class DataService {
 
   public fetchEgresos(method: string = '', body: any = {}, proxy: boolean = false): void {
     const NAME: any = body.name;
+    if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    if (!SharedService.isProduction) console.log(body);
     let url = SharedService.host + 'egresos.php';
     if (proxy) url = SharedService.proxy + url;
 

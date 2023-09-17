@@ -126,59 +126,23 @@ export class InventoryComponent implements AfterViewInit {
     this.Item.observacion = item.observacion;
   }
 
-  public createRecord() {
+  public record(method: string) {
     try {
       const body: Product = {
         id: this.Item.id,
-        name: this.Item.name != 0 ? this.Item.name : " ",
-        buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
-        sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
-        stock: this.Item.stock !== undefined ? this.Item.stock : 0,
-        ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
-        observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
+        name: this.Item.name,
+        buyPrice: this.Item.buyPrice,
+        sellPrice: this.Item.sellPrice,
+        stock: this.Item.stock,
+        ventasRealizadas: this.Item.ventasRealizadas,
+        observacion: this.Item.observacion
       };
-      this.dataService.fetchInventario('POST', body);
+      this.dataService.fetchInventario(method, body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
-    }
-  }
-
-  public editRecord() {
-    try {
-      const body: Product = {
-        id: this.Item.id,
-        name: this.Item.name != 0 ? this.Item.name : " ",
-        buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
-        sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
-        stock: this.Item.stock !== undefined ? this.Item.stock : 0,
-        ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
-        observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
-      };
-      this.dataService.fetchInventario('PUT', body);
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
       this.Edit(false);
-    }
-  }
-
-  public doubleRecord() {
-    try {
-      const body: Product = {
-        id: this.Item.id,
-        name: this.Item.name != 0 ? this.Item.name : " ",
-        buyPrice: this.Item.buyPrice !== undefined ? this.Item.buyPrice : 0,
-        sellPrice: this.Item.sellPrice !== undefined ? this.Item.sellPrice : 0,
-        stock: this.Item.stock !== undefined ? this.Item.stock : 0,
-        ventasRealizadas: this.Item.ventasRealizadas !== undefined ? this.Item.ventasRealizadas : 0,
-        observacion: this.Item.observacion !== undefined ? this.Item.observacion : ""
-      };
-      this.dataService.fetchInventario('POST', body);
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
       this.Double(false);
     }
   }

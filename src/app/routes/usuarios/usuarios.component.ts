@@ -27,7 +27,7 @@ export class UsuariosComponent implements AfterViewInit {
     position: 'Cargo',
     phone: 'Teléfono',
     email: 'Correo',
-/*     password: 'Contraseña', */
+    /*     password: 'Contraseña', */
     actions: 'Operaciones'
   };
 
@@ -112,44 +112,28 @@ export class UsuariosComponent implements AfterViewInit {
     this.Item.password = '';
   }
 
-  public createRecord() {
+  public record(method: string) {
     try {
       const body: User = {
         id: this.Item.id,
-        username: this.Item.username != 0 ? this.Item.username : " ",
-        fullname: this.Item.fullname != 0 ? this.Item.fullname : " ",
-        position: this.Item.position != 0 ? this.Item.position : " ",
-        phone: this.Item.phone != 0 ? this.Item.phone : " ",
-        email: this.Item.email != 0 ? this.Item.email : " ",
-        password: this.Item.password != 0 ? this.Item.password : " "
+        username: this.Item.username,
+        fullname: this.Item.fullname,
+        position: this.Item.position,
+        phone: this.Item.phone,
+        email: this.Item.email,
+        password: this.Item.password
       };
-      this.dataService.fetchUsuarios('POST', body);
+      this.dataService.fetchUsuarios(method, body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
-    }
-  }
-
-  public editRecord() {
-    try {
-      const body: User = {
-        id: this.Item.id,
-        username: this.Item.username != 0 ? this.Item.username : " ",
-        fullname: this.Item.fullname != 0 ? this.Item.fullname : " ",
-        position: this.Item.position != 0 ? this.Item.position : " ",
-        phone: this.Item.phone != 0 ? this.Item.phone : " ",
-        email: this.Item.email != 0 ? this.Item.email : " ",
-        password: this.Item.password != 0 ? this.Item.password : " "
-      };
-      this.dataService.fetchUsuarios('PUT', body);
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
       this.Edit(false);
     }
   }
 }
+
+
 
 
 

@@ -236,7 +236,7 @@
     <input matInput placeholder="Contraseña" [(ngModel)]="Item.password" required>
   </mat-form-field>
 
-  <button mat-button (click)="createRecord()"
+  <button mat-button (click)="record('POST')"
     [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password">Guardar</button>
 </div>
 
@@ -290,6 +290,6 @@
     <input matInput placeholder="Contraseña" [(ngModel)]="Item.password" required>
   </mat-form-field>
 
-  <button mat-button (click)="editRecord()"
+  <button mat-button (click)="record('PUT')"
     [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password">Guardar</button>
 </div>

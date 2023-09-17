@@ -275,7 +275,7 @@
     <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="createRecord()" [disabled]="!Item.date || !Item.amount">Guardar</button>
+  <button mat-button (click)="record('POST')" [disabled]="!Item.date || !Item.amount">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -334,5 +334,5 @@
     <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="editRecord()" [disabled]="!Item.date || !Item.amount">Guardar</button>
+  <button mat-button (click)="record('PUT')" [disabled]="!Item.date || !Item.amount">Guardar</button>
 </div>
