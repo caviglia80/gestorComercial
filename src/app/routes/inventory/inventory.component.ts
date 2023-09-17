@@ -70,8 +70,7 @@ export class InventoryComponent implements AfterViewInit {
 
   public searchFilter(filterValue: string) {
     filterValue = filterValue.trim().toLowerCase();
-    if (filterValue === '') this.dataSource.filter = ''; else
-      this.dataSource.filter = filterValue;
+    this.dataSource.filter = filterValue === '' ? '' : filterValue;
   }
 
   public Detail(visible: boolean) {

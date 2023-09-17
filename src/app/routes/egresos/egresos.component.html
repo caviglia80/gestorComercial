@@ -84,7 +84,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by invoice">
             {{ Columns['invoice'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.invoice)">
+          <td [matTooltip]="element.invoice" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.invoice)">
             {{element.invoice}} </td>
         </ng-container>
 

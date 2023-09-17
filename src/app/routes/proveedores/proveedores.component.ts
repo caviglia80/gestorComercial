@@ -23,7 +23,7 @@ export class ProveedoresComponent implements AfterViewInit {
   public Columns: { [key: string]: string } = {
     /* id: 'ID', */
     company: 'Empresa',
-    contactFullname: 'Contacto',
+    contactFullname: 'Nombre contacto',
     phone: 'Teléfono',
     /* email: 'Correo', */
     /*  address: 'Dirección', */
@@ -72,8 +72,7 @@ export class ProveedoresComponent implements AfterViewInit {
 
   public searchFilter(filterValue: string) {
     filterValue = filterValue.trim().toLowerCase();
-    if (filterValue === '') this.dataSource.filter = ''; else
-      this.dataSource.filter = filterValue;
+    this.dataSource.filter = filterValue === '' ? '' : filterValue;
   }
 
   public Detail(visible: boolean) {
