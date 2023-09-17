@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
 })
 export class NavComponent {
   public sidenavOpened: boolean = true;
-  panelOpenState = false;
 
   public toggleSidenav() {
     this.sidenavOpened = !this.sidenavOpened;
