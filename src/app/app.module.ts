@@ -23,19 +23,23 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { CurrencyWithSymbolPipe } from '@pipes/currencyWithSymbol/currency-with-symbol.pipe';
 import { TruncatePipe } from '@pipes/truncate/truncate.pipe';
+import { DateFormatPipe } from '@pipes/dateFormat/date-format.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { NavComponent } from '@components/nav/nav.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ProveedoresComponent } from '@routes/proveedores/proveedores.component';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { ConfiguracionGeneralComponent } from '@routes/configuracion-general/configuracion-general.component';
 import { UsuariosComponent } from '@routes/usuarios/usuarios.component';
 import { RolesComponent } from '@routes/roles/roles.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { registerLocaleData } from '@angular/common';
+import localeEsES from '@angular/common/locales/es';
+
 
 @NgModule({
   declarations: [
@@ -52,6 +56,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     BillingComponent,
     CurrencyWithSymbolPipe,
     TruncatePipe,
+    DateFormatPipe,
     NavComponent,
     ProveedoresComponent,
     ConfiguracionGeneralComponent,
@@ -77,9 +82,15 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatFormFieldModule,
     MatInputModule,
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    registerLocaleData(localeEsES, 'es-ES');
+  }
+ }

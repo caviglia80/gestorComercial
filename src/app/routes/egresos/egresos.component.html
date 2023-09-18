@@ -42,7 +42,7 @@
           </th>
           <td [matTooltip]="element.date" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.date)">
-            {{element.date | truncate:15 }}
+            {{element.date | dateFormat }}
           </td>
         </ng-container>
 
@@ -84,7 +84,8 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by invoice">
             {{ Columns['invoice'] }}
           </th>
-          <td [matTooltip]="element.invoice" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.invoice)">
+          <td [matTooltip]="element.invoice" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.invoice)">
             {{element.invoice}} </td>
         </ng-container>
 
@@ -162,14 +163,14 @@
   <div class="table-container mt-3">
     <div class="table-wrapper">
       <table>
-<!--         <tr>
+        <!--         <tr>
           <td style="font-weight: bold; white-space: nowrap;">ID:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['id'])">{{ Item['id'] }}</td>
         </tr> -->
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['date'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['date'])">{{ Item['date'] }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['date'])">{{ Item['date'] | dateFormat }}</td>
         </tr>
 
         <tr>
@@ -236,7 +237,7 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['date'] | lowercase }} <span class="red-asterisk">*</span></p>
-    <input matInput placeholder="{{ Columns['date'] }}" [(ngModel)]="Item.date" required>
+    <input class="my-2" type="date" matInput [(ngModel)]="Item.date" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -295,7 +296,7 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['date'] | lowercase }} <span class="red-asterisk">*</span></p>
-    <input matInput placeholder="{{ Columns['date'] }}" [(ngModel)]="Item.date" required>
+    <input class="my-2" type="date" matInput [(ngModel)]="Item.date" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
