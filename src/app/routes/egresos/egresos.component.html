@@ -242,7 +242,9 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['currency'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+    <mat-select placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+      <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -253,7 +255,9 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese método de gasto</p>
-    <input matInput placeholder="Método de gasto" [(ngModel)]="Item.expenseMethod">
+    <mat-select placeholder="Método de gasto" [(ngModel)]="Item.expenseMethod">
+      <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -301,7 +305,9 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['currency'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+    <mat-select placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+      <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -312,7 +318,9 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese método de gasto</p>
-    <input matInput placeholder="Método de gasto" [(ngModel)]="Item.expenseMethod">
+    <mat-select placeholder="Método de gasto" [(ngModel)]="Item.expenseMethod">
+      <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">

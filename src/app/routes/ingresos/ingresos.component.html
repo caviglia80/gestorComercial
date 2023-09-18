@@ -225,7 +225,9 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['currency'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+    <mat-select placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+      <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -235,8 +237,10 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese método de pago</p>
-    <input matInput placeholder="Método de Pago" [(ngModel)]="Item.paymentMethod">
+    <p class="form-field-description">Ingrese método de Pago</p>
+    <mat-select placeholder="Método de Pago" [(ngModel)]="Item.paymentMethod">
+      <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -279,7 +283,9 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['currency'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+    <mat-select placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+      <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -290,7 +296,9 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese método de Pago</p>
-    <input matInput placeholder="Método de Pago" [(ngModel)]="Item.paymentMethod">
+    <mat-select placeholder="Método de Pago" [(ngModel)]="Item.paymentMethod">
+      <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">

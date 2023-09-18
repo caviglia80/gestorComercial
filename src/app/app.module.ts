@@ -39,6 +39,7 @@ import { RolesComponent } from '@routes/roles/roles.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { registerLocaleData } from '@angular/common';
 import localeEsES from '@angular/common/locales/es';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import localeEsES from '@angular/common/locales/es';
     MatInputModule,
     MatExpansionModule,
     MatSlideToggleModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   providers: [
   ],

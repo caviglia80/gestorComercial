@@ -9,6 +9,21 @@ export class SharedService {
   public static isProduction = environment.production;
   public static host: string = 'https://francisco-caviglia.com.ar/francisco-caviglia/'; /* localhost/ */
   public static proxy: string = 'https://cors-anywhere.herokuapp.com/'; // Use the CORS Anywhere proxy
+  public currencys: string[] = ['ARS', 'USD', 'EUR'];
+  public paidMethods: string[] = [
+    'Efectivo',
+    'Tarjeta de crédito',
+    'Tarjeta de débito',
+    'Transferencia bancaria',
+    'Mercado Pago',
+    'Cheque',
+    'Pago Fácil',
+    'Rapipago',
+    'Débito automático',
+    'PayPal',
+    'Ualá',
+    'Bitcoin'
+  ];
 
   constructor(
     private snackBar: MatSnackBar
