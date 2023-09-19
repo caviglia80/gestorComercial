@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment';
 })
 export class SharedService {
   public static isProduction = environment.production;
-  public static host: string = 'https://francisco-caviglia.com.ar/francisco-caviglia/'; /* localhost/ */
-  public static proxy: string = 'https://cors-anywhere.herokuapp.com/'; // Use the CORS Anywhere proxy
+  public static host: string = 'https://francisco-caviglia.com.ar/francisco-caviglia/php/'; /* localhost/ */
+  public static proxy: string = 'https://cors-anywhere.herokuapp.com/';
   public currencys: string[] = ['ARS', 'USD', 'EUR'];
   public paidMethods: string[] = [
     'Efectivo',
