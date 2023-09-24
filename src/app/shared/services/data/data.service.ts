@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
+import { facturacionAuth } from '@models/mainClasses/main-classes';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,8 @@ export class DataService {
   private ds_Egresos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Egresos$: Observable<any[]> = this.ds_Egresos.asObservable();
 
+  private ds_FacturacionAuth: BehaviorSubject<facturacionAuth[]> = new BehaviorSubject<facturacionAuth[]>([]);
+  public FacturacionAuth$: Observable<facturacionAuth[]> = this.ds_FacturacionAuth.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -380,7 +383,37 @@ export class DataService {
     }
   }
 
+  public fetchFacturacionAuth(method: string = '', body: any = {}, proxy: boolean = false): void {
+    if (!SharedService.isProduction) console.log(body);
+    body = JSON.stringify(body);
+    const headers: {} = { 'Content-Type': 'application/json' }
+    let url = SharedService.host + 'facturacionAuth.php';
+    if (proxy) url = SharedService.proxy + url;
 
+    if (method === 'GET') {
+      this.http.get<facturacionAuth[]>(url)
+        .subscribe({
+          next: (data) => {
+            this.ds_FacturacionAuth.next(data);
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar obtener registros.');
+          }
+        });
+    } else if (method === 'PUT') {
+      this.http.put<any[]>(url, body, headers)
+        .subscribe({
+          next: () => {
+            this.sharedService.message('Actualizado !');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar editar el registro.');
+          }
+        });
+    }
+  }
 
 
 

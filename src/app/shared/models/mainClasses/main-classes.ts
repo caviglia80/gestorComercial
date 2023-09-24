@@ -177,3 +177,31 @@ export class moneyOutlays {
     this.description = description;
   }
 }
+
+export class facturacionAuth {
+  id: number;
+  sign: string | null | undefined;
+  token: string | null;
+  expirationTime: string | null;
+  uniqueId: string | null;
+  certificado: string | null;
+  llave: string | null;
+
+  constructor(
+    id: number = 0,
+    sign: string = '',
+    token: string = '',
+    expirationTime: string = '',
+    uniqueId: string = '',
+    certificado: string = '',
+    llave: string = ''
+  ) {
+    this.id = id;
+    this.sign = sign;
+    this.token = token;
+    this.expirationTime = expirationTime;
+    this.uniqueId = uniqueId;
+    this.certificado = certificado;
+    this.llave = llave;
+  }
+}

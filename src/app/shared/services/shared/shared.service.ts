@@ -48,11 +48,52 @@ export class SharedService {
     });
   }
 
+  public encodeBase64(text: string): string {
+    return btoa(text);
+  }
 
+  public decodeBase64(base64String: string): string {
+    return atob(base64String);
+  }
 
+  public getDateNow(): Date {
+    const options = { timeZone: 'America/Argentina/Buenos_Aires' };
+    const fecha = new Date().toLocaleString('en-US', options);
+    return new Date(fecha);
+  }
 
+  public stringToDate(date: string): Date {
+    return new Date(date);
+  }
 
+  public isFAuthExpired(expirationTime: string): boolean {
+    if (expirationTime) {
+      const fechaActual: Date = this.getDateNow();
+      const fechaVencimiento: Date = this.stringToDate(expirationTime);
+      if (fechaActual > fechaVencimiento) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public needNewFAuth(expirationTime: string): boolean {
+    if (expirationTime) {
+      const fechaActual: Date = this.getDateNow().addHours(1);
+      const fechaVencimiento: Date = this.stringToDate(expirationTime);
+      if (fechaActual > fechaVencimiento) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
 
 
 
 }
+
+

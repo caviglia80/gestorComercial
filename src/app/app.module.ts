@@ -40,7 +40,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { registerLocaleData } from '@angular/common';
 import localeEsES from '@angular/common/locales/es';
 import { MatSelectModule } from '@angular/material/select';
-
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -85,7 +85,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatExpansionModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTabsModule
   ],
   providers: [
   ],
