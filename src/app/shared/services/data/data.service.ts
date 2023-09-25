@@ -29,6 +29,9 @@ export class DataService {
   private ds_FacturacionAuth: BehaviorSubject<facturacionAuth[]> = new BehaviorSubject<facturacionAuth[]>([]);
   public FacturacionAuth$: Observable<facturacionAuth[]> = this.ds_FacturacionAuth.asObservable();
 
+  private ds_Wsaa: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public Wsaa$: Observable<any[]> = this.ds_Wsaa.asObservable();
+
   constructor(
     private http: HttpClient,
     public sharedService: SharedService
@@ -406,6 +409,7 @@ export class DataService {
         .subscribe({
           next: () => {
             this.sharedService.message('Actualizado !');
+            this.fetchFacturacionAuth('GET');
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -415,13 +419,26 @@ export class DataService {
     }
   }
 
+  public fetchWSAA(method: string = '', body: any = {}, proxy: boolean = false): void {
+    if (!SharedService.isProduction) console.log(body);
+    body = JSON.stringify(body);
+    const headers: {} = { 'Content-Type': 'application/json' }
+    let url = SharedService.host + 'wsaa.php';
+    if (proxy) url = SharedService.proxy + url;
 
-
-
-
-
-
-
+    if (method === 'POST') {
+      this.http.post<any[]>(url, body, headers)
+        .subscribe({
+          next: (data) => {
+            this.ds_Wsaa.next(data);
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar generar nuevo token.');
+          }
+        });
+    }
+  }
 
 
 

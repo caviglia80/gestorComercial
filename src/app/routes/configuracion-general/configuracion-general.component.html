@@ -14,10 +14,9 @@
 
 
 
-
-
     </div>
   </mat-tab>
+
   <mat-tab label="Facturación">
     <div class="box mat-elevation-z4">
 
@@ -50,18 +49,15 @@
       </div>
 
       <div class="buttons justify-content-center">
-        <button type="button" class="btn m-2"
-          [ngClass]="IsConfigurated()? 'btn-outline-primary':'btn btn-outline-secondary'" (click)="consultarToken()"
-          [disabled]="!IsConfigurated()">Consultar Token</button>
 
         <button type="button" class="btn m-2"
-          [ngClass]="IsConfigurated()? 'btn-outline-warning':'btn btn-outline-secondary'" (click)="forzarToken()"
-          [disabled]="!IsConfigurated()">Nuevo Token (Forzar)</button>
+          [ngClass]="isConfigurated && !online? 'btn-outline-primary':'btn-outline-secondary'" (click)="iniciarSesion()"
+          [disabled]="!isConfigurated || online">Iniciar sesión</button>
+
+        <button type="button" class="btn m-2" [ngClass]="isConfigurated? 'btn-outline-warning':'btn-outline-secondary'"
+          (click)="forzarToken()" [disabled]="!isConfigurated">Nuevo Token (Forzar)</button>
+
       </div>
-
-
-
-
 
     </div>
   </mat-tab>
