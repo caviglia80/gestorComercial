@@ -20,13 +20,22 @@
   <mat-tab label="Facturación">
     <div class="box mat-elevation-z4">
 
-      <div class="container-fluid d-flex justify-content-end align-items-end">
+      <div class="container-fluid d-flex justify-content-end align-items-start">
 
-        <div class="spinner-grow text-warning mx-2  mat-elevation-z1" role="status" *ngIf="loading"></div>
+        <div class="alert alert-danger container-fluid" role="alert" *ngIf="!isConfigurated"
+          style="margin-right: 1rem;">
+          Cargue el certificado y llave privada para poder usar el servicio web de facturacion de AFIP.
+        </div>
 
-        <div class="spinner-grow text-danger mx-2  mat-elevation-z1" role="status" *ngIf="error"></div>
+        <div class="alert alert-danger container-fluid" role="alert" *ngIf="!systemStatus" style="margin-right: 1rem;">
+          Uno o varios sistemas de AFIP se encuentran en mantenimiento.
+        </div>
 
-        <span class="badge bg-success px-3 py-1 mx-1 mat-elevation-z3" *ngIf="online && !loading">
+        <div class="spinner-grow text-warning mx-2 mat-elevation-z1" role="status" *ngIf="loading"></div>
+
+        <div class="spinner-grow text-danger mx-2 mat-elevation-z1" role="status" *ngIf="error || !systemStatus"></div>
+
+        <span class="badge bg-success px-3 py-1 mx-1 mat-elevation-z3" *ngIf="online && !loading && systemStatus">
           <h3 class="p-0 m-0">Online</h3>
         </span>
 
@@ -50,19 +59,19 @@
 
       <div class="buttons justify-content-center">
 
-        <button type="button" class="btn m-2"
+        <button type="button" class="btn m-2 mb-2"
           [ngClass]="isConfigurated && !online? 'btn-outline-primary':'btn-outline-secondary'" (click)="iniciarSesion()"
           [disabled]="!isConfigurated || online">Iniciar sesión</button>
 
-        <button type="button" class="btn btn-outline-primary m-2" (click)="dataService.fetchFacturacionAuth('GET')"
-          (click)="consultarEstados()">Consultar</button>
+        <button type="button" class="btn m-2 mb-2 btn-outline-primary"
+          (click)="dataService.fetchFacturacionAuth('GET')" (click)="consultarEstados()">Consultar</button>
 
-        <button type="button" class="btn m-2" [ngClass]="isConfigurated? 'btn-outline-warning':'btn-outline-secondary'"
-          (click)="forzarToken()" [disabled]="!isConfigurated">Nuevo Token (Forzar)</button>
+        <button type="button" class="btn m-2 mb-2"
+          [ngClass]="isConfigurated? 'btn-outline-warning':'btn-outline-secondary'" (click)="forzarToken()"
+          [disabled]="!isConfigurated">Nuevo Token (Forzar)</button>
+
 
       </div>
-
-
 
 
     </div>
