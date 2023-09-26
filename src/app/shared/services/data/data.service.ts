@@ -43,7 +43,7 @@ export class DataService {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'inventario.php';
+    let url = SharedService.host + 'DB/inventario.php';
     if (proxy) url = SharedService.proxy + url;
 
     if (method === 'GET') {
@@ -101,7 +101,7 @@ export class DataService {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'usuarios.php';
+    let url = SharedService.host + 'DB/usuarios.php';
     if (proxy) url = SharedService.proxy + url;
 
     if (method === 'GET') {
@@ -159,7 +159,7 @@ export class DataService {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'roles.php';
+    let url = SharedService.host + 'DB/roles.php';
     if (proxy) url = SharedService.proxy + url;
 
     if (method === 'GET') {
@@ -217,7 +217,7 @@ export class DataService {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'proveedores.php';
+    let url = SharedService.host + 'DB/proveedores.php';
     if (proxy) url = SharedService.proxy + url;
 
     if (method === 'GET') {
@@ -275,7 +275,7 @@ export class DataService {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'ingresos.php';
+    let url = SharedService.host + 'DB/ingresos.php';
     if (proxy) url = SharedService.proxy + url;
 
     if (method === 'GET') {
@@ -333,7 +333,7 @@ export class DataService {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'egresos.php';
+    let url = SharedService.host + 'DB/egresos.php';
     if (proxy) url = SharedService.proxy + url;
 
     if (method === 'GET') {
@@ -390,7 +390,7 @@ export class DataService {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'facturacionAuth.php';
+    let url = SharedService.host + 'DB/facturacionAuth.php';
     if (proxy) url = SharedService.proxy + url;
 
     if (method === 'GET') {
@@ -423,14 +423,38 @@ export class DataService {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'wsaa.php';
+    let url = SharedService.host + 'AFIP/wsaa.php';
     if (proxy) url = SharedService.proxy + url;
 
     if (method === 'POST') {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: (data) => {
-            this.ds_Wsaa.next(data);
+            /*  this.ds_Wsaa.next(data); */
+
+            if (data && data?.length === undefined) {
+              const WsaaStore: any = data;
+
+              if (WsaaStore.header.uniqueId !== undefined &&
+                WsaaStore.header.expirationTime !== undefined &&
+                WsaaStore.credentials.token !== undefined &&
+                WsaaStore.credentials.sign !== undefined)
+                if (WsaaStore.header.uniqueId.length > 5 &&
+                  WsaaStore.header.expirationTime.length > 5 &&
+                  WsaaStore.credentials.token.length > 5 &&
+                  WsaaStore.credentials.sign.length > 5)
+                  this.fetchFacturacionAuth('PUT', {
+                    id: 1,
+                    uniqueId: WsaaStore.header.uniqueId,
+                    expirationTime: WsaaStore.header.expirationTime,
+                    token: this.sharedService.encodeBase64(WsaaStore.credentials.token),
+                    sign: this.sharedService.encodeBase64(WsaaStore.credentials.sign)
+                  });
+                else
+                  this.sharedService.message('Error, no se pudieron guardar las credenciales.');
+              else
+                this.sharedService.message('Error, no se pudieron guardar las credenciales.');
+            }
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -443,10 +467,13 @@ export class DataService {
 
 
 
+  /*
 
-
-
-
+    public getFileContent(xmlFileName: string): Observable<string> {
+      const xmlFilePath = `assets/xml/${xmlFileName}`;
+      return this.http.get(xmlFilePath, { responseType: 'text' });
+    }
+   */
 
 
 

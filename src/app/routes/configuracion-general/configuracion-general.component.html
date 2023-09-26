@@ -22,15 +22,15 @@
 
       <div class="container-fluid d-flex justify-content-end align-items-end">
 
-        <div class="spinner-grow text-warning" role="status" *ngIf="loading"></div>
+        <div class="spinner-grow text-warning mx-2  mat-elevation-z1" role="status" *ngIf="loading"></div>
 
-        <div class="spinner-grow text-danger" role="status" *ngIf="error"></div>
+        <div class="spinner-grow text-danger mx-2  mat-elevation-z1" role="status" *ngIf="error"></div>
 
-        <span class="badge bg-success px-3 py-1" *ngIf="online">
+        <span class="badge bg-success px-3 py-1 mx-1 mat-elevation-z3" *ngIf="online && !loading">
           <h3 class="p-0 m-0">Online</h3>
         </span>
 
-        <span class="badge bg-secondary px-3 py-1" *ngIf="!online">
+        <span class="badge bg-secondary px-3 py-1 mx-1 mat-elevation-z3" *ngIf="!online && !loading">
           <h3 class="p-0 m-0">Offline</h3>
         </span>
 
@@ -54,10 +54,16 @@
           [ngClass]="isConfigurated && !online? 'btn-outline-primary':'btn-outline-secondary'" (click)="iniciarSesion()"
           [disabled]="!isConfigurated || online">Iniciar sesión</button>
 
+        <button type="button" class="btn btn-outline-primary m-2" (click)="dataService.fetchFacturacionAuth('GET')"
+          (click)="consultarEstados()">Consultar</button>
+
         <button type="button" class="btn m-2" [ngClass]="isConfigurated? 'btn-outline-warning':'btn-outline-secondary'"
           (click)="forzarToken()" [disabled]="!isConfigurated">Nuevo Token (Forzar)</button>
 
       </div>
+
+
+
 
     </div>
   </mat-tab>
