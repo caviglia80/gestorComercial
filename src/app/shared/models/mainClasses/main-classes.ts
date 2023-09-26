@@ -180,7 +180,8 @@ export class moneyOutlays {
 
 export class facturacionAuth {
   id: number;
-  sign: string | null | undefined;
+  cuit: string | null;
+  sign: string | null;
   token: string | null;
   expirationTime: string | null;
   uniqueId: string | null;
@@ -189,6 +190,7 @@ export class facturacionAuth {
 
   constructor(
     id: number = 0,
+    cuit: string = '',
     sign: string = '',
     token: string = '',
     expirationTime: string = '',
@@ -197,6 +199,7 @@ export class facturacionAuth {
     llave: string = ''
   ) {
     this.id = id;
+    this.cuit = cuit;
     this.sign = sign;
     this.token = token;
     this.expirationTime = expirationTime;

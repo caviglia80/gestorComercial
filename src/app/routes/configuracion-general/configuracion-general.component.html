@@ -63,16 +63,14 @@
           [ngClass]="isConfigurated && !online? 'btn-outline-primary':'btn-outline-secondary'" (click)="iniciarSesion()"
           [disabled]="!isConfigurated || online">Iniciar sesión</button>
 
-        <button type="button" class="btn m-2 mb-2 btn-outline-primary"
-          (click)="dataService.fetchFacturacionAuth('GET')" (click)="consultarEstados()">Consultar</button>
+        <button type="button" class="btn m-2 mb-2 btn-outline-primary" (click)="dataService.fetchFacturacionAuth('GET')"
+          (click)="consultarEstados()">Consultar</button>
 
         <button type="button" class="btn m-2 mb-2"
           [ngClass]="isConfigurated? 'btn-outline-warning':'btn-outline-secondary'" (click)="forzarToken()"
           [disabled]="!isConfigurated">Nuevo Token (Forzar)</button>
 
-
       </div>
-
 
     </div>
   </mat-tab>

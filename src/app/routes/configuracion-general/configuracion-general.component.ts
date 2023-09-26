@@ -5,13 +5,12 @@ import { facturacionAuth } from '@models/mainClasses/main-classes';
 import { AfipService } from '@services/afip/afip.service';
 import { AfipRequest } from '@models/afipRequest/afip-request';
 
-
 @Component({
   selector: 'app-configuracion-general',
   templateUrl: './configuracion-general.component.html',
   styleUrls: ['./configuracion-general.component.css']
 })
-export class ConfiguracionGeneralComponent implements OnInit, AfterViewInit {
+export class ConfiguracionGeneralComponent implements AfterViewInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageCrt: boolean = false;
   public errorMessageKey: boolean = false;
@@ -21,7 +20,6 @@ export class ConfiguracionGeneralComponent implements OnInit, AfterViewInit {
   public error: boolean = false;
   public isConfigurated: boolean = false;
   public systemStatus: boolean = false;
-  /*   private AfipRequest = new AfipRequest(); */
 
   constructor(
     public dataService: DataService,
@@ -33,9 +31,6 @@ export class ConfiguracionGeneralComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.facturacionAuthInit();
     this.cdr.detectChanges();
-  }
-
-  ngOnInit(): void {
   }
 
   private facturacionAuthInit() {
@@ -55,43 +50,6 @@ export class ConfiguracionGeneralComponent implements OnInit, AfterViewInit {
       }
     });
     this.dataService.fetchFacturacionAuth('GET');
-
-    this.dataService.Wsaa$.subscribe({
-      next: (data) => {
-        /*         if (data && data?.length === undefined) {
-                  this.WsaaStore = data;
-
-                  if (this.WsaaStore.header.uniqueId !== undefined &&
-                    this.WsaaStore.header.expirationTime !== undefined &&
-                    this.WsaaStore.credentials.token !== undefined &&
-                    this.WsaaStore.credentials.sign !== undefined)
-                    if (this.WsaaStore.header.uniqueId.length > 5 &&
-                      this.WsaaStore.header.expirationTime.length > 5 &&
-                      this.WsaaStore.credentials.token.length > 5 &&
-                      this.WsaaStore.credentials.sign.length > 5)
-                      this.dataService.fetchFacturacionAuth('PUT', {
-                        id: 1,
-                        uniqueId: this.WsaaStore.header.uniqueId,
-                        expirationTime: this.WsaaStore.header.expirationTime,
-                        token: this.sharedService.encodeBase64(this.WsaaStore.credentials.token),
-                        sign: this.sharedService.encodeBase64(this.WsaaStore.credentials.sign)
-                      });
-                    else
-                      this.sharedService.message('Error, no se pudieron guardar las credenciales.');
-                  else
-                    this.sharedService.message('Error, no se pudieron guardar las credenciales.');
-                } */
-        this.loading = false;
-        this.error = false;
-      },
-      error: (error) => {
-        this.online = false;
-        this.loading = false;
-        this.error = true;
-
-        console.error(error);
-      }
-    });
   }
 
   private clearFileInput() {
@@ -159,7 +117,7 @@ export class ConfiguracionGeneralComponent implements OnInit, AfterViewInit {
     if (this.isConfigurated) {
       this.dataService.fetchWSAA('POST', { id: 1, CERT: this.fAuthStore.certificado, PRIVATEKEY: this.fAuthStore.llave });
     } else {
-      this.sharedService.message('Error, asegurese de haber cargado el certificado y la llave.');
+      this.sharedService.message('Cargue certificado, llave y CUIT.');
       return;
     }
   }
@@ -209,7 +167,6 @@ export class ConfiguracionGeneralComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
 
 
 

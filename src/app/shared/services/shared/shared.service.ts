@@ -22,7 +22,8 @@ export class SharedService {
     'Débito automático',
     'PayPal',
     'Ualá',
-    'Bitcoin'
+    'Bitcoin',
+    'Otro'
   ];
 
   constructor(

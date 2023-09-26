@@ -29,9 +29,9 @@ export class DataService {
   private ds_FacturacionAuth: BehaviorSubject<facturacionAuth[]> = new BehaviorSubject<facturacionAuth[]>([]);
   public FacturacionAuth$: Observable<facturacionAuth[]> = this.ds_FacturacionAuth.asObservable();
 
-  private ds_Wsaa: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+/*   private ds_Wsaa: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Wsaa$: Observable<any[]> = this.ds_Wsaa.asObservable();
-
+ */
   constructor(
     private http: HttpClient,
     public sharedService: SharedService
@@ -430,30 +430,36 @@ export class DataService {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: (data) => {
-            /*  this.ds_Wsaa.next(data); */
 
-            if (data && data?.length === undefined) {
+            if (data) {
               const WsaaStore: any = data;
 
-              if (WsaaStore.header.uniqueId !== undefined &&
-                WsaaStore.header.expirationTime !== undefined &&
-                WsaaStore.credentials.token !== undefined &&
-                WsaaStore.credentials.sign !== undefined)
-                if (WsaaStore.header.uniqueId.length > 5 &&
-                  WsaaStore.header.expirationTime.length > 5 &&
-                  WsaaStore.credentials.token.length > 5 &&
-                  WsaaStore.credentials.sign.length > 5)
-                  this.fetchFacturacionAuth('PUT', {
-                    id: 1,
-                    uniqueId: WsaaStore.header.uniqueId,
-                    expirationTime: WsaaStore.header.expirationTime,
-                    token: this.sharedService.encodeBase64(WsaaStore.credentials.token),
-                    sign: this.sharedService.encodeBase64(WsaaStore.credentials.sign)
-                  });
+              if (typeof WsaaStore === 'object' && Object.keys(WsaaStore).length === 0) {
+                this.sharedService.message('Es posible que ya haya iniciado sesión.');
+              } else {
+                if (WsaaStore.header.uniqueId !== undefined &&
+                  WsaaStore.header.expirationTime !== undefined &&
+                  WsaaStore.credentials.token !== undefined &&
+                  WsaaStore.credentials.sign !== undefined &&
+                  WsaaStore.header.destination !== undefined)
+                  if (WsaaStore.header.uniqueId.length > 5 &&
+                    WsaaStore.header.expirationTime.length > 5 &&
+                    WsaaStore.credentials.token.length > 5 &&
+                    WsaaStore.credentials.sign.length > 5 &&
+                    WsaaStore.header.destination.length > 5)
+                    this.fetchFacturacionAuth('PUT', {
+                      id: 1,
+                      cuit: WsaaStore.header.destination.match(/CUIT (\d+)/)[1],
+                      uniqueId: WsaaStore.header.uniqueId,
+                      expirationTime: WsaaStore.header.expirationTime,
+                      token: this.sharedService.encodeBase64(WsaaStore.credentials.token),
+                      sign: this.sharedService.encodeBase64(WsaaStore.credentials.sign)
+                    });
+                  else
+                    this.sharedService.message('Error, no se pudieron guardar las credenciales.');
                 else
                   this.sharedService.message('Error, no se pudieron guardar las credenciales.');
-              else
-                this.sharedService.message('Error, no se pudieron guardar las credenciales.');
+              }
             }
           },
           error: (error) => {
