@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { AfipRequest } from '@models/afipRequest/afip-request';
+import * as vkbeautify from 'vkbeautify';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -19,12 +21,19 @@ export class AfipService {
     /*     private sharedService: SharedService, */
     private http: HttpClient) { }
 
-  public sendRequestAfip(body: string) {
+/*   public sendRequestAfip(body: string) {
     const header = new HttpHeaders({ 'Content-Type': 'text/xml;charset=UTF-8' });
     return this.http.post(this.host, body, { headers: header, responseType: 'text' });
+  } */
+
+  public send_AfipRequest(body: string) {
+    const header = new HttpHeaders({ 'Content-Type': 'text/xml;charset=UTF-8' });
+    return this.http.post(this.host, body, { headers: header, responseType: 'text' }).pipe(
+      map((response: string) => {
+        return vkbeautify.xml(response);
+      })
+    );
   }
-
-
 
 
 

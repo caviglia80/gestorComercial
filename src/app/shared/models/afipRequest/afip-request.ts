@@ -11,7 +11,20 @@ export class AfipRequest {
     </soap:Envelope>`;
   }
 
-
+  public FEParamGetPtosVenta(): string {
+    return `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ar="http://ar.gov.afip.dif.FEV1/">
+    <soapenv:Header/>
+    <soapenv:Body>
+      <FEParamGetPtosVenta xmlns="http://ar.gov.afip.dif.FEV1/">
+        <Auth>
+          <Token></Token>
+          <Sign></Sign>
+          <Cuit></Cuit>
+        </Auth>
+      </FEParamGetPtosVenta>
+    </soapenv:Body>
+  </soapenv:Envelope>`;
+  }
 
 
 

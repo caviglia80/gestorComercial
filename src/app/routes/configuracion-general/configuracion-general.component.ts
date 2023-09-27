@@ -141,7 +141,7 @@ export class ConfiguracionGeneralComponent implements AfterViewInit {
   }
 
   public checkSystemStatus() {
-    this.afipService.sendRequestAfip(new AfipRequest().FEDummy()).subscribe({
+    this.afipService.send_AfipRequest(new AfipRequest().FEDummy()).subscribe({
       next: (dataResponse) => {
 
         if (dataResponse.length >= 10) {
@@ -153,13 +153,35 @@ export class ConfiguracionGeneralComponent implements AfterViewInit {
 
           if (appServerStatus === 'OK' && dbServerStatus === 'OK' && authServerStatus === 'OK') this.systemStatus = true; else
             this.systemStatus = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
+  }
 
-          /*           xmlDoc.querySelector('AppServer')!.textContent = 'Nuevo Valorrrrrrr';
-                    const modifiedXmlString = new XMLSerializer().serializeToString(xmlDoc);
+  public GetPuntosDeVenta() {
 
-                    console.log('XML modificado:');
-                    console.log(modifiedXmlString);
-           */
+    let body = new AfipRequest().FEParamGetPtosVenta();
+    const xmlRequest = new DOMParser().parseFromString(body, 'text/xml');
+
+
+    xmlRequest.querySelector('Token')!.textContent = this.sharedService.decodeBase64(this.fAuthStore.token!);
+    xmlRequest.querySelector('Sign')!.textContent = this.sharedService.decodeBase64(this.fAuthStore.sign!);
+    xmlRequest.querySelector('Cuit')!.textContent = this.fAuthStore.cuit;
+
+
+
+    this.afipService.send_AfipRequest(new XMLSerializer().serializeToString(xmlRequest)).subscribe({
+      next: (dataResponse) => {
+
+        if (dataResponse.length >= 5) {
+
+
+          this.testStr = dataResponse;
+
+
         }
       },
       error: (error) => {
@@ -169,9 +191,7 @@ export class ConfiguracionGeneralComponent implements AfterViewInit {
   }
 
 
-
-
-
+  testStr = '';
 
 
 
