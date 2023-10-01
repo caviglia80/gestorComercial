@@ -115,7 +115,7 @@ export class ConfiguracionGeneralComponent implements AfterViewInit {
     this.dataService.fetchFacturacionAuth('GET');
 
     if (this.isConfigurated) {
-      this.dataService.fetchWSAA('POST', { id: 1, CERT: this.fAuthStore.certificado, PRIVATEKEY: this.fAuthStore.llave });
+      this.afipService.fetchWSAA('POST', { id: 1, CERT: this.fAuthStore.certificado, PRIVATEKEY: this.fAuthStore.llave });
     } else {
       this.sharedService.message('Cargue certificado, llave y CUIT.');
       return;
@@ -127,7 +127,7 @@ export class ConfiguracionGeneralComponent implements AfterViewInit {
     this.dataService.fetchFacturacionAuth('GET');
     if (this.fAuthStore.certificado && this.fAuthStore.llave)
       if (this.fAuthStore.certificado.length > 10 && this.fAuthStore.llave.length > 10) {
-        this.dataService.fetchWSAA('POST', { id: 1, CERT: this.fAuthStore.certificado, PRIVATEKEY: this.fAuthStore.llave });
+        this.afipService.fetchWSAA('POST', { id: 1, CERT: this.fAuthStore.certificado, PRIVATEKEY: this.fAuthStore.llave });
       } else {
         this.sharedService.message('Error, asegurese de haber cargado el certificado y la llave.');
         return;
@@ -162,27 +162,46 @@ export class ConfiguracionGeneralComponent implements AfterViewInit {
   }
 
   public GetPuntosDeVenta() {
-
     let body = new AfipRequest().FEParamGetPtosVenta();
     const xmlRequest = new DOMParser().parseFromString(body, 'text/xml');
-
-
     xmlRequest.querySelector('Token')!.textContent = this.sharedService.decodeBase64(this.fAuthStore.token!);
     xmlRequest.querySelector('Sign')!.textContent = this.sharedService.decodeBase64(this.fAuthStore.sign!);
     xmlRequest.querySelector('Cuit')!.textContent = this.fAuthStore.cuit;
 
+    this.afipService.send_AfipRequest(new XMLSerializer().serializeToString(xmlRequest)).subscribe({
+      next: (dataResponse) => {
+        /* if (dataResponse.length >= 5)
+          this.testStr = dataResponse; */
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
+  }
 
+  public FECAESolicitar_C() {
+    let body = new AfipRequest().FECAESolicitar('c');
+    const xmlRequest = new DOMParser().parseFromString(body, 'text/xml');
+
+    xmlRequest.querySelector('Token')!.textContent = this.sharedService.decodeBase64(this.fAuthStore.token!);
+    xmlRequest.querySelector('Sign')!.textContent = this.sharedService.decodeBase64(this.fAuthStore.sign!);
+    xmlRequest.querySelector('Cuit')!.textContent = this.fAuthStore.cuit;
+    xmlRequest.querySelector('PtoVta')!.textContent = '1';
+
+    xmlRequest.querySelector('CbteFch')!.textContent = '20230929';
+    xmlRequest.querySelector('DocTipo')!.textContent = '80';
+    xmlRequest.querySelector('DocNro')!.textContent = '30000000007';
+
+    xmlRequest.querySelector('CbteDesde')!.textContent = '6';
+    xmlRequest.querySelector('CbteHasta')!.textContent = '6';
+
+    xmlRequest.querySelector('ImpTotal')!.textContent = '5';
+    xmlRequest.querySelector('ImpNeto')!.textContent = '5';
 
     this.afipService.send_AfipRequest(new XMLSerializer().serializeToString(xmlRequest)).subscribe({
       next: (dataResponse) => {
-
-        if (dataResponse.length >= 5) {
-
-
-          this.testStr = dataResponse;
-
-
-        }
+      /*   if (dataResponse.length >= 5)
+          this.testStr = dataResponse; */
       },
       error: (error) => {
         console.error('Error:', error);
@@ -191,7 +210,22 @@ export class ConfiguracionGeneralComponent implements AfterViewInit {
   }
 
 
-  testStr = '';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
