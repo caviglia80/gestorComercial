@@ -8,14 +8,3 @@
   overflow-y: auto;
 }
 
-.buttons {
-  display: flex;
-  flex-direction: row;
-}
-
-@media (max-width: 570px) {
-  .buttons {
-    display: flex;
-    flex-direction: column;
-  }
-}

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
+/* import * as sharp from 'sharp'; */
 
 @Injectable({
   providedIn: 'root',
@@ -92,6 +93,43 @@ export class SharedService {
     }
     return true;
   }
+/*
+  public async optimizarImagen(file: File, ancho: number = 300, alto: number = 200, calidad: number = 80): Promise<Buffer> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+          const iconoOriginalBuffer: ArrayBuffer = event.target!.result as ArrayBuffer;
+          const buffer: Buffer = Buffer.from(iconoOriginalBuffer);
+
+          let imagenProcesada = sharp(buffer);
+          imagenProcesada = imagenProcesada.toFormat('png' as keyof sharp.FormatEnum);
+
+          // Redimensionar
+          if (ancho && alto)
+            imagenProcesada = imagenProcesada.resize(ancho, alto);
+
+          // Aplicar compresión
+          if (calidad)
+            imagenProcesada = imagenProcesada.png({ quality: calidad });
+
+          const imagenProcesadaBuffer = await imagenProcesada.toBuffer();
+          resolve(imagenProcesadaBuffer);
+        };
+
+        reader.onerror = (error) => {
+          reject(new Error('Error al cargar el archivo: ' + error));
+        };
+
+        reader.readAsArrayBuffer(file);
+      } catch (error) {
+        reject(new Error('Error al procesar la imagen: ' + error));
+      }
+    });
+  }
+ */
+
+
 
 
 
