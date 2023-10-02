@@ -1,0 +1,11 @@
+<div class="form-group container-fluid mb-4">
+  <p class="mb-1">Ingrese imagen (.png)</p>
+  <input type="file" class="form-control" id="crtFile" #fileInput (change)="onFileSelected($event, 'png')">
+  <div class="text-danger m-2" *ngIf="errorMessageImg">Solo se permiten imagenes con extensión .png</div>
+</div>
+
+
+<!--
+<img [src]="hexadecimalImage" alt="Icon">
+ -->
+

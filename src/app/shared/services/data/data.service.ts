@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { facturacionAuth } from '@models/mainClasses/main-classes';
+import { configuracion } from '@models/mainClasses/main-classes';
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +30,15 @@ export class DataService {
   private ds_FacturacionAuth: BehaviorSubject<facturacionAuth[]> = new BehaviorSubject<facturacionAuth[]>([]);
   public FacturacionAuth$: Observable<facturacionAuth[]> = this.ds_FacturacionAuth.asObservable();
 
+  private ds_Configuracion: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public Configuracion$: Observable<any[]> = this.ds_Configuracion.asObservable();
+
   constructor(
     private http: HttpClient,
     public sharedService: SharedService
-  ) { }
-
+  ) {
+    this.fetchConfiguracion('GET');
+  }
 
   public fetchInventario(method: string = '', body: any = {}, proxy: boolean = false): void {
     const NAME: any = body.name;
@@ -416,7 +421,38 @@ export class DataService {
     }
   }
 
+  public fetchConfiguracion(method: string = '', body: any = {}, proxy: boolean = false): void {
+    if (!SharedService.isProduction) console.log(body);
+    body = JSON.stringify(body);
+    const headers: {} = { 'Content-Type': 'application/json' }
+    let url = SharedService.host + 'DB/configuracion.php';
+    if (proxy) url = SharedService.proxy + url;
 
+    if (method === 'GET') {
+      this.http.get<any[]>(url)
+        .subscribe({
+          next: (data) => {
+            this.ds_Configuracion.next(data);
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar obtener registros.');
+          }
+        });
+    } else if (method === 'PUT') {
+      this.http.put(url, body, headers)
+        .subscribe({
+          next: () => {
+            this.sharedService.message('Actualizado !');
+            this.fetchConfiguracion('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar editar el registro.');
+          }
+        });
+    }
+  }
 
 
 

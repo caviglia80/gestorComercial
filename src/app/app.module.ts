@@ -42,6 +42,7 @@ import localeEsES from '@angular/common/locales/es';
 import { MatSelectModule } from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FacturacionConfigComponent } from './shared/components/facturacion-config/facturacion-config.component';
+import { AjustesConfigComponent } from './shared/components/ajustes-config/ajustes-config.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { FacturacionConfigComponent } from './shared/components/facturacion-conf
     ConfiguracionGeneralComponent,
     UsuariosComponent,
     RolesComponent,
-    FacturacionConfigComponent
+    FacturacionConfigComponent,
+    AjustesConfigComponent
   ],
   imports: [
     BrowserModule,

@@ -208,3 +208,25 @@ export class facturacionAuth {
     this.llave = llave;
   }
 }
+
+export class configuracion {
+  id: number;
+  icono: string;
+  tooltipEnabled: number;
+  copyEnabled: number;
+  colors: string;
+
+  constructor(
+    id: number = 0,
+    icono: string = '',
+    tooltipEnabled: number = 0,
+    copyEnabled: number = 0,
+    colors: string = '',
+  ) {
+    this.id = id;
+    this.icono = icono;
+    this.tooltipEnabled = tooltipEnabled;
+    this.copyEnabled = copyEnabled;
+    this.colors = colors;
+  }
+}

@@ -4,7 +4,7 @@
     <button class="toggle-button mt-2" (click)="toggleSidenav()">
       <mat-icon>{{ sidenavOpened ? 'arrow_back_ios' : 'menu' }}</mat-icon>
     </button>
-    <img class="navbar-icon" src="./assets/logo.png" alt="logo">
+    <img class="navbar-icon" [src]="icono" alt="logo" *ngIf="icono">
   </div>
 </nav>
 

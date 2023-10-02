@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
-/* import * as sharp from 'sharp'; */
+import { Ng2ImgMaxService } from 'ng2-img-max';
+import { Observable, from, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +28,13 @@ export class SharedService {
     'Bitcoin',
     'Otro'
   ];
+  public dataConfiguracion: any;
 
   constructor(
+    private ng2ImgMax: Ng2ImgMaxService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+  }
 
   public copy(textToCopy: string) {
     const el = document.createElement('textarea');
@@ -52,6 +57,28 @@ export class SharedService {
 
   public encodeBase64(text: string): string {
     return btoa(text);
+  }
+
+  public encodeImgToBase64(file: File): Observable<string> {
+    return from(this.ng2ImgMax.compressImage(file, 0.03))
+      .pipe(
+        switchMap(result => {
+          const reader = new FileReader();
+          reader.readAsDataURL(result);
+          return from(new Promise<string>((resolve, reject) => {
+            reader.onload = () => {
+              resolve(reader.result as string);
+            };
+            reader.onerror = () => {
+              reject('Error al leer la imagen');
+            };
+          }));
+        }),
+        catchError(error => {
+          console.error('Error al comprimir la imagen:', error);
+          return '' + error;
+        })
+      );
   }
 
   public decodeBase64(base64String: string): string {
@@ -93,41 +120,16 @@ export class SharedService {
     }
     return true;
   }
-/*
-  public async optimizarImagen(file: File, ancho: number = 300, alto: number = 200, calidad: number = 80): Promise<Buffer> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const reader = new FileReader();
-        reader.onload = async (event) => {
-          const iconoOriginalBuffer: ArrayBuffer = event.target!.result as ArrayBuffer;
-          const buffer: Buffer = Buffer.from(iconoOriginalBuffer);
 
-          let imagenProcesada = sharp(buffer);
-          imagenProcesada = imagenProcesada.toFormat('png' as keyof sharp.FormatEnum);
 
-          // Redimensionar
-          if (ancho && alto)
-            imagenProcesada = imagenProcesada.resize(ancho, alto);
 
-          // Aplicar compresión
-          if (calidad)
-            imagenProcesada = imagenProcesada.png({ quality: calidad });
 
-          const imagenProcesadaBuffer = await imagenProcesada.toBuffer();
-          resolve(imagenProcesadaBuffer);
-        };
 
-        reader.onerror = (error) => {
-          reject(new Error('Error al cargar el archivo: ' + error));
-        };
 
-        reader.readAsArrayBuffer(file);
-      } catch (error) {
-        reject(new Error('Error al procesar la imagen: ' + error));
-      }
-    });
-  }
- */
+
+
+
+
 
 
 
