@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { Ng2ImgMaxService } from 'ng2-img-max';
-import { Observable, from, throwError } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { DataService } from '@services/data/data.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,25 +29,30 @@ export class SharedService {
     'Bitcoin',
     'Otro'
   ];
-  public dataConfiguracion: any;
+  private currentConfiguracion: any;
 
   constructor(
+    private injector: Injector,
     private ng2ImgMax: Ng2ImgMaxService,
     private snackBar: MatSnackBar
   ) {
   }
 
   public copy(textToCopy: string) {
-    const el = document.createElement('textarea');
-    el.value = textToCopy;
-    document.body.appendChild(el);
-    el.select();
-    try {
-      document.execCommand('copy');
-      this.message('Texto copiado !');
-    } finally {
-      document.body.removeChild(el);
-    }
+    this.currentConfiguracion = this.injector.get(DataService).getCurrentConfiguracion();
+    if (this.currentConfiguracion.copyEnabled !== undefined)
+      if (this.currentConfiguracion.copyEnabled === '1') {
+        const el = document.createElement('textarea');
+        el.value = textToCopy;
+        document.body.appendChild(el);
+        el.select();
+        try {
+          document.execCommand('copy');
+          this.message('Texto copiado !');
+        } finally {
+          document.body.removeChild(el);
+        }
+      }
   }
 
   public message(text: string, action: string = 'Cerrar') {

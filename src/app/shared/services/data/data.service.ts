@@ -32,12 +32,21 @@ export class DataService {
 
   private ds_Configuracion: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Configuracion$: Observable<any[]> = this.ds_Configuracion.asObservable();
+  private currentConfiguracion: any;
 
   constructor(
     private http: HttpClient,
     public sharedService: SharedService
   ) {
+
+    this.Configuracion$.subscribe((data) => {
+      this.currentConfiguracion = data[0];
+    });
     this.fetchConfiguracion('GET');
+  }
+
+  public getCurrentConfiguracion(): any {
+    return this.currentConfiguracion;
   }
 
   public fetchInventario(method: string = '', body: any = {}, proxy: boolean = false): void {

@@ -35,10 +35,8 @@ export class AjustesConfigComponent implements AfterViewInit {
       if (this.dataSource !== undefined) {
         this.tooltipChecked = this.dataSource.tooltipEnabled == 1;
         this.copyChecked = this.dataSource.copyEnabled == 1;
-
         this.Color1 = this.dataSource.color1;
         this.Color2 = this.dataSource.color2;
-
       }
     });
   }
