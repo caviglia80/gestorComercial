@@ -2,9 +2,8 @@
 
 :root {
   /* colores globales - de mas claro a mas oscuro */
-  --color-0: #ab9bf1;
-  --color-1: #846bf3;
-  --color-2: #4c28ec;
+  --color-1: transparent;
+  --color-2: transparent;
   /* fondo del contenido */
   --content-Background-color: var(--color-2);
   --content-Background-opacity: .07;
@@ -20,7 +19,7 @@
   --navBar-Background-opacity: 1;
   /* title */
   --title-background: linear-gradient(60deg, var(--color-1), var(--color-2));
-  --title-box-shadow: 0 4px 15px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px var(--color-0);
+  --title-box-shadow: 0 4px 15px 0 rgba(0, 0, 0, .14), 0 7px 10px -7px var(--color-1);
   /* scroll */
   --scroll-Background: linear-gradient(60deg, var(--color-1), var(--color-2), var(--color-1));
 }

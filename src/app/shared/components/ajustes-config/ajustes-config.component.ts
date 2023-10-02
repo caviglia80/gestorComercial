@@ -16,6 +16,7 @@ export class AjustesConfigComponent implements AfterViewInit {
   public copyChecked: boolean = false;
   public Color1: string = '#000000';
   public Color2: string = '#000000';
+  public colorPickerIsOpen: boolean = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -24,8 +25,8 @@ export class AjustesConfigComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    this.cdr.detectChanges();
     this.dataInit();
+    this.cdr.detectChanges();
   }
 
   private dataInit() {
@@ -82,7 +83,17 @@ export class AjustesConfigComponent implements AfterViewInit {
     this.dataService.fetchConfiguracion('PUT', { id: 1, color2: color });
   }
 
+  public ColorPickerIsOpen(open: boolean) {
+    this.colorPickerIsOpen = open;
+  }
 
+  public previewColor1(color: string) {
+    document.documentElement.style.setProperty('--color-1', color);
+  }
+
+  public previewColor2(color: string) {
+    document.documentElement.style.setProperty('--color-2', color);
+  }
 
 
 

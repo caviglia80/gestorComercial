@@ -24,3 +24,7 @@
   color: black;
   font-weight: bold;
 }
+
+.overflow-visible {
+  overflow: visible !important;
+}

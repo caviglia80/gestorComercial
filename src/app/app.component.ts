@@ -20,6 +20,7 @@ Date.prototype.addHours = function (hours: number): Date {
 })
 export class AppComponent implements OnInit {
   title = 'gestorComercial';
+  private dataSource: any;
 
   constructor(
     public dataService: DataService
@@ -31,7 +32,12 @@ export class AppComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Configuracion$.subscribe((data) => {
-      this.cargarIcono(data[0] !== undefined ? data[0].icono : '');
+      this.dataSource = data[0];
+      if (this.dataSource !== undefined) {
+        this.cargarIcono(this.dataSource.icono !== undefined ? this.dataSource.icono : '');
+        document.documentElement.style.setProperty('--color-1', this.dataSource.color1);
+        document.documentElement.style.setProperty('--color-2', this.dataSource.color2);
+      }
     });
   }
 
@@ -39,4 +45,5 @@ export class AppComponent implements OnInit {
     const link = document.querySelector('#page-icon') as HTMLLinkElement;
     link.href = icon;
   }
+
 }
