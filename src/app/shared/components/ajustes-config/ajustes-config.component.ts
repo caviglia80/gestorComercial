@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
+import { configuracion } from '@models/mainClasses/main-classes';
 
 @Component({
   selector: 'app-ajustes-config',
@@ -42,7 +43,9 @@ export class AjustesConfigComponent implements AfterViewInit {
     }
   }
 
-
+  public restauracionDeFabrica() {
+    this.dataService.fetchConfiguracion('PUT', new configuracion());
+  }
 
 
 }

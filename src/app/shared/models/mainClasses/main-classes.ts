@@ -189,7 +189,7 @@ export class facturacionAuth {
   llave: string | null;
 
   constructor(
-    id: number = 0,
+    id: number = 1,
     cuit: string = '',
     sign: string = '',
     token: string = '',
@@ -217,10 +217,10 @@ export class configuracion {
   colors: string;
 
   constructor(
-    id: number = 0,
-    icono: string = '',
-    tooltipEnabled: number = 0,
-    copyEnabled: number = 0,
+    id: number = 1,
+    icono: string = 'assets/defaultLogo.png',
+    tooltipEnabled: number = 1,
+    copyEnabled: number = 1,
     colors: string = '',
   ) {
     this.id = id;
