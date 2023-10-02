@@ -212,15 +212,15 @@ export class facturacionAuth {
 export class configuracion {
   id: number;
   icono: string;
-  tooltipEnabled: number;
-  copyEnabled: number;
+  tooltipEnabled: string;
+  copyEnabled: string;
   colors: string;
 
   constructor(
     id: number = 1,
     icono: string = 'assets/defaultLogo.png',
-    tooltipEnabled: number = 1,
-    copyEnabled: number = 1,
+    tooltipEnabled: string = 'true',
+    copyEnabled: string = 'true',
     colors: string = '',
   ) {
     this.id = id;

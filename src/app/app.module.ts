@@ -40,9 +40,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { registerLocaleData } from '@angular/common';
 import localeEsES from '@angular/common/locales/es';
 import { MatSelectModule } from '@angular/material/select';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { FacturacionConfigComponent } from './shared/components/facturacion-config/facturacion-config.component';
 import { AjustesConfigComponent } from './shared/components/ajustes-config/ajustes-config.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { AjustesConfigComponent } from './shared/components/ajustes-config/ajust
     MatSlideToggleModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCheckboxModule
   ],
   providers: [
   ],
@@ -100,4 +102,4 @@ export class AppModule {
   constructor() {
     registerLocaleData(localeEsES, 'es-ES');
   }
- }
+}
