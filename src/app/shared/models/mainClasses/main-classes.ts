@@ -214,19 +214,22 @@ export class configuracion {
   icono: string;
   tooltipEnabled: string;
   copyEnabled: string;
-  colors: string;
+  color1: string;
+  color2: string;
 
   constructor(
     id: number = 1,
     icono: string = 'assets/defaultLogo.png',
     tooltipEnabled: string = 'true',
     copyEnabled: string = 'true',
-    colors: string = '',
+    color1: string = '#846bf3',
+    color2: string = '#4c28ec',
   ) {
     this.id = id;
     this.icono = icono;
     this.tooltipEnabled = tooltipEnabled;
     this.copyEnabled = copyEnabled;
-    this.colors = colors;
+    this.color1 = color1;
+    this.color2 = color2;
   }
 }

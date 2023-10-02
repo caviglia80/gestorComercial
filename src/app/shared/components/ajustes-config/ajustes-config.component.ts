@@ -14,6 +14,8 @@ export class AjustesConfigComponent implements AfterViewInit {
   public dataSource: any;
   public tooltipChecked: boolean = false;
   public copyChecked: boolean = false;
+  public Color1: string = '#000000';
+  public Color2: string = '#000000';
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -32,6 +34,10 @@ export class AjustesConfigComponent implements AfterViewInit {
       if (this.dataSource !== undefined) {
         this.tooltipChecked = this.dataSource.tooltipEnabled == 1;
         this.copyChecked = this.dataSource.copyEnabled == 1;
+
+        this.Color1 = this.dataSource.color1;
+        this.Color2 = this.dataSource.color2;
+
       }
     });
   }
@@ -68,9 +74,13 @@ export class AjustesConfigComponent implements AfterViewInit {
     this.dataService.fetchConfiguracion('PUT', { id: 1, copyEnabled: isChecked ? "true" : "false" });
   }
 
+  public color1(color: string) {
+    this.dataService.fetchConfiguracion('PUT', { id: 1, color1: color });
+  }
 
-
-
+  public color2(color: string) {
+    this.dataService.fetchConfiguracion('PUT', { id: 1, color2: color });
+  }
 
 
 

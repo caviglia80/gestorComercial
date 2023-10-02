@@ -5,11 +5,32 @@
 </div>
 
 <div class="checkbox-container">
-  <mat-checkbox [(ngModel)]="tooltipChecked" (ngModelChange)="habilitarTooltip(tooltipChecked)">Habilitar tootltips</mat-checkbox>
-  <mat-checkbox [(ngModel)]="copyChecked" (ngModelChange)="habilitarCopy(copyChecked)">Habilitar copiar con doble clic</mat-checkbox>
+  <mat-checkbox [(ngModel)]="tooltipChecked" (ngModelChange)="habilitarTooltip(tooltipChecked)">Habilitar
+    tootltips</mat-checkbox>
+  <mat-checkbox [(ngModel)]="copyChecked" (ngModelChange)="habilitarCopy(copyChecked)">Habilitar copiar con doble
+    clic</mat-checkbox>
 </div>
 
 
+
+
+
+
+<mat-expansion-panel class="mb-2" style="overflow:visible;">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Cambiar colores
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <div class="color-container justify-content-center">
+    <input [(colorPicker)]="Color1" [style.background]="Color1" placeholder="Color 1" class="mx-3 text-center"
+      style="width: 40%;" (colorPickerSelect)="color1(Color1)" />
+    <input [(colorPicker)]="Color2" [style.background]="Color2" placeholder="Color 2" class="mx-3 text-center"
+      style="width: 40%;" (colorPickerSelect)="color2(Color2)" />
+  </div>
+
+</mat-expansion-panel>
 
 
 
@@ -20,5 +41,6 @@
 
 
 <div class="buttons justify-content-center">
-  <button type="button" class="btn m-2 mb-2 btn-outline-primary" (click)="restauracionDeFabrica()">Restaurar valores de fabrica</button>
+  <button type="button" class="btn m-2 mb-2 btn-outline-primary" (click)="restauracionDeFabrica()">Restaurar valores de
+    fabrica</button>
 </div>

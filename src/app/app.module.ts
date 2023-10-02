@@ -44,6 +44,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FacturacionConfigComponent } from './shared/components/facturacion-config/facturacion-config.component';
 import { AjustesConfigComponent } from './shared/components/ajustes-config/ajustes-config.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReactiveFormsModule,
     MatSelectModule,
     MatTabsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ColorPickerModule
   ],
   providers: [
   ],

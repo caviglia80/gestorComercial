@@ -25,6 +25,7 @@
     "image-resize": "^1.3.2",
     "ng2-img-max": "^2.2.9",
     "ngx-bootstrap": "^11.0.2",
+    "ngx-color-picker": "^15.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.6.0",
     "vkbeautify": "^0.99.3",
