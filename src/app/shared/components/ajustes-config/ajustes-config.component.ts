@@ -12,7 +12,7 @@ export class AjustesConfigComponent implements AfterViewInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageImg: boolean = false;
   public dataSource: any;
-  public tooltipChecked: boolean = false;
+/*   public tooltipChecked: boolean = false; */
   public copyChecked: boolean = false;
   public Color1: string = '#000000';
   public Color2: string = '#000000';
@@ -33,7 +33,7 @@ export class AjustesConfigComponent implements AfterViewInit {
     this.dataService.Configuracion$.subscribe((data) => {
       this.dataSource = data[0];
       if (this.dataSource !== undefined) {
-        this.tooltipChecked = this.dataSource.tooltipEnabled == 1;
+/*         this.tooltipChecked = this.dataSource.tooltipEnabled == 1; */
         this.copyChecked = this.dataSource.copyEnabled == 1;
         this.Color1 = this.dataSource.color1;
         this.Color2 = this.dataSource.color2;
@@ -65,9 +65,9 @@ export class AjustesConfigComponent implements AfterViewInit {
     this.dataService.fetchConfiguracion('PUT', new configuracion());
   }
 
-  public habilitarTooltip(isChecked: boolean) {
+/*   public habilitarTooltip(isChecked: boolean) {
     this.dataService.fetchConfiguracion('PUT', { id: 1, tooltipEnabled: isChecked ? "true" : "false" });
-  }
+  } */
 
   public habilitarCopy(isChecked: boolean) {
     this.dataService.fetchConfiguracion('PUT', { id: 1, copyEnabled: isChecked ? "true" : "false" });

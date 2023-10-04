@@ -212,7 +212,6 @@ export class facturacionAuth {
 export class configuracion {
   id: number;
   icono: string;
-  tooltipEnabled: string;
   copyEnabled: string;
   color1: string;
   color2: string;
@@ -220,14 +219,12 @@ export class configuracion {
   constructor(
     id: number = 1,
     icono: string = 'assets/defaultLogo.png',
-    tooltipEnabled: string = 'true',
     copyEnabled: string = 'true',
     color1: string = '#846bf3',
     color2: string = '#4c28ec',
   ) {
     this.id = id;
     this.icono = icono;
-    this.tooltipEnabled = tooltipEnabled;
     this.copyEnabled = copyEnabled;
     this.color1 = color1;
     this.color2 = color2;
