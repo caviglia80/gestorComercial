@@ -23,6 +23,7 @@ export class EgresosComponent implements AfterViewInit {
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
     date: 'Fecha',
+    product: 'Producto',
     currency: 'Moneda',
     amount: 'Monto',
     /*     expenseMethod: 'Método de Gasto', */
@@ -107,6 +108,7 @@ export class EgresosComponent implements AfterViewInit {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.date = item.date;
+    this.Item.product = item.product;
     this.Item.currency = item.currency;
     this.Item.amount = item.amount;
     this.Item.expenseMethod = item.expenseMethod;
@@ -121,6 +123,7 @@ export class EgresosComponent implements AfterViewInit {
       const body: moneyOutlays = {
         id: this.Item.id,
         date: this.Item.date,
+        product: this.Item.product,
         currency: this.Item.currency,
         amount: this.Item.amount,
         expenseMethod: this.Item.expenseMethod,

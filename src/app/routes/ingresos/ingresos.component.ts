@@ -23,6 +23,7 @@ export class IngresosComponent implements AfterViewInit {
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
     date: 'Fecha',
+    product: 'Producto',
     currency: 'Moneda',
     amount: 'Monto',
     /*     paymentMethod: 'Método de Pago', */
@@ -106,6 +107,7 @@ export class IngresosComponent implements AfterViewInit {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.date = item.date;
+    this.Item.product = item.product;
     this.Item.currency = item.currency;
     this.Item.amount = item.amount;
     this.Item.paymentMethod = item.paymentMethod;
@@ -119,6 +121,7 @@ export class IngresosComponent implements AfterViewInit {
       const body: moneyIncome = {
         id: this.Item.id,
         date: this.Item.date,
+        product: this.Item.product,
         currency: this.Item.currency,
         amount: this.Item.amount,
         paymentMethod: this.Item.paymentMethod,

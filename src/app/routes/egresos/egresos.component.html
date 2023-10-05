@@ -46,6 +46,16 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by product">
+            {{ Columns['product'] }}
+          </th>
+          <td [matTooltip]="element.product" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.product)">
+            {{element.product }}
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="currency">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by currency">
             {{ Columns['currency'] }}
@@ -174,6 +184,11 @@
         </tr>
 
         <tr>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['product'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['product'])">{{ Item['product'] }}</td>
+        </tr>
+
+        <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['currency'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['currency'])">{{ Item['currency'] }}</td>
         </tr>
@@ -241,6 +256,11 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese producto</p>
+    <input matInput placeholder="Producto" [(ngModel)]="Item.product">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['currency'] | lowercase }}</p>
     <mat-select placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
       <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
@@ -301,6 +321,11 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['date'] | lowercase }} <span class="red-asterisk">*</span></p>
     <input class="my-2" type="date" matInput [(ngModel)]="Item.date" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese producto</p>
+    <input matInput placeholder="Producto" [(ngModel)]="Item.product">
   </mat-form-field>
 
   <mat-form-field class="full-width">

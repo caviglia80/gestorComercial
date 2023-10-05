@@ -116,6 +116,7 @@ export class supplier {
 export class moneyIncome {
   id: number;
   date: string;
+  product: string;
   currency: string;
   amount: number;
   paymentMethod: string;
@@ -126,6 +127,7 @@ export class moneyIncome {
   constructor(
     id: number = 0,
     date: string = '',
+    product: string = '',
     currency: string = '',
     amount: number = 0,
     paymentMethod: string = '',
@@ -135,6 +137,7 @@ export class moneyIncome {
   ) {
     this.id = id;
     this.date = date;
+    this.product = product;
     this.currency = currency;
     this.amount = amount;
     this.paymentMethod = paymentMethod;
@@ -147,6 +150,7 @@ export class moneyIncome {
 export class moneyOutlays {
   id: number;
   date: string;
+  product: string;
   currency: string;
   amount: number;
   expenseMethod: string;
@@ -158,6 +162,7 @@ export class moneyOutlays {
   constructor(
     id: number = 0,
     date: string = '',
+    product: string = '',
     currency: string = '',
     amount: number = 0,
     expenseMethod: string = '',
@@ -168,6 +173,7 @@ export class moneyOutlays {
   ) {
     this.id = id;
     this.date = date;
+    this.product = product;
     this.currency = currency;
     this.amount = amount;
     this.expenseMethod = expenseMethod;
