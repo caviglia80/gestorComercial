@@ -5,6 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { moneyOutlays } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
+import { startWith, map } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Product } from '@models/mainClasses/main-classes';
 
 @Component({
   selector: 'app-egresos',
@@ -14,6 +18,9 @@ import { DataService } from '@services/data/data.service';
 
 export class EgresosComponent implements AfterViewInit {
   public dataSource = new MatTableDataSource<moneyOutlays>;
+  public dataInventario: Product[] = [];
+  public inventarioControl = new FormControl();
+  public filteredInventario: Observable<any[]>;
   public isLoading = true;
   public Item: any = {};
   public create: boolean = false;
@@ -38,7 +45,12 @@ export class EgresosComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef,
     public dataService: DataService,
     public sharedService: SharedService
-  ) { }
+  ) {
+    this.filteredInventario = this.inventarioControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterProduct(value))
+    );
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -46,6 +58,7 @@ export class EgresosComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataInit();
+    this.dataInit_Inventario();
   }
 
   private dataInit() {
@@ -59,6 +72,24 @@ export class EgresosComponent implements AfterViewInit {
       }
     });
     this.dataService.fetchEgresos('GET');
+  }
+
+  private _filterProduct(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.dataInventario.filter(item =>
+      item.name.toLowerCase().includes(filterValue) ||
+      item.id.toString().toLowerCase().includes(filterValue)
+    );
+  }
+
+  public getInventario() {
+    this.dataService.fetchInventario('GET');
+  }
+
+  private dataInit_Inventario() {
+    this.dataService.Inventario$.subscribe((data) => {
+      this.dataInventario = data;
+    });
   }
 
   private loading(state: boolean) {

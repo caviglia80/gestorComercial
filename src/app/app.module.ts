@@ -45,6 +45,8 @@ import { FacturacionConfigComponent } from './shared/components/facturacion-conf
 import { AjustesConfigComponent } from './shared/components/ajustes-config/ajustes-config.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 @NgModule({
   declarations: [
@@ -94,7 +96,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatSelectModule,
     MatTabsModule,
     MatCheckboxModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MatAutocompleteModule
   ],
   providers: [
   ],

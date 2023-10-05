@@ -256,8 +256,14 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese producto</p>
-    <input matInput placeholder="Producto" [(ngModel)]="Item.product">
+    <p class="form-field-description">Buscar producto (ID / Nombre) <span class="red-asterisk">*</span></p>
+    <input type="text" placeholder="Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
+      [(ngModel)]="Item.product" (focus)="getInventario()">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
+        {{ producto.id }} - {{ producto.name }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -324,8 +330,14 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese producto</p>
-    <input matInput placeholder="Producto" [(ngModel)]="Item.product">
+    <p class="form-field-description">Buscar producto (ID / Nombre) <span class="red-asterisk">*</span></p>
+    <input type="text" placeholder="Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
+      [(ngModel)]="Item.product" (focus)="getInventario()">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
+        {{ producto.id }} - {{ producto.name }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field class="full-width">
