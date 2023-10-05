@@ -24,8 +24,8 @@ export class InventoryComponent implements AfterViewInit {
   public Columns: { [key: string]: string } = {
     id: 'ID',
     name: 'Nombre',
-    buyPrice: 'Precio compra',
-    sellPrice: 'Precio venta',
+    costPrice: 'Precio costo',
+    listPrice: 'Precio lista',
     stock: 'Stock',
     ventasRealizadas: 'Ventas realizadas',
     observacion: 'Observación',
@@ -119,8 +119,8 @@ export class InventoryComponent implements AfterViewInit {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.name = item.name;
-    this.Item.buyPrice = item.buyPrice;
-    this.Item.sellPrice = item.sellPrice;
+    this.Item.costPrice = item.costPrice;
+    this.Item.listPrice = item.listPrice;
     this.Item.stock = item.stock;
     this.Item.ventasRealizadas = item.ventasRealizadas;
     this.Item.observacion = item.observacion;
@@ -131,8 +131,8 @@ export class InventoryComponent implements AfterViewInit {
       const body: Product = {
         id: this.Item.id,
         name: this.Item.name,
-        buyPrice: this.Item.buyPrice,
-        sellPrice: this.Item.sellPrice,
+        costPrice: this.Item.costPrice,
+        listPrice: this.Item.listPrice,
         stock: this.Item.stock,
         ventasRealizadas: this.Item.ventasRealizadas,
         observacion: this.Item.observacion

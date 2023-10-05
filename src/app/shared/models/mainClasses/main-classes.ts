@@ -2,8 +2,8 @@ export class Product {
   id: number;
   name: string;
   stock: number;
-  buyPrice: number;
-  sellPrice: number;
+  costPrice: number;
+  listPrice: number;
   observacion: string;
   ventasRealizadas: number;
 
@@ -11,16 +11,16 @@ export class Product {
     id: number = 0,
     name: string = '',
     stock: number = 0,
-    buyPrice: number = 0,
-    sellPrice: number = 0,
+    costPrice: number = 0,
+    listPrice: number = 0,
     observacion: string = '',
     ventasRealizadas: number = 0
   ) {
     this.id = id;
     this.name = name;
     this.stock = stock;
-    this.buyPrice = buyPrice;
-    this.sellPrice = sellPrice;
+    this.costPrice = costPrice;
+    this.listPrice = listPrice;
     this.observacion = observacion;
     this.ventasRealizadas = ventasRealizadas;
   }

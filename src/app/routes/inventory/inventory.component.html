@@ -53,19 +53,19 @@
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.stock)"> {{element.stock}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="buyPrice">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by buyPrice">
-            {{ Columns['buyPrice'] }}
+        <ng-container matColumnDef="costPrice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by costPrice">
+            {{ Columns['costPrice'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.buyPrice)"> {{element.buyPrice |
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.costPrice)"> {{element.costPrice |
             currencyWithSymbol }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="sellPrice">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by sellPrice">
-            {{ Columns['sellPrice'] }}
+        <ng-container matColumnDef="listPrice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by listPrice">
+            {{ Columns['listPrice'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.sellPrice)">{{ element.sellPrice
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.listPrice)">{{ element.listPrice
             |
             currencyWithSymbol }}</td>
         </ng-container>
@@ -161,13 +161,13 @@
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['stock'])">{{ Item['stock'] }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['buyPrice'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['buyPrice'])">{{ Item['buyPrice'] |
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['costPrice'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['costPrice'])">{{ Item['costPrice'] |
             currencyWithSymbol }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['sellPrice'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['sellPrice'])">{{ Item['sellPrice'] |
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['listPrice'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['listPrice'])">{{ Item['listPrice'] |
             currencyWithSymbol }}
           </td>
         </tr>
@@ -205,12 +205,12 @@
     <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['buyPrice'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['buyPrice'] }}" [(ngModel)]="Item.buyPrice" type="number">
+    <p class="form-field-description">Ingrese {{ Columns['costPrice'] | lowercase }}</p>
+    <input matInput placeholder="{{ Columns['costPrice'] }}" [(ngModel)]="Item.costPrice" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['sellPrice'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['sellPrice'] }}" [(ngModel)]="Item.sellPrice" type="number">
+    <p class="form-field-description">Ingrese {{ Columns['listPrice'] | lowercase }}</p>
+    <input matInput placeholder="{{ Columns['listPrice'] }}" [(ngModel)]="Item.listPrice" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['stock'] | lowercase }}</p>
@@ -246,12 +246,12 @@
     <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['buyPrice'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['buyPrice'] }}" [(ngModel)]="Item.buyPrice" type="number">
+    <p class="form-field-description">Ingrese {{ Columns['costPrice'] | lowercase }}</p>
+    <input matInput placeholder="{{ Columns['costPrice'] }}" [(ngModel)]="Item.costPrice" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['sellPrice'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['sellPrice'] }}" [(ngModel)]="Item.sellPrice" type="number">
+    <p class="form-field-description">Ingrese {{ Columns['listPrice'] | lowercase }}</p>
+    <input matInput placeholder="{{ Columns['listPrice'] }}" [(ngModel)]="Item.listPrice" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['stock'] | lowercase }}</p>
@@ -287,12 +287,12 @@
     <input matInput placeholder="{{ Columns['name'] }}" [(ngModel)]="Item.name" required>
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['buyPrice'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['buyPrice'] }}" [(ngModel)]="Item.buyPrice" type="number">
+    <p class="form-field-description">Ingrese {{ Columns['costPrice'] | lowercase }}</p>
+    <input matInput placeholder="{{ Columns['costPrice'] }}" [(ngModel)]="Item.costPrice" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['sellPrice'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['sellPrice'] }}" [(ngModel)]="Item.sellPrice" type="number">
+    <p class="form-field-description">Ingrese {{ Columns['listPrice'] | lowercase }}</p>
+    <input matInput placeholder="{{ Columns['listPrice'] }}" [(ngModel)]="Item.listPrice" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['stock'] | lowercase }}</p>
