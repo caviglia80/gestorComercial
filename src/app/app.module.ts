@@ -21,9 +21,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HttpClientModule } from '@angular/common/http';
-import { CurrencyWithSymbolPipe } from '@pipes/currencyWithSymbol/currency-with-symbol.pipe';
 import { TruncatePipe } from '@pipes/truncate/truncate.pipe';
-import { DateFormatPipe } from '@pipes/dateFormat/date-format.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { NavComponent } from '@components/nav/nav.component';
@@ -46,6 +44,7 @@ import { AjustesConfigComponent } from './shared/components/ajustes-config/ajust
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { InventarioConfigComponent } from './shared/components/inventario-config/inventario-config.component';
 
 
 @NgModule({
@@ -61,16 +60,15 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     InventoryComponent,
     ReportsComponent,
     BillingComponent,
-    CurrencyWithSymbolPipe,
     TruncatePipe,
-    DateFormatPipe,
     NavComponent,
     ProveedoresComponent,
     ConfiguracionGeneralComponent,
     UsuariosComponent,
     RolesComponent,
     FacturacionConfigComponent,
-    AjustesConfigComponent
+    AjustesConfigComponent,
+    InventarioConfigComponent
   ],
   imports: [
     BrowserModule,

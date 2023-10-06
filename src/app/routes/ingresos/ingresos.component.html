@@ -42,7 +42,7 @@
           </th>
           <td [matTooltip]="element.date" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.date)">
-            {{element.date | dateFormat }}
+            {{element.date | date:'dd/MM/yyyy' }}
           </td>
         </ng-container>
 
@@ -69,7 +69,7 @@
             {{ Columns['amount'] }}
           </th>
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.amount)"> {{element.amount |
-            currencyWithSymbol }} </td>
+            currency:'$':'symbol' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="method">
@@ -170,7 +170,8 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['date'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['date'])">{{ Item['date'] | dateFormat }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['date'])">{{ Item['date'] | date:'dd/MM/yyyy' }}
+          </td>
         </tr>
 
         <tr>
@@ -186,7 +187,7 @@
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['amount'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['amount'])">{{ Item['amount'] |
-            currencyWithSymbol }}</td>
+            currency:'$':'symbol' }}</td>
         </tr>
 
         <tr>

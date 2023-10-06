@@ -58,8 +58,7 @@
             {{ Columns['costPrice'] }}
           </th>
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.costPrice)"> {{element.costPrice
-            |
-            currencyWithSymbol }} </td>
+            | currency:'$':'symbol' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="listPrice">
@@ -67,8 +66,7 @@
             {{ Columns['listPrice'] }}
           </th>
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.listPrice)">{{ element.listPrice
-            |
-            currencyWithSymbol }}</td>
+            | currency:'$':'symbol' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="description">
@@ -156,12 +154,12 @@
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['costPrice'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['costPrice'])">{{ Item['costPrice'] |
-            currencyWithSymbol }}</td>
+            currency:'$':'symbol' }}</td>
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['listPrice'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['listPrice'])">{{ Item['listPrice'] |
-            currencyWithSymbol }}
+            currency:'$':'symbol' }}
           </td>
         </tr>
         <tr>
