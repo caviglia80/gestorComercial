@@ -21,7 +21,7 @@ export class PvpPipe implements PipeTransform {
   }
 
   public transform(value: any): number {
-    const margin = (this.dataConfiguration.pvpPorcentaje / 100);
+    const margin = (parseFloat(this.dataConfiguration.pvpPorcentaje) / 100);
     return parseFloat(value) * (1 + margin);
   }
 

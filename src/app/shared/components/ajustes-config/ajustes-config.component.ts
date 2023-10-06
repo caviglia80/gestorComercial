@@ -72,23 +72,23 @@ export class AjustesConfigComponent implements AfterViewInit {
   }
 
   public habilitarCopy(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, copyEnabled: isChecked ? "true" : "false" });
+    this.dataService.fetchConfiguracion('PUT', { id: 1, copyEnabled: isChecked ? "1" : "0" });
   }
 
   public habilitarIngresoRapido(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoRapidoEnabled: isChecked ? "true" : "false" });
+    this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoRapidoEnabled: isChecked ? "1" : "0" });
   }
 
   public habilitarEgresoRapido(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, egresoRapidoEnabled: isChecked ? "true" : "false" });
+    this.dataService.fetchConfiguracion('PUT', { id: 1, egresoRapidoEnabled: isChecked ? "1" : "0" });
   }
 
-  public habilitarIngresoRestaStockEnabled(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoRestaStockEnabled: isChecked ? "true" : "false" });
+  public habilitarIngresoRestaStock(isChecked: boolean) {
+    this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoRestaStockEnabled: isChecked ? "1" : "0" });
   }
 
-  public habilitarEgresoSumaStockEnabled(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, egresoSumaStockEnabled: isChecked ? "true" : "false" });
+  public habilitarEgresoSumaStock(isChecked: boolean) {
+    this.dataService.fetchConfiguracion('PUT', { id: 1, egresoSumaStockEnabled: isChecked ? "1" : "0" });
   }
 
   public color1(color: string) {

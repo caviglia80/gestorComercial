@@ -219,19 +219,19 @@ export class configuracion {
   egresoRapidoEnabled: string;
   ingresoRestaStockEnabled: string;
   egresoSumaStockEnabled: string;
-  pvpPorcentaje: number;
+  pvpPorcentaje: string;
 
   constructor(
     id: number = 1,
     icono: string = 'assets/defaultLogo.png',
-    copyEnabled: string = 'true',
+    copyEnabled: string = '1',
     color1: string = '#846bf3',
     color2: string = '#4c28ec',
-    ingresoRapidoEnabled: string = 'true',
-    egresoRapidoEnabled: string = 'true',
-    ingresoRestaStockEnabled: string = 'true',
-    egresoSumaStockEnabled: string = 'true',
-    pvpPorcentaje: number = 0
+    ingresoRapidoEnabled: string = '1',
+    egresoRapidoEnabled: string = '1',
+    ingresoRestaStockEnabled: string = '1',
+    egresoSumaStockEnabled: string = '1',
+    pvpPorcentaje: string = '0'
   ) {
     this.id = id;
     this.icono = icono;
