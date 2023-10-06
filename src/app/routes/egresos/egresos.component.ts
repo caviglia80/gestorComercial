@@ -78,8 +78,8 @@ export class EgresosComponent implements AfterViewInit {
     });
   }
 
-  onProductoSeleccionado(event: any) {
-    this.Item.amount = this._getProduct(event.option.value).listPrice
+  public onProductoSeleccionado(event: any) {
+    this.Item.amount = this.dataService.getPvp(this._getProduct(event.option.value).costPrice);
   }
 
   private _filterProduct(value: string): any[] {
@@ -180,7 +180,7 @@ export class EgresosComponent implements AfterViewInit {
         description: this.Item.description
       };
       this.dataService.fetchEgresos(method, body);
-      if (this.currentConfiguracion.egresoSumaStockEnabled === '1')
+      if (this.currentConfiguracion.egresoSumaStockEnabled === '1' && method === 'POST')
         this.sumarStock(this._getProduct(body.product));
     } catch (error) {
       console.error('Se ha producido un error:', error);

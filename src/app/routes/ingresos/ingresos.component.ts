@@ -77,10 +77,10 @@ export class IngresosComponent implements AfterViewInit {
     });
   }
 
-  onProductoSeleccionado(event: any) {
+  public onProductoSeleccionado(event: any) {
     if (this._getProduct(event.option.value).stock === 0)
       this.sharedService.message('Advertencia: no hay stock');
-    this.Item.amount = this._getProduct(event.option.value).listPrice
+    this.Item.amount = this.dataService.getPvp(this._getProduct(event.option.value).costPrice);
   }
 
   private _filterProduct(value: string): any[] {
@@ -179,7 +179,7 @@ export class IngresosComponent implements AfterViewInit {
         description: this.Item.description
       };
       this.dataService.fetchIngresos(method, body);
-      if (this.currentConfiguracion.ingresoRestaStockEnabled === '1')
+      if (this.currentConfiguracion.ingresoRestaStockEnabled === '1' && method === 'POST')
         this.restarStock(this._getProduct(body.product));
     } catch (error) {
       console.error('Se ha producido un error:', error);

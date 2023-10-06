@@ -119,7 +119,6 @@ export class InventoryComponent implements AfterViewInit {
     this.Item.id = item.id;
     this.Item.name = item.name;
     this.Item.costPrice = item.costPrice;
-    this.Item.listPrice = item.listPrice;
     this.Item.stock = item.stock;
     this.Item.description = item.description;
   }
@@ -130,7 +129,6 @@ export class InventoryComponent implements AfterViewInit {
         id: this.Item.id,
         name: this.Item.name,
         costPrice: this.Item.costPrice,
-        listPrice: this.Item.listPrice,
         stock: this.Item.stock,
         description: this.Item.description
       };

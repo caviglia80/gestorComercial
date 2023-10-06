@@ -3,7 +3,6 @@ export class Product {
   name: string;
   stock: number;
   costPrice: number;
-  listPrice: number;
   description: string;
 
   constructor(
@@ -11,14 +10,12 @@ export class Product {
     name: string = '',
     stock: number = 0,
     costPrice: number = 0,
-    listPrice: number = 0,
     description: string = '',
   ) {
     this.id = id;
     this.name = name;
     this.stock = stock;
     this.costPrice = costPrice;
-    this.listPrice = listPrice;
     this.description = description;
   }
 }
@@ -222,6 +219,7 @@ export class configuracion {
   egresoRapidoEnabled: string;
   ingresoRestaStockEnabled: string;
   egresoSumaStockEnabled: string;
+  pvpPorcentaje: number;
 
   constructor(
     id: number = 1,
@@ -232,7 +230,8 @@ export class configuracion {
     ingresoRapidoEnabled: string = 'true',
     egresoRapidoEnabled: string = 'true',
     ingresoRestaStockEnabled: string = 'true',
-    egresoSumaStockEnabled: string = 'true'
+    egresoSumaStockEnabled: string = 'true',
+    pvpPorcentaje: number = 0
   ) {
     this.id = id;
     this.icono = icono;
@@ -243,5 +242,6 @@ export class configuracion {
     this.egresoRapidoEnabled = egresoRapidoEnabled;
     this.ingresoRestaStockEnabled = ingresoRestaStockEnabled;
     this.egresoSumaStockEnabled = egresoSumaStockEnabled;
+    this.pvpPorcentaje = pvpPorcentaje;
   }
 }

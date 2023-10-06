@@ -45,6 +45,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { InventarioConfigComponent } from './shared/components/inventario-config/inventario-config.component';
+import { PvpPipe } from './core/pipes/pvp/pvp.pipe';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { InventarioConfigComponent } from './shared/components/inventario-config
     RolesComponent,
     FacturacionConfigComponent,
     AjustesConfigComponent,
-    InventarioConfigComponent
+    InventarioConfigComponent,
+    PvpPipe
   ],
   imports: [
     BrowserModule,

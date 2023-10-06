@@ -39,7 +39,6 @@ export class DataService {
     private http: HttpClient,
     public sharedService: SharedService
   ) {
-
     this.Configuracion$.subscribe((data) => {
       this.currentConfiguracion = data[0];
     });
@@ -48,6 +47,11 @@ export class DataService {
 
   public getCurrentConfiguracion(): configuracion {
     return this.currentConfiguracion;
+  }
+
+  public getPvp(costPrice: any): number {
+    const margin = (this.currentConfiguracion.pvpPorcentaje / 100);
+    return parseFloat(costPrice) * (1 + margin);
   }
 
   public fetchInventario(method: string = '', body: any = {}, proxy: boolean = false): void {
