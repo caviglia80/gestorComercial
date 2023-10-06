@@ -16,6 +16,7 @@ export class AjustesConfigComponent implements OnInit {
   public Color2: string = '#000000';
   public colorPickerIsOpen: boolean = false;
   public copyEnabled: boolean = false;
+  public titulo: string = '';
 
   constructor(
     public dataService: DataService,
@@ -33,6 +34,7 @@ export class AjustesConfigComponent implements OnInit {
         this.copyEnabled = this.dataConfig.copyEnabled === '1';
         this.Color1 = this.dataConfig.color1;
         this.Color2 = this.dataConfig.color2;
+        this.titulo = this.dataConfig.titulo;
       }
     });
   }
@@ -85,8 +87,8 @@ export class AjustesConfigComponent implements OnInit {
     document.documentElement.style.setProperty('--color-2', color);
   }
 
-
-
-
-
+  public setTitulo(titulo: string) {
+    if (titulo !== this.dataConfig.titulo)
+      this.dataService.fetchConfiguracion('PUT', { id: 1, titulo: titulo });
+  }
 }

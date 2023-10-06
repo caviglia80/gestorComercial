@@ -220,6 +220,7 @@ export class configuracion {
   ingresoRestaStockEnabled: string;
   egresoSumaStockEnabled: string;
   pvpPorcentaje: string;
+  titulo: string;
 
   constructor(
     id: number = 1,
@@ -231,7 +232,8 @@ export class configuracion {
     egresoRapidoEnabled: string = '1',
     ingresoRestaStockEnabled: string = '1',
     egresoSumaStockEnabled: string = '1',
-    pvpPorcentaje: string = '0'
+    pvpPorcentaje: string = '0',
+    titulo: string = 'Gestor Comercial'
   ) {
     this.id = id;
     this.icono = icono;
@@ -243,5 +245,6 @@ export class configuracion {
     this.ingresoRestaStockEnabled = ingresoRestaStockEnabled;
     this.egresoSumaStockEnabled = egresoSumaStockEnabled;
     this.pvpPorcentaje = pvpPorcentaje;
+    this.titulo = titulo;
   }
 }

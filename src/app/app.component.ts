@@ -19,7 +19,7 @@ Date.prototype.addHours = function (hours: number): Date {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'gestorComercial';
+  title = '';
   private dataSource: any;
 
   constructor(
@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
         this.cargarIcono(this.dataSource.icono !== undefined ? this.dataSource.icono : '');
         document.documentElement.style.setProperty('--color-1', this.dataSource.color1);
         document.documentElement.style.setProperty('--color-2', this.dataSource.color2);
+        this.cargarTitulo(this.dataSource.titulo);
       }
     });
   }
@@ -44,6 +45,11 @@ export class AppComponent implements OnInit {
   private cargarIcono(icon: string) {
     const link = document.querySelector('#page-icon') as HTMLLinkElement;
     link.href = icon;
+  }
+
+  private cargarTitulo(titulo: string) {
+    document.title = titulo;
+    this.title = titulo;
   }
 
 }

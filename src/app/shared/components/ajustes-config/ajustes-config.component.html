@@ -1,15 +1,20 @@
-<div class="form-group container-fluid mb-4">
+<mat-form-field class="full-width">
+  <p class="form-field-description">Ingrese título</p>
+  <input matInput placeholder="Título" [(ngModel)]="titulo" (blur)="setTitulo(titulo)">
+</mat-form-field>
+
+<div class="form-group container-fluid py-3">
   <p class="mb-1">Logo (*.png)</p>
   <input type="file" class="form-control" id="crtFile" #fileInput (change)="onFileSelected($event, 'png')">
   <div class="text-danger m-2" *ngIf="errorMessageImg">Solo se permiten imagenes con extensión .png</div>
 </div>
 
-<div class="checkbox-container">
+<div class="checkbox-container py-3">
   <mat-checkbox [(ngModel)]="copyEnabled" (ngModelChange)="habilitarCopy(copyEnabled)">Habilitar copiar con doble
     clic</mat-checkbox>
 </div>
 
-<mat-expansion-panel class="my-2" [class.overflow-visible]="colorPickerIsOpen">
+<mat-expansion-panel [class.overflow-visible]="colorPickerIsOpen" class="my-2">
   <mat-expansion-panel-header>
     <mat-panel-title>
       Cambiar colores
