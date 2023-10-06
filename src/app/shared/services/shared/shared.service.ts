@@ -44,12 +44,6 @@ export class SharedService {
     private snackBar: MatSnackBar
   ) { }
 
-/*   public getCurrentConfiguracion(): any {
-    if (this.currentConfiguracion === undefined)
-      this.currentConfiguracion = this.injector.get(DataService).getCurrentConfiguracion();
-    return this.currentConfiguracion;
-  } */
-
   public copy(textToCopy: string) {
     this.currentConfiguracion = this.injector.get(DataService).getCurrentConfiguracion();
     if (this.currentConfiguracion.copyEnabled !== undefined)
