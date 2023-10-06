@@ -51,7 +51,6 @@ export class DataService {
   }
 
   public fetchInventario(method: string = '', body: any = {}, proxy: boolean = false): void {
-    const NAME: any = body.name;
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -73,7 +72,7 @@ export class DataService {
       this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
+            this.sharedService.message('Inventario: registro eliminado.');
             this.fetchInventario('GET');
           },
           error: (error) => {
@@ -85,7 +84,7 @@ export class DataService {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
+            this.sharedService.message('Inventario: registro guardado.');
             this.fetchInventario('GET');
           },
           error: (error) => {
@@ -97,7 +96,7 @@ export class DataService {
       this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
+            this.sharedService.message('Inventario: registro actualizado.');
             this.fetchInventario('GET');
           },
           error: (error) => {
@@ -109,7 +108,6 @@ export class DataService {
   }
 
   public fetchUsuarios(method: string = '', body: any = {}, proxy: boolean = false): void {
-    const NAME: any = body.name;
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -131,7 +129,7 @@ export class DataService {
       this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
+            this.sharedService.message('Usuarios: registro eliminado.');
             this.fetchUsuarios('GET');
           },
           error: (error) => {
@@ -143,7 +141,7 @@ export class DataService {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
+            this.sharedService.message('Usuarios: registro guardado.');
             this.fetchUsuarios('GET');
           },
           error: (error) => {
@@ -155,7 +153,7 @@ export class DataService {
       this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
+            this.sharedService.message('Usuarios: registro actualizado.');
             this.fetchUsuarios('GET');
           },
           error: (error) => {
@@ -167,7 +165,6 @@ export class DataService {
   }
 
   public fetchRoles(method: string = '', body: any = {}, proxy: boolean = false): void {
-    const NAME: any = body.name;
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -189,7 +186,7 @@ export class DataService {
       this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
+            this.sharedService.message('Roles: registro eliminado.');
             this.fetchRoles('GET');
           },
           error: (error) => {
@@ -201,7 +198,7 @@ export class DataService {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
+            this.sharedService.message('Roles: registro guardado.');
             this.fetchRoles('GET');
           },
           error: (error) => {
@@ -213,7 +210,7 @@ export class DataService {
       this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
+            this.sharedService.message('Roles: registro actualizado.');
             this.fetchRoles('GET');
           },
           error: (error) => {
@@ -225,7 +222,6 @@ export class DataService {
   }
 
   public fetchProveedores(method: string = '', body: any = {}, proxy: boolean = false): void {
-    const NAME: any = body.name;
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -247,7 +243,7 @@ export class DataService {
       this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
+            this.sharedService.message('Proveedores: registro eliminado.');
             this.fetchProveedores('GET');
           },
           error: (error) => {
@@ -259,7 +255,7 @@ export class DataService {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
+            this.sharedService.message('Proveedores: registro guardado.');
             this.fetchProveedores('GET');
           },
           error: (error) => {
@@ -271,7 +267,7 @@ export class DataService {
       this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
+            this.sharedService.message('Proveedores: registro actualizado.');
             this.fetchProveedores('GET');
           },
           error: (error) => {
@@ -283,7 +279,6 @@ export class DataService {
   }
 
   public fetchIngresos(method: string = '', body: any = {}, proxy: boolean = false): void {
-    const NAME: any = body.name;
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -305,7 +300,7 @@ export class DataService {
       this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
+            this.sharedService.message('Ingresos: registro eliminado.');
             this.fetchIngresos('GET');
           },
           error: (error) => {
@@ -317,7 +312,7 @@ export class DataService {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
+            this.sharedService.message('Ingresos: registro guardado.');
             this.fetchIngresos('GET');
           },
           error: (error) => {
@@ -329,7 +324,7 @@ export class DataService {
       this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
+            this.sharedService.message('Ingresos: registro actualizado.');
             this.fetchIngresos('GET');
           },
           error: (error) => {
@@ -341,7 +336,6 @@ export class DataService {
   }
 
   public fetchEgresos(method: string = '', body: any = {}, proxy: boolean = false): void {
-    const NAME: any = body.name;
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -363,7 +357,7 @@ export class DataService {
       this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Eliminado: ' + NAME : 'Registro eliminado.');
+            this.sharedService.message('Egresos: registro eliminado.');
             this.fetchEgresos('GET');
           },
           error: (error) => {
@@ -375,7 +369,7 @@ export class DataService {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Guardado: ' + NAME : 'Registro guardado.');
+            this.sharedService.message('Egresos: registro guardado.');
             this.fetchEgresos('GET');
           },
           error: (error) => {
@@ -387,7 +381,7 @@ export class DataService {
       this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message(NAME ? 'Editado: ' + NAME : 'Registro editado.');
+            this.sharedService.message('Egresos: registro actualizado.');
             this.fetchEgresos('GET');
           },
           error: (error) => {
@@ -420,7 +414,7 @@ export class DataService {
       this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message('Actualizado !');
+            this.sharedService.message('Facturacion: registro actualizado.');
             this.fetchFacturacionAuth('GET');
           },
           error: (error) => {
@@ -453,7 +447,7 @@ export class DataService {
       this.http.put(url, body, headers)
         .subscribe({
           next: () => {
-            this.sharedService.message('Actualizado !');
+            this.sharedService.message('Configuración actualizada !');
             this.fetchConfiguracion('GET');
           },
           error: (error) => {
