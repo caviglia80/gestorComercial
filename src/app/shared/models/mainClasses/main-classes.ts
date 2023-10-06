@@ -220,6 +220,8 @@ export class configuracion {
   color2: string;
   ingresoRapidoEnabled: string;
   egresoRapidoEnabled: string;
+  ingresoRestaStockEnabled: string;
+  egresoSumaStockEnabled: string;
 
   constructor(
     id: number = 1,
@@ -229,6 +231,8 @@ export class configuracion {
     color2: string = '#4c28ec',
     ingresoRapidoEnabled: string = '1',
     egresoRapidoEnabled: string = '1',
+    ingresoRestaStockEnabled: string = '1',
+    egresoSumaStockEnabled: string = '1'
   ) {
     this.id = id;
     this.icono = icono;
@@ -237,5 +241,7 @@ export class configuracion {
     this.color2 = color2;
     this.ingresoRapidoEnabled = ingresoRapidoEnabled;
     this.egresoRapidoEnabled = egresoRapidoEnabled;
+    this.ingresoRestaStockEnabled = ingresoRestaStockEnabled;
+    this.egresoSumaStockEnabled = egresoSumaStockEnabled;
   }
 }

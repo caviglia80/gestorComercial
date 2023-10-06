@@ -7,14 +7,22 @@
 <div class="checkbox-container">
   <!--   <mat-checkbox [(ngModel)]="tooltipChecked" (ngModelChange)="habilitarTooltip(tooltipChecked)">Habilitar
     tootltips</mat-checkbox> -->
-  <mat-checkbox [(ngModel)]="copyChecked" (ngModelChange)="habilitarCopy(copyChecked)">Habilitar copiar con doble
+  <mat-checkbox [(ngModel)]="copyEnabled" (ngModelChange)="habilitarCopy(copyEnabled)">Habilitar copiar con doble
     clic</mat-checkbox>
-  <mat-checkbox [(ngModel)]="iRapidoChecked" (ngModelChange)="habilitarIngresoRapido(iRapidoChecked)">Ingreso rápido
+  <mat-checkbox [(ngModel)]="ingresoRapidoEnabled"
+    (ngModelChange)="habilitarIngresoRapido(ingresoRapidoEnabled)">Ingreso rápido
     (primer
     item)</mat-checkbox>
-  <mat-checkbox [(ngModel)]="eRapidoChecked" (ngModelChange)="habilitarEgresoRapido(eRapidoChecked)">Egreso rápido
+  <mat-checkbox [(ngModel)]="egresoRapidoEnabled" (ngModelChange)="habilitarEgresoRapido(egresoRapidoEnabled)">Egreso
+    rápido
     (primer
     item)</mat-checkbox>
+  <mat-checkbox [(ngModel)]="ingresoRestaStockEnabled"
+    (ngModelChange)="habilitarIngresoRestaStockEnabled(ingresoRestaStockEnabled)">Restar stock por
+    ingreso</mat-checkbox>
+  <mat-checkbox [(ngModel)]="egresoSumaStockEnabled"
+    (ngModelChange)="habilitarEgresoSumaStockEnabled(egresoSumaStockEnabled)">Sumar stock por
+    egreso</mat-checkbox>
 </div>
 
 <mat-expansion-panel class="my-2" [class.overflow-visible]="colorPickerIsOpen">
@@ -39,5 +47,5 @@
 
 <div class="buttons justify-content-center">
   <button type="button" class="btn m-2 mb-2 btn-outline-primary" (click)="restauracionDeFabrica()">Restaurar valores de
-    fabrica</button>
+    fábrica</button>
 </div>
