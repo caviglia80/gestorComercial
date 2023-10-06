@@ -78,12 +78,22 @@ export class EgresosComponent implements AfterViewInit {
     });
   }
 
+  onProductoSeleccionado(event: any) {
+    this.Item.amount = this._getProduct(event.option.value).listPrice
+  }
+
   private _filterProduct(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.dataInventario.filter(item =>
       item.name.toLowerCase().includes(filterValue) ||
       item.id.toString().toLowerCase().includes(filterValue)
     );
+  }
+
+  private _getProduct(id: string): Product {
+    return this.dataInventario.filter(item =>
+      item.id.toString().toLowerCase() === id.toLowerCase()
+    )[0];
   }
 
   public getInventario() {
