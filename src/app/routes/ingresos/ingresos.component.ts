@@ -33,7 +33,7 @@ export class IngresosComponent implements AfterViewInit {
     product: 'Producto',
     currency: 'Moneda',
     amount: 'Monto',
-    /*     paymentMethod: 'Método de Pago', */
+    /*     method: 'Método de Pago', */
     category: 'Rubro',
     /*     invoice: 'Comprobante', */
     /*     description: 'Descripción', */
@@ -50,6 +50,24 @@ export class IngresosComponent implements AfterViewInit {
       map(value => this._filterProduct(value))
     );
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -117,6 +135,7 @@ export class IngresosComponent implements AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
+    this.Item = this.sharedService.crearDefault();
     this.create = visible;
   }
 
@@ -141,7 +160,7 @@ export class IngresosComponent implements AfterViewInit {
     this.Item.product = item.product;
     this.Item.currency = item.currency;
     this.Item.amount = item.amount;
-    this.Item.paymentMethod = item.paymentMethod;
+    this.Item.method = item.method;
     this.Item.category = item.category;
     this.Item.invoice = item.invoice;
     this.Item.description = item.description;
@@ -155,7 +174,7 @@ export class IngresosComponent implements AfterViewInit {
         product: this.Item.product,
         currency: this.Item.currency,
         amount: this.Item.amount,
-        paymentMethod: this.Item.paymentMethod,
+        method: this.Item.method,
         category: this.Item.category,
         invoice: this.Item.invoice,
         description: this.Item.description

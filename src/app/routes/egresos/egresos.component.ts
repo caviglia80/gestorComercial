@@ -33,7 +33,7 @@ export class EgresosComponent implements AfterViewInit {
     product: 'Producto',
     currency: 'Moneda',
     amount: 'Monto',
-    /*     expenseMethod: 'Método de Gasto', */
+    /*     method: 'Método de Gasto', */
     category: 'Rubro',
     /*     invoice: 'Comprobante', */
     beneficiary_provider: 'Beneficiario/Proveedor',
@@ -118,6 +118,7 @@ export class EgresosComponent implements AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
+    this.Item = this.sharedService.crearDefault();
     this.create = visible;
   }
 
@@ -142,7 +143,7 @@ export class EgresosComponent implements AfterViewInit {
     this.Item.product = item.product;
     this.Item.currency = item.currency;
     this.Item.amount = item.amount;
-    this.Item.expenseMethod = item.expenseMethod;
+    this.Item.method = item.method;
     this.Item.category = item.category;
     this.Item.invoice = item.invoice;
     this.Item.beneficiary_provider = item.beneficiary_provider;
@@ -157,7 +158,7 @@ export class EgresosComponent implements AfterViewInit {
         product: this.Item.product,
         currency: this.Item.currency,
         amount: this.Item.amount,
-        expenseMethod: this.Item.expenseMethod,
+        method: this.Item.method,
         category: this.Item.category,
         invoice: this.Item.invoice,
         beneficiary_provider: this.Item.beneficiary_provider,

@@ -119,7 +119,7 @@ export class moneyIncome {
   product: string;
   currency: string;
   amount: number;
-  paymentMethod: string;
+  method: string;
   category: string;
   invoice: string;
   description: string;
@@ -130,7 +130,7 @@ export class moneyIncome {
     product: string = '',
     currency: string = '',
     amount: number = 0,
-    paymentMethod: string = '',
+    method: string = '',
     category: string = '',
     invoice: string = '',
     description: string = ''
@@ -140,7 +140,7 @@ export class moneyIncome {
     this.product = product;
     this.currency = currency;
     this.amount = amount;
-    this.paymentMethod = paymentMethod;
+    this.method = method;
     this.category = category;
     this.invoice = invoice;
     this.description = description;
@@ -153,7 +153,7 @@ export class moneyOutlays {
   product: string;
   currency: string;
   amount: number;
-  expenseMethod: string;
+  method: string;
   category: string;
   invoice: string;
   beneficiary_provider: string;
@@ -165,7 +165,7 @@ export class moneyOutlays {
     product: string = '',
     currency: string = '',
     amount: number = 0,
-    expenseMethod: string = '',
+    method: string = '',
     category: string = '',
     invoice: string = '',
     beneficiary_provider: string = '',
@@ -176,7 +176,7 @@ export class moneyOutlays {
     this.product = product;
     this.currency = currency;
     this.amount = amount;
-    this.expenseMethod = expenseMethod;
+    this.method = method;
     this.category = category;
     this.invoice = invoice;
     this.beneficiary_provider = beneficiary_provider;

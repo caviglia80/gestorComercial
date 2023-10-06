@@ -13,7 +13,10 @@ export class SharedService {
   public static isProduction = environment.production;
   public static host: string = 'https://francisco-caviglia.com.ar/francisco-caviglia/php/'; /* localhost/ */
   public static proxy: string = 'https://cors-anywhere.herokuapp.com/';
-  public currencys: string[] = ['ARS', 'USD', 'EUR'];
+  public currencys: string[] = [
+    'ARS',
+    'USD',
+    'EUR'];
   public paidMethods: string[] = [
     'Efectivo',
     'Tarjeta de crédito',
@@ -29,14 +32,17 @@ export class SharedService {
     'Bitcoin',
     'Otro'
   ];
+  public categories: string[] = [
+    'Ventas',
+    'Extraordinarios',
+    'Otra Actividad'];
   private currentConfiguracion: any;
 
   constructor(
     private injector: Injector,
     private ng2ImgMax: Ng2ImgMaxService,
     private snackBar: MatSnackBar
-  ) {
-  }
+  ) { }
 
   public copy(textToCopy: string) {
     this.currentConfiguracion = this.injector.get(DataService).getCurrentConfiguracion();
@@ -127,6 +133,21 @@ export class SharedService {
     return true;
   }
 
+  public crearDefault(): any {
+    const Item: any = {};
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Enero es 0
+    const dd = String(today.getDate()).padStart(2, '0');
+    Item.date = `${yyyy}-${mm}-${dd}`;
+    if (this.currencys.length > 0)
+      Item.currency = this.currencys[0];
+    if (this.paidMethods.length > 0)
+      Item.method = this.paidMethods[0];
+    if (this.categories.length > 0)
+      Item.category = this.categories[0];
+    return Item;
+  }
 
 
 

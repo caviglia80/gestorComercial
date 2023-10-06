@@ -72,12 +72,12 @@
             currencyWithSymbol }} </td>
         </ng-container>
 
-        <ng-container matColumnDef="expenseMethod">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by expenseMethod">
-            {{ Columns['expenseMethod'] }}
+        <ng-container matColumnDef="method">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by method">
+            {{ Columns['method'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.expenseMethod)">{{
-            element.expenseMethod }}</td>
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.method)">{{
+            element.method }}</td>
         </ng-container>
 
         <ng-container matColumnDef="category">
@@ -201,7 +201,7 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Método de Gasto:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['expenseMethod'])">{{ Item['expenseMethod'] }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['method'])">{{ Item['method'] }}
           </td>
         </tr>
 
@@ -281,14 +281,16 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese método de gasto</p>
-    <mat-select placeholder="Método de gasto" [(ngModel)]="Item.expenseMethod">
+    <mat-select placeholder="Método de gasto" [(ngModel)]="Item.method">
       <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
+    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
+      <mat-option *ngFor="let category of sharedService.categories" [value]="category">{{ category }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -355,14 +357,16 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese método de gasto</p>
-    <mat-select placeholder="Método de gasto" [(ngModel)]="Item.expenseMethod">
+    <mat-select placeholder="Método de gasto" [(ngModel)]="Item.method">
       <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
+    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
+      <mat-option *ngFor="let category of sharedService.categories" [value]="category">{{ category }}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
