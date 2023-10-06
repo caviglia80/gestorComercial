@@ -27,7 +27,7 @@ export class InventoryComponent implements AfterViewInit {
     costPrice: 'Precio costo',
     listPrice: 'Precio lista',
     stock: 'Stock',
-    observacion: 'Observación',
+    description: 'Descripción',
     actions: 'Operaciones'
   };
 
@@ -121,7 +121,7 @@ export class InventoryComponent implements AfterViewInit {
     this.Item.costPrice = item.costPrice;
     this.Item.listPrice = item.listPrice;
     this.Item.stock = item.stock;
-    this.Item.observacion = item.observacion;
+    this.Item.description = item.description;
   }
 
   public record(method: string) {
@@ -132,7 +132,7 @@ export class InventoryComponent implements AfterViewInit {
         costPrice: this.Item.costPrice,
         listPrice: this.Item.listPrice,
         stock: this.Item.stock,
-        observacion: this.Item.observacion
+        description: this.Item.description
       };
       this.dataService.fetchInventario(method, body);
     } catch (error) {

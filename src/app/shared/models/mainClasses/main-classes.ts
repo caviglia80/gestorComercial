@@ -4,7 +4,7 @@ export class Product {
   stock: number;
   costPrice: number;
   listPrice: number;
-  observacion: string;
+  description: string;
 
   constructor(
     id: number = 0,
@@ -12,14 +12,14 @@ export class Product {
     stock: number = 0,
     costPrice: number = 0,
     listPrice: number = 0,
-    observacion: string = '',
+    description: string = '',
   ) {
     this.id = id;
     this.name = name;
     this.stock = stock;
     this.costPrice = costPrice;
     this.listPrice = listPrice;
-    this.observacion = observacion;
+    this.description = description;
   }
 }
 
