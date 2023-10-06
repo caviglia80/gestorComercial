@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import { Observable, from } from 'rxjs';
@@ -37,12 +37,38 @@ export class SharedService {
     'Extraordinarios',
     'Otra Actividad'];
   private currentConfiguracion: any;
+  private notificationQueue: { text: string; action?: string }[] = [];
+  private isNotificationDisplayed = false;
+  private snackBarRef: MatSnackBarRef<any> | null = null;
 
   constructor(
     private injector: Injector,
     private ng2ImgMax: Ng2ImgMaxService,
     private snackBar: MatSnackBar
   ) { }
+
+  public message(text: string, action: string = 'Cerrar') {
+    this.notificationQueue.push({ text, action });
+    if (!this.isNotificationDisplayed)
+      this.showNextNotification();
+  }
+
+  private showNextNotification() {
+    if (this.notificationQueue.length > 0) {
+      const notification = this.notificationQueue.shift();
+      if (notification) {
+        const { text, action } = notification;
+        this.isNotificationDisplayed = true;
+        this.snackBarRef = this.snackBar.open(text, action, {
+          duration: 1500,
+        });
+        this.snackBarRef.afterDismissed().subscribe(() => {
+          this.isNotificationDisplayed = false;
+          this.showNextNotification();
+        });
+      }
+    }
+  }
 
   public copy(textToCopy: string) {
     this.currentConfiguracion = this.injector.get(DataService).getCurrentConfiguracion();
@@ -59,12 +85,6 @@ export class SharedService {
           document.body.removeChild(el);
         }
       }
-  }
-
-  public message(text: string, action: string = 'Cerrar') {
-    this.snackBar.open(text, action, {
-      duration: 2500,
-    });
   }
 
   public encodeBase64(text: string): string {

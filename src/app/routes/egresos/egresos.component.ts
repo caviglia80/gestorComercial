@@ -180,11 +180,24 @@ export class EgresosComponent implements AfterViewInit {
         description: this.Item.description
       };
       this.dataService.fetchEgresos(method, body);
+      if (this.currentConfiguracion.egresoSumaStockEnabled === '1')
+        this.sumarStock(this._getProduct(body.product));
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
       this.Edit(false);
+    }
+  }
+
+  private sumarStock(product: Product) {
+    if (product !== undefined) {
+      let stockCount: number = product.stock;
+      stockCount++;
+      this.dataService.fetchInventario('PUT', { id: product.id, stock: stockCount });
+      this.sharedService.message('Se sumó una unidad al stock.');
+    } else {
+      this.sharedService.message('Advertencia: no se localizó el ID del producto.');
     }
   }
 }

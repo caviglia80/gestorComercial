@@ -78,6 +78,8 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   onProductoSeleccionado(event: any) {
+    if (this._getProduct(event.option.value).stock === 0)
+      this.sharedService.message('Advertencia: no hay stock');
     this.Item.amount = this._getProduct(event.option.value).listPrice
   }
 
@@ -177,6 +179,8 @@ export class IngresosComponent implements AfterViewInit {
         description: this.Item.description
       };
       this.dataService.fetchIngresos(method, body);
+      if (this.currentConfiguracion.ingresoRestaStockEnabled === '1')
+        this.restarStock(this._getProduct(body.product));
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
@@ -184,7 +188,23 @@ export class IngresosComponent implements AfterViewInit {
       this.Edit(false);
     }
   }
+
+  private restarStock(product: Product) {
+    if (product !== undefined) {
+      let stockCount: number = product.stock;
+      if (stockCount > 0) {
+        stockCount--;
+        this.dataService.fetchInventario('PUT', { id: product.id, stock: stockCount });
+        this.sharedService.message('Se descontó una unidad del stock.');
+      } else
+        this.sharedService.message('Advertencia: no hay stock para descontar.');
+    } else {
+      this.sharedService.message('Advertencia: no se localizó el ID del producto.');
+    }
+  }
 }
+
+
 
 
 

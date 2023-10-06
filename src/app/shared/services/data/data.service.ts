@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { facturacionAuth } from '@models/mainClasses/main-classes';
 import { configuracion } from '@models/mainClasses/main-classes';
+import { Product } from '@models/mainClasses/main-classes';
 
 @Injectable({
   providedIn: 'root'
