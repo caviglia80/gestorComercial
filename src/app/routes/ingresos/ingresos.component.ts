@@ -26,7 +26,7 @@ export class IngresosComponent implements AfterViewInit {
   public create: boolean = false;
   public edit: boolean = false;
   public detail: boolean = false;
-  private currentConfiguracion: any;
+  /*   private dataConfig: any; */
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -72,9 +72,9 @@ export class IngresosComponent implements AfterViewInit {
       }
     });
     this.dataService.fetchIngresos('GET');
-    this.dataService.Configuracion$.subscribe((data) => {
-      this.currentConfiguracion = data[0];
-    });
+    /*     this.dataService.Configuracion$.subscribe((data) => {
+          this.dataConfig = data[0];
+        }); */
   }
 
   public onProductoSeleccionado(event: any) {
@@ -133,7 +133,7 @@ export class IngresosComponent implements AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
-    if (this.currentConfiguracion.ingresoRapidoEnabled === '1')
+    if (this.dataService.getCurrentConfiguracion().ingresoRapidoEnabled === '1')
       this.Item = this.sharedService.crearDefault();
     this.create = visible;
   }
@@ -179,7 +179,7 @@ export class IngresosComponent implements AfterViewInit {
         description: this.Item.description
       };
       this.dataService.fetchIngresos(method, body);
-      if (this.currentConfiguracion.ingresoRestaStockEnabled === '1' && method === 'POST')
+      if (this.dataService.getCurrentConfiguracion().ingresoRestaStockEnabled === '1' && method === 'POST')
         this.restarStock(this._getProduct(body.product));
     } catch (error) {
       console.error('Se ha producido un error:', error);

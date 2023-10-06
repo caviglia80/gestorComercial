@@ -11,7 +11,7 @@ import { configuracion } from '@models/mainClasses/main-classes';
 export class AjustesConfigComponent implements AfterViewInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageImg: boolean = false;
-  public dataSource: configuracion = new configuracion();
+  public dataConfig: configuracion = new configuracion();
   public Color1: string = '#000000';
   public Color2: string = '#000000';
   public colorPickerIsOpen: boolean = false;
@@ -34,15 +34,15 @@ export class AjustesConfigComponent implements AfterViewInit {
 
   private dataInit() {
     this.dataService.Configuracion$.subscribe((data) => {
-      this.dataSource = data[0];
-      if (this.dataSource !== undefined) {
-        this.copyEnabled = this.dataSource.copyEnabled === '1';
-        this.Color1 = this.dataSource.color1;
-        this.Color2 = this.dataSource.color2;
-        this.ingresoRapidoEnabled = this.dataSource.ingresoRapidoEnabled === '1';
-        this.egresoRapidoEnabled = this.dataSource.egresoRapidoEnabled === '1';
-        this.ingresoRestaStockEnabled = this.dataSource.ingresoRestaStockEnabled === '1';
-        this.egresoSumaStockEnabled = this.dataSource.egresoSumaStockEnabled === '1';
+      this.dataConfig = data[0];
+      if (this.dataConfig !== undefined) {
+        this.copyEnabled = this.dataConfig.copyEnabled === '1';
+        this.Color1 = this.dataConfig.color1;
+        this.Color2 = this.dataConfig.color2;
+        this.ingresoRapidoEnabled = this.dataConfig.ingresoRapidoEnabled === '1';
+        this.egresoRapidoEnabled = this.dataConfig.egresoRapidoEnabled === '1';
+        this.ingresoRestaStockEnabled = this.dataConfig.ingresoRestaStockEnabled === '1';
+        this.egresoSumaStockEnabled = this.dataConfig.egresoSumaStockEnabled === '1';
       }
     });
   }

@@ -26,7 +26,7 @@ export class EgresosComponent implements AfterViewInit {
   public create: boolean = false;
   public edit: boolean = false;
   public detail: boolean = false;
-  private currentConfiguracion: any;
+/*   private currentConfiguracion: any; */
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -73,9 +73,9 @@ export class EgresosComponent implements AfterViewInit {
       }
     });
     this.dataService.fetchEgresos('GET');
-    this.dataService.Configuracion$.subscribe((data) => {
+/*     this.dataService.Configuracion$.subscribe((data) => {
       this.currentConfiguracion = data[0];
-    });
+    }); */
   }
 
   public onProductoSeleccionado(event: any) {
@@ -132,7 +132,7 @@ export class EgresosComponent implements AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
-    if (this.currentConfiguracion.egresoRapidoEnabled === '1')
+    if (this.dataService.getCurrentConfiguracion().egresoRapidoEnabled === '1')
       this.Item = this.sharedService.crearDefault();
     this.create = visible;
   }
@@ -180,7 +180,7 @@ export class EgresosComponent implements AfterViewInit {
         description: this.Item.description
       };
       this.dataService.fetchEgresos(method, body);
-      if (this.currentConfiguracion.egresoSumaStockEnabled === '1' && method === 'POST')
+      if (this.dataService.getCurrentConfiguracion().egresoSumaStockEnabled === '1' && method === 'POST')
         this.sumarStock(this._getProduct(body.product));
     } catch (error) {
       console.error('Se ha producido un error:', error);
