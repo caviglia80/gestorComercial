@@ -46,6 +46,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { InventarioConfigComponent } from './shared/components/inventario-config/inventario-config.component';
 import { PvpPipe } from './core/pipes/pvp/pvp.pipe';
+import { IngresoConfigComponent } from './shared/components/ingreso-config/ingreso-config.component';
+import { EgresoConfigComponent } from './shared/components/egreso-config/egreso-config.component';
 
 
 @NgModule({
@@ -70,7 +72,9 @@ import { PvpPipe } from './core/pipes/pvp/pvp.pipe';
     FacturacionConfigComponent,
     AjustesConfigComponent,
     InventarioConfigComponent,
-    PvpPipe
+    PvpPipe,
+    IngresoConfigComponent,
+    EgresoConfigComponent
   ],
   imports: [
     BrowserModule,

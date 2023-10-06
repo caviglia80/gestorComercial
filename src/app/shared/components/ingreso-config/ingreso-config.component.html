@@ -1,0 +1,11 @@
+<div class="checkbox-container">
+  <div class="checkbox-container">
+    <mat-checkbox [(ngModel)]="ingresoRapidoEnabled"
+      (ngModelChange)="habilitarIngresoRapido(ingresoRapidoEnabled)">Ingreso rápido
+      (primer
+      item de cada lista)</mat-checkbox>
+    <mat-checkbox [(ngModel)]="ingresoRestaStockEnabled"
+      (ngModelChange)="habilitarIngresoRestaStock(ingresoRestaStockEnabled)">Restar stock por
+      ingreso</mat-checkbox>
+  </div>
+</div>

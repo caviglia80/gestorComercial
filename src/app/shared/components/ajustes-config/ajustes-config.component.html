@@ -5,24 +5,8 @@
 </div>
 
 <div class="checkbox-container">
-  <!--   <mat-checkbox [(ngModel)]="tooltipChecked" (ngModelChange)="habilitarTooltip(tooltipChecked)">Habilitar
-    tootltips</mat-checkbox> -->
   <mat-checkbox [(ngModel)]="copyEnabled" (ngModelChange)="habilitarCopy(copyEnabled)">Habilitar copiar con doble
     clic</mat-checkbox>
-  <mat-checkbox [(ngModel)]="ingresoRapidoEnabled"
-    (ngModelChange)="habilitarIngresoRapido(ingresoRapidoEnabled)">Ingreso rápido
-    (primer
-    item)</mat-checkbox>
-  <mat-checkbox [(ngModel)]="egresoRapidoEnabled" (ngModelChange)="habilitarEgresoRapido(egresoRapidoEnabled)">Egreso
-    rápido
-    (primer
-    item)</mat-checkbox>
-  <mat-checkbox [(ngModel)]="ingresoRestaStockEnabled"
-    (ngModelChange)="habilitarIngresoRestaStock(ingresoRestaStockEnabled)">Restar stock por
-    ingreso</mat-checkbox>
-  <mat-checkbox [(ngModel)]="egresoSumaStockEnabled"
-    (ngModelChange)="habilitarEgresoSumaStock(egresoSumaStockEnabled)">Sumar stock por
-    egreso</mat-checkbox>
 </div>
 
 <mat-expansion-panel class="my-2" [class.overflow-visible]="colorPickerIsOpen">

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { configuracion } from '@models/mainClasses/main-classes';
@@ -8,7 +8,7 @@ import { configuracion } from '@models/mainClasses/main-classes';
   templateUrl: './ajustes-config.component.html',
   styleUrls: ['./ajustes-config.component.css']
 })
-export class AjustesConfigComponent implements AfterViewInit {
+export class AjustesConfigComponent implements OnInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageImg: boolean = false;
   public dataConfig: configuracion = new configuracion();
@@ -16,20 +16,14 @@ export class AjustesConfigComponent implements AfterViewInit {
   public Color2: string = '#000000';
   public colorPickerIsOpen: boolean = false;
   public copyEnabled: boolean = false;
-  public ingresoRapidoEnabled: boolean = false;
-  public egresoRapidoEnabled: boolean = false;
-  public ingresoRestaStockEnabled: boolean = false;
-  public egresoSumaStockEnabled: boolean = false;
 
   constructor(
-    private cdr: ChangeDetectorRef,
     public dataService: DataService,
     private sharedService: SharedService
   ) { }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.dataInit();
-    this.cdr.detectChanges();
   }
 
   private dataInit() {
@@ -39,10 +33,6 @@ export class AjustesConfigComponent implements AfterViewInit {
         this.copyEnabled = this.dataConfig.copyEnabled === '1';
         this.Color1 = this.dataConfig.color1;
         this.Color2 = this.dataConfig.color2;
-        this.ingresoRapidoEnabled = this.dataConfig.ingresoRapidoEnabled === '1';
-        this.egresoRapidoEnabled = this.dataConfig.egresoRapidoEnabled === '1';
-        this.ingresoRestaStockEnabled = this.dataConfig.ingresoRestaStockEnabled === '1';
-        this.egresoSumaStockEnabled = this.dataConfig.egresoSumaStockEnabled === '1';
       }
     });
   }
@@ -73,22 +63,6 @@ export class AjustesConfigComponent implements AfterViewInit {
 
   public habilitarCopy(isChecked: boolean) {
     this.dataService.fetchConfiguracion('PUT', { id: 1, copyEnabled: isChecked ? "1" : "0" });
-  }
-
-  public habilitarIngresoRapido(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoRapidoEnabled: isChecked ? "1" : "0" });
-  }
-
-  public habilitarEgresoRapido(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, egresoRapidoEnabled: isChecked ? "1" : "0" });
-  }
-
-  public habilitarIngresoRestaStock(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoRestaStockEnabled: isChecked ? "1" : "0" });
-  }
-
-  public habilitarEgresoSumaStock(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, egresoSumaStockEnabled: isChecked ? "1" : "0" });
   }
 
   public color1(color: string) {

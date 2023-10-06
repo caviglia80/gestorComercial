@@ -1,0 +1,5 @@
+<div class="checkbox-container">
+  <mat-checkbox [(ngModel)]="egresoRapidoEnabled" (ngModelChange)="habilitarEgresoRapido(egresoRapidoEnabled)">Egreso rápido (primer item de cada lista)</mat-checkbox>
+  <mat-checkbox [(ngModel)]="egresoSumaStockEnabled"
+    (ngModelChange)="habilitarEgresoSumaStock(egresoSumaStockEnabled)">Sumar stock por egreso</mat-checkbox>
+</div>
