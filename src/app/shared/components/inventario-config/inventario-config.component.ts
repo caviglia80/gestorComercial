@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 import { configuracion } from '@models/mainClasses/main-classes';
 
@@ -7,15 +7,15 @@ import { configuracion } from '@models/mainClasses/main-classes';
   templateUrl: './inventario-config.component.html',
   styleUrls: ['./inventario-config.component.css']
 })
-export class InventarioConfigComponent implements AfterViewInit {
+export class InventarioConfigComponent implements OnInit {
   public dataConfig: configuracion = new configuracion();
   public pvp: string = '0';
 
   constructor(
-    public dataService: DataService,
+    public dataService: DataService
   ) { }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.dataInit();
   }
 
