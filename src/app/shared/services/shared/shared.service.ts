@@ -70,12 +70,12 @@ export class SharedService {
     }
   }
 
-  public copy(textToCopy: string) {
+  public copy(textToCopy: any) {
     this.currentConfiguracion = this.injector.get(DataService).getCurrentConfiguracion();
     if (this.currentConfiguracion.copyEnabled !== undefined)
       if (this.currentConfiguracion.copyEnabled === '1') {
         const el = document.createElement('textarea');
-        el.value = textToCopy;
+        el.value = String(textToCopy);
         document.body.appendChild(el);
         el.select();
         try {
