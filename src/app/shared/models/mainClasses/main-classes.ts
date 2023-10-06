@@ -5,7 +5,6 @@ export class Product {
   costPrice: number;
   listPrice: number;
   observacion: string;
-  ventasRealizadas: number;
 
   constructor(
     id: number = 0,
@@ -14,7 +13,6 @@ export class Product {
     costPrice: number = 0,
     listPrice: number = 0,
     observacion: string = '',
-    ventasRealizadas: number = 0
   ) {
     this.id = id;
     this.name = name;
@@ -22,7 +20,6 @@ export class Product {
     this.costPrice = costPrice;
     this.listPrice = listPrice;
     this.observacion = observacion;
-    this.ventasRealizadas = ventasRealizadas;
   }
 }
 

@@ -80,14 +80,6 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="ventasRealizadas">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by ventasRealizadas">
-            {{ Columns['ventasRealizadas'] }}
-          </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.ventasRealizadas)">
-            {{element.ventasRealizadas}} </td>
-        </ng-container>
-
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Operaciones </th>
           <td mat-cell *matCellDef="let element" class="actions-cell">
@@ -172,11 +164,6 @@
           </td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['ventasRealizadas'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['ventasRealizadas'])">{{
-            Item['ventasRealizadas'] }}</td>
-        </tr>
-        <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['observacion'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['observacion'])">{{ Item['observacion'] }}
           </td>
@@ -217,10 +204,6 @@
     <input matInput placeholder="{{ Columns['stock'] }}" [(ngModel)]="Item.stock" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['ventasRealizadas'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="Item.ventasRealizadas" type="number">
-  </mat-form-field>
-  <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['observacion'] | lowercase }}</p>
     <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="Item.observacion">
   </mat-form-field>
@@ -258,10 +241,6 @@
     <input matInput placeholder="{{ Columns['stock'] }}" [(ngModel)]="Item.stock" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['ventasRealizadas'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="Item.ventasRealizadas" type="number">
-  </mat-form-field>
-  <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['observacion'] | lowercase }}</p>
     <input matInput placeholder="{{ Columns['observacion'] }}" [(ngModel)]="Item.observacion">
   </mat-form-field>
@@ -297,10 +276,6 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['stock'] | lowercase }}</p>
     <input matInput placeholder="{{ Columns['stock'] }}" [(ngModel)]="Item.stock" type="number">
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['ventasRealizadas'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['ventasRealizadas'] }}" [(ngModel)]="Item.ventasRealizadas" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['observacion'] | lowercase }}</p>

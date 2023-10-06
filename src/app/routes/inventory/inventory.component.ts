@@ -27,7 +27,6 @@ export class InventoryComponent implements AfterViewInit {
     costPrice: 'Precio costo',
     listPrice: 'Precio lista',
     stock: 'Stock',
-    ventasRealizadas: 'Ventas realizadas',
     observacion: 'Observación',
     actions: 'Operaciones'
   };
@@ -122,7 +121,6 @@ export class InventoryComponent implements AfterViewInit {
     this.Item.costPrice = item.costPrice;
     this.Item.listPrice = item.listPrice;
     this.Item.stock = item.stock;
-    this.Item.ventasRealizadas = item.ventasRealizadas;
     this.Item.observacion = item.observacion;
   }
 
@@ -134,7 +132,6 @@ export class InventoryComponent implements AfterViewInit {
         costPrice: this.Item.costPrice,
         listPrice: this.Item.listPrice,
         stock: this.Item.stock,
-        ventasRealizadas: this.Item.ventasRealizadas,
         observacion: this.Item.observacion
       };
       this.dataService.fetchInventario(method, body);
