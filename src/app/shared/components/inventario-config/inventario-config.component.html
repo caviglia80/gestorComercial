@@ -1,1 +1,4 @@
-<p>inventario-config works!</p>
+<mat-form-field class="full-width">
+  <p class="form-field-description">Ingrese porcentaje de margen para calcular el precio de lista (PVP)</p>
+  <input matInput placeholder="PVP" [(ngModel)]="pvp" type="number" (blur)="setPvp(pvp)">
+</mat-form-field>
