@@ -221,18 +221,24 @@ export class configuracion {
   copyEnabled: string;
   color1: string;
   color2: string;
+  ingresoRapidoEnabled: string;
+  egresoRapidoEnabled: string;
 
   constructor(
     id: number = 1,
     icono: string = 'assets/defaultLogo.png',
-    copyEnabled: string = 'true',
+    copyEnabled: string = '1',
     color1: string = '#846bf3',
     color2: string = '#4c28ec',
+    ingresoRapidoEnabled: string = '1',
+    egresoRapidoEnabled: string = '1',
   ) {
     this.id = id;
     this.icono = icono;
     this.copyEnabled = copyEnabled;
     this.color1 = color1;
     this.color2 = color2;
+    this.ingresoRapidoEnabled = ingresoRapidoEnabled;
+    this.egresoRapidoEnabled = egresoRapidoEnabled;
   }
 }

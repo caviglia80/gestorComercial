@@ -11,9 +11,10 @@ import { configuracion } from '@models/mainClasses/main-classes';
 export class AjustesConfigComponent implements AfterViewInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageImg: boolean = false;
-  public dataSource: any;
-/*   public tooltipChecked: boolean = false; */
+  public dataSource: configuracion = new configuracion();
   public copyChecked: boolean = false;
+  public iRapidoChecked: boolean = false;
+  public eRapidoChecked: boolean = false;
   public Color1: string = '#000000';
   public Color2: string = '#000000';
   public colorPickerIsOpen: boolean = false;
@@ -33,10 +34,11 @@ export class AjustesConfigComponent implements AfterViewInit {
     this.dataService.Configuracion$.subscribe((data) => {
       this.dataSource = data[0];
       if (this.dataSource !== undefined) {
-/*         this.tooltipChecked = this.dataSource.tooltipEnabled == 1; */
-        this.copyChecked = this.dataSource.copyEnabled == 1;
+        this.copyChecked = this.dataSource.copyEnabled === '1';
         this.Color1 = this.dataSource.color1;
         this.Color2 = this.dataSource.color2;
+        this.iRapidoChecked = this.dataSource.ingresoRapidoEnabled === '1';
+        this.eRapidoChecked = this.dataSource.egresoRapidoEnabled === '1';
       }
     });
   }
@@ -65,12 +67,16 @@ export class AjustesConfigComponent implements AfterViewInit {
     this.dataService.fetchConfiguracion('PUT', new configuracion());
   }
 
-/*   public habilitarTooltip(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, tooltipEnabled: isChecked ? "true" : "false" });
-  } */
-
   public habilitarCopy(isChecked: boolean) {
     this.dataService.fetchConfiguracion('PUT', { id: 1, copyEnabled: isChecked ? "true" : "false" });
+  }
+
+  public habilitarIngresoRapido(isChecked: boolean) {
+    this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoRapidoEnabled: isChecked ? "true" : "false" });
+  }
+
+  public habilitarEgresoRapido(isChecked: boolean) {
+    this.dataService.fetchConfiguracion('PUT', { id: 1, egresoRapidoEnabled: isChecked ? "true" : "false" });
   }
 
   public color1(color: string) {

@@ -26,6 +26,7 @@ export class IngresosComponent implements AfterViewInit {
   public create: boolean = false;
   public edit: boolean = false;
   public detail: boolean = false;
+  private currentConfiguracion: any;
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -51,24 +52,6 @@ export class IngresosComponent implements AfterViewInit {
     );
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
@@ -89,6 +72,9 @@ export class IngresosComponent implements AfterViewInit {
       }
     });
     this.dataService.fetchIngresos('GET');
+    this.dataService.Configuracion$.subscribe((data) => {
+      this.currentConfiguracion = data[0];
+    });
   }
 
   private _filterProduct(value: string): any[] {
@@ -135,7 +121,8 @@ export class IngresosComponent implements AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
-    this.Item = this.sharedService.crearDefault();
+    if (this.currentConfiguracion.ingresoRapidoEnabled === '1')
+      this.Item = this.sharedService.crearDefault();
     this.create = visible;
   }
 

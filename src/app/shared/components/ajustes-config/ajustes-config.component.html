@@ -5,10 +5,16 @@
 </div>
 
 <div class="checkbox-container">
-<!--   <mat-checkbox [(ngModel)]="tooltipChecked" (ngModelChange)="habilitarTooltip(tooltipChecked)">Habilitar
+  <!--   <mat-checkbox [(ngModel)]="tooltipChecked" (ngModelChange)="habilitarTooltip(tooltipChecked)">Habilitar
     tootltips</mat-checkbox> -->
   <mat-checkbox [(ngModel)]="copyChecked" (ngModelChange)="habilitarCopy(copyChecked)">Habilitar copiar con doble
     clic</mat-checkbox>
+  <mat-checkbox [(ngModel)]="iRapidoChecked" (ngModelChange)="habilitarIngresoRapido(iRapidoChecked)">Ingreso rápido
+    (primer
+    item)</mat-checkbox>
+  <mat-checkbox [(ngModel)]="eRapidoChecked" (ngModelChange)="habilitarEgresoRapido(eRapidoChecked)">Egreso rápido
+    (primer
+    item)</mat-checkbox>
 </div>
 
 <mat-expansion-panel class="my-2" [class.overflow-visible]="colorPickerIsOpen">

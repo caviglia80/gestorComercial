@@ -26,6 +26,7 @@ export class EgresosComponent implements AfterViewInit {
   public create: boolean = false;
   public edit: boolean = false;
   public detail: boolean = false;
+  private currentConfiguracion: any;
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -72,6 +73,9 @@ export class EgresosComponent implements AfterViewInit {
       }
     });
     this.dataService.fetchEgresos('GET');
+    this.dataService.Configuracion$.subscribe((data) => {
+      this.currentConfiguracion = data[0];
+    });
   }
 
   private _filterProduct(value: string): any[] {
@@ -118,7 +122,8 @@ export class EgresosComponent implements AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
-    this.Item = this.sharedService.crearDefault();
+    if (this.currentConfiguracion.egresoRapidoEnabled === '1')
+      this.Item = this.sharedService.crearDefault();
     this.create = visible;
   }
 

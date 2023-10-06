@@ -45,7 +45,7 @@ export class DataService {
     this.fetchConfiguracion('GET');
   }
 
-  public getCurrentConfiguracion(): any {
+  public getCurrentConfiguracion(): configuracion {
     return this.currentConfiguracion;
   }
 
