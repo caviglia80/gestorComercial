@@ -6,7 +6,7 @@ import { moneyIncome } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Product } from '@models/mainClasses/main-classes';
 
@@ -26,7 +26,7 @@ export class IngresosComponent implements AfterViewInit {
   public create: boolean = false;
   public edit: boolean = false;
   public detail: boolean = false;
-  /*   private dataConfig: any; */
+  public productoValido: boolean = false;
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -72,29 +72,48 @@ export class IngresosComponent implements AfterViewInit {
       }
     });
     this.dataService.fetchIngresos('GET');
-    /*     this.dataService.Configuracion$.subscribe((data) => {
-          this.dataConfig = data[0];
-        }); */
   }
 
   public onProductoSeleccionado(event: any) {
-    if (this._getProduct(event.option.value).stock === 0)
-      this.sharedService.message('Advertencia: no hay stock');
-    this.Item.amount = this.dataService.getPvp(this._getProduct(event.option.value).costPrice);
+    const selectedProduct = this._getProduct(event.option.value);
+    if (selectedProduct.stock != 0) {
+      this.Item.amount = this.dataService.getPvp(this._getProduct(selectedProduct.id).costPrice);
+    } else {
+      this.sharedService.message('Advertencia: el producto no tiene stock');
+      this.Item.amount = 0;
+      this.inventarioControl.reset();
+    }
+  }
+
+  public comprobarProducto(producto: any): void {
+    const selectedProduct = this._filterProduct(producto.product);
+    if (selectedProduct.length === 0) {
+      this.sharedService.message('Advertencia: seleccione un producto válido.');
+      this.Item.amount = 0;
+      this.inventarioControl.reset();
+    }
   }
 
   private _filterProduct(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.dataInventario.filter(item =>
-      item.name.toLowerCase().includes(filterValue) ||
-      item.id.toString().toLowerCase().includes(filterValue)
-    );
+    if (value != null) {
+      const filterValue = value.toLowerCase();
+      return this.dataInventario.filter(item =>
+        item.name.toLowerCase().includes(filterValue) ||
+        item.id.toString().toLowerCase().includes(filterValue)
+      );
+    } else {
+      return [];
+    }
   }
 
-  private _getProduct(id: string): Product {
-    return this.dataInventario.filter(item =>
-      item.id.toString().toLowerCase() === id.toLowerCase()
-    )[0];
+  private _getProduct(id: any): any {
+    if (id != null) {
+      return this.dataInventario.filter(item =>
+        item.id.toString().toLowerCase() === id.toLowerCase()
+      )[0];
+    } else {
+      return null;
+    }
   }
 
   public getInventario() {
@@ -202,6 +221,15 @@ export class IngresosComponent implements AfterViewInit {
       this.sharedService.message('Advertencia: no se localizó el ID del producto.');
     }
   }
+
+
+
+
+
+
+
+
+
 }
 
 

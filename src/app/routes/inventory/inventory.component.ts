@@ -129,7 +129,7 @@ export class InventoryComponent implements AfterViewInit {
         id: this.Item.id,
         name: this.Item.name,
         costPrice: this.Item.costPrice,
-        stock: this.Item.stock,
+        stock: this.Item.stock == null ? 0 : this.Item.stock,
         description: this.Item.description
       };
       this.dataService.fetchInventario(method, body);

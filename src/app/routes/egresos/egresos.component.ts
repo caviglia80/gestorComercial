@@ -73,27 +73,42 @@ export class EgresosComponent implements AfterViewInit {
       }
     });
     this.dataService.fetchEgresos('GET');
-/*     this.dataService.Configuracion$.subscribe((data) => {
-      this.currentConfiguracion = data[0];
-    }); */
   }
 
   public onProductoSeleccionado(event: any) {
-    this.Item.amount = this.dataService.getPvp(this._getProduct(event.option.value).costPrice);
+    const selectedProduct = this._getProduct(event.option.value);
+    this.Item.amount = this.dataService.getPvp(this._getProduct(selectedProduct.id).costPrice);
+  }
+
+  public comprobarProducto(producto: any): void {
+    const selectedProduct = this._filterProduct(producto.product);
+    if (selectedProduct.length === 0) {
+      this.sharedService.message('Advertencia: seleccione un producto válido.');
+      this.Item.amount = 0;
+      this.inventarioControl.reset();
+    }
   }
 
   private _filterProduct(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.dataInventario.filter(item =>
-      item.name.toLowerCase().includes(filterValue) ||
-      item.id.toString().toLowerCase().includes(filterValue)
-    );
+    if (value != null) {
+      const filterValue = value.toLowerCase();
+      return this.dataInventario.filter(item =>
+        item.name.toLowerCase().includes(filterValue) ||
+        item.id.toString().toLowerCase().includes(filterValue)
+      );
+    } else {
+      return [];
+    }
   }
 
-  private _getProduct(id: string): Product {
-    return this.dataInventario.filter(item =>
-      item.id.toString().toLowerCase() === id.toLowerCase()
-    )[0];
+  private _getProduct(id: any): any {
+    if (id != null) {
+      return this.dataInventario.filter(item =>
+        item.id.toString().toLowerCase() === id.toLowerCase()
+      )[0];
+    } else {
+      return null;
+    }
   }
 
   public getInventario() {
