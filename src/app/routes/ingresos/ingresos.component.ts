@@ -5,8 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { moneyIncome } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
-import { startWith, map } from 'rxjs/operators';
-import { FormControl, Validators } from '@angular/forms';
+import { startWith, map, take } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Product } from '@models/mainClasses/main-classes';
 
@@ -17,16 +17,15 @@ import { Product } from '@models/mainClasses/main-classes';
 })
 
 export class IngresosComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<moneyIncome>;
-  public dataInventario: Product[] = [];
   public inventarioControl = new FormControl();
   public filteredInventario: Observable<any[]>;
+  public dataSource = new MatTableDataSource<moneyIncome>;
+  public dataInventario: Product[] = [];
   public isLoading = true;
   public Item: any = {};
   public create: boolean = false;
   public edit: boolean = false;
   public detail: boolean = false;
-  public productoValido: boolean = false;
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -74,21 +73,12 @@ export class IngresosComponent implements AfterViewInit {
     this.dataService.fetchIngresos('GET');
   }
 
-  public onProductoSeleccionado(event: any) {
+  public onProductoSeleccionado(event: any): void {
     const selectedProduct = this._getProduct(event.option.value);
     if (selectedProduct.stock != 0) {
       this.Item.amount = this.dataService.getPvp(this._getProduct(selectedProduct.id).costPrice);
     } else {
       this.sharedService.message('Advertencia: el producto no tiene stock');
-      this.Item.amount = 0;
-      this.inventarioControl.reset();
-    }
-  }
-
-  public comprobarProducto(producto: any): void {
-    const selectedProduct = this._filterProduct(producto.product);
-    if (selectedProduct.length === 0) {
-      this.sharedService.message('Advertencia: seleccione un producto válido.');
       this.Item.amount = 0;
       this.inventarioControl.reset();
     }
@@ -101,19 +91,15 @@ export class IngresosComponent implements AfterViewInit {
         item.name.toLowerCase().includes(filterValue) ||
         item.id.toString().toLowerCase().includes(filterValue)
       );
-    } else {
-      return [];
-    }
+    } else return [];
   }
 
   private _getProduct(id: any): any {
-    if (id != null) {
+    if (id !== null && id !== undefined) {
       return this.dataInventario.filter(item =>
         item.id.toString().toLowerCase() === id.toLowerCase()
       )[0];
-    } else {
-      return null;
-    }
+    } else return null;
   }
 
   public getInventario() {
@@ -185,6 +171,7 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   public record(method: string) {
+    if (!this.productoValido()) return;
     try {
       const body: moneyIncome = {
         id: this.Item.id,
@@ -222,14 +209,15 @@ export class IngresosComponent implements AfterViewInit {
     }
   }
 
-
-
-
-
-
-
-
-
+  private productoValido(): boolean {
+    if (this._getProduct(this.Item.product) === undefined) {
+      this.sharedService.message('Advertencia: seleccione un producto válido.');
+      this.Item.amount = 0;
+      this.inventarioControl.reset();
+      return false;
+    }
+    return true;
+  }
 }
 
 

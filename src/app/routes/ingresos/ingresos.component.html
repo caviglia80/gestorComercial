@@ -241,8 +241,8 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Buscar producto (ID / Nombre) <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.product" (focus)="getInventario()" (blur)="comprobarProducto(Item)">
+    <input type="text" placeholder="ID Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
+      [(ngModel)]="Item.product" (focus)="getInventario()">
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
         {{ producto.id }} - {{ producto.name }}

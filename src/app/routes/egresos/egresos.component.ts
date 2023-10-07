@@ -26,7 +26,7 @@ export class EgresosComponent implements AfterViewInit {
   public create: boolean = false;
   public edit: boolean = false;
   public detail: boolean = false;
-/*   private currentConfiguracion: any; */
+  /*   private currentConfiguracion: any; */
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -75,18 +75,9 @@ export class EgresosComponent implements AfterViewInit {
     this.dataService.fetchEgresos('GET');
   }
 
-  public onProductoSeleccionado(event: any) {
+  public onProductoSeleccionado(event: any): void {
     const selectedProduct = this._getProduct(event.option.value);
     this.Item.amount = this.dataService.getPvp(this._getProduct(selectedProduct.id).costPrice);
-  }
-
-  public comprobarProducto(producto: any): void {
-    const selectedProduct = this._filterProduct(producto.product);
-    if (selectedProduct.length === 0) {
-      this.sharedService.message('Advertencia: seleccione un producto válido.');
-      this.Item.amount = 0;
-      this.inventarioControl.reset();
-    }
   }
 
   private _filterProduct(value: string): any[] {
@@ -96,19 +87,15 @@ export class EgresosComponent implements AfterViewInit {
         item.name.toLowerCase().includes(filterValue) ||
         item.id.toString().toLowerCase().includes(filterValue)
       );
-    } else {
-      return [];
-    }
+    } else return [];
   }
 
   private _getProduct(id: any): any {
-    if (id != null) {
+    if (id !== null && id !== undefined) {
       return this.dataInventario.filter(item =>
         item.id.toString().toLowerCase() === id.toLowerCase()
       )[0];
-    } else {
-      return null;
-    }
+    } else return null;
   }
 
   public getInventario() {
@@ -181,6 +168,7 @@ export class EgresosComponent implements AfterViewInit {
   }
 
   public record(method: string) {
+    if (!this.productoValido()) return;
     try {
       const body: moneyOutlays = {
         id: this.Item.id,
@@ -214,6 +202,16 @@ export class EgresosComponent implements AfterViewInit {
     } else {
       this.sharedService.message('Advertencia: no se localizó el ID del producto.');
     }
+  }
+
+  private productoValido(): boolean {
+    if (this._getProduct(this.Item.product) === undefined) {
+      this.sharedService.message('Advertencia: seleccione un producto válido.');
+      this.Item.amount = 0;
+      this.inventarioControl.reset();
+      return false;
+    }
+    return true;
   }
 }
 
