@@ -150,7 +150,6 @@ export class moneyIncome {
 export class moneyOutlays {
   id: number;
   date: string;
-  product: string;
   currency: string;
   amount: number;
   method: string;
@@ -162,7 +161,6 @@ export class moneyOutlays {
   constructor(
     id: number = 0,
     date: string = '',
-    product: string = '',
     currency: string = '',
     amount: number = 0,
     method: string = '',
@@ -173,7 +171,6 @@ export class moneyOutlays {
   ) {
     this.id = id;
     this.date = date;
-    this.product = product;
     this.currency = currency;
     this.amount = amount;
     this.method = method;

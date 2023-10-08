@@ -18,9 +18,6 @@ import { Product } from '@models/mainClasses/main-classes';
 
 export class EgresosComponent implements AfterViewInit {
   public dataSource = new MatTableDataSource<moneyOutlays>;
-  public dataInventario: Product[] = [];
-  public inventarioControl = new FormControl();
-  public filteredInventario: Observable<any[]>;
   public isLoading = true;
   public Item: any = {};
   public create: boolean = false;
@@ -31,13 +28,12 @@ export class EgresosComponent implements AfterViewInit {
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
     date: 'Fecha',
-    product: 'Producto',
-    currency: 'Moneda',
+    beneficiary_provider: 'Beneficiario/Proveedor',
+/*     currency: 'Moneda', */
     amount: 'Monto',
     /*     method: 'Método de Gasto', */
     category: 'Rubro',
     /*     invoice: 'Comprobante', */
-    beneficiary_provider: 'Beneficiario/Proveedor',
     /*     description: 'Descripción', */
     actions: 'Operaciones'
   };
@@ -46,12 +42,7 @@ export class EgresosComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef,
     public dataService: DataService,
     public sharedService: SharedService
-  ) {
-    this.filteredInventario = this.inventarioControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterProduct(value))
-    );
-  }
+  ) {  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -59,7 +50,6 @@ export class EgresosComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataInit();
-    this.dataInit_Inventario();
   }
 
   private dataInit() {
@@ -75,37 +65,8 @@ export class EgresosComponent implements AfterViewInit {
     this.dataService.fetchEgresos('GET');
   }
 
-  public onProductoSeleccionado(event: any): void {
-    const selectedProduct = this._getProduct(event.option.value);
-    this.Item.amount = this.dataService.getPvp(this._getProduct(selectedProduct.id).costPrice);
-  }
-
-  private _filterProduct(value: string): any[] {
-    if (value != null) {
-      const filterValue = value.toLowerCase();
-      return this.dataInventario.filter(item =>
-        item.name.toLowerCase().includes(filterValue) ||
-        item.id.toString().toLowerCase().includes(filterValue)
-      );
-    } else return [];
-  }
-
-  private _getProduct(id: any): any {
-    if (id !== null && id !== undefined) {
-      return this.dataInventario.filter(item =>
-        item.id.toString().toLowerCase() === id.toLowerCase()
-      )[0];
-    } else return null;
-  }
-
   public getInventario() {
     this.dataService.fetchInventario('GET');
-  }
-
-  private dataInit_Inventario() {
-    this.dataService.Inventario$.subscribe((data) => {
-      this.dataInventario = data;
-    });
   }
 
   private loading(state: boolean) {
@@ -157,7 +118,6 @@ export class EgresosComponent implements AfterViewInit {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.date = item.date;
-    this.Item.product = item.product;
     this.Item.currency = item.currency;
     this.Item.amount = item.amount;
     this.Item.method = item.method;
@@ -168,12 +128,10 @@ export class EgresosComponent implements AfterViewInit {
   }
 
   public record(method: string) {
-    if (!this.productoValido()) return;
     try {
       const body: moneyOutlays = {
         id: this.Item.id,
         date: this.Item.date,
-        product: this.Item.product,
         currency: this.Item.currency,
         amount: this.Item.amount,
         method: this.Item.method,
@@ -189,27 +147,6 @@ export class EgresosComponent implements AfterViewInit {
       this.Create(false);
       this.Edit(false);
     }
-  }
-
-  private sumarStock(product: Product) {
-    if (product !== undefined) {
-      let stockCount: number = product.stock;
-      stockCount++;
-      this.dataService.fetchInventario('PUT', { id: product.id, stock: stockCount });
-      this.sharedService.message('Se sumó una unidad al stock.');
-    } else {
-      this.sharedService.message('Advertencia: no se localizó el ID del producto.');
-    }
-  }
-
-  private productoValido(): boolean {
-    if (this._getProduct(this.Item.product) === undefined) {
-      this.sharedService.message('Advertencia: seleccione un producto válido.');
-      this.Item.amount = 0;
-      this.inventarioControl.reset();
-      return false;
-    }
-    return true;
   }
 }
 

@@ -46,16 +46,6 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="product">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by product">
-            {{ Columns['product'] }}
-          </th>
-          <td [matTooltip]="element.product" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.product)">
-            {{element.product }}
-          </td>
-        </ng-container>
-
         <ng-container matColumnDef="currency">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by currency">
             {{ Columns['currency'] }}
@@ -185,12 +175,14 @@
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['product'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['product'])">{{ Item['product'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['beneficiary_provider'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['beneficiary_provider'])">{{
+            Item['beneficiary_provider'] }}
+          </td>
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['currency'] }}:</td>
+          <td style="font-weight: bold; white-space: nowrap;">Moneda:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['currency'])">{{ Item['currency'] }}</td>
         </tr>
 
@@ -216,13 +208,6 @@
           <td style="font-weight: bold; white-space: nowrap;">Comprobante:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['invoice'])">{{
             Item['invoice'] }}</td>
-        </tr>
-
-        <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['beneficiary_provider'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['beneficiary_provider'])">{{
-            Item['beneficiary_provider'] }}
-          </td>
         </tr>
 
         <tr>
@@ -254,17 +239,6 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['date'] | lowercase }} <span class="red-asterisk">*</span></p>
     <input class="my-2" type="date" matInput [(ngModel)]="Item.date" required>
-  </mat-form-field>
-
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Buscar producto (ID / Nombre) <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="ID Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.product" (focus)="getInventario()">
-    <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
-      <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
-        {{ producto.id }} - {{ producto.name }}
-      </mat-option>
-    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -330,17 +304,6 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['date'] | lowercase }} <span class="red-asterisk">*</span></p>
     <input class="my-2" type="date" matInput [(ngModel)]="Item.date" required>
-  </mat-form-field>
-
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Buscar producto (ID / Nombre) <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.product" (focus)="getInventario()">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
-        {{ producto.id }} - {{ producto.name }}
-      </mat-option>
-    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field class="full-width">
