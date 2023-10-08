@@ -62,13 +62,7 @@
         </ng-container>
 
         <ng-container matColumnDef="listPrice">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by listPrice">
-            {{ Columns['listPrice'] }}
-          </th>
-
-
-          <!-- this.dataService.getPvp(element.costPrice); -->
-
+          <th mat-header-cell *matHeaderCellDef>{{ Columns['listPrice'] }}</th>
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(dataService.getPvp(element.costPrice))">
             {{ element.costPrice
             | pvp

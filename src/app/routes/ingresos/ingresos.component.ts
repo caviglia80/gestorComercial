@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { moneyIncome } from '@models/mainClasses/main-classes';
+import { configuracion, moneyIncome } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { startWith, map, take } from 'rxjs/operators';
@@ -38,6 +38,7 @@ export class IngresosComponent implements AfterViewInit {
     /*     method: 'Método de Pago', */
     category: 'Rubro',
     /*     invoice: 'Comprobante', */
+    pvpPorcentaje: 'PVP',
     /*     description: 'Descripción', */
     actions: 'Operaciones'
   };
@@ -178,12 +179,14 @@ export class IngresosComponent implements AfterViewInit {
     this.Item.invoice = item.invoice;
     this.Item.anulado = item.anulado;
     this.Item.cliente = item.cliente;
+    this.Item.pvpPorcentaje = item.pvpPorcentaje;
     this.Item.description = item.description;
   }
 
   public record(method: string) {
     if (!this.productoValido()) return;
     try {
+      const config: configuracion = this.dataService.getCurrentConfiguracion();
       const body: moneyIncome = {
         id: this.Item.id,
         date: this.Item.date,
@@ -195,10 +198,11 @@ export class IngresosComponent implements AfterViewInit {
         invoice: this.Item.invoice,
         anulado: method === 'PUT' ? this.Item.anulado : '0',
         cliente: this.Item.cliente,
+        pvpPorcentaje: method === 'POST' ? config.pvpPorcentaje : this.Item.pvpPorcentaje,
         description: this.Item.description
       };
       this.dataService.fetchIngresos(method, body);
-      if (this.dataService.getCurrentConfiguracion().ingresoRestaStockEnabled === '1' && method === 'POST')
+      if (config.ingresoRestaStockEnabled === '1' && method === 'POST')
         this.restarStock(this._getProduct(body.product));
     } catch (error) {
       console.error('Se ha producido un error:', error);

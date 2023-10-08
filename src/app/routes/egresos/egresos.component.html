@@ -242,8 +242,8 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['currency'] | lowercase }}</p>
-    <mat-select placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+    <p class="form-field-description">Ingrese moneda</p>
+    <mat-select placeholder="Moneda" [(ngModel)]="Item.currency">
       <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -307,8 +307,8 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['currency'] | lowercase }}</p>
-    <mat-select placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+    <p class="form-field-description">Ingrese moneda</p>
+    <mat-select placeholder="Moneda" [(ngModel)]="Item.currency">
       <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
     </mat-select>
   </mat-form-field>

@@ -107,6 +107,14 @@
             {{element.invoice}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="pvpPorcentaje">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by pvpPorcentaje">
+            {{ Columns['pvpPorcentaje'] }}
+          </th>
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.pvpPorcentaje)">
+            {{element.pvpPorcentaje + '%' }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
             {{ Columns['description'] }}
@@ -176,10 +184,6 @@
   <div class="table-container mt-3">
     <div class="table-wrapper">
       <table>
-        <!--         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">ID:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['id'])">{{ Item['id'] }}</td>
-        </tr> -->
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['date'] }}:</td>
@@ -233,6 +237,13 @@
         </tr>
 
         <tr>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['pvpPorcentaje'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['pvpPorcentaje'])">{{ Item['pvpPorcentaje'] + '%'
+            }}
+          </td>
+        </tr>
+
+        <tr>
           <td style="font-weight: bold; white-space: nowrap;">Descripción:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['description'])">{{ Item['description'] }}
           </td>
@@ -280,8 +291,8 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['currency'] | lowercase }}</p>
-    <mat-select placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+    <p class="form-field-description">Ingrese moneda</p>
+    <mat-select placeholder="Moneda" [(ngModel)]="Item.currency">
       <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -356,8 +367,8 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['currency'] | lowercase }}</p>
-    <mat-select placeholder="{{ Columns['currency'] }}" [(ngModel)]="Item.currency">
+    <p class="form-field-description">Ingrese moneda</p>
+    <mat-select placeholder="Moneda" [(ngModel)]="Item.currency">
       <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
     </mat-select>
   </mat-form-field>
