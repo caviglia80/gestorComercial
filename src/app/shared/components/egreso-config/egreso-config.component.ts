@@ -1,5 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { SharedService } from '@services/shared/shared.service';
+import { Component } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 import { configuracion } from '@models/mainClasses/main-classes';
 
@@ -11,11 +10,9 @@ import { configuracion } from '@models/mainClasses/main-classes';
 export class EgresoConfigComponent {
   public dataConfig: configuracion = new configuracion();
   public egresoRapidoEnabled: boolean = false;
-  public egresoSumaStockEnabled: boolean = false;
 
   constructor(
-    public dataService: DataService,
-    private sharedService: SharedService
+    public dataService: DataService
   ) { }
 
   ngOnInit() {
@@ -27,16 +24,11 @@ export class EgresoConfigComponent {
       this.dataConfig = data[0];
       if (this.dataConfig !== undefined) {
         this.egresoRapidoEnabled = this.dataConfig.egresoRapidoEnabled === '1';
-        this.egresoSumaStockEnabled = this.dataConfig.egresoSumaStockEnabled === '1';
       }
     });
   }
 
   public habilitarEgresoRapido(isChecked: boolean) {
     this.dataService.fetchConfiguracion('PUT', { id: 1, egresoRapidoEnabled: isChecked ? "1" : "0" });
-  }
-
-  public habilitarEgresoSumaStock(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, egresoSumaStockEnabled: isChecked ? "1" : "0" });
   }
 }

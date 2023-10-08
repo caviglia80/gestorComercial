@@ -7,5 +7,7 @@
     <mat-checkbox [(ngModel)]="ingresoRestaStockEnabled"
       (ngModelChange)="habilitarIngresoRestaStock(ingresoRestaStockEnabled)">Restar stock por
       ingreso</mat-checkbox>
+      <mat-checkbox [(ngModel)]="ingresoAnuladoSumaStockEnabled"
+      (ngModelChange)="habilitarAnularIngresoSumaStock(ingresoAnuladoSumaStockEnabled)">Sumar stock al anular ingreso</mat-checkbox>
   </div>
 </div>

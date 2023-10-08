@@ -12,6 +12,8 @@
 <div class="checkbox-container py-3">
   <mat-checkbox [(ngModel)]="copyEnabled" (ngModelChange)="habilitarCopy(copyEnabled)">Copiar con doble
     clic</mat-checkbox>
+  <mat-checkbox [(ngModel)]="notificacionesEnabled"
+    (ngModelChange)="habilitaNotificaciones(notificacionesEnabled)">Notificaciones (acciones)</mat-checkbox>
 </div>
 
 <mat-expansion-panel [class.overflow-visible]="colorPickerIsOpen" class="my-2">

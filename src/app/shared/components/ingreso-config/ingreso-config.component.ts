@@ -12,6 +12,7 @@ export class IngresoConfigComponent {
   public dataConfig: configuracion = new configuracion();
   public ingresoRestaStockEnabled: boolean = false;
   public ingresoRapidoEnabled: boolean = false;
+  public ingresoAnuladoSumaStockEnabled: boolean = false;
 
   constructor(
     public dataService: DataService,
@@ -28,6 +29,7 @@ export class IngresoConfigComponent {
       if (this.dataConfig !== undefined) {
         this.ingresoRestaStockEnabled = this.dataConfig.ingresoRestaStockEnabled === '1';
         this.ingresoRapidoEnabled = this.dataConfig.ingresoRapidoEnabled === '1';
+        this.ingresoAnuladoSumaStockEnabled = this.dataConfig.ingresoAnuladoSumaStockEnabled === '1';
       }
     });
   }
@@ -38,5 +40,9 @@ export class IngresoConfigComponent {
 
   public habilitarIngresoRapido(isChecked: boolean) {
     this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoRapidoEnabled: isChecked ? "1" : "0" });
+  }
+
+  public habilitarAnularIngresoSumaStock(isChecked: boolean) {
+    this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoAnuladoSumaStockEnabled: isChecked ? "1" : "0" });
   }
 }

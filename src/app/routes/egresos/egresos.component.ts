@@ -183,8 +183,6 @@ export class EgresosComponent implements AfterViewInit {
         description: this.Item.description
       };
       this.dataService.fetchEgresos(method, body);
-      if (this.dataService.getCurrentConfiguracion().egresoSumaStockEnabled === '1' && method === 'POST')
-        this.sumarStock(this._getProduct(body.product));
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {

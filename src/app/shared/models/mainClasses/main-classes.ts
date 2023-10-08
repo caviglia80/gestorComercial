@@ -116,6 +116,8 @@ export class moneyIncome {
   method: string;
   category: string;
   invoice: string;
+  anulado: string;
+  cliente: string;
   description: string;
 
   constructor(
@@ -127,6 +129,8 @@ export class moneyIncome {
     method: string = '',
     category: string = '',
     invoice: string = '',
+    anulado: string = '0',
+    cliente: string = '',
     description: string = ''
   ) {
     this.id = id;
@@ -137,6 +141,8 @@ export class moneyIncome {
     this.method = method;
     this.category = category;
     this.invoice = invoice;
+    this.anulado = anulado;
+    this.cliente = cliente;
     this.description = description;
   }
 }
@@ -218,7 +224,8 @@ export class configuracion {
   ingresoRapidoEnabled: string;
   egresoRapidoEnabled: string;
   ingresoRestaStockEnabled: string;
-  egresoSumaStockEnabled: string;
+  notificacionesEnabled: string;
+  ingresoAnuladoSumaStockEnabled: string;
   pvpPorcentaje: string;
   titulo: string;
 
@@ -231,7 +238,8 @@ export class configuracion {
     ingresoRapidoEnabled: string = '1',
     egresoRapidoEnabled: string = '1',
     ingresoRestaStockEnabled: string = '1',
-    egresoSumaStockEnabled: string = '1',
+    notificacionesEnabled: string = '1',
+    ingresoAnuladoSumaStockEnabled: string = '1',
     pvpPorcentaje: string = '0',
     titulo: string = 'Gestor Comercial'
   ) {
@@ -243,7 +251,8 @@ export class configuracion {
     this.ingresoRapidoEnabled = ingresoRapidoEnabled;
     this.egresoRapidoEnabled = egresoRapidoEnabled;
     this.ingresoRestaStockEnabled = ingresoRestaStockEnabled;
-    this.egresoSumaStockEnabled = egresoSumaStockEnabled;
+    this.ingresoAnuladoSumaStockEnabled = ingresoAnuladoSumaStockEnabled;
+    this.notificacionesEnabled = notificacionesEnabled;
     this.pvpPorcentaje = pvpPorcentaje;
     this.titulo = titulo;
   }

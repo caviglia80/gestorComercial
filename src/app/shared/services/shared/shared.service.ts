@@ -48,9 +48,13 @@ export class SharedService {
   ) { }
 
   public message(text: string, action: string = 'Cerrar') {
-    this.notificationQueue.push({ text, action });
-    if (!this.isNotificationDisplayed)
-      this.showNextNotification();
+    this.currentConfiguracion = this.injector.get(DataService).getCurrentConfiguracion();
+    if (this.currentConfiguracion.notificacionesEnabled !== undefined)
+      if (this.currentConfiguracion.notificacionesEnabled === '1') {
+        this.notificationQueue.push({ text, action });
+        if (!this.isNotificationDisplayed)
+          this.showNextNotification();
+      }
   }
 
   private showNextNotification() {

@@ -30,8 +30,10 @@ export class IngresosComponent implements AfterViewInit {
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
     date: 'Fecha',
+    anulado: 'Anulado',
     product: 'Producto',
-    currency: 'Moneda',
+    cliente: 'Cliente',
+    /*     currency: 'Moneda', */
     amount: 'Monto',
     /*     method: 'Método de Pago', */
     category: 'Rubro',
@@ -157,6 +159,13 @@ export class IngresosComponent implements AfterViewInit {
     this.dataService.fetchIngresos('DELETE', { id: item.id });
   }
 
+  public anularItem(item: moneyIncome) {
+    item.anulado = '1';
+    this.dataService.fetchIngresos('PUT', item);
+    if (this.dataService.getCurrentConfiguracion().ingresoAnuladoSumaStockEnabled === '1')
+      this.sumarStock(this._getProduct(item.product));
+  }
+
   private rellenarRecord(item: moneyIncome) {
     this.Item = {};
     this.Item.id = item.id;
@@ -167,6 +176,8 @@ export class IngresosComponent implements AfterViewInit {
     this.Item.method = item.method;
     this.Item.category = item.category;
     this.Item.invoice = item.invoice;
+    this.Item.anulado = item.anulado;
+    this.Item.cliente = item.cliente;
     this.Item.description = item.description;
   }
 
@@ -182,6 +193,8 @@ export class IngresosComponent implements AfterViewInit {
         method: this.Item.method,
         category: this.Item.category,
         invoice: this.Item.invoice,
+        anulado: method === 'PUT' ? this.Item.anulado : '0',
+        cliente: this.Item.cliente,
         description: this.Item.description
       };
       this.dataService.fetchIngresos(method, body);
@@ -217,6 +230,17 @@ export class IngresosComponent implements AfterViewInit {
       return false;
     }
     return true;
+  }
+
+  private sumarStock(product: Product) {
+    if (product !== undefined) {
+      let stockCount: number = product.stock;
+      stockCount++;
+      this.dataService.fetchInventario('PUT', { id: product.id, stock: stockCount });
+      this.sharedService.message('Se sumó una unidad al stock.');
+    } else {
+      this.sharedService.message('Advertencia: no se localizó el ID del producto.');
+    }
   }
 }
 
