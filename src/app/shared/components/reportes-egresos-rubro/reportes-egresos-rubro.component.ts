@@ -7,11 +7,11 @@ import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 
 @Component({
-  selector: 'app-reportes-egresos',
-  templateUrl: './reportes-egresos.component.html',
-  styleUrls: ['./reportes-egresos.component.css']
+  selector: 'app-reportes-egresos-rubro',
+  templateUrl: './reportes-egresos-rubro.component.html',
+  styleUrls: ['./reportes-egresos-rubro.component.css']
 })
-export class ReportesEgresosComponent {
+export class ReportesEgresosRubroComponent {
   public dataSource = new MatTableDataSource<reportesEgresosRubro>;
   public isLoading: boolean = true;
   public fechaDesde: string = ''

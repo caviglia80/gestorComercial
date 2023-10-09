@@ -50,8 +50,8 @@ import { IngresoConfigComponent } from './shared/components/ingreso-config/ingre
 import { EgresoConfigComponent } from './shared/components/egreso-config/egreso-config.component';
 import { ReportesIngresosComponent } from './shared/components/reportes-ingresos/reportes-ingresos.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReportesEgresosComponent } from './shared/components/reportes-egresos/reportes-egresos.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { ReportesEgresosRubroComponent } from './shared/components/reportes-egresos-rubro/reportes-egresos-rubro.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +79,7 @@ import {MatRadioModule} from '@angular/material/radio';
     IngresoConfigComponent,
     EgresoConfigComponent,
     ReportesIngresosComponent,
-    ReportesEgresosComponent
+    ReportesEgresosRubroComponent
   ],
   imports: [
     BrowserModule,
