@@ -54,7 +54,7 @@
             {{ Columns['totalIngresos'] }}
           </th>
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.totalIngresos)">
-            {{element.totalIngresos}} </td>
+            {{element.totalIngresos | currency:'$':'symbol' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="margenGanancias">
@@ -62,7 +62,7 @@
             {{ Columns['margenGanancias'] }}
           </th>
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.margenGanancias)">
-            {{element.margenGanancias}} </td>
+            {{element.margenGanancias | currency:'$':'symbol' }} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="getColumnsKeys()"></tr>
