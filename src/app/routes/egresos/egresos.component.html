@@ -251,7 +251,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['amount'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number">
+    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -262,8 +262,9 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }}</p>
-    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
+    <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }} <span class="red-asterisk">*</span>
+    </p>
+    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category" required>
       <mat-option *ngFor="let category of sharedService.categories" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -274,8 +275,10 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['beneficiary_provider'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['beneficiary_provider'] }}" [(ngModel)]="Item.beneficiary_provider">
+    <p class="form-field-description">Ingrese {{ Columns['beneficiary_provider'] | lowercase }} <span
+        class="red-asterisk">*</span></p>
+    <input matInput placeholder="{{ Columns['beneficiary_provider'] }}" [(ngModel)]="Item.beneficiary_provider"
+      required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -283,7 +286,8 @@
     <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="record('POST')" [disabled]="!Item.date || !Item.amount">Guardar</button>
+  <button mat-button (click)="record('POST')"
+    [disabled]="!Item.date || !Item.amount || !Item.beneficiary_providert || !Item.category">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -316,7 +320,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['amount'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number">
+    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -327,8 +331,9 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }}</p>
-    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
+    <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }} <span class="red-asterisk">*</span>
+    </p>
+    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category" required>
       <mat-option *ngFor="let category of sharedService.categories" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -339,8 +344,10 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['beneficiary_provider'] | lowercase }}</p>
-    <input matInput placeholder="{{ Columns['beneficiary_provider'] }}" [(ngModel)]="Item.beneficiary_provider">
+    <p class="form-field-description">Ingrese {{ Columns['beneficiary_provider'] | lowercase }} <span
+        class="red-asterisk">*</span></p>
+    <input matInput placeholder="{{ Columns['beneficiary_provider'] }}" [(ngModel)]="Item.beneficiary_provider"
+      required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -348,5 +355,6 @@
     <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="record('PUT')" [disabled]="!Item.date || !Item.amount">Guardar</button>
+  <button mat-button (click)="record('PUT')"
+    [disabled]="!Item.date || !Item.amount || !Item.beneficiary_provider || !Item.category">Guardar</button>
 </div>

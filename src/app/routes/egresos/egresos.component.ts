@@ -29,10 +29,10 @@ export class EgresosComponent implements AfterViewInit {
     /*     id: 'ID', */
     date: 'Fecha',
     beneficiary_provider: 'Beneficiario/Proveedor',
-/*     currency: 'Moneda', */
+    /*     currency: 'Moneda', */
+    category: 'Rubro',
     amount: 'Monto',
     /*     method: 'Método de Gasto', */
-    category: 'Rubro',
     /*     invoice: 'Comprobante', */
     /*     description: 'Descripción', */
     actions: 'Operaciones'
@@ -42,7 +42,7 @@ export class EgresosComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef,
     public dataService: DataService,
     public sharedService: SharedService
-  ) {  }
+  ) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
