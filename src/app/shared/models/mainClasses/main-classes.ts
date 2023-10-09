@@ -295,3 +295,19 @@ export class reportesEgresosRubro {
     this.montoTotalEgresos = montoTotalEgresos;
   }
 }
+
+export class reportesEgresosBP {
+  bp: string;
+  cantidadEgresos: string;
+  montoTotalEgresos: string;
+
+  constructor(
+    bp: string = '',
+    cantidadEgresos: string = '0',
+    montoTotalEgresos: string = '0'
+  ) {
+    this.bp = bp;
+    this.cantidadEgresos = cantidadEgresos;
+    this.montoTotalEgresos = montoTotalEgresos;
+  }
+}

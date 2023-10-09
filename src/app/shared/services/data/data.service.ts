@@ -41,6 +41,9 @@ export class DataService {
   private ds_reportesEgresosRubro: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public reportesEgresosRubro$: Observable<any[]> = this.ds_reportesEgresosRubro.asObservable();
 
+  private ds_reportesEgresosBP: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public reportesEgresosBP$: Observable<any[]> = this.ds_reportesEgresosBP.asObservable();
+
   constructor(
     private http: HttpClient,
     public sharedService: SharedService
@@ -479,6 +482,8 @@ export class DataService {
               this.ds_reportesIngresos.next(data);
             else if (tipo === 'reportesEgresosRubro')
               this.ds_reportesEgresosRubro.next(data);
+            else if (tipo === 'reportesEgresosBP')
+              this.ds_reportesEgresosBP.next(data);
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
