@@ -72,6 +72,5 @@ export class ReportesEgresosComponent {
       this.loading(true);
       this.dataService.fetchReportes('GET', `?reporte=3&startd=${this.fechaDesde}&endd=${this.fechaHasta}`, 'reportesEgresosRubro');
     }
-
   }
 }
