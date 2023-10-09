@@ -279,3 +279,19 @@ export class reportesIngresos {
     this.margenGanancias = margenGanancias;
   }
 }
+
+export class reportesEgresosRubro {
+  rubro: string;
+  cantidadEgresos: string;
+  montoTotalEgresos: string;
+
+  constructor(
+    rubro: string = '',
+    cantidadEgresos: string = '0',
+    montoTotalEgresos: string = '0'
+  ) {
+    this.rubro = rubro;
+    this.cantidadEgresos = cantidadEgresos;
+    this.montoTotalEgresos = montoTotalEgresos;
+  }
+}

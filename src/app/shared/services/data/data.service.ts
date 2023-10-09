@@ -38,6 +38,9 @@ export class DataService {
   private ds_reportesIngresos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public reportesIngresos$: Observable<any[]> = this.ds_reportesIngresos.asObservable();
 
+  private ds_reportesEgresosRubro: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public reportesEgresosRubro$: Observable<any[]> = this.ds_reportesEgresosRubro.asObservable();
+
   constructor(
     private http: HttpClient,
     public sharedService: SharedService
@@ -465,14 +468,17 @@ export class DataService {
     }
   }
 
-  public fetchReportes(method: string = '', params: string, proxy: boolean = false): void {
+  public fetchReportes(method: string = '', params: string, tipo: string, proxy: boolean = false): void {
     let url = SharedService.host + 'DB/reportes.php' + params;
     if (proxy) url = SharedService.proxy + url;
     if (method === 'GET') {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.ds_reportesIngresos.next(data);
+            if (tipo === 'ingresos')
+              this.ds_reportesIngresos.next(data);
+            else if (tipo === 'reportesEgresosRubro')
+              this.ds_reportesEgresosRubro.next(data);
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
