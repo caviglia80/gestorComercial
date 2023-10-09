@@ -257,3 +257,25 @@ export class configuracion {
     this.titulo = titulo;
   }
 }
+
+export class reportesIngresos {
+  id: number;
+  name: string;
+  cantidadIngresos: string;
+  totalIngresos: string;
+  margenGanancias: string;
+
+  constructor(
+    id: number = 0,
+    name: string = '',
+    cantidadIngresos: string = '0',
+    totalIngresos: string = '0',
+    margenGanancias: string = '0',
+  ) {
+    this.id = id;
+    this.name = name;
+    this.cantidadIngresos = cantidadIngresos;
+    this.totalIngresos = totalIngresos;
+    this.margenGanancias = margenGanancias;
+  }
+}

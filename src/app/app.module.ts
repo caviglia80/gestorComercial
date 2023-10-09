@@ -48,6 +48,8 @@ import { InventarioConfigComponent } from './shared/components/inventario-config
 import { PvpPipe } from './core/pipes/pvp/pvp.pipe';
 import { IngresoConfigComponent } from './shared/components/ingreso-config/ingreso-config.component';
 import { EgresoConfigComponent } from './shared/components/egreso-config/egreso-config.component';
+import { ReportesIngresosComponent } from './shared/components/reportes-ingresos/reportes-ingresos.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -74,7 +76,8 @@ import { EgresoConfigComponent } from './shared/components/egreso-config/egreso-
     InventarioConfigComponent,
     PvpPipe,
     IngresoConfigComponent,
-    EgresoConfigComponent
+    EgresoConfigComponent,
+    ReportesIngresosComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +104,8 @@ import { EgresoConfigComponent } from './shared/components/egreso-config/egreso-
     MatTabsModule,
     MatCheckboxModule,
     ColorPickerModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    FlexLayoutModule
   ],
   providers: [
   ],

@@ -173,9 +173,28 @@ export class SharedService {
     return Item;
   }
 
+  public obtenerFechaPrimerDiaDelMes(): string {
+    const hoy = new Date();
+    const primerDiaMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+    const año = primerDiaMes.getFullYear().toString();
+    const mes = (primerDiaMes.getMonth() + 1).toString().padStart(2, '0');
+    const dia = primerDiaMes.getDate().toString().padStart(2, '0');
+    return `${año}-${mes}-${dia}`;
+  }
 
+  public obtenerFechaUltimoDiaDelMes(): string {
+    const hoy = new Date();
+    const ultimoDiaMes = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0);
+    const año = ultimoDiaMes.getFullYear().toString();
+    const mes = (ultimoDiaMes.getMonth() + 1).toString().padStart(2, '0');
+    const dia = ultimoDiaMes.getDate().toString().padStart(2, '0');
+    return `${año}-${mes}-${dia}`;
+  }
 
-
+  public isValidDate(dateString: string): boolean {
+    const date = new Date(dateString);
+    return !isNaN(date.getTime());
+  }
 
 
 

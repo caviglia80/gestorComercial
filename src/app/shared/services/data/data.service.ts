@@ -35,6 +35,9 @@ export class DataService {
   public Configuracion$: Observable<any[]> = this.ds_Configuracion.asObservable();
   private currentConfiguracion: any;
 
+  private ds_reportesIngresos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public reportesIngresos$: Observable<any[]> = this.ds_reportesIngresos.asObservable();
+
   constructor(
     private http: HttpClient,
     public sharedService: SharedService
@@ -462,7 +465,22 @@ export class DataService {
     }
   }
 
-
+  public fetchReportes(method: string = '', params: string, proxy: boolean = false): void {
+    let url = SharedService.host + 'DB/reportes.php' + params;
+    if (proxy) url = SharedService.proxy + url;
+    if (method === 'GET') {
+      this.http.get<any[]>(url)
+        .subscribe({
+          next: (data) => {
+            this.ds_reportesIngresos.next(data);
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar obtener registros.');
+          }
+        });
+    }
+  }
 
 
 
