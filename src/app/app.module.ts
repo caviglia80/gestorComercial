@@ -51,7 +51,7 @@ import { EgresoConfigComponent } from './shared/components/egreso-config/egreso-
 import { ReportesIngresosComponent } from './shared/components/reportes-ingresos/reportes-ingresos.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReportesEgresosComponent } from './shared/components/reportes-egresos/reportes-egresos.component';
-
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -107,7 +107,8 @@ import { ReportesEgresosComponent } from './shared/components/reportes-egresos/r
     MatCheckboxModule,
     ColorPickerModule,
     MatAutocompleteModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatRadioModule
   ],
   providers: [
   ],

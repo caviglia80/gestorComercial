@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent {
-
+  public filtro: string = 'rubro';
 }
