@@ -70,7 +70,10 @@ export class ReportesIngresosComponent {
   }
 
   public onFechaChange() {
-    if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta))
+    if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta)) {
+      this.loading(true);
       this.dataService.fetchReportes('GET', `?reporte=2&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
+    }
+
   }
 }
