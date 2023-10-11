@@ -53,6 +53,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatRadioModule} from '@angular/material/radio';
 import { ReportesEgresosRubroComponent } from './shared/components/reportes-egresos-rubro/reportes-egresos-rubro.component';
 import { ReportesEgresosBPComponent } from './shared/components/reportes-egresos-bp/reportes-egresos-bp.component';
+import { GraficoIngresosDashboardComponent } from './shared/components/grafico-ingresos-dashboard/grafico-ingresos-dashboard.component';
+import { NgChartsModule } from 'ng2-charts';
+
+
+
 
 @NgModule({
   declarations: [
@@ -81,7 +86,8 @@ import { ReportesEgresosBPComponent } from './shared/components/reportes-egresos
     EgresoConfigComponent,
     ReportesIngresosComponent,
     ReportesEgresosRubroComponent,
-    ReportesEgresosBPComponent
+    ReportesEgresosBPComponent,
+    GraficoIngresosDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +116,8 @@ import { ReportesEgresosBPComponent } from './shared/components/reportes-egresos
     ColorPickerModule,
     MatAutocompleteModule,
     FlexLayoutModule,
-    MatRadioModule
+    MatRadioModule,
+    NgChartsModule
   ],
   providers: [
   ],
