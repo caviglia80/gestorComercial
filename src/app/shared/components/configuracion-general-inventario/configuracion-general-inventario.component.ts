@@ -3,11 +3,11 @@ import { DataService } from '@services/data/data.service';
 import { configuracion } from '@models/mainClasses/main-classes';
 
 @Component({
-  selector: 'app-inventario-config',
-  templateUrl: './inventario-config.component.html',
-  styleUrls: ['./inventario-config.component.css']
+  selector: 'app-configuracion-general-inventario',
+  templateUrl: './configuracion-general-inventario.component.html',
+  styleUrls: ['./configuracion-general-inventario.component.css']
 })
-export class InventarioConfigComponent implements OnInit {
+export class ConfiguracionGeneralInventarioComponent implements OnInit {
   public dataConfig: configuracion = new configuracion();
   public pvp: string = '0';
 

@@ -6,11 +6,11 @@ import { AfipService } from '@services/afip/afip.service';
 import { AfipRequest } from '@models/afipRequest/afip-request';
 
 @Component({
-  selector: 'app-facturacion-config',
-  templateUrl: './facturacion-config.component.html',
-  styleUrls: ['./facturacion-config.component.css']
+  selector: 'app-configuracion-general-facturacion',
+  templateUrl: './configuracion-general-facturacion.component.html',
+  styleUrls: ['./configuracion-general-facturacion.component.css']
 })
-export class FacturacionConfigComponent implements AfterViewInit {
+export class ConfiguracionGeneralFacturacionComponent implements AfterViewInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageCrt: boolean = false;
   public errorMessageKey: boolean = false;

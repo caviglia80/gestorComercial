@@ -39,11 +39,9 @@ import { registerLocaleData } from '@angular/common';
 import localeEsES from '@angular/common/locales/es';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
-import { FacturacionConfigComponent } from './shared/components/facturacion-config/facturacion-config.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { InventarioConfigComponent } from './shared/components/inventario-config/inventario-config.component';
 import { PvpPipe } from './core/pipes/pvp/pvp.pipe';
 import { ReportesIngresosComponent } from './shared/components/reportes-ingresos/reportes-ingresos.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -55,6 +53,8 @@ import { DashboardGraficoIngresosComponent } from './shared/components/dashboard
 import { ConfiguracionGeneralAjustesComponent } from './shared/components/configuracion-general-ajustes/configuracion-general-ajustes.component';
 import { ConfiguracionGeneralEgresoComponent } from './shared/components/configuracion-general-egreso/configuracion-general-egreso.component';
 import { ConfiguracionGeneralIngresoComponent } from './shared/components/configuracion-general-ingreso/configuracion-general-ingreso.component';
+import { ConfiguracionGeneralFacturacionComponent } from './shared/components/configuracion-general-facturacion/configuracion-general-facturacion.component';
+import { ConfiguracionGeneralInventarioComponent } from './shared/components/configuracion-general-inventario/configuracion-general-inventario.component';
 
 
 
@@ -78,8 +78,6 @@ import { ConfiguracionGeneralIngresoComponent } from './shared/components/config
     ConfiguracionGeneralComponent,
     UsuariosComponent,
     RolesComponent,
-    FacturacionConfigComponent,
-    InventarioConfigComponent,
     PvpPipe,
     ReportesIngresosComponent,
     ReportesEgresosRubroComponent,
@@ -87,7 +85,9 @@ import { ConfiguracionGeneralIngresoComponent } from './shared/components/config
     DashboardGraficoIngresosComponent,
     ConfiguracionGeneralAjustesComponent,
     ConfiguracionGeneralEgresoComponent,
-    ConfiguracionGeneralIngresoComponent
+    ConfiguracionGeneralIngresoComponent,
+    ConfiguracionGeneralFacturacionComponent,
+    ConfiguracionGeneralInventarioComponent
   ],
   imports: [
     BrowserModule,
