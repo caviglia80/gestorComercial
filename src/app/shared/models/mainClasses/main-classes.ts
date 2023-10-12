@@ -108,18 +108,18 @@ export class supplier {
 }
 
 export class moneyIncome {
-  id: number;
+  id?: number;
   date: string;
-  product: string;
-  currency: string;
+  product?: string;
+  currency?: string;
   amount: number;
-  method: string;
+  method?: string;
   category: string;
-  invoice: string;
-  anulado: string;
-  cliente: string;
-  pvpPorcentaje: string;
-  description: string;
+  invoice?: string;
+  anulado?: string;
+  cliente?: string;
+  pvpPorcentaje?: string;
+  description?: string;
 
   constructor(
     id: number = 0,

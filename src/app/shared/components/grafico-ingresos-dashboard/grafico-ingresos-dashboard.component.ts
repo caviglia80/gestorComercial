@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ChartType } from 'chart.js';
 import { SharedService } from '@services/shared/shared.service';
+import { configuracion, moneyIncome } from '@models/mainClasses/main-classes';
+import { DataService } from '@services/data/data.service';
 
 @Component({
   selector: 'app-grafico-ingresos-dashboard',
@@ -8,6 +10,7 @@ import { SharedService } from '@services/shared/shared.service';
   styleUrls: ['./grafico-ingresos-dashboard.component.css']
 })
 export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit {
+/*   public dataSource: moneyIncome[] = []; */
   public groupedIncomeData: any[] = [];
   public lineChartLabels: string[] = [];
   public lineChartData: any[] = [];
@@ -23,51 +26,56 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
     },
   };
 
-  public incomeData = [
-    { date: '2023-03-20', category: 'Ventas', amount: 100 },
-    { date: '2023-04-20', category: 'Ventas', amount: 5500 },
-    { date: '2023-05-20', category: 'Ventas', amount: 1500 },
-    { date: '2023-06-20', category: 'Ventas', amount: 6500 },
-    { date: '2023-07-20', category: 'Ventas', amount: 1500 },
-    { date: '2023-08-20', category: 'Ventas', amount: 7500 },
-    { date: '2023-09-20', category: 'Ventas', amount: 300 },
-    { date: '2023-10-20', category: 'Ventas', amount: 8500 },
-    { date: '2023-11-20', category: 'Ventas', amount: 1500 },
-    { date: '2022-01-15', category: 'Ventas', amount: 100 },
-    { date: '2022-02-20', category: 'Ventas', amount: 200 },
-    { date: '2022-03-20', category: 'Ventas', amount: 300 },
-    { date: '2022-04-20', category: 'Extraordinarios', amount: 400 },
-    { date: '2022-05-20', category: 'Ventas', amount: 500 },
-    { date: '2022-06-20', category: 'Ventas', amount: 600 },
-    { date: '2022-07-20', category: 'Extraordinarios', amount: 600 },
-    { date: '2022-08-20', category: 'Ventas', amount: 500 },
-    { date: '2022-09-20', category: 'Ventas', amount: 400 },
-    { date: '2022-10-20', category: 'Ventas', amount: 300 },
-    { date: '2022-12-10', category: 'Otra Actividad', amount: 200 },
-    { date: '2021-05-10', category: 'Ventas', amount: 200 },
-    { date: '2022-12-10', category: 'Otra Actividad', amount: 1250 }
-  ];
-
   public filteredData: any[] = [];
-  public availableYears: string[] = this.getAvailableYears();
+  public availableYears: string[] = [];
   public selectedYear: string = this.availableYears[0];
-
   public Categories: string[] = [];
   public selectedCategory: string = 'Todos los rubros';
 
-  constructor(public sharedService: SharedService) { }
+  public incomeData: moneyIncome[] = [];
+
+  constructor(
+    public sharedService: SharedService,
+    public dataService: DataService) { }
 
   ngOnInit() {
-    this.globalFilter();
-    this.Categories = this.sharedService.categories;
-    this.Categories.push('Todos los rubros');
-    this.selectedCategory = this.Categories[this.Categories.length - 1];
+    this.dataInit();
+  }
+
+  private dataInit() {
+    this.dataService.Ingresos$.subscribe({
+      next: (data) => {
+
+        this.incomeData = data.map((item) => ({
+          date: item.date,
+          category: item.category,
+          amount: item.amount,
+        }));
+
+        this.inicioUnico();
+      },
+      error: (error) => {
+        console.error(error)
+      }
+    });
+    this.dataService.fetchIngresos('GET');
   }
 
   ngAfterViewInit() {
   }
 
+  private inicioUnico() {
+    this.availableYears = this.getAvailableYears();
+    this.selectedYear = this.availableYears[0];
+    this.Categories = this.sharedService.categories;
+    if (!this.Categories.includes('Todos los rubros'))
+      this.Categories.push('Todos los rubros');
+    this.selectedCategory = this.Categories[this.Categories.length - 1];
+    this.globalFilter();
+  }
+
   private getAvailableYears(): string[] {
+    if (this.incomeData.length == 0) return [];
     const years = new Set<string>();
     for (const entry of this.incomeData) {
       const year = entry.date.substring(0, 4);
@@ -81,16 +89,15 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach(month => {
       data.push({ date: this.selectedYear + '-' + month + '-01', amount: 0 });
     });
-
     const groupedData: { [key: string]: any } = {};
     for (const entry of data) {
       const month = entry.date.substring(0, 7);
       if (groupedData[month]) {
-        groupedData[month].total += entry.amount;
+        groupedData[month].total += parseFloat(entry.amount);
       } else {
         groupedData[month] = {
           month: month,
-          total: entry.amount
+          total: parseFloat(entry.amount)
         };
       }
     }
@@ -100,6 +107,8 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
   }
 
   public globalFilter() {
+    if (this.incomeData.length == 0) return;
+    this.availableYears = this.getAvailableYears();
     if (this.selectedYear.length === 0 || this.selectedCategory.length === 0) return;
     this.filteredData = this.incomeData.filter(entry => entry.date.startsWith(this.selectedYear));
     if (!this.selectedCategory.includes('Todos los rubros'))
