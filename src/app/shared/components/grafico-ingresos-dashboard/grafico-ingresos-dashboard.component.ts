@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartType } from 'chart.js';
 import { SharedService } from '@services/shared/shared.service';
-import { configuracion, moneyIncome } from '@models/mainClasses/main-classes';
+import { moneyIncome } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 
 @Component({
@@ -9,11 +9,11 @@ import { DataService } from '@services/data/data.service';
   templateUrl: './grafico-ingresos-dashboard.component.html',
   styleUrls: ['./grafico-ingresos-dashboard.component.css']
 })
-export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit {
+export class GraficoIngresosDashboardComponent implements OnInit {
   public incomeData: moneyIncome[] = [];
   public groupedIncomeData: any[] = [];
-  public lineChartLabels: string[] = [];
   public lineChartData: any[] = [];
+  public lineChartLabels: string[] = [];
   public lineChartType: ChartType = 'line';
 
   public lineChartOptions: any = {
@@ -59,9 +59,6 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
       }
     });
     this.dataService.fetchIngresos('GET');
-  }
-
-  ngAfterViewInit() {
   }
 
   private inicioUnico() {
