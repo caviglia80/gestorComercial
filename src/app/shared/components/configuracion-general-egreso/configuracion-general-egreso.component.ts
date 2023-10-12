@@ -3,11 +3,11 @@ import { DataService } from '@services/data/data.service';
 import { configuracion } from '@models/mainClasses/main-classes';
 
 @Component({
-  selector: 'app-egreso-config',
-  templateUrl: './egreso-config.component.html',
-  styleUrls: ['./egreso-config.component.css']
+  selector: 'app-configuracion-general-egreso',
+  templateUrl: './configuracion-general-egreso.component.html',
+  styleUrls: ['./configuracion-general-egreso.component.css']
 })
-export class EgresoConfigComponent {
+export class ConfiguracionGeneralEgresoComponent {
   public dataConfig: configuracion = new configuracion();
   public egresoRapidoEnabled: boolean = false;
 

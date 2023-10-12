@@ -4,11 +4,12 @@ import { DataService } from '@services/data/data.service';
 import { configuracion } from '@models/mainClasses/main-classes';
 
 @Component({
-  selector: 'app-ingreso-config',
-  templateUrl: './ingreso-config.component.html',
-  styleUrls: ['./ingreso-config.component.css']
+  selector: 'app-configuracion-general-ingreso',
+  templateUrl: './configuracion-general-ingreso.component.html',
+  styleUrls: ['./configuracion-general-ingreso.component.css']
 })
-export class IngresoConfigComponent {
+export class ConfiguracionGeneralIngresoComponent {
+
   public dataConfig: configuracion = new configuracion();
   public ingresoRestaStockEnabled: boolean = false;
   public ingresoRapidoEnabled: boolean = false;

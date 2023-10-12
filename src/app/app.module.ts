@@ -40,21 +40,21 @@ import localeEsES from '@angular/common/locales/es';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FacturacionConfigComponent } from './shared/components/facturacion-config/facturacion-config.component';
-import { AjustesConfigComponent } from './shared/components/ajustes-config/ajustes-config.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { InventarioConfigComponent } from './shared/components/inventario-config/inventario-config.component';
 import { PvpPipe } from './core/pipes/pvp/pvp.pipe';
-import { IngresoConfigComponent } from './shared/components/ingreso-config/ingreso-config.component';
-import { EgresoConfigComponent } from './shared/components/egreso-config/egreso-config.component';
 import { ReportesIngresosComponent } from './shared/components/reportes-ingresos/reportes-ingresos.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatRadioModule} from '@angular/material/radio';
 import { ReportesEgresosRubroComponent } from './shared/components/reportes-egresos-rubro/reportes-egresos-rubro.component';
 import { ReportesEgresosBPComponent } from './shared/components/reportes-egresos-bp/reportes-egresos-bp.component';
-import { GraficoIngresosDashboardComponent } from './shared/components/grafico-ingresos-dashboard/grafico-ingresos-dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
+import { DashboardGraficoIngresosComponent } from './shared/components/dashboard-grafico-ingresos/dashboard-grafico-ingresos.component';
+import { ConfiguracionGeneralAjustesComponent } from './shared/components/configuracion-general-ajustes/configuracion-general-ajustes.component';
+import { ConfiguracionGeneralEgresoComponent } from './shared/components/configuracion-general-egreso/configuracion-general-egreso.component';
+import { ConfiguracionGeneralIngresoComponent } from './shared/components/configuracion-general-ingreso/configuracion-general-ingreso.component';
 
 
 
@@ -79,15 +79,15 @@ import { NgChartsModule } from 'ng2-charts';
     UsuariosComponent,
     RolesComponent,
     FacturacionConfigComponent,
-    AjustesConfigComponent,
     InventarioConfigComponent,
     PvpPipe,
-    IngresoConfigComponent,
-    EgresoConfigComponent,
     ReportesIngresosComponent,
     ReportesEgresosRubroComponent,
     ReportesEgresosBPComponent,
-    GraficoIngresosDashboardComponent
+    DashboardGraficoIngresosComponent,
+    ConfiguracionGeneralAjustesComponent,
+    ConfiguracionGeneralEgresoComponent,
+    ConfiguracionGeneralIngresoComponent
   ],
   imports: [
     BrowserModule,

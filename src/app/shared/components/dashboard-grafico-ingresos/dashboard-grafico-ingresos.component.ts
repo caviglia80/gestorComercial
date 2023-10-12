@@ -5,11 +5,11 @@ import { moneyIncome } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 
 @Component({
-  selector: 'app-grafico-ingresos-dashboard',
-  templateUrl: './grafico-ingresos-dashboard.component.html',
-  styleUrls: ['./grafico-ingresos-dashboard.component.css']
+  selector: 'app-dashboard-grafico-ingresos',
+  templateUrl: './dashboard-grafico-ingresos.component.html',
+  styleUrls: ['./dashboard-grafico-ingresos.component.css']
 })
-export class GraficoIngresosDashboardComponent implements OnInit {
+export class DashboardGraficoIngresosComponent implements OnInit {
   public incomeData: moneyIncome[] = [];
   public groupedIncomeData: any[] = [];
   public lineChartData: any[] = [];

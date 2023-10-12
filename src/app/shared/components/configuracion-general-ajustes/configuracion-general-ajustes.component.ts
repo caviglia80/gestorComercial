@@ -4,11 +4,11 @@ import { DataService } from '@services/data/data.service';
 import { configuracion } from '@models/mainClasses/main-classes';
 
 @Component({
-  selector: 'app-ajustes-config',
-  templateUrl: './ajustes-config.component.html',
-  styleUrls: ['./ajustes-config.component.css']
+  selector: 'app-configuracion-general-ajustes',
+  templateUrl: './configuracion-general-ajustes.component.html',
+  styleUrls: ['./configuracion-general-ajustes.component.css']
 })
-export class AjustesConfigComponent implements OnInit {
+export class ConfiguracionGeneralAjustesComponent implements OnInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageImg: boolean = false;
   public dataConfig: configuracion = new configuracion();
