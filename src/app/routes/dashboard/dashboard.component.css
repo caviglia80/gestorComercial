@@ -1,1 +1,14 @@
+.graficosContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+@media (max-width: 1515px) {
+  .graficosContainer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 
