@@ -10,7 +10,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./grafico-ingresos-dashboard.component.css']
 })
 export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit {
-/*   public dataSource: moneyIncome[] = []; */
+  public incomeData: moneyIncome[] = [];
   public groupedIncomeData: any[] = [];
   public lineChartLabels: string[] = [];
   public lineChartData: any[] = [];
@@ -32,8 +32,6 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
   public Categories: string[] = [];
   public selectedCategory: string = 'Todos los rubros';
 
-  public incomeData: moneyIncome[] = [];
-
   constructor(
     public sharedService: SharedService,
     public dataService: DataService) { }
@@ -45,6 +43,8 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
   private dataInit() {
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
+
+        data = data.filter(entry => entry.anulado.includes('0'));
 
         this.incomeData = data.map((item) => ({
           date: item.date,
@@ -119,17 +119,14 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
     this.lineChartData = [{
       label: 'Ingresos',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: 'blue',
-      borderColor: 'blue',
-      pointBackgroundColor: 'blue',
-      pointBorderColor: 'black',
+      backgroundColor: this.dataService.getCurrentConfiguracion().color2,
+      borderColor: this.dataService.getCurrentConfiguracion().color1,
+      pointBackgroundColor: this.dataService.getCurrentConfiguracion().color2,
+      pointBorderColor: this.dataService.getCurrentConfiguracion().color1,
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,
       borderWidth: 2,
     }];
   }
-
-
-
 }

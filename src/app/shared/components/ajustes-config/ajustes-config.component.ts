@@ -70,11 +70,13 @@ export class AjustesConfigComponent implements OnInit {
   }
 
   public color1(color: string) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, color1: color });
+    if (color !== this.dataConfig.color1)
+      this.dataService.fetchConfiguracion('PUT', { id: 1, color1: color });
   }
 
   public color2(color: string) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, color2: color });
+    if (color !== this.dataConfig.color2)
+      this.dataService.fetchConfiguracion('PUT', { id: 1, color2: color });
   }
 
   public ColorPickerIsOpen(open: boolean) {

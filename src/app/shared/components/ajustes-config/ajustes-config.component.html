@@ -27,12 +27,12 @@
     <input [(colorPicker)]="Color1" [style.background]="Color1" placeholder="Color 1"
       (colorPickerOpen)="ColorPickerIsOpen(true)" (colorPickerClose)="ColorPickerIsOpen(false)"
       (colorPickerChange)="previewColor1(Color1)" class="mx-3 text-center form-control" style="width: 40%;"
-      (colorPickerSelect)="color1(Color1)" />
+      (colorPickerSelect)="color1(Color1)" cpPosition="top" />
 
     <input [(colorPicker)]="Color2" [style.background]="Color2" placeholder="Color 2"
       (colorPickerOpen)="ColorPickerIsOpen(true)" (colorPickerClose)="ColorPickerIsOpen(false)"
       (colorPickerChange)="previewColor2(Color2)" class="mx-3 text-center form-control" style="width: 40%;"
-      (colorPickerSelect)="color2(Color2)" />
+      (colorPickerSelect)="color2(Color2)" cpPosition="top" />
   </div>
 </mat-expansion-panel>
 
