@@ -1,18 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ChartType } from 'chart.js';
-
-interface LineChartConfig {
-  label?: string;
-  data?: number[];
-  backgroundColor?: string;
-  borderColor?: string;
-  pointBackgroundColor?: string;
-  pointBorderColor?: string;
-  pointRadius?: number;
-  fill?: boolean;
-  lineTension?: number;
-  borderWidth?: number;
-}
+import { SharedService } from '@services/shared/shared.service';
 
 @Component({
   selector: 'app-grafico-ingresos-dashboard',
@@ -36,37 +24,44 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
   };
 
   public incomeData = [
-    { date: '2023-03-20', amount: 100 },
-    { date: '2023-04-20', amount: 5500 },
-    { date: '2023-05-20', amount: 1500 },
-    { date: '2023-06-20', amount: 6500 },
-    { date: '2023-07-20', amount: 1500 },
-    { date: '2023-08-20', amount: 7500 },
-    { date: '2023-09-20', amount: 300 },
-    { date: '2023-10-20', amount: 8500 },
-    { date: '2023-11-20', amount: 1500 },
-    { date: '2022-01-15', amount: 100 },
-    { date: '2022-02-20', amount: 200 },
-    { date: '2022-03-20', amount: 300 },
-    { date: '2022-04-20', amount: 400 },
-    { date: '2022-05-20', amount: 500 },
-    { date: '2022-06-20', amount: 600 },
-    { date: '2022-07-20', amount: 600 },
-    { date: '2022-08-20', amount: 500 },
-    { date: '2022-09-20', amount: 400 },
-    { date: '2022-10-20', amount: 300 },
-    { date: '2022-12-10', amount: 200 },
-    { date: '2021-05-10', amount: 200 },
-    { date: '2022-12-10', amount: 1250 }
+    { date: '2023-03-20', category: 'Ventas', amount: 100 },
+    { date: '2023-04-20', category: 'Ventas', amount: 5500 },
+    { date: '2023-05-20', category: 'Ventas', amount: 1500 },
+    { date: '2023-06-20', category: 'Ventas', amount: 6500 },
+    { date: '2023-07-20', category: 'Ventas', amount: 1500 },
+    { date: '2023-08-20', category: 'Ventas', amount: 7500 },
+    { date: '2023-09-20', category: 'Ventas', amount: 300 },
+    { date: '2023-10-20', category: 'Ventas', amount: 8500 },
+    { date: '2023-11-20', category: 'Ventas', amount: 1500 },
+    { date: '2022-01-15', category: 'Ventas', amount: 100 },
+    { date: '2022-02-20', category: 'Ventas', amount: 200 },
+    { date: '2022-03-20', category: 'Ventas', amount: 300 },
+    { date: '2022-04-20', category: 'Extraordinarios', amount: 400 },
+    { date: '2022-05-20', category: 'Ventas', amount: 500 },
+    { date: '2022-06-20', category: 'Ventas', amount: 600 },
+    { date: '2022-07-20', category: 'Extraordinarios', amount: 600 },
+    { date: '2022-08-20', category: 'Ventas', amount: 500 },
+    { date: '2022-09-20', category: 'Ventas', amount: 400 },
+    { date: '2022-10-20', category: 'Ventas', amount: 300 },
+    { date: '2022-12-10', category: 'Otra Actividad', amount: 200 },
+    { date: '2021-05-10', category: 'Ventas', amount: 200 },
+    { date: '2022-12-10', category: 'Otra Actividad', amount: 1250 }
   ];
 
+  public filteredData: any[] = [];
   public availableYears: string[] = this.getAvailableYears();
-  public selectedYear: string = this.availableYears[0]; // Establece el año seleccionado inicialmente
+  public selectedYear: string = this.availableYears[0];
 
-  constructor() { }
+  public Categories: string[] = [];
+  public selectedCategory: string = 'Todos los rubros';
+
+  constructor(public sharedService: SharedService) { }
 
   ngOnInit() {
-    this.onYearChange();
+    this.globalFilter();
+    this.Categories = this.sharedService.categories;
+    this.Categories.push('Todos los rubros');
+    this.selectedCategory = this.Categories[this.Categories.length - 1];
   }
 
   ngAfterViewInit() {
@@ -79,25 +74,6 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
       years.add(year);
     }
     return Array.from(years);
-  }
-
-  public onYearChange() {
-    const filteredData = this.incomeData.filter(entry => entry.date.startsWith(this.selectedYear));
-    this.groupedIncomeData = this.groupAndSumByMonth(filteredData);
-    this.lineChartLabels = this.groupedIncomeData.map(item => item.month);
-    /*     this.lineChartData = [{ data: this.groupedIncomeData.map(item => item.total), label: 'Ingresos' }]; */
-    this.lineChartData = [{
-      label: 'Ingresos',
-      data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: 'blue',
-      borderColor: 'blue',
-      pointBackgroundColor: 'blue',
-      pointBorderColor: 'black',
-      pointRadius: 2,
-      fill: false,
-      lineTension: 0.1,
-      borderWidth: 1,
-    }];
   }
 
   /* doughnut pie line */
@@ -123,16 +99,27 @@ export class GraficoIngresosDashboardComponent implements OnInit, AfterViewInit 
     return orderedData;
   }
 
-
-
-
-
-
-
-
-
-
-
+  public globalFilter() {
+    if (this.selectedYear.length === 0 || this.selectedCategory.length === 0) return;
+    this.filteredData = this.incomeData.filter(entry => entry.date.startsWith(this.selectedYear));
+    if (!this.selectedCategory.includes('Todos los rubros'))
+      this.filteredData = this.filteredData.filter(entry => entry.category.startsWith(this.selectedCategory));
+    this.groupedIncomeData = this.groupAndSumByMonth(this.filteredData);
+    this.lineChartLabels = this.groupedIncomeData.map(item => item.month);
+    /*     this.lineChartData = [{ data: this.groupedIncomeData.map(item => item.total), label: 'Ingresos' }]; */
+    this.lineChartData = [{
+      label: 'Ingresos',
+      data: this.groupedIncomeData.map(item => item.total),
+      backgroundColor: 'blue',
+      borderColor: 'blue',
+      pointBackgroundColor: 'blue',
+      pointBorderColor: 'black',
+      pointRadius: 2,
+      fill: false,
+      lineTension: 0.1,
+      borderWidth: 2,
+    }];
+  }
 
 
 
