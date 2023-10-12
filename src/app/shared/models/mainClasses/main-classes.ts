@@ -151,15 +151,15 @@ export class moneyIncome {
 }
 
 export class moneyOutlays {
-  id: number;
+  id?: number;
   date: string;
-  currency: string;
+  currency?: string;
   amount: number;
-  method: string;
+  method?: string;
   category: string;
-  invoice: string;
-  beneficiary_provider: string;
-  description: string;
+  invoice?: string;
+  beneficiary_provider?: string;
+  description?: string;
 
   constructor(
     id: number = 0,
