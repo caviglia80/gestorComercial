@@ -56,7 +56,6 @@ export class DashboardGraficoEgresosComponent implements OnInit {
         console.error(error)
       }
     });
-    this.dataService.fetchEgresos('GET');
   }
 
   private inicioUnico() {

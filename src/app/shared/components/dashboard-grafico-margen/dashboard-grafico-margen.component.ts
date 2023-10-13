@@ -60,7 +60,6 @@ export class DashboardGraficoMargenComponent implements OnInit {
         console.error(error)
       }
     });
-    this.dataService.fetchIngresos('GET');
   }
 
   private inicioUnico() {

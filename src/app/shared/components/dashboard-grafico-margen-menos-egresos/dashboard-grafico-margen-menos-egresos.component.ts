@@ -59,7 +59,6 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
         console.error(error)
       }
     });
-    this.dataService.fetchIngresos('GET');
   }
 
   private EgresosdataInit() {
@@ -76,7 +75,6 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
         console.error(error)
       }
     });
-    this.dataService.fetchEgresos('GET');
   }
 
   private inicioUnico() {
