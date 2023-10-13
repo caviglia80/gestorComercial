@@ -99,10 +99,6 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
     this.Categories = Array.from(filteredCategoriesSet);
     if (!this.Categories.includes('Todos los rubros'))
       this.Categories.push('Todos los rubros');
-
-
-
-
   }
 
 
