@@ -29,7 +29,7 @@ export class ConfiguracionGeneralFacturacionComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    /* this.facturacionAuthInit(); */
+    this.facturacionAuthInit();
     this.cdr.detectChanges();
   }
 

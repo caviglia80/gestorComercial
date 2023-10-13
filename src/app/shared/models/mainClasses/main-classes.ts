@@ -112,7 +112,7 @@ export class moneyIncome {
   date: string;
   product?: string;
   currency?: string;
-  amount: number;
+  amount?: number;
   method?: string;
   category: string;
   invoice?: string;

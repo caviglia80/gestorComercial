@@ -33,6 +33,7 @@ export class SharedService {
     'Otro'
   ];
   public categories: string[] = [
+    'Compras',
     'Ventas',
     'Extraordinarios',
     'Otra Actividad'];

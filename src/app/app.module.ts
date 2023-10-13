@@ -58,6 +58,7 @@ import { ConfiguracionGeneralInventarioComponent } from './shared/components/con
 import { DashboardGraficoEgresosComponent } from './shared/components/dashboard-grafico-egresos/dashboard-grafico-egresos.component';
 import { DashboardGraficoMargenComponent } from './shared/components/dashboard-grafico-margen/dashboard-grafico-margen.component';
 import { DashboardGraficoMargenMenosEgresosComponent } from './shared/components/dashboard-grafico-margen-menos-egresos/dashboard-grafico-margen-menos-egresos.component';
+import { DashboardGraficoMediosdepagoComponent } from './shared/components/dashboard-grafico-mediosdepago/dashboard-grafico-mediosdepago.component';
 
 
 
@@ -93,7 +94,8 @@ import { DashboardGraficoMargenMenosEgresosComponent } from './shared/components
     ConfiguracionGeneralInventarioComponent,
     DashboardGraficoEgresosComponent,
     DashboardGraficoMargenComponent,
-    DashboardGraficoMargenMenosEgresosComponent
+    DashboardGraficoMargenMenosEgresosComponent,
+    DashboardGraficoMediosdepagoComponent
   ],
   imports: [
     BrowserModule,
