@@ -56,6 +56,7 @@ import { ConfiguracionGeneralIngresoComponent } from './shared/components/config
 import { ConfiguracionGeneralFacturacionComponent } from './shared/components/configuracion-general-facturacion/configuracion-general-facturacion.component';
 import { ConfiguracionGeneralInventarioComponent } from './shared/components/configuracion-general-inventario/configuracion-general-inventario.component';
 import { DashboardGraficoEgresosComponent } from './shared/components/dashboard-grafico-egresos/dashboard-grafico-egresos.component';
+import { DashboardGraficoMargenComponent } from './shared/components/dashboard-grafico-margen/dashboard-grafico-margen.component';
 
 
 
@@ -89,7 +90,8 @@ import { DashboardGraficoEgresosComponent } from './shared/components/dashboard-
     ConfiguracionGeneralIngresoComponent,
     ConfiguracionGeneralFacturacionComponent,
     ConfiguracionGeneralInventarioComponent,
-    DashboardGraficoEgresosComponent
+    DashboardGraficoEgresosComponent,
+    DashboardGraficoMargenComponent
   ],
   imports: [
     BrowserModule,

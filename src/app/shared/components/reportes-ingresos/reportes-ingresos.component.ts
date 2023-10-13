@@ -74,6 +74,5 @@ export class ReportesIngresosComponent {
       this.loading(true);
       this.dataService.fetchReportes('GET', `?reporte=2&startd=${this.fechaDesde}&endd=${this.fechaHasta}`, 'ingresos');
     }
-
   }
 }
