@@ -27,7 +27,8 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     },
   };
 
-  public filteredData: any[] = [];
+  public IngresosFilteredData: any[] = [];
+  public EgresosFilteredData: any[] = [];
   public availableYears: string[] = [];
   public selectedYear: string = this.availableYears[0];
   public Categories: string[] = [];
@@ -102,12 +103,15 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     return Array.from(years);
   }
 
-  private groupAndSumByMonth(data: any[]): any[] {
+  private groupAndSumByMonth(ingresosData: any[], egresosData: any[]): any[] {
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach(month => {
-      data.push({ date: this.selectedYear + '-' + month + '-01', amount: 0 });
+      ingresosData.push({ date: this.selectedYear + '-' + month + '-01', amount: 0 });
+    });
+    ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach(month => {
+      egresosData.push({ date: this.selectedYear + '-' + month + '-01', amount: 0 });
     });
     const groupedData: { [key: string]: any } = {};
-    for (const entry of data) {
+    for (const entry of ingresosData) {
       const month = entry.date.substring(0, 7);
       const amountt: number = parseFloat(entry.amount);
       const margen: number = parseFloat(entry.amount) !== 0 ? (amountt - ((parseFloat(entry.pvpPorcentaje) / 2) * amountt / 100)) : 0;
@@ -121,6 +125,19 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
         };
       }
     }
+
+    for (const entry of egresosData) {
+      const month = entry.date.substring(0, 7);
+      const amount: number = parseFloat(entry.amount);
+      if (groupedData[month]) {
+        groupedData[month].total -= amount;
+      } else {
+        groupedData[month] = {
+          month: month,
+          total: -amount,
+        };
+      }
+    }
     const sortedMonths = Object.keys(groupedData).sort();
     const orderedData = sortedMonths.map(month => groupedData[month]);
     return orderedData;
@@ -131,14 +148,17 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     this.availableYears = this.getAvailableYears();
     if (this.selectedYear.length === 0 || this.selectedCategory.length === 0) return;
 
-
-
-    this.filteredData = this.ingresosData.filter(entry => entry.date.startsWith(this.selectedYear));
+    this.IngresosFilteredData = this.ingresosData.filter(entry => entry.date.startsWith(this.selectedYear));
     if (!this.selectedCategory.includes('Todos los rubros'))
-      this.filteredData = this.filteredData.filter(entry => entry.category.startsWith(this.selectedCategory));
-    this.groupedIncomeData = this.groupAndSumByMonth(this.filteredData);
+      this.IngresosFilteredData = this.IngresosFilteredData.filter(entry => entry.category.startsWith(this.selectedCategory));
+
+    this.EgresosFilteredData = this.egresosData.filter(entry => entry.date.startsWith(this.selectedYear));
+    if (!this.selectedCategory.includes('Todos los rubros'))
+      this.EgresosFilteredData = this.EgresosFilteredData.filter(entry => entry.category.startsWith(this.selectedCategory));
+
+    this.groupedIncomeData = this.groupAndSumByMonth(this.IngresosFilteredData, this.EgresosFilteredData);
     this.lineChartLabels = this.groupedIncomeData.map(item => item.month);
-    /*     this.lineChartData = [{ data: this.groupedIncomeData.map(item => item.total), label: 'Ingresos' }]; */
+
     this.lineChartData = [{
       label: 'Margen-Egresos',
       data: this.groupedIncomeData.map(item => item.total),
