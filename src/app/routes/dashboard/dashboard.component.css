@@ -1,4 +1,4 @@
-.graficosContainer {
+/* .graficosContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -11,4 +11,54 @@
   }
 }
 
+ */
 
+
+
+
+
+
+
+
+
+
+
+
+ .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 100vh; /* Esto asegura que el contenedor ocupe toda la altura disponible */
+
+  flex: 1;
+  flex-shrink: 1;
+}
+
+.box {
+  flex: 1;
+
+  flex: 1;
+  flex-shrink: 1;
+}
+
+/* Estilos para las esquinas específicas */
+.top-left {
+  order: 1;
+  align-self: flex-start;
+}
+
+.top-right {
+  order: 2;
+  align-self: flex-start;
+}
+
+.bottom-left {
+  order: 3;
+  align-self: flex-end;
+}
+
+.bottom-right {
+  order: 4;
+  align-self: flex-end;
+}

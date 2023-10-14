@@ -1,7 +1,25 @@
-.chart {
+/* .chart {
   display: flex;
   flex-direction: column;
   padding: 8px;
   border-radius: 8px;
   width: 600px;
+}
+ */
+
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 8px;
+  border-radius: 8px;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 600px;
+}
+
+.chart {
+  flex: 1;
+  flex-shrink: 1;
 }
