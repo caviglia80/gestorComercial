@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
 import { moneyIncome, moneyOutlays, configuracion } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
@@ -8,7 +8,7 @@ import { DataService } from '@services/data/data.service';
   templateUrl: './dashboard-grafico-margen-menos-egresos.component.html',
   styleUrls: ['./dashboard-grafico-margen-menos-egresos.component.css']
 })
-export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
+export class DashboardGraficoMargenMenosEgresosComponent implements OnInit, AfterViewChecked {
   private currentConfiguracion: configuracion = new configuracion();
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -40,15 +40,28 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   constructor(
     public dataService: DataService) {
     this.confInit();
-  }
 
-  ngOnInit() {
     this.IngresosDataInit();
     this.EgresosdataInit();
     if (this.ingresosData.length === 0)
       this.dataService.fetchIngresos('GET');
     if (this.egresosData.length === 0)
       this.dataService.fetchEgresos('GET');
+
+
+  }
+
+  ngOnInit() {
+    /*     this.IngresosDataInit();
+        this.EgresosdataInit();
+        if (this.ingresosData.length === 0)
+          this.dataService.fetchIngresos('GET');
+        if (this.egresosData.length === 0)
+          this.dataService.fetchEgresos('GET'); */
+  }
+
+  ngAfterViewChecked() {
+
   }
 
   private confInit() {
@@ -157,10 +170,10 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     this.lineChartData = [{
       label: 'Margen-Egresos',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.currentConfiguracion.color2,
-      borderColor: this.currentConfiguracion.color1,
-      pointBackgroundColor: this.currentConfiguracion.color2,
-      pointBorderColor: this.currentConfiguracion.color1,
+      backgroundColor: this.currentConfiguracion.color2 === undefined ? 'transparent' : this.currentConfiguracion.color2,
+      borderColor: this.currentConfiguracion.color1 === undefined ? 'transparent' : this.currentConfiguracion.color1,
+      pointBackgroundColor: this.currentConfiguracion.color2 === undefined ? 'transparent' : this.currentConfiguracion.color2,
+      pointBorderColor: this.currentConfiguracion.color1 === undefined ? 'transparent' : this.currentConfiguracion.color1,
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,
@@ -190,3 +203,4 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     this.Categories = Array.from(filteredCategoriesSet);
   }
 }
+
