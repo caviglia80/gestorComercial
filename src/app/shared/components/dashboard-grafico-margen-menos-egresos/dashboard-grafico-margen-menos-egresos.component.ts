@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartType } from 'chart.js';
-import { SharedService } from '@services/shared/shared.service';
+import { ChartOptions, ChartType } from 'chart.js';
 import { moneyIncome, moneyOutlays } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 
@@ -10,14 +9,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-margen-menos-egresos.component.css']
 })
 export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
-  public ingresosData: moneyIncome[] = [];
-  public egresosData: moneyOutlays[] = [];
-  public groupedIncomeData: any[] = [];
-  public lineChartData: any[] = [];
-  public lineChartLabels: string[] = [];
-  public lineChartType: ChartType = 'line';
-
-  public lineChartOptions: any = {
+  public lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
       x: {
@@ -27,15 +19,27 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     },
   };
 
+  public lineChartData: any[] = [];
+  public lineChartLabels: string[] = [];
+  public lineChartType: ChartType = 'line';
+
   public IngresosFilteredData: any[] = [];
   public EgresosFilteredData: any[] = [];
-  public availableYears: string[] = [];
-  public selectedYear: string = this.availableYears[0];
+
+  public ingresosData: moneyIncome[] = [];
+  public egresosData: moneyOutlays[] = [];
+
+
+
+
+  public groupedIncomeData: any[] = [];
+
+  public Years: string[] = [];
+  public selectedYear: string = '';
   public Categories: string[] = [];
   public selectedCategory: string = 'Todos los rubros';
 
   constructor(
-    public sharedService: SharedService,
     public dataService: DataService) { }
 
   ngOnInit() {
@@ -53,7 +57,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
           amount: item.amount,
           pvpPorcentaje: item.pvpPorcentaje,
         }));
-        this.inicioUnico();
+        this.init();
       },
       error: (error) => {
         console.error(error)
@@ -69,7 +73,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
           category: item.category,
           amount: item.amount,
         }));
-        this.inicioUnico();
+        this.init();
       },
       error: (error) => {
         console.error(error)
@@ -77,28 +81,9 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     });
   }
 
-  private inicioUnico() {
-    this.availableYears = this.getAvailableYears();
-    this.selectedYear = this.availableYears[0];
-    this.Categories = this.sharedService.categories;
-    if (!this.Categories.includes('Todos los rubros'))
-      this.Categories.push('Todos los rubros');
-    this.selectedCategory = this.Categories[this.Categories.length - 1];
+  private init() {
+    this.setYears(this.ingresosData, this.egresosData);
     this.globalFilter();
-  }
-
-  private getAvailableYears(): string[] {
-    if (this.ingresosData.length + this.egresosData.length == 0) return [];
-    const years = new Set<string>();
-    for (const entry of this.ingresosData) {
-      const year = entry.date.substring(0, 4);
-      years.add(year);
-    }
-    for (const entry of this.egresosData) {
-      const year = entry.date.substring(0, 4);
-      years.add(year);
-    }
-    return Array.from(years);
   }
 
   private groupAndSumByMonth(ingresosData: any[], egresosData: any[]): any[] {
@@ -143,7 +128,6 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
 
   public globalFilter() {
     if (this.ingresosData.length + this.egresosData.length == 0) return;
-    this.availableYears = this.getAvailableYears();
     if (this.selectedYear.length === 0 || this.selectedCategory.length === 0) return;
 
     this.IngresosFilteredData = this.ingresosData.filter(entry => entry.date.startsWith(this.selectedYear));
@@ -153,6 +137,8 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     this.EgresosFilteredData = this.egresosData.filter(entry => entry.date.startsWith(this.selectedYear));
     if (!this.selectedCategory.includes('Todos los rubros'))
       this.EgresosFilteredData = this.EgresosFilteredData.filter(entry => entry.category.startsWith(this.selectedCategory));
+
+    this.setCategories(this.IngresosFilteredData, this.EgresosFilteredData);
 
     this.groupedIncomeData = this.groupAndSumByMonth(this.IngresosFilteredData, this.EgresosFilteredData);
     this.lineChartLabels = this.groupedIncomeData.map(item => item.month);
@@ -169,5 +155,29 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
       lineTension: 0.1,
       borderWidth: 2,
     }];
+  }
+
+  private setYears(data1: any, data2: any) {
+    if (data1.length + data2.length == 0) return;
+    const years = new Set<string>();
+    for (const entry of data1)
+      years.add(entry.date.substring(0, 4));
+    for (const entry of data2)
+      years.add(entry.date.substring(0, 4));
+    this.Years = Array.from(years);
+    this.selectedYear = this.Years[0];
+  }
+
+  private setCategories(data1: any, data2: any) {
+    if (data1.length + data2.length == 0) return;
+    const filteredCategoriesSet = new Set<string>();
+    for (const entry of data1)
+      filteredCategoriesSet.add(entry.category);
+    for (const entry of data2)
+      filteredCategoriesSet.add(entry.category);
+    filteredCategoriesSet.add('Todos los rubros');
+    this.Categories = Array.from(filteredCategoriesSet);
+
+    this.selectedCategory = this.Categories[this.Categories.length - 1];
   }
 }

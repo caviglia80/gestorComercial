@@ -64,16 +64,6 @@ export class DashboardGraficoIngresosComponent implements OnInit {
     this.globalFilter();
   }
 
-  private getAvailableYears(): string[] {
-    if (this.incomeData.length == 0) return [];
-    const years = new Set<string>();
-    for (const entry of this.incomeData) {
-      const year = entry.date.substring(0, 4);
-      years.add(year);
-    }
-    return Array.from(years);
-  }
-
   /* doughnut pie line */
   private groupAndSumByMonth(data: any[]): any[] {
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach(month => {

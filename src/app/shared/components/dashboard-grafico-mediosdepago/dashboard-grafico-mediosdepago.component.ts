@@ -100,7 +100,5 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
     if (!this.Categories.includes('Todos los rubros'))
       this.Categories.push('Todos los rubros');
   }
-
-
 }
 
