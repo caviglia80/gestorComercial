@@ -3,10 +3,16 @@
     <mat-option *ngFor="let year of Years" [value]="year">{{ year }}</mat-option>
   </mat-select>
 
-  <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [type]="chartType" [options]="chartOptions"></canvas>
+  <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [type]="chartType" [options]="chartOptions"
+    *ngIf="filteredData.length !== 0"></canvas>
+
+  <div class="text-center sinDatos no-data-message" *ngIf="filteredData.length === 0">
+    <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
+  </div>
 
   <mat-select [(ngModel)]="selectedCategory" (selectionChange)="globalFilter()">
     <mat-option *ngFor="let selectedCategory of Categories" [value]="selectedCategory">{{ selectedCategory
       }}</mat-option>
   </mat-select>
 </div>
+<!-- *ngIf="chartData.length === 0" -->
