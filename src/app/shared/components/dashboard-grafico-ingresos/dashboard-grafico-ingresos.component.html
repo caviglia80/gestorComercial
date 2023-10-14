@@ -8,6 +8,7 @@
   </canvas>
 
   <mat-select [(ngModel)]="selectedCategory" (selectionChange)="globalFilter()">
-    <mat-option *ngFor="let selectedCategory of Categories" [value]="selectedCategory">{{ selectedCategory }}</mat-option>
+    <mat-option *ngFor="let selectedCategory of Categories" [value]="selectedCategory">{{ selectedCategory
+      }}</mat-option>
   </mat-select>
 </div>

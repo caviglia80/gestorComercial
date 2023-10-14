@@ -88,7 +88,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
     if (this.incomeData.length == 0) return;
     if (this.selectedYear.length === 0 || this.selectedCategory.length === 0) return;
     this.filteredData = this.incomeData.filter(entry => entry.date.startsWith(this.selectedYear));
-    this.setCategories(this.filteredData);
+    this.setCategories(this.incomeData);
     if (!this.selectedCategory.includes('Todos los rubros'))
       this.filteredData = this.filteredData.filter(entry => entry.category.startsWith(this.selectedCategory));
     this.groupedIncomeData = this.groupAndSumByMonth(this.filteredData);
@@ -111,9 +111,8 @@ export class DashboardGraficoEgresosComponent implements OnInit {
   private setYears(data: any) {
     if (data.length == 0) return;
     const years = new Set<string>();
-    for (const entry of this.incomeData) {
+    for (const entry of this.incomeData)
       years.add(entry.date.substring(0, 4));
-    }
     this.Years = Array.from(years);
     this.selectedYear = this.Years[0];
   }
@@ -123,8 +122,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
     const filteredCategoriesSet = new Set<string>();
     for (const entry of data)
       filteredCategoriesSet.add(entry.category);
+    filteredCategoriesSet.add('Todos los rubros');
     this.Categories = Array.from(filteredCategoriesSet);
-    if (!this.Categories.includes('Todos los rubros'))
-      this.Categories.push('Todos los rubros');
   }
 }

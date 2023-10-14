@@ -23,14 +23,11 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   public lineChartLabels: string[] = [];
   public lineChartType: ChartType = 'line';
 
-  public IngresosFilteredData: any[] = [];
-  public EgresosFilteredData: any[] = [];
-
   public ingresosData: moneyIncome[] = [];
   public egresosData: moneyOutlays[] = [];
 
-
-
+  public IngresosFilteredData: any[] = [];
+  public EgresosFilteredData: any[] = [];
 
   public groupedIncomeData: any[] = [];
 
@@ -82,7 +79,8 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   }
 
   private init() {
-    this.setYears(this.ingresosData, this.egresosData);
+    this.setYears(this.ingresosData);
+    this.setYears(this.egresosData);
     this.globalFilter();
   }
 
@@ -131,14 +129,14 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     if (this.selectedYear.length === 0 || this.selectedCategory.length === 0) return;
 
     this.IngresosFilteredData = this.ingresosData.filter(entry => entry.date.startsWith(this.selectedYear));
+    this.setCategories(this.ingresosData);
     if (!this.selectedCategory.includes('Todos los rubros'))
       this.IngresosFilteredData = this.IngresosFilteredData.filter(entry => entry.category.startsWith(this.selectedCategory));
 
     this.EgresosFilteredData = this.egresosData.filter(entry => entry.date.startsWith(this.selectedYear));
+    this.setCategories(this.egresosData);
     if (!this.selectedCategory.includes('Todos los rubros'))
       this.EgresosFilteredData = this.EgresosFilteredData.filter(entry => entry.category.startsWith(this.selectedCategory));
-
-    this.setCategories(this.IngresosFilteredData, this.EgresosFilteredData);
 
     this.groupedIncomeData = this.groupAndSumByMonth(this.IngresosFilteredData, this.EgresosFilteredData);
     this.lineChartLabels = this.groupedIncomeData.map(item => item.month);
@@ -157,27 +155,25 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     }];
   }
 
-  private setYears(data1: any, data2: any) {
-    if (data1.length + data2.length == 0) return;
+  private setYears(data: any) {
+    if (data.length == 0) return;
     const years = new Set<string>();
-    for (const entry of data1)
+    for (const entry of data)
       years.add(entry.date.substring(0, 4));
-    for (const entry of data2)
-      years.add(entry.date.substring(0, 4));
+    for (const entry of this.Years)
+      years.add(entry);
     this.Years = Array.from(years);
     this.selectedYear = this.Years[0];
   }
 
-  private setCategories(data1: any, data2: any) {
-    if (data1.length + data2.length == 0) return;
+  private setCategories(data: any) {
+    if (data.length == 0) return;
     const filteredCategoriesSet = new Set<string>();
-    for (const entry of data1)
+    for (const entry of data)
       filteredCategoriesSet.add(entry.category);
-    for (const entry of data2)
-      filteredCategoriesSet.add(entry.category);
+    for (const entry of this.Categories)
+      filteredCategoriesSet.add(entry);
     filteredCategoriesSet.add('Todos los rubros');
     this.Categories = Array.from(filteredCategoriesSet);
-
-    this.selectedCategory = this.Categories[this.Categories.length - 1];
   }
 }
