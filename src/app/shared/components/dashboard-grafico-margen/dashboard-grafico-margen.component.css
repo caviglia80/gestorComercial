@@ -6,7 +6,7 @@
   width: 600px;
 } */
 
-.chart-container {
+/* .chart-container {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -16,9 +16,11 @@
   flex-grow: 1;
   width: 100%;
   max-width: 630px;
-}
+} */
 
 .chart {
   flex: 1;
   flex-shrink: 1;
+  padding: 8px;
+  border-radius: 8px;
 }

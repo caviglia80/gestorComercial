@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
 import { moneyIncome, moneyOutlays, configuracion } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
@@ -8,7 +8,7 @@ import { DataService } from '@services/data/data.service';
   templateUrl: './dashboard-grafico-margen-menos-egresos.component.html',
   styleUrls: ['./dashboard-grafico-margen-menos-egresos.component.css']
 })
-export class DashboardGraficoMargenMenosEgresosComponent implements OnInit, AfterViewChecked {
+export class DashboardGraficoMargenMenosEgresosComponent implements OnInit, AfterViewInit {
   private currentConfiguracion: configuracion = new configuracion();
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -40,28 +40,24 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit, Afte
   constructor(
     public dataService: DataService) {
     this.confInit();
+  }
 
+  ngOnInit() {
     this.IngresosDataInit();
     this.EgresosdataInit();
     if (this.ingresosData.length === 0)
       this.dataService.fetchIngresos('GET');
     if (this.egresosData.length === 0)
       this.dataService.fetchEgresos('GET');
-
-
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     /*     this.IngresosDataInit();
         this.EgresosdataInit();
         if (this.ingresosData.length === 0)
           this.dataService.fetchIngresos('GET');
         if (this.egresosData.length === 0)
           this.dataService.fetchEgresos('GET'); */
-  }
-
-  ngAfterViewChecked() {
-
   }
 
   private confInit() {
