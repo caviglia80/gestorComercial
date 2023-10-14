@@ -312,7 +312,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }}</p>
     <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
-      <mat-option *ngFor="let category of sharedService.categories" [value]="category">{{ category }}</mat-option>
+      <mat-option *ngFor="let category of sharedService.rubrosIngresos" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -388,7 +388,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }}</p>
     <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
-      <mat-option *ngFor="let category of sharedService.categories" [value]="category">{{ category }}</mat-option>
+      <mat-option *ngFor="let category of sharedService.rubrosIngresos" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
 

@@ -96,7 +96,7 @@ export class EgresosComponent implements AfterViewInit {
   public Create(visible: boolean) {
     this.Item = {};
     if (this.dataService.getCurrentConfiguracion().egresoRapidoEnabled === '1')
-      this.Item = this.sharedService.crearDefault();
+      this.Item = this.sharedService.rellenoCampos_IE('e');
     this.create = visible;
   }
 

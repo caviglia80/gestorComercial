@@ -32,9 +32,12 @@ export class SharedService {
     'Bitcoin',
     'Otro'
   ];
-  public categories: string[] = [
-    'Compras',
+  public rubrosIngresos: string[] = [
     'Ventas',
+    'Extraordinarios',
+    'Otra Actividad'];
+  public rubrosEgresos: string[] = [
+    'Compras',
     'Extraordinarios',
     'Otra Actividad'];
   private currentConfiguracion: any;
@@ -158,7 +161,7 @@ export class SharedService {
     return true;
   }
 
-  public crearDefault(): any {
+  public rellenoCampos_IE(type: string): any {
     const Item: any = {};
     const today = new Date();
     const yyyy = today.getFullYear();
@@ -169,8 +172,12 @@ export class SharedService {
       Item.currency = this.currencys[0];
     if (this.paidMethods.length > 0)
       Item.method = this.paidMethods[0];
-    if (this.categories.length > 0)
-      Item.category = this.categories[0];
+    if (type === 'i')
+      if (this.rubrosIngresos.length > 0)
+        Item.category = this.rubrosIngresos[0];
+    if (type === 'e')
+      if (this.rubrosEgresos.length > 0)
+        Item.category = this.rubrosEgresos[0];
     return Item;
   }
 

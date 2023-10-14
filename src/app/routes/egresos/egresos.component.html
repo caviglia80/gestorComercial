@@ -265,7 +265,7 @@
     <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
     <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category" required>
-      <mat-option *ngFor="let category of sharedService.categories" [value]="category">{{ category }}</mat-option>
+      <mat-option *ngFor="let category of sharedService.rubrosEgresos" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -334,7 +334,7 @@
     <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
     <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category" required>
-      <mat-option *ngFor="let category of sharedService.categories" [value]="category">{{ category }}</mat-option>
+      <mat-option *ngFor="let category of sharedService.rubrosEgresos" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
 
