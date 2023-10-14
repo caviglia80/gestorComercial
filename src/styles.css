@@ -44,20 +44,6 @@ h4 {
   font-weight: 300;
 }
 
-.table-wrapper::-webkit-scrollbar {
-  width: 10px;
-}
-
-.table-wrapper::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-  border-radius: 10px;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb {
-  background: var(--scroll-Background);
-  border-radius: 10px;
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);

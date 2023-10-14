@@ -1,33 +1,49 @@
-<!--
-  <app-dashboard-grafico-mediosdepago></app-dashboard-grafico-mediosdepago>
- -->
-
-
-
-
-
 <div class="container-fluid" style="height: 90vh;">
-  <div class="row">
-    <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
-      <div class="content p-3">
-        <app-dashboard-grafico-ingresos></app-dashboard-grafico-ingresos>
-      </div>
-    </div>
-    <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
-      <div class="content p-3">
-        <app-dashboard-grafico-egresos></app-dashboard-grafico-egresos>
+
+  <div class="row justify-content-center align-items-center">
+    <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center">
+      <div class="content text-center" style="overflow: visible;">
+        <mat-button-toggle-group name="toggleGroup" [(ngModel)]="view" style="overflow: visible;">
+          <mat-button-toggle value="0">Vista 1</mat-button-toggle>
+          <mat-button-toggle value="1">Vista 2</mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
-      <div class="content p-3">
-        <app-dashboard-grafico-margen></app-dashboard-grafico-margen>
+
+  <div *ngIf="view ==='0'">
+    <div class="row">
+      <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
+        <div class="content p-2">
+          <app-dashboard-grafico-ingresos></app-dashboard-grafico-ingresos>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
+        <div class="content p-2">
+          <app-dashboard-grafico-egresos></app-dashboard-grafico-egresos>
+        </div>
       </div>
     </div>
-    <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
-      <div class="content p-3">
-        <app-dashboard-grafico-margen-menos-egresos></app-dashboard-grafico-margen-menos-egresos>
+    <div class="row">
+      <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
+        <div class="content p-2">
+          <app-dashboard-grafico-margen></app-dashboard-grafico-margen>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
+        <div class="content p-2">
+          <app-dashboard-grafico-margen-menos-egresos></app-dashboard-grafico-margen-menos-egresos>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="view ==='1'">
+    <div class="row justify-content-center align-items-center py-3">
+      <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
+        <div class="content p-3">
+          <app-dashboard-grafico-mediosdepago></app-dashboard-grafico-mediosdepago>
+        </div>
       </div>
     </div>
   </div>

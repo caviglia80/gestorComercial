@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
-import { moneyIncome } from '@models/mainClasses/main-classes';
+import { moneyIncome, configuracion } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 
 @Component({
@@ -9,6 +9,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-margen.component.css']
 })
 export class DashboardGraficoMargenComponent implements OnInit {
+  private currentConfiguracion: configuracion = new configuracion();
   public lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -33,10 +34,14 @@ export class DashboardGraficoMargenComponent implements OnInit {
   public selectedCategory: string = 'Todos los rubros';
 
   constructor(
-    public dataService: DataService) { }
+    public dataService: DataService) {
+    this.confInit();
+  }
 
   ngOnInit() {
     this.dataInit();
+    if (this.incomeData.length === 0)
+      this.dataService.fetchIngresos('GET');
   }
 
   private dataInit() {
@@ -56,6 +61,12 @@ export class DashboardGraficoMargenComponent implements OnInit {
       error: (error) => {
         console.error(error)
       }
+    });
+  }
+
+  private confInit() {
+    this.dataService.Configuracion$.subscribe((data) => {
+      this.currentConfiguracion = data[0];
     });
   }
 
@@ -102,10 +113,10 @@ export class DashboardGraficoMargenComponent implements OnInit {
     this.lineChartData = [{
       label: 'Margen',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.dataService.getCurrentConfiguracion().color2,
-      borderColor: this.dataService.getCurrentConfiguracion().color1,
-      pointBackgroundColor: this.dataService.getCurrentConfiguracion().color2,
-      pointBorderColor: this.dataService.getCurrentConfiguracion().color1,
+      backgroundColor: this.currentConfiguracion.color2,
+      borderColor: this.currentConfiguracion.color1,
+      pointBackgroundColor: this.currentConfiguracion.color2,
+      pointBorderColor: this.currentConfiguracion.color1,
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
-import { moneyOutlays } from '@models/mainClasses/main-classes';
+import { moneyOutlays, configuracion } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 
 @Component({
@@ -9,6 +9,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-egresos.component.css']
 })
 export class DashboardGraficoEgresosComponent implements OnInit {
+  private currentConfiguracion: configuracion = new configuracion();
   public lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -33,10 +34,20 @@ export class DashboardGraficoEgresosComponent implements OnInit {
   public selectedCategory: string = 'Todos los rubros';
 
   constructor(
-    public dataService: DataService) { }
+    public dataService: DataService) {
+    this.confInit();
+  }
 
   ngOnInit() {
     this.dataInit();
+    if (this.incomeData.length === 0)
+      this.dataService.fetchEgresos('GET');
+  }
+
+  private confInit() {
+    this.dataService.Configuracion$.subscribe((data) => {
+      this.currentConfiguracion = data[0];
+    });
   }
 
   private dataInit() {
@@ -97,10 +108,10 @@ export class DashboardGraficoEgresosComponent implements OnInit {
     this.lineChartData = [{
       label: 'Egresos',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.dataService.getCurrentConfiguracion().color2,
-      borderColor: this.dataService.getCurrentConfiguracion().color1,
-      pointBackgroundColor: this.dataService.getCurrentConfiguracion().color2,
-      pointBorderColor: this.dataService.getCurrentConfiguracion().color1,
+      backgroundColor: this.currentConfiguracion.color2,
+      borderColor: this.currentConfiguracion.color1,
+      pointBackgroundColor: this.currentConfiguracion.color2,
+      pointBorderColor: this.currentConfiguracion.color1,
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,

@@ -7,6 +7,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  view: string = "0";
 
   constructor(
     public dataService: DataService) { }

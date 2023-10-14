@@ -18,9 +18,9 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
     responsive: true,
   };
 
-  chartData: any[] = [];
-  chartLabels: LabelItem[] = [];
-  chartType: ChartType = 'pie';
+  public chartData: any[] = [];
+  public chartLabels: LabelItem[] = [];
+  public chartType: ChartType = 'pie';
 
   public incomeData: moneyIncome[] = [];
   public groupedIncomeData: any[] = [];
@@ -36,6 +36,8 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
 
   ngOnInit() {
     this.dataInit();
+    if (this.incomeData.length === 0)
+      this.dataService.fetchIngresos('GET');
   }
 
   private dataInit() {

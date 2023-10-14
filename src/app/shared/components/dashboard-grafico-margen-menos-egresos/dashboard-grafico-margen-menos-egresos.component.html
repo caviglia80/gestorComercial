@@ -13,7 +13,7 @@
   </mat-select>
 </div> -->
 
-<div class="chart-container mat-elevation-z4 m-2">
+<div class="chart-container mat-elevation-z3 m-1">
   <div class="chart" *ngIf="ingresosData.length + egresosData.length !== 0">
     <mat-select [(ngModel)]="selectedYear" (selectionChange)="globalFilter()">
       <mat-option *ngFor="let year of Years" [value]="year">{{ year }}</mat-option>

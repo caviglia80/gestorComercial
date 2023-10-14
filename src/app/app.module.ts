@@ -43,24 +43,23 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PvpPipe } from './core/pipes/pvp/pvp.pipe';
-import { ReportesIngresosComponent } from './shared/components/reportes-ingresos/reportes-ingresos.component';
+import { ReportesIngresosComponent } from '@components/reportes-ingresos/reportes-ingresos.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatRadioModule} from '@angular/material/radio';
-import { ReportesEgresosRubroComponent } from './shared/components/reportes-egresos-rubro/reportes-egresos-rubro.component';
-import { ReportesEgresosBPComponent } from './shared/components/reportes-egresos-bp/reportes-egresos-bp.component';
+import { ReportesEgresosRubroComponent } from '@components/reportes-egresos-rubro/reportes-egresos-rubro.component';
+import { ReportesEgresosBPComponent } from '@components/reportes-egresos-bp/reportes-egresos-bp.component';
 import { NgChartsModule } from 'ng2-charts';
-import { DashboardGraficoIngresosComponent } from './shared/components/dashboard-grafico-ingresos/dashboard-grafico-ingresos.component';
-import { ConfiguracionGeneralAjustesComponent } from './shared/components/configuracion-general-ajustes/configuracion-general-ajustes.component';
-import { ConfiguracionGeneralEgresoComponent } from './shared/components/configuracion-general-egreso/configuracion-general-egreso.component';
-import { ConfiguracionGeneralIngresoComponent } from './shared/components/configuracion-general-ingreso/configuracion-general-ingreso.component';
-import { ConfiguracionGeneralFacturacionComponent } from './shared/components/configuracion-general-facturacion/configuracion-general-facturacion.component';
-import { ConfiguracionGeneralInventarioComponent } from './shared/components/configuracion-general-inventario/configuracion-general-inventario.component';
-import { DashboardGraficoEgresosComponent } from './shared/components/dashboard-grafico-egresos/dashboard-grafico-egresos.component';
-import { DashboardGraficoMargenComponent } from './shared/components/dashboard-grafico-margen/dashboard-grafico-margen.component';
-import { DashboardGraficoMargenMenosEgresosComponent } from './shared/components/dashboard-grafico-margen-menos-egresos/dashboard-grafico-margen-menos-egresos.component';
-import { DashboardGraficoMediosdepagoComponent } from './shared/components/dashboard-grafico-mediosdepago/dashboard-grafico-mediosdepago.component';
-
-
+import { DashboardGraficoIngresosComponent } from '@components/dashboard-grafico-ingresos/dashboard-grafico-ingresos.component';
+import { ConfiguracionGeneralAjustesComponent } from '@components/configuracion-general-ajustes/configuracion-general-ajustes.component';
+import { ConfiguracionGeneralEgresoComponent } from '@components/configuracion-general-egreso/configuracion-general-egreso.component';
+import { ConfiguracionGeneralIngresoComponent } from '@components/configuracion-general-ingreso/configuracion-general-ingreso.component';
+import { ConfiguracionGeneralFacturacionComponent } from '@components/configuracion-general-facturacion/configuracion-general-facturacion.component';
+import { ConfiguracionGeneralInventarioComponent } from '@components/configuracion-general-inventario/configuracion-general-inventario.component';
+import { DashboardGraficoEgresosComponent } from '@components/dashboard-grafico-egresos/dashboard-grafico-egresos.component';
+import { DashboardGraficoMargenComponent } from '@components/dashboard-grafico-margen/dashboard-grafico-margen.component';
+import { DashboardGraficoMargenMenosEgresosComponent } from '@components/dashboard-grafico-margen-menos-egresos/dashboard-grafico-margen-menos-egresos.component';
+import { DashboardGraficoMediosdepagoComponent } from '@components/dashboard-grafico-mediosdepago/dashboard-grafico-mediosdepago.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -125,7 +124,8 @@ import { DashboardGraficoMediosdepagoComponent } from './shared/components/dashb
     MatAutocompleteModule,
     FlexLayoutModule,
     MatRadioModule,
-    NgChartsModule
+    NgChartsModule,
+    MatButtonToggleModule
   ],
   providers: [
   ],
