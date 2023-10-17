@@ -77,7 +77,8 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by amount">
             {{ Columns['amount'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.amount)"> {{element.amount | currency:'$':'symbol' }} </td>
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.amount)"> {{element.amount |
+            currency:'$':'symbol' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="method">
@@ -276,7 +277,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Buscar producto (ID / Nombre) <span class="red-asterisk">*</span></p>
     <input type="text" placeholder="ID Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.product" (focus)="getInventario()">
+      [(ngModel)]="Item.product" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
         {{ producto.id }} - {{ producto.name }}
@@ -299,19 +300,20 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['amount'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number">
+    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese método de Pago</p>
-    <mat-select placeholder="Método de Pago" [(ngModel)]="Item.method">
+    <p class="form-field-description">Ingrese método de Pago <span class="red-asterisk">*</span></p>
+    <mat-select placeholder="Método de Pago" [(ngModel)]="Item.method" required>
       <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }}</p>
-    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
+    <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }} <span class="red-asterisk">*</span>
+    </p>
+    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category" required>
       <mat-option *ngFor="let category of sharedService.rubrosIngresos" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -326,7 +328,8 @@
     <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="record('POST')" [disabled]="!Item.date || !Item.amount || !Item.product">Guardar</button>
+  <button mat-button (click)="record('POST')"
+    [disabled]="!Item.date || !Item.product || !Item.amount || !Item.method || !Item.category">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -352,7 +355,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Buscar producto (ID / Nombre) <span class="red-asterisk">*</span></p>
     <input type="text" placeholder="Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.product" (focus)="getInventario()">
+      [(ngModel)]="Item.product" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
         {{ producto.id }} - {{ producto.name }}
@@ -375,19 +378,20 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['amount'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number">
+    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese método de Pago</p>
-    <mat-select placeholder="Método de Pago" [(ngModel)]="Item.method">
+    <p class="form-field-description">Ingrese método de Pago <span class="red-asterisk">*</span></p>
+    <mat-select placeholder="Método de Pago" [(ngModel)]="Item.method" required>
       <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }}</p>
-    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category">
+    <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }} <span class="red-asterisk">*</span>
+    </p>
+    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category" required>
       <mat-option *ngFor="let category of sharedService.rubrosIngresos" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -402,5 +406,6 @@
     <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="record('PUT')" [disabled]="!Item.date || !Item.amount">Guardar</button>
+  <button mat-button (click)="record('PUT')"
+    [disabled]="!Item.date || !Item.product || !Item.amount || !Item.method || !Item.category">Guardar</button>
 </div>

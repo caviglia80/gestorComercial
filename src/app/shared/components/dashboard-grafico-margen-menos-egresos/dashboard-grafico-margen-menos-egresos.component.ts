@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
 import { moneyIncome, moneyOutlays, configuracion } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
@@ -8,7 +8,8 @@ import { DataService } from '@services/data/data.service';
   templateUrl: './dashboard-grafico-margen-menos-egresos.component.html',
   styleUrls: ['./dashboard-grafico-margen-menos-egresos.component.css']
 })
-export class DashboardGraficoMargenMenosEgresosComponent implements OnInit, AfterViewInit {
+export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
+  public chartTootilp: string = 'Ingresos Totales: son todos los ingresos generados por las ventas de productos o servicios. Costos Operativos: incluyen todos los gastos directamente relacionados con las operaciones del negocio. Utilidad Operativa = Ingresos Totales - Costos Operativos';
   private currentConfiguracion: configuracion = new configuracion();
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -49,15 +50,6 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit, Afte
       this.dataService.fetchIngresos('GET');
     if (this.egresosData.length === 0)
       this.dataService.fetchEgresos('GET');
-  }
-
-  ngAfterViewInit() {
-    /*     this.IngresosDataInit();
-        this.EgresosdataInit();
-        if (this.ingresosData.length === 0)
-          this.dataService.fetchIngresos('GET');
-        if (this.egresosData.length === 0)
-          this.dataService.fetchEgresos('GET'); */
   }
 
   private confInit() {
@@ -164,7 +156,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit, Afte
     this.lineChartLabels = this.groupedIncomeData.map(item => item.month);
 
     this.lineChartData = [{
-      label: 'Margen-Egresos',
+      label: 'Utilidad Operativa',
       data: this.groupedIncomeData.map(item => item.total),
       backgroundColor: this.currentConfiguracion.color2 === undefined ? 'transparent' : this.currentConfiguracion.color2,
       borderColor: this.currentConfiguracion.color1 === undefined ? 'transparent' : this.currentConfiguracion.color1,

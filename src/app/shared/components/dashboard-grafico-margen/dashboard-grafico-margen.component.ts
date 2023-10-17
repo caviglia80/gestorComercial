@@ -9,6 +9,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-margen.component.css']
 })
 export class DashboardGraficoMargenComponent implements OnInit {
+  public chartTootilp: string = 'Representa la diferencia entre los ingresos totales generados por la venta de productos o servicios y el costo de los bienes o servicios vendidos. Utilidad Bruta = Ingresos Totales - Costo de Bienes o Servicios Vendidos';
   private currentConfiguracion: configuracion = new configuracion();
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -111,7 +112,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
     this.lineChartLabels = this.groupedIncomeData.map(item => item.month);
     /*     this.lineChartData = [{ data: this.groupedIncomeData.map(item => item.total), label: 'Ingresos' }]; */
     this.lineChartData = [{
-      label: 'Margen',
+      label: 'Utilidad Bruta',
       data: this.groupedIncomeData.map(item => item.total),
       backgroundColor: this.currentConfiguracion.color2 === undefined ? 'transparent' : this.currentConfiguracion.color2,
       borderColor: this.currentConfiguracion.color1 === undefined ? 'transparent' : this.currentConfiguracion.color1,

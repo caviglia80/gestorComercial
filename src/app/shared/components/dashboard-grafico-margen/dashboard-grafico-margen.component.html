@@ -18,8 +18,8 @@
     <mat-option *ngFor="let year of Years" [value]="year">{{ year }}</mat-option>
   </mat-select>
 
-  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [type]="lineChartType"
-    [options]="lineChartOptions">
+  <canvas [matTooltip]="chartTootilp" [matTooltipShowDelay]="2000" baseChart [datasets]="lineChartData"
+    [labels]="lineChartLabels" [type]="lineChartType" [options]="lineChartOptions">
   </canvas>
 
   <mat-select [(ngModel)]="selectedCategory" (selectionChange)="globalFilter()">
