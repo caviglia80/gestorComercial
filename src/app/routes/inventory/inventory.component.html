@@ -194,13 +194,13 @@
           <td style="font-weight: bold; white-space: nowrap;">Existencias:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['existencias'])">{{ Item['existencias'] }}</td>
         </tr>
-        <tr>
-          <td style="font-weight: bold; white-space: nowrap;">costo:</td>
+        <tr *ngIf="Item.tipo==='Producto'">
+          <td style="font-weight: bold; white-space: nowrap;">Precio Costo:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['costo'])">{{ Item['costo'] |
             currency:'$':'symbol' }}</td>
         </tr>
-        <tr *ngIf="Item.tipo==='Producto'">
-          <td style="font-weight: bold; white-space: nowrap;">costo lista:</td>
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">Precio Lista:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(precioLista(Item['costo'], Item['margenBeneficio']))">
             {{
             precioLista(Item['costo'], Item['margenBeneficio'])

@@ -156,8 +156,7 @@ export class InventoryComponent implements AfterViewInit {
   }
 
   public precioLista(costo: number, margenBeneficio: number): number {
-    const margin = (margenBeneficio / 100);
-    return (costo * (1 + margin));
+    return (costo * (1 + margenBeneficio / 100));
   }
 }
 
