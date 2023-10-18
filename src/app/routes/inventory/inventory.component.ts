@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { Product } from '@models/mainClasses/main-classes';
+import { Producto } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 
@@ -13,7 +13,7 @@ import { DataService } from '@services/data/data.service';
 })
 
 export class InventoryComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<Product>;
+  public dataSource = new MatTableDataSource<Producto>;
   public isLoading = true;
   public Item: any = {};
   public create: boolean = false;
@@ -23,11 +23,12 @@ export class InventoryComponent implements AfterViewInit {
 
   public Columns: { [key: string]: string } = {
     id: 'ID',
-    name: 'Nombre',
-    costPrice: 'Precio costo',
+    idExterno: 'ID Externo',
+    nombre: 'Nombre',
+    tipo: 'Tipo',
     listPrice: 'Precio lista',
-    stock: 'Stock',
-    description: 'Descripción',
+    /*     existencias: 'Existencias', */
+    /*     margenBeneficio: 'Margen-Beneficio', */
     actions: 'Operaciones'
   };
 
@@ -92,45 +93,57 @@ export class InventoryComponent implements AfterViewInit {
     this.create = visible;
   }
 
-  public viewItem(item: Product) {
+  public viewItem(item: Producto) {
     this.Detail(true);
     this.rellenarRecord(item);
   }
 
-  public editItem(item: Product) {
+  public editItem(item: Producto) {
     this.Edit(true);
     this.rellenarRecord(item);
   }
 
-  public duplicateItem(item: Product) {
+  public duplicateItem(item: Producto) {
     this.Double(true);
-    const originalName: string = item.name;
-    item.name = 'Duplicado - ' + item.name;
+    const originalExternalID: string = item.idExterno == null ? "" : item.idExterno;
+    item.idExterno = 'Duplicado - ' + item.idExterno;
     this.rellenarRecord(item);
-    item.name = originalName;
+    item.idExterno = originalExternalID;
   }
 
-  public deleteItem(item: Product) {
-    this.dataService.fetchInventario('DELETE', { id: item.id, name: item.name });
+  public deleteItem(item: Producto) {
+    this.dataService.fetchInventario('DELETE', { id: item.id, nombre: item.nombre });
   }
 
-  private rellenarRecord(item: Product) {
+  private rellenarRecord(item: Producto) {
     this.Item = {};
     this.Item.id = item.id;
-    this.Item.name = item.name;
-    this.Item.costPrice = item.costPrice;
-    this.Item.stock = item.stock;
-    this.Item.description = item.description;
+    this.Item.idExterno = item.idExterno;
+    this.Item.nombre = item.nombre;
+    this.Item.existencias = item.existencias;
+    this.Item.precio = item.precio;
+    this.Item.margenBeneficio = item.margenBeneficio;
+    this.Item.tipo = item.tipo;
+    this.Item.proveedor = item.proveedor;
+    this.Item.duracion = item.duracion;
+    this.Item.categoria = item.categoria;
+    this.Item.descripcion = item.descripcion;
   }
 
   public record(method: string) {
     try {
-      const body: Product = {
+      const body: Producto = {
         id: this.Item.id,
-        name: this.Item.name,
-        costPrice: this.Item.costPrice,
-        stock: this.Item.stock == null ? 0 : this.Item.stock,
-        description: this.Item.description
+        idExterno: this.Item.idExterno,
+        nombre: this.Item.nombre,
+        existencias: this.Item.existencias == null ? 0 : this.Item.existencias,
+        precio: this.Item.precio == null ? 0 : this.Item.precio,
+        margenBeneficio: this.Item.margenBeneficio == null ? 0 : this.Item.margenBeneficio,
+        tipo: this.Item.tipo,
+        proveedor: this.Item.proveedor,
+        duracion: this.Item.duracion,
+        categoria: this.Item.categoria,
+        descripcion: this.Item.descripcion
       };
       this.dataService.fetchInventario(method, body);
     } catch (error) {
@@ -140,6 +153,11 @@ export class InventoryComponent implements AfterViewInit {
       this.Edit(false);
       this.Double(false);
     }
+  }
+
+  public precioLista(costo: number, margenBeneficio: number): number {
+    const margin = (margenBeneficio / 100);
+    return (costo * (1 + margin));
   }
 }
 

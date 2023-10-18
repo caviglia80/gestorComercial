@@ -1,22 +1,40 @@
-export class Product {
+export class Producto {
   id: number;
-  name: string;
-  stock: number;
-  costPrice: number;
-  description: string;
+  idExterno?: string;
+  nombre: string;
+  existencias?: number;
+  precio: number;
+  margenBeneficio?: number;
+  tipo: string;
+  proveedor?: string;
+  duracion?: string;
+  categoria?: string;
+  descripcion?: string;
 
   constructor(
     id: number = 0,
-    name: string = '',
-    stock: number = 0,
-    costPrice: number = 0,
-    description: string = '',
+    idExterno: string = '',
+    nombre: string = '',
+    existencias: number = 0,
+    precio: number = 0,
+    margenBeneficio: number = 0,
+    tipo: string = '',
+    proveedor: string = '',
+    duracion: string = '',
+    categoria: string = '',
+    descripcion: string = '',
   ) {
     this.id = id;
-    this.name = name;
-    this.stock = stock;
-    this.costPrice = costPrice;
-    this.description = description;
+    this.idExterno = idExterno;
+    this.nombre = nombre;
+    this.existencias = existencias;
+    this.precio = precio;
+    this.margenBeneficio = margenBeneficio;
+    this.tipo = tipo;
+    this.proveedor = proveedor;
+    this.duracion = duracion;
+    this.categoria = categoria;
+    this.descripcion = descripcion;
   }
 }
 

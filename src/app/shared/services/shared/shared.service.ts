@@ -16,7 +16,8 @@ export class SharedService {
   public currencys: string[] = [
     'ARS',
     'USD',
-    'EUR'];
+    'EUR'
+  ];
   public paidMethods: string[] = [
     'Efectivo',
     'Tarjeta de crédito',
@@ -35,11 +36,16 @@ export class SharedService {
   public rubrosIngresos: string[] = [
     'Ventas',
     'Extraordinarios',
-    'Otra Actividad'];
+    'Otra Actividad'
+  ];
   public rubrosEgresos: string[] = [
     'Compras',
     'Extraordinarios',
     'Otra Actividad'];
+  public inventarioTipos: string[] = [
+    'Producto',
+    'Servicio'
+  ];
   private currentConfiguracion: any;
   private notificationQueue: { text: string; action?: string }[] = [];
   private isNotificationDisplayed = false;

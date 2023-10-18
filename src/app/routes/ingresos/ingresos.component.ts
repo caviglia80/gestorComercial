@@ -8,7 +8,7 @@ import { DataService } from '@services/data/data.service';
 import { startWith, map, take } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Product } from '@models/mainClasses/main-classes';
+import { Producto } from '@models/mainClasses/main-classes';
 
 @Component({
   selector: 'app-ingresos',
@@ -20,7 +20,7 @@ export class IngresosComponent implements AfterViewInit {
   public inventarioControl = new FormControl();
   public filteredInventario: Observable<any[]>;
   public dataSource = new MatTableDataSource<moneyIncome>;
-  public dataInventario: Product[] = [];
+  public dataInventario: Producto[] = [];
   public isLoading = true;
   public Item: any = {};
   public create: boolean = false;
@@ -91,7 +91,7 @@ export class IngresosComponent implements AfterViewInit {
     if (value != null) {
       const filterValue = value.toLowerCase();
       return this.dataInventario.filter(item =>
-        item.name.toLowerCase().includes(filterValue) ||
+        item.nombre.toLowerCase().includes(filterValue) ||
         item.id.toString().toLowerCase().includes(filterValue)
       );
     } else return [];
@@ -212,12 +212,12 @@ export class IngresosComponent implements AfterViewInit {
     }
   }
 
-  private restarStock(product: Product) {
+  private restarStock(product: Producto) {
     if (product !== undefined) {
-      let stockCount: number = product.stock;
-      if (stockCount > 0) {
-        stockCount--;
-        this.dataService.fetchInventario('PUT', { id: product.id, stock: stockCount });
+      let existenciasCount: number = product.existencias == null ? 0 : product.existencias;
+      if (existenciasCount > 0) {
+        existenciasCount--;
+        this.dataService.fetchInventario('PUT', { id: product.id, stock: existenciasCount });
         this.sharedService.message('Se descontó una unidad del stock.');
       } else
         this.sharedService.message('Advertencia: no hay stock para descontar.');
@@ -236,11 +236,11 @@ export class IngresosComponent implements AfterViewInit {
     return true;
   }
 
-  private sumarStock(product: Product) {
+  private sumarStock(product: Producto) {
     if (product !== undefined) {
-      let stockCount: number = product.stock;
-      stockCount++;
-      this.dataService.fetchInventario('PUT', { id: product.id, stock: stockCount });
+      let existenciasCount: number = product.existencias == null ? 0 : product.existencias;
+      existenciasCount++;
+      this.dataService.fetchInventario('PUT', { id: product.id, stock: existenciasCount });
       this.sharedService.message('Se sumó una unidad al stock.');
     } else {
       this.sharedService.message('Advertencia: no se localizó el ID del producto.');
