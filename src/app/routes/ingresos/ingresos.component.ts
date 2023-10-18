@@ -8,7 +8,7 @@ import { DataService } from '@services/data/data.service';
 import { startWith, map, take } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Producto } from '@models/mainClasses/main-classes';
+import { Inventario } from '@models/mainClasses/main-classes';
 
 @Component({
   selector: 'app-ingresos',
@@ -20,7 +20,7 @@ export class IngresosComponent implements AfterViewInit {
   public inventarioControl = new FormControl();
   public filteredInventario: Observable<any[]>;
   public dataSource = new MatTableDataSource<moneyIncome>;
-  public dataInventario: Producto[] = [];
+  public dataInventario: Inventario[] = [];
   public isLoading = true;
   public Item: any = {};
   public create: boolean = false;
@@ -212,7 +212,7 @@ export class IngresosComponent implements AfterViewInit {
     }
   }
 
-  private restarStock(product: Producto) {
+  private restarStock(product: Inventario) {
     if (product !== undefined) {
       let existenciasCount: number = product.existencias == null ? 0 : product.existencias;
       if (existenciasCount > 0) {
@@ -236,7 +236,7 @@ export class IngresosComponent implements AfterViewInit {
     return true;
   }
 
-  private sumarStock(product: Producto) {
+  private sumarStock(product: Inventario) {
     if (product !== undefined) {
       let existenciasCount: number = product.existencias == null ? 0 : product.existencias;
       existenciasCount++;

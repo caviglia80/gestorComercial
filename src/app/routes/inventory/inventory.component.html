@@ -62,18 +62,18 @@
             {{element.tipo}} </td>
         </ng-container>
 
-        <!--         <ng-container matColumnDef="precio">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActiondescripcion="Sort by precio">
-            {{ Columns['precio'] }}
+        <!--         <ng-container matColumnDef="costo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActiondescripcion="Sort by costo">
+            {{ Columns['costo'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.precio)"> {{element.precio
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.costo)"> {{element.costo
             | currency:'$':'symbol' }} </td>
         </ng-container> -->
 
         <!--         <ng-container matColumnDef="listPrice">
           <th mat-header-cell *matHeaderCellDef>{{ Columns['listPrice'] }}</th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(dataService.getPvp(element.precio))">
-            {{ element.precio
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(dataService.getPvp(element.costo))">
+            {{ element.costo
             | pvp
             | currency:'$':'symbol' }}</td>
         </ng-container> -->
@@ -81,8 +81,8 @@
         <ng-container matColumnDef="listPrice">
           <th mat-header-cell *matHeaderCellDef>{{ Columns['listPrice'] }}</th>
           <td mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(precioLista(element.precio, element.margenBeneficio))">
-            {{ precioLista(element.precio, element.margenBeneficio)
+            (dblclick)="sharedService.copy(precioLista(element.costo, element.margenBeneficio))">
+            {{ precioLista(element.costo, element.margenBeneficio)
             | currency:'$':'symbol' }}</td>
         </ng-container>
 
@@ -195,15 +195,15 @@
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['existencias'])">{{ Item['existencias'] }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">Precio:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['precio'])">{{ Item['precio'] |
+          <td style="font-weight: bold; white-space: nowrap;">costo:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['costo'])">{{ Item['costo'] |
             currency:'$':'symbol' }}</td>
         </tr>
         <tr *ngIf="Item.tipo==='Producto'">
-          <td style="font-weight: bold; white-space: nowrap;">Precio lista:</td>
-          <td style="width: 100%;"
-            (dblclick)="sharedService.copy(precioLista(Item['precio'], Item['margenBeneficio']))">{{
-            precioLista(Item['precio'], Item['margenBeneficio'])
+          <td style="font-weight: bold; white-space: nowrap;">costo lista:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(precioLista(Item['costo'], Item['margenBeneficio']))">
+            {{
+            precioLista(Item['costo'], Item['margenBeneficio'])
             | currency:'$':'symbol' }}
           </td>
         </tr>
@@ -272,8 +272,8 @@
     <input matInput placeholder="Existencias" [(ngModel)]="Item.existencias" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese precio</p>
-    <input matInput placeholder="Precio" [(ngModel)]="Item.precio" type="number">
+    <p class="form-field-description">Ingrese costo</p>
+    <input matInput placeholder="Costo" [(ngModel)]="Item.costo" type="number">
   </mat-form-field>
   <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
     <p class="form-field-description">Ingrese Margen-Beneficio %</p>
@@ -332,8 +332,8 @@
     <input matInput placeholder="Existencias" [(ngModel)]="Item.existencias" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese precio</p>
-    <input matInput placeholder="Precio" [(ngModel)]="Item.precio" type="number">
+    <p class="form-field-description">Ingrese costo</p>
+    <input matInput placeholder="Costo" [(ngModel)]="Item.costo" type="number">
   </mat-form-field>
   <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
     <p class="form-field-description">Ingrese Margen-Beneficio %</p>
@@ -392,8 +392,8 @@
     <input matInput placeholder="Existencias" [(ngModel)]="Item.existencias" type="number">
   </mat-form-field>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese precio</p>
-    <input matInput placeholder="Precio" [(ngModel)]="Item.precio" type="number">
+    <p class="form-field-description">Ingrese costo</p>
+    <input matInput placeholder="Costo" [(ngModel)]="Item.costo" type="number">
   </mat-form-field>
   <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
     <p class="form-field-description">Ingrese Margen-Beneficio %</p>

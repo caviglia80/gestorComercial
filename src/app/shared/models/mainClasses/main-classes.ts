@@ -1,9 +1,9 @@
-export class Producto {
+export class Inventario {
   id: number;
   idExterno?: string;
   nombre: string;
   existencias?: number;
-  precio: number;
+  costo: number;
   margenBeneficio?: number;
   tipo: string;
   proveedor?: string;
@@ -16,7 +16,7 @@ export class Producto {
     idExterno: string = '',
     nombre: string = '',
     existencias: number = 0,
-    precio: number = 0,
+    costo: number = 0,
     margenBeneficio: number = 0,
     tipo: string = '',
     proveedor: string = '',
@@ -28,7 +28,7 @@ export class Producto {
     this.idExterno = idExterno;
     this.nombre = nombre;
     this.existencias = existencias;
-    this.precio = precio;
+    this.costo = costo;
     this.margenBeneficio = margenBeneficio;
     this.tipo = tipo;
     this.proveedor = proveedor;

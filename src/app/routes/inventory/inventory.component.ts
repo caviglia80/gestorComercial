@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { Producto } from '@models/mainClasses/main-classes';
+import { Inventario } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 
@@ -13,7 +13,7 @@ import { DataService } from '@services/data/data.service';
 })
 
 export class InventoryComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<Producto>;
+  public dataSource = new MatTableDataSource<Inventario>;
   public isLoading = true;
   public Item: any = {};
   public create: boolean = false;
@@ -93,17 +93,17 @@ export class InventoryComponent implements AfterViewInit {
     this.create = visible;
   }
 
-  public viewItem(item: Producto) {
+  public viewItem(item: Inventario) {
     this.Detail(true);
     this.rellenarRecord(item);
   }
 
-  public editItem(item: Producto) {
+  public editItem(item: Inventario) {
     this.Edit(true);
     this.rellenarRecord(item);
   }
 
-  public duplicateItem(item: Producto) {
+  public duplicateItem(item: Inventario) {
     this.Double(true);
     const originalExternalID: string = item.idExterno == null ? "" : item.idExterno;
     item.idExterno = 'Duplicado - ' + item.idExterno;
@@ -111,17 +111,17 @@ export class InventoryComponent implements AfterViewInit {
     item.idExterno = originalExternalID;
   }
 
-  public deleteItem(item: Producto) {
+  public deleteItem(item: Inventario) {
     this.dataService.fetchInventario('DELETE', { id: item.id, nombre: item.nombre });
   }
 
-  private rellenarRecord(item: Producto) {
+  private rellenarRecord(item: Inventario) {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.idExterno = item.idExterno;
     this.Item.nombre = item.nombre;
     this.Item.existencias = item.existencias;
-    this.Item.precio = item.precio;
+    this.Item.costo = item.costo;
     this.Item.margenBeneficio = item.margenBeneficio;
     this.Item.tipo = item.tipo;
     this.Item.proveedor = item.proveedor;
@@ -132,12 +132,12 @@ export class InventoryComponent implements AfterViewInit {
 
   public record(method: string) {
     try {
-      const body: Producto = {
+      const body: Inventario = {
         id: this.Item.id,
         idExterno: this.Item.idExterno,
         nombre: this.Item.nombre,
         existencias: this.Item.existencias == null ? 0 : this.Item.existencias,
-        precio: this.Item.precio == null ? 0 : this.Item.precio,
+        costo: this.Item.costo == null ? 0 : this.Item.costo,
         margenBeneficio: this.Item.margenBeneficio == null ? 0 : this.Item.margenBeneficio,
         tipo: this.Item.tipo,
         proveedor: this.Item.proveedor,
