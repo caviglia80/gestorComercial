@@ -38,7 +38,7 @@ export class IngresosComponent implements AfterViewInit {
     /*     method: 'Método de Pago', */
     category: 'Rubro',
     /*     invoice: 'Comprobante', */
-    pvpPorcentaje: 'PVP',
+    /*     pvpPorcentaje: 'PVP', */
     /*     description: 'Descripción', */
     actions: 'Operaciones'
   };
@@ -77,10 +77,11 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   public onProductoSeleccionado(event: any): void {
-    const selectedProduct = this._getProduct(event.option.value);
-    if (selectedProduct.stock != 0) {
-      this.Item.amount = this.dataService.getPvp(this._getProduct(selectedProduct.id).costPrice);
-    } else {
+    const selectedProduct: Inventario = this._getProduct(event.option.value);
+    if (selectedProduct.existencias != 0) {
+/*       const inventario: Inventario = this._getProduct(selectedProduct.id) */
+      this.Item.amount = this.sharedService.getPrecioLista(selectedProduct.costo, selectedProduct.margenBeneficio)
+    } else if(selectedProduct.tipo === 'Producto') {
       this.sharedService.message('Advertencia: el producto no tiene stock');
       this.Item.amount = 0;
       this.inventarioControl.reset();
@@ -92,17 +93,18 @@ export class IngresosComponent implements AfterViewInit {
       const filterValue = value.toLowerCase();
       return this.dataInventario.filter(item =>
         item.nombre.toLowerCase().includes(filterValue) ||
-        item.id.toString().toLowerCase().includes(filterValue)
+        item.id.toString().toLowerCase().includes(filterValue) ||
+        item.idExterno.toLowerCase().includes(filterValue)
       );
     } else return [];
   }
 
-  private _getProduct(id: any): any {
+  public _getProduct(id: any): Inventario {
     if (id !== null && id !== undefined) {
       return this.dataInventario.filter(item =>
         item.id.toString().toLowerCase() === id.toLowerCase()
       )[0];
-    } else return null;
+    } else return null!;
   }
 
   public getInventario() {
@@ -179,7 +181,6 @@ export class IngresosComponent implements AfterViewInit {
     this.Item.invoice = item.invoice;
     this.Item.anulado = item.anulado;
     this.Item.cliente = item.cliente;
-    this.Item.pvpPorcentaje = item.pvpPorcentaje;
     this.Item.description = item.description;
   }
 
@@ -198,7 +199,6 @@ export class IngresosComponent implements AfterViewInit {
         invoice: this.Item.invoice,
         anulado: method === 'PUT' ? this.Item.anulado : '0',
         cliente: this.Item.cliente,
-        pvpPorcentaje: method === 'POST' ? config.pvpPorcentaje : this.Item.pvpPorcentaje,
         description: this.Item.description
       };
       this.dataService.fetchIngresos(method, body);

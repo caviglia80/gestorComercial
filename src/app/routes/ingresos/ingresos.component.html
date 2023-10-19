@@ -107,13 +107,13 @@
             {{element.invoice}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="pvpPorcentaje">
+        <!--         <ng-container matColumnDef="pvpPorcentaje">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by pvpPorcentaje">
             {{ Columns['pvpPorcentaje'] }}
           </th>
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.pvpPorcentaje)">
             {{element.pvpPorcentaje + '%' }} </td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
@@ -193,7 +193,17 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['product'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['product'])">{{ Item['product'] }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['product'])">
+
+            <!--  {{ _getProduct(Item['product']).nombre }} -->
+
+
+            <!-- <pre>{{ _getProduct('9').nombre }}</pre> -->
+
+
+            {{ Item['product'] }}
+            <!--   {{ Item['product'] }} -->
+          </td>
         </tr>
 
         <tr>
@@ -236,12 +246,12 @@
             Item['invoice'] }}</td>
         </tr>
 
-        <tr>
+        <!--         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['pvpPorcentaje'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['pvpPorcentaje'])">{{ Item['pvpPorcentaje'] + '%'
             }}
           </td>
-        </tr>
+        </tr> -->
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Descripción:</td>
@@ -275,12 +285,12 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Buscar producto (ID / Nombre) <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="ID Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.product" (focus)="getInventario()" required>
+    <p class="form-field-description">Buscar producto (ID / ID Externo / Nombre) <span class="red-asterisk">*</span></p>
+    <input type="text" placeholder="ID Producto / Servicio" matInput [formControl]="inventarioControl"
+      [matAutocomplete]="auto" [(ngModel)]="Item.product" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
-        {{ producto.id }} - {{ producto.name }}
+        {{ producto.id }} - {{ producto.idExterno }} - {{ producto.nombre }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
@@ -353,12 +363,12 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Buscar producto (ID / Nombre) <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="Producto" matInput [formControl]="inventarioControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.product" (focus)="getInventario()" required>
-    <mat-autocomplete #auto="matAutocomplete">
+    <p class="form-field-description">Buscar producto (ID / ID Externo / Nombre) <span class="red-asterisk">*</span></p>
+    <input type="text" placeholder="ID Producto / Servicio" matInput [formControl]="inventarioControl"
+      [matAutocomplete]="auto" [(ngModel)]="Item.product" (focus)="getInventario()" required>
+    <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
-        {{ producto.id }} - {{ producto.name }}
+        {{ producto.id }} - {{ producto.idExterno }} - {{ producto.nombre }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
