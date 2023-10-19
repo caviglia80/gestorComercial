@@ -81,8 +81,8 @@
         <ng-container matColumnDef="listPrice">
           <th mat-header-cell *matHeaderCellDef>{{ Columns['listPrice'] }}</th>
           <td mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(precioLista(element.costo, element.margenBeneficio))">
-            {{ precioLista(element.costo, element.margenBeneficio)
+            (dblclick)="sharedService.copy(sharedService.getPrecioLista(element.costo, element.margenBeneficio))">
+            {{ sharedService.getPrecioLista(element.costo, element.margenBeneficio)
             | currency:'$':'symbol' }}</td>
         </ng-container>
 
@@ -201,9 +201,9 @@
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Precio Lista:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(precioLista(Item['costo'], Item['margenBeneficio']))">
+          <td style="width: 100%;" (dblclick)="sharedService.copy(sharedService.getPrecioLista(Item['costo'], Item['margenBeneficio']))">
             {{
-            precioLista(Item['costo'], Item['margenBeneficio'])
+            sharedService.getPrecioLista(Item['costo'], Item['margenBeneficio'])
             | currency:'$':'symbol' }}
           </td>
         </tr>

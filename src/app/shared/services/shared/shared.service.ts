@@ -210,7 +210,9 @@ export class SharedService {
     return !isNaN(date.getTime());
   }
 
-
+  public getPrecioLista(costo: number, margenBeneficio: number): number {
+    return (costo * (1 + margenBeneficio / 100));
+  }
 
 
 

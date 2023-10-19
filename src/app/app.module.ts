@@ -42,7 +42,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { PvpPipe } from './core/pipes/pvp/pvp.pipe';
 import { ReportesIngresosComponent } from '@components/reportes-ingresos/reportes-ingresos.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatRadioModule} from '@angular/material/radio';
@@ -81,7 +80,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     ConfiguracionGeneralComponent,
     UsuariosComponent,
     RolesComponent,
-    PvpPipe,
     ReportesIngresosComponent,
     ReportesEgresosRubroComponent,
     ReportesEgresosBPComponent,

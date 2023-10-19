@@ -57,10 +57,10 @@ export class DataService {
     return this.currentConfiguracion;
   }
 
-  public getPvp(costPrice: any): number {
+/*   public getPvp(costPrice: any): number {
     const margin = (this.currentConfiguracion.pvpPorcentaje / 100);
     return parseFloat(costPrice) * (1 + margin);
-  }
+  } */
 
   public fetchInventario(method: string = '', body: any = {}, proxy: boolean = false): void {
     if (!SharedService.isProduction) console.log(body);

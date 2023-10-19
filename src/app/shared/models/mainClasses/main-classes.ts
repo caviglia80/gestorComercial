@@ -1,10 +1,10 @@
 export class Inventario {
   id: number;
-  idExterno?: string;
+  idExterno: string;
   nombre: string;
   existencias?: number;
   costo: number;
-  margenBeneficio?: number;
+  margenBeneficio: number;
   tipo: string;
   proveedor?: string;
   duracion?: string;
@@ -136,7 +136,6 @@ export class moneyIncome {
   invoice?: string;
   anulado?: string;
   cliente?: string;
-  pvpPorcentaje?: string;
   description?: string;
 
   constructor(
@@ -150,7 +149,6 @@ export class moneyIncome {
     invoice: string = '',
     anulado: string = '0',
     cliente: string = '',
-    pvpPorcentaje: string = '0',
     description: string = ''
   ) {
     this.id = id;
@@ -163,7 +161,6 @@ export class moneyIncome {
     this.invoice = invoice;
     this.anulado = anulado;
     this.cliente = cliente;
-    this.pvpPorcentaje = pvpPorcentaje;
     this.description = description;
   }
 }
