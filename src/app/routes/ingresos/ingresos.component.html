@@ -416,6 +416,7 @@
     <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
+  
   <button mat-button (click)="record('PUT')"
     [disabled]="!Item.date || !Item.product || !Item.amount || !Item.method || !Item.category">Guardar</button>
 </div>
