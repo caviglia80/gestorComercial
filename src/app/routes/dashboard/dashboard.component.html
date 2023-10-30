@@ -1,4 +1,4 @@
-<div class="container-fluid" style="height: 90vh;">
+<div class="container-fluid">
 
   <div class="row justify-content-center align-items-center">
     <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center">
@@ -9,7 +9,7 @@
         </mat-button-toggle-group>
       </div>
     </div>
-  </div>
+  </div>  
 
   <div *ngIf="view ==='0'">
     <div class="row">
@@ -41,7 +41,7 @@
   <div *ngIf="view ==='1'">
     <div class="row justify-content-center align-items-center py-3">
       <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center g-0">
-        <div class="py-4 chart-container">
+        <div class="pt-2 px-5 chart-container">
           <app-dashboard-grafico-mediosdepago></app-dashboard-grafico-mediosdepago>
         </div>
       </div>
