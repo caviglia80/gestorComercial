@@ -46,13 +46,13 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="product">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by product">
-            {{ Columns['product'] }}
+        <ng-container matColumnDef="idInventario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by idInventario">
+            {{ Columns['idInventario'] }}
           </th>
-          <td [matTooltip]="element.product" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.product)">
-            {{element.product }}
+          <td [matTooltip]="element.idInventario" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.idInventario)">
+            {{element.idInventario }}
           </td>
         </ng-container>
 
@@ -192,7 +192,7 @@
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['product'] }}:</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['idInventario'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(fullNameProducto)">
             {{fullNameProducto}}
           </td>
@@ -279,10 +279,10 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Buscar producto (ID / ID Externo / Nombre) <span class="red-asterisk">*</span></p>
     <input type="text" placeholder="ID Producto / ID Servicio" matInput [formControl]="inventarioControl"
-      [matAutocomplete]="auto" [(ngModel)]="Item.product" (focus)="getInventario()" required>
+      [matAutocomplete]="auto" [(ngModel)]="Item.idInventario" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
-      <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
-        {{ producto.id }} - {{ producto.idExterno }} - {{ producto.nombre }}
+      <mat-option *ngFor="let inventario of filteredInventario | async" [value]="inventario.id">
+        {{ inventario.id }} - {{ inventario.idExterno }} - {{ inventario.nombre }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
@@ -331,7 +331,7 @@
   </mat-form-field>
 
   <button mat-button (click)="record('POST')"
-    [disabled]="!Item.date || !Item.product || !Item.amount || !Item.method || !Item.category">Guardar</button>
+    [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -357,10 +357,10 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Buscar producto (ID / ID Externo / Nombre) <span class="red-asterisk">*</span></p>
     <input type="text" placeholder="ID Producto / ID Servicio" matInput [formControl]="inventarioControl"
-      [matAutocomplete]="auto" [(ngModel)]="Item.product" (focus)="getInventario()" required>
+      [matAutocomplete]="auto" [(ngModel)]="Item.idInventario" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
-      <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
-        {{ producto.id }} - {{ producto.idExterno }} - {{ producto.nombre }}
+      <mat-option *ngFor="let inventario of filteredInventario | async" [value]="inventario.id">
+        {{ inventario.id }} - {{ inventario.idExterno }} - {{ inventario.nombre }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
@@ -409,5 +409,5 @@
   </mat-form-field>
 
   <button mat-button (click)="record('PUT')"
-    [disabled]="!Item.date || !Item.product || !Item.amount || !Item.method || !Item.category">Guardar</button>
+    [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">Guardar</button>
 </div>

@@ -128,7 +128,7 @@ export class supplier {
 export class moneyIncome {
   id?: number;
   date: string;
-  product?: string;
+  idInventario?: string;
   currency?: string;
   amount?: number;
   method?: string;
@@ -141,7 +141,7 @@ export class moneyIncome {
   constructor(
     id: number = 0,
     date: string = '',
-    product: string = '',
+    idInventario: string = '',
     currency: string = '',
     amount: number = 0,
     method: string = '',
@@ -153,7 +153,7 @@ export class moneyIncome {
   ) {
     this.id = id;
     this.date = date;
-    this.product = product;
+    this.idInventario = idInventario;
     this.currency = currency;
     this.amount = amount;
     this.method = method;

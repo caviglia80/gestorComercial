@@ -32,7 +32,7 @@ export class IngresosComponent implements AfterViewInit {
     /*     id: 'ID', */
     date: 'Fecha',
     anulado: 'Anulado',
-    product: 'Producto',
+    idInventario: 'Inventario',
     cliente: 'Cliente',
     /*     currency: 'Moneda', */
     amount: 'Monto',
@@ -78,11 +78,11 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   public onProductoSeleccionado(event: any): void {
-    const selectedProduct: Inventario = this._getProduct(event.option.value);
-    if (selectedProduct.existencias != 0) {
-      /*       const inventario: Inventario = this._getProduct(selectedProduct.id) */
-      this.Item.amount = this.sharedService.getPrecioLista(selectedProduct.costo, selectedProduct.margenBeneficio)
-    } else if (selectedProduct.tipo === 'Producto') {
+    const idInventario: Inventario = this._getProduct(event.option.value);
+    if (idInventario.existencias != 0) {
+      /*       const inventario: Inventario = this._getProduct(idInventario.id) */
+      this.Item.amount = this.sharedService.getPrecioLista(idInventario.costo, idInventario.margenBeneficio)
+    } else if (idInventario.tipo === 'Producto') {
       this.sharedService.message('Advertencia: el producto no tiene stock');
       this.Item.amount = 0;
       this.inventarioControl.reset();
@@ -102,12 +102,12 @@ export class IngresosComponent implements AfterViewInit {
     } else return [];
   }
 
-  public _getProduct(id: any): Inventario {
+  public _getProduct(idInventario: any): Inventario {
     if (this.dataInventario.length === 0)
       this.getInventario();
-    if (id !== null && id !== undefined) {
+    if (idInventario !== null && idInventario !== undefined) {
       return this.dataInventario.filter(item =>
-        item.id.toString().toLowerCase() === id.toLowerCase()
+        item.id.toString().toLowerCase() === idInventario.toLowerCase()
       )[0];
     } else return null!;
   }
@@ -172,15 +172,16 @@ export class IngresosComponent implements AfterViewInit {
     item.anulado = '1';
     this.dataService.fetchIngresos('PUT', item);
     if (this.dataService.getCurrentConfiguracion().ingresoAnuladoSumaStockEnabled === '1')
-      this.sumarStock(this._getProduct(item.product));
+      this.sumarStock(this._getProduct(item.idInventario));
   }
 
   private rellenarRecord(item: moneyIncome) {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.date = item.date;
-    this.Item.product = item.product;
-    const prod: Inventario = this._getProduct(item.product);
+    this.Item.idInventario = item.idInventario;
+    this.fullNameProducto = item.idInventario != null ? item.idInventario : '';
+    const prod: Inventario = this._getProduct(item.idInventario);
     if (prod)
       this.fullNameProducto = (prod.id + ' - ') + (prod.idExterno !== '' ? prod.idExterno + ' - ' : ' - ') + (prod.nombre);
     this.Item.currency = item.currency;
@@ -200,7 +201,7 @@ export class IngresosComponent implements AfterViewInit {
       const body: moneyIncome = {
         id: this.Item.id,
         date: this.Item.date,
-        product: this.Item.product,
+        idInventario: this.Item.idInventario,
         currency: this.Item.currency,
         amount: this.Item.amount,
         method: this.Item.method,
@@ -212,7 +213,7 @@ export class IngresosComponent implements AfterViewInit {
       };
       this.dataService.fetchIngresos(method, body);
       if (config.ingresoRestaStockEnabled === '1' && method === 'POST')
-        this.restarStock(this._getProduct(body.product));
+        this.restarStock(this._getProduct(body.idInventario));
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
@@ -221,12 +222,12 @@ export class IngresosComponent implements AfterViewInit {
     }
   }
 
-  private restarStock(product: Inventario) {
-    if (product !== undefined) {
-      let existenciasCount: number = product.existencias == null ? 0 : product.existencias;
+  private restarStock(inv: Inventario) {
+    if (inv !== undefined) {
+      let existenciasCount: number = inv.existencias == null ? 0 : inv.existencias;
       if (existenciasCount > 0) {
         existenciasCount--;
-        this.dataService.fetchInventario('PUT', { id: product.id, stock: existenciasCount });
+        this.dataService.fetchInventario('PUT', { id: inv.id, stock: existenciasCount });
         this.sharedService.message('Se descontó una unidad del stock.');
       } else
         this.sharedService.message('Advertencia: no hay stock para descontar.');
@@ -236,7 +237,7 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   private productoValido(): boolean {
-    if (this._getProduct(this.Item.product) === undefined) {
+    if (this._getProduct(this.Item.idInventario) === undefined) {
       this.sharedService.message('Advertencia: seleccione un producto válido.');
       this.Item.amount = 0;
       this.inventarioControl.reset();
@@ -245,11 +246,11 @@ export class IngresosComponent implements AfterViewInit {
     return true;
   }
 
-  private sumarStock(product: Inventario) {
-    if (product !== undefined) {
-      let existenciasCount: number = product.existencias == null ? 0 : product.existencias;
+  private sumarStock(inventario: Inventario) {
+    if (inventario !== undefined) {
+      let existenciasCount: number = inventario.existencias == null ? 0 : inventario.existencias;
       existenciasCount++;
-      this.dataService.fetchInventario('PUT', { id: product.id, stock: existenciasCount });
+      this.dataService.fetchInventario('PUT', { id: inventario.id, stock: existenciasCount });
       this.sharedService.message('Se sumó una unidad al stock.');
     } else {
       this.sharedService.message('Advertencia: no se localizó el ID del producto.');
