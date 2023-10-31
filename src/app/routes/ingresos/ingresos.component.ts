@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { configuracion, moneyIncome } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
-import { startWith, map, take } from 'rxjs/operators';
+import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Inventario } from '@models/mainClasses/main-classes';
@@ -26,6 +26,7 @@ export class IngresosComponent implements AfterViewInit {
   public create: boolean = false;
   public edit: boolean = false;
   public detail: boolean = false;
+  public fullNameProducto: string = '';
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -79,9 +80,9 @@ export class IngresosComponent implements AfterViewInit {
   public onProductoSeleccionado(event: any): void {
     const selectedProduct: Inventario = this._getProduct(event.option.value);
     if (selectedProduct.existencias != 0) {
-/*       const inventario: Inventario = this._getProduct(selectedProduct.id) */
+      /*       const inventario: Inventario = this._getProduct(selectedProduct.id) */
       this.Item.amount = this.sharedService.getPrecioLista(selectedProduct.costo, selectedProduct.margenBeneficio)
-    } else if(selectedProduct.tipo === 'Producto') {
+    } else if (selectedProduct.tipo === 'Producto') {
       this.sharedService.message('Advertencia: el producto no tiene stock');
       this.Item.amount = 0;
       this.inventarioControl.reset();
@@ -89,6 +90,8 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   private _filterProduct(value: string): any[] {
+    if (this.dataInventario.length === 0)
+      this.getInventario();
     if (value != null) {
       const filterValue = value.toLowerCase();
       return this.dataInventario.filter(item =>
@@ -100,6 +103,8 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   public _getProduct(id: any): Inventario {
+    if (this.dataInventario.length === 0)
+      this.getInventario();
     if (id !== null && id !== undefined) {
       return this.dataInventario.filter(item =>
         item.id.toString().toLowerCase() === id.toLowerCase()
@@ -107,14 +112,15 @@ export class IngresosComponent implements AfterViewInit {
     } else return null!;
   }
 
-  public getInventario() {
-    this.dataService.fetchInventario('GET');
-  }
-
   private dataInit_Inventario() {
     this.dataService.Inventario$.subscribe((data) => {
       this.dataInventario = data;
     });
+    this.getInventario();
+  }
+
+  public getInventario() {
+    this.dataService.fetchInventario('GET');
   }
 
   private loading(state: boolean) {
@@ -174,6 +180,9 @@ export class IngresosComponent implements AfterViewInit {
     this.Item.id = item.id;
     this.Item.date = item.date;
     this.Item.product = item.product;
+    const prod: Inventario = this._getProduct(item.product);
+    if (prod)
+      this.fullNameProducto = (prod.id + ' - ') + (prod.idExterno !== '' ? prod.idExterno + ' - ' : ' - ') + (prod.nombre);
     this.Item.currency = item.currency;
     this.Item.amount = item.amount;
     this.Item.method = item.method;

@@ -193,16 +193,8 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['product'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['product'])">
-
-            <!--  {{ _getProduct(Item['product']).nombre }} -->
-
-
-            <!-- <pre>{{ _getProduct('9').nombre }}</pre> -->
-
-
-            {{ Item['product'] }}
-            <!--   {{ Item['product'] }} -->
+          <td style="width: 100%;" (dblclick)="sharedService.copy(fullNameProducto)">
+            {{fullNameProducto}}
           </td>
         </tr>
 
@@ -286,7 +278,7 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Buscar producto (ID / ID Externo / Nombre) <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="ID Producto / Servicio" matInput [formControl]="inventarioControl"
+    <input type="text" placeholder="ID Producto / ID Servicio" matInput [formControl]="inventarioControl"
       [matAutocomplete]="auto" [(ngModel)]="Item.product" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
@@ -364,7 +356,7 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Buscar producto (ID / ID Externo / Nombre) <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="ID Producto / Servicio" matInput [formControl]="inventarioControl"
+    <input type="text" placeholder="ID Producto / ID Servicio" matInput [formControl]="inventarioControl"
       [matAutocomplete]="auto" [(ngModel)]="Item.product" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let producto of filteredInventario | async" [value]="producto.id">
