@@ -66,7 +66,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
           date: item.date,
           category: item.category,
           amount: item.amount,
-          margenBeneficio: item.margenBeneficio,
+          margenBeneficio: item.margenBeneficio ? item.margenBeneficio : 0,
         }));
         this.init();
       },

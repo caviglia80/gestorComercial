@@ -258,7 +258,7 @@ export class configuracion {
     ingresoRestaStockEnabled: string = '1',
     notificacionesEnabled: string = '1',
     ingresoAnuladoSumaStockEnabled: string = '1',
-    permitirStockCeroEnabled: string = '1',
+    permitirStockCeroEnabled: string = '0',
     titulo: string = 'Gestor Comercial'
   ) {
     this.id = id;
