@@ -277,18 +277,19 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Buscar producto (ID / ID Externo / Nombre) <span class="red-asterisk">*</span></p>
+    <p class="form-field-description">Buscar en inventario (ID / ID Externo / Nombre) <span
+        class="red-asterisk">*</span></p>
     <input type="text" placeholder="ID Producto / ID Servicio" matInput [formControl]="inventarioControl"
       [matAutocomplete]="auto" [(ngModel)]="Item.idInventario" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let inventario of filteredInventario | async" [value]="inventario.id">
-        {{ inventario.id }} - {{ inventario.idExterno }} - {{ inventario.nombre }}
+        {{ getName(inventario)}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['cliente'] | lowercase }}</p>
+    <p class="form-field-description">Ingrese {{ Columns[ 'cliente'] | lowercase }}</p>
     <input matInput placeholder="{{ Columns['cliente'] }}" [(ngModel)]="Item.cliente">
   </mat-form-field>
 
@@ -355,12 +356,13 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Buscar producto (ID / ID Externo / Nombre) <span class="red-asterisk">*</span></p>
+    <p class="form-field-description">Buscar en inventario (ID / ID Externo / Nombre) <span
+        class="red-asterisk">*</span></p>
     <input type="text" placeholder="ID Producto / ID Servicio" matInput [formControl]="inventarioControl"
       [matAutocomplete]="auto" [(ngModel)]="Item.idInventario" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let inventario of filteredInventario | async" [value]="inventario.id">
-        {{ inventario.id }} - {{ inventario.idExterno }} - {{ inventario.nombre }}
+        {{ getName(inventario)}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

@@ -78,14 +78,21 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   public onProductoSeleccionado(event: any): void {
-    const idInventario: Inventario = this._getProduct(event.option.value);
-    if (idInventario.existencias != 0) {
-      /*       const inventario: Inventario = this._getProduct(idInventario.id) */
-      this.Item.amount = this.sharedService.getPrecioLista(idInventario.costo, idInventario.margenBeneficio)
-    } else if (idInventario.tipo === 'Producto') {
-      this.sharedService.message('Advertencia: el producto no tiene stock');
-      this.Item.amount = 0;
-      this.inventarioControl.reset();
+    const inventario: Inventario = this._getProduct(event.option.value);
+    if (inventario.tipo === 'Producto') {
+      if (this.dataService.getCurrentConfiguracion().permitirStockCeroEnabled === '1') {
+        this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio)
+      } else {
+        if (inventario.existencias != 0) {
+          this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio)
+        } else {
+          this.sharedService.message('Advertencia: el producto no tiene stock');
+          this.Item.amount = 0;
+          this.inventarioControl.reset();
+        }
+      }
+    } else {
+      this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio)
     }
   }
 
@@ -95,9 +102,9 @@ export class IngresosComponent implements AfterViewInit {
     if (value != null) {
       const filterValue = value.toLowerCase();
       return this.dataInventario.filter(item =>
-        item.nombre.toLowerCase().includes(filterValue) ||
+        item.nombre?.toLowerCase().includes(filterValue) ||
         item.id.toString().toLowerCase().includes(filterValue) ||
-        item.idExterno.toLowerCase().includes(filterValue)
+        item.idExterno?.toLowerCase().includes(filterValue)
       );
     } else return [];
   }
@@ -213,7 +220,7 @@ export class IngresosComponent implements AfterViewInit {
       };
       this.dataService.fetchIngresos(method, body);
       if (config.ingresoRestaStockEnabled === '1' && method === 'POST')
-        this.restarStock(this._getProduct(body.idInventario));
+        this.restarStock(this._getProduct(this.Item.idInventario));
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
@@ -222,15 +229,17 @@ export class IngresosComponent implements AfterViewInit {
     }
   }
 
-  private restarStock(inv: Inventario) {
-    if (inv !== undefined) {
-      let existenciasCount: number = inv.existencias == null ? 0 : inv.existencias;
-      if (existenciasCount > 0) {
-        existenciasCount--;
-        this.dataService.fetchInventario('PUT', { id: inv.id, stock: existenciasCount });
-        this.sharedService.message('Se descontó una unidad del stock.');
-      } else
-        this.sharedService.message('Advertencia: no hay stock para descontar.');
+  private restarStock(inventario: Inventario) {
+    if (inventario !== undefined) {
+      if (inventario.tipo === 'Producto') {
+        let existenciasCount: number = inventario.existencias == null ? 0 : inventario.existencias;
+        if (existenciasCount > 0) {
+          existenciasCount--;
+          this.dataService.fetchInventario('PUT', { id: inventario.id, existencias: existenciasCount });
+          this.sharedService.message('Se descontó una unidad del stock.');
+        } else
+          this.sharedService.message('Advertencia: no hay stock para descontar.');
+      }
     } else {
       this.sharedService.message('Advertencia: no se localizó el ID del producto.');
     }
@@ -248,13 +257,22 @@ export class IngresosComponent implements AfterViewInit {
 
   private sumarStock(inventario: Inventario) {
     if (inventario !== undefined) {
-      let existenciasCount: number = inventario.existencias == null ? 0 : inventario.existencias;
-      existenciasCount++;
-      this.dataService.fetchInventario('PUT', { id: inventario.id, stock: existenciasCount });
-      this.sharedService.message('Se sumó una unidad al stock.');
+      if (inventario.tipo === 'Producto') {
+        let existenciasCount: number = inventario.existencias == null ? 0 : inventario.existencias;
+        existenciasCount++;
+        this.dataService.fetchInventario('PUT', { id: inventario.id, existencias: existenciasCount });
+        this.sharedService.message('Se sumó una unidad al stock.');
+      }
     } else {
       this.sharedService.message('Advertencia: no se localizó el ID del producto.');
     }
+  }
+
+  public getName(inventario: Inventario): string {
+    if (inventario.idExterno)
+      return inventario.id.toString() + ' - ' + inventario.idExterno.toString() + ' - ' + inventario.nombre;
+    else
+      return inventario.id.toString() + ' - ' + inventario.nombre;
   }
 }
 

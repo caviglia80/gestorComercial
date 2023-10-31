@@ -241,6 +241,7 @@ export class configuracion {
   ingresoRestaStockEnabled: string;
   notificacionesEnabled: string;
   ingresoAnuladoSumaStockEnabled: string;
+  permitirStockCeroEnabled: string;
   pvpPorcentaje: string;
   titulo: string;
 
@@ -255,6 +256,7 @@ export class configuracion {
     ingresoRestaStockEnabled: string = '1',
     notificacionesEnabled: string = '1',
     ingresoAnuladoSumaStockEnabled: string = '1',
+    permitirStockCeroEnabled: string = '1',
     pvpPorcentaje: string = '0',
     titulo: string = 'Gestor Comercial'
   ) {
@@ -267,6 +269,7 @@ export class configuracion {
     this.egresoRapidoEnabled = egresoRapidoEnabled;
     this.ingresoRestaStockEnabled = ingresoRestaStockEnabled;
     this.ingresoAnuladoSumaStockEnabled = ingresoAnuladoSumaStockEnabled;
+    this.permitirStockCeroEnabled = permitirStockCeroEnabled;
     this.notificacionesEnabled = notificacionesEnabled;
     this.pvpPorcentaje = pvpPorcentaje;
     this.titulo = titulo;

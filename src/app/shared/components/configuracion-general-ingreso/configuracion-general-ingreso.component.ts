@@ -1,5 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { SharedService } from '@services/shared/shared.service';
+import { Component } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 import { configuracion } from '@models/mainClasses/main-classes';
 
@@ -14,10 +13,10 @@ export class ConfiguracionGeneralIngresoComponent {
   public ingresoRestaStockEnabled: boolean = false;
   public ingresoRapidoEnabled: boolean = false;
   public ingresoAnuladoSumaStockEnabled: boolean = false;
+  public permitirStockCeroEnabled: boolean = false;
 
   constructor(
-    public dataService: DataService,
-    private sharedService: SharedService
+    public dataService: DataService
   ) { }
 
   ngOnInit() {
@@ -31,6 +30,7 @@ export class ConfiguracionGeneralIngresoComponent {
         this.ingresoRestaStockEnabled = this.dataConfig.ingresoRestaStockEnabled === '1';
         this.ingresoRapidoEnabled = this.dataConfig.ingresoRapidoEnabled === '1';
         this.ingresoAnuladoSumaStockEnabled = this.dataConfig.ingresoAnuladoSumaStockEnabled === '1';
+        this.permitirStockCeroEnabled = this.dataConfig.permitirStockCeroEnabled === '1';
       }
     });
   }
@@ -45,5 +45,9 @@ export class ConfiguracionGeneralIngresoComponent {
 
   public habilitarAnularIngresoSumaStock(isChecked: boolean) {
     this.dataService.fetchConfiguracion('PUT', { id: 1, ingresoAnuladoSumaStockEnabled: isChecked ? "1" : "0" });
+  }
+
+  public habilitarPermitirStockCeroEnabled(isChecked: boolean) {
+    this.dataService.fetchConfiguracion('PUT', { id: 1, permitirStockCeroEnabled: isChecked ? "1" : "0" });
   }
 }
