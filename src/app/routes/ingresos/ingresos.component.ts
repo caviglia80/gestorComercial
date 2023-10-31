@@ -81,18 +81,19 @@ export class IngresosComponent implements AfterViewInit {
     const inventario: Inventario = this._getProduct(event.option.value);
     if (inventario.tipo === 'Producto') {
       if (this.dataService.getCurrentConfiguracion().permitirStockCeroEnabled === '1') {
-        this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio)
+        this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
       } else {
         if (inventario.existencias != 0) {
-          this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio)
+          this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
         } else {
           this.sharedService.message('Advertencia: el producto no tiene stock');
           this.Item.amount = 0;
           this.inventarioControl.reset();
         }
       }
+      this.Item.pvpPorcentaje = inventario.margenBeneficio;
     } else {
-      this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio)
+      this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
     }
   }
 
@@ -193,6 +194,7 @@ export class IngresosComponent implements AfterViewInit {
       this.fullNameProducto = (prod.id + ' - ') + (prod.idExterno !== '' ? prod.idExterno + ' - ' : ' - ') + (prod.nombre);
     this.Item.currency = item.currency;
     this.Item.amount = item.amount;
+    this.Item.pvpPorcentaje = item.pvpPorcentaje;
     this.Item.method = item.method;
     this.Item.category = item.category;
     this.Item.invoice = item.invoice;
@@ -211,6 +213,7 @@ export class IngresosComponent implements AfterViewInit {
         idInventario: this.Item.idInventario,
         currency: this.Item.currency,
         amount: this.Item.amount,
+        pvpPorcentaje: this.Item.pvpPorcentaje,
         method: this.Item.method,
         category: this.Item.category,
         invoice: this.Item.invoice,

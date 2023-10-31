@@ -131,6 +131,7 @@ export class moneyIncome {
   idInventario?: string;
   currency?: string;
   amount?: number;
+  pvpPorcentaje?: number;
   method?: string;
   category: string;
   invoice?: string;
@@ -144,6 +145,7 @@ export class moneyIncome {
     idInventario: string = '',
     currency: string = '',
     amount: number = 0,
+    pvpPorcentaje: number = 0,
     method: string = '',
     category: string = '',
     invoice: string = '',
@@ -156,6 +158,7 @@ export class moneyIncome {
     this.idInventario = idInventario;
     this.currency = currency;
     this.amount = amount;
+    this.pvpPorcentaje = pvpPorcentaje;
     this.method = method;
     this.category = category;
     this.invoice = invoice;
