@@ -19,7 +19,7 @@ export class ReportesIngresosComponent {
 
   public Columns: { [key: string]: string } = {
     id: 'ID',
-    name: 'Nombre de producto',
+    name: 'Nombre',
     cantidadIngresos: 'Cantidad de ingresos',
     totalIngresos: 'Total de ingresos',
     margenGanancias: 'Margen de ganancias'
@@ -70,9 +70,9 @@ export class ReportesIngresosComponent {
   }
 
   public onFechaChange() {
-    if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta)) {
-      this.loading(true);
-      this.dataService.fetchReportes('GET', `?reporte=2&startd=${this.fechaDesde}&endd=${this.fechaHasta}`, 'ingresos');
-    }
+      if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta)) {
+        this.loading(true);
+        this.dataService.fetchReportes('GET', `?reporte=2&startd=${this.fechaDesde}&endd=${this.fechaHasta}`, 'ingresos');
+      }
   }
 }
