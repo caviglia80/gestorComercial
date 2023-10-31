@@ -131,7 +131,7 @@ export class moneyIncome {
   idInventario?: string;
   currency?: string;
   amount?: number;
-  pvpPorcentaje?: number;
+  margenBeneficio?: number;
   method?: string;
   category: string;
   invoice?: string;
@@ -145,7 +145,7 @@ export class moneyIncome {
     idInventario: string = '',
     currency: string = '',
     amount: number = 0,
-    pvpPorcentaje: number = 0,
+    margenBeneficio: number = 0,
     method: string = '',
     category: string = '',
     invoice: string = '',
@@ -158,7 +158,7 @@ export class moneyIncome {
     this.idInventario = idInventario;
     this.currency = currency;
     this.amount = amount;
-    this.pvpPorcentaje = pvpPorcentaje;
+    this.margenBeneficio = margenBeneficio;
     this.method = method;
     this.category = category;
     this.invoice = invoice;
@@ -245,7 +245,6 @@ export class configuracion {
   notificacionesEnabled: string;
   ingresoAnuladoSumaStockEnabled: string;
   permitirStockCeroEnabled: string;
-  pvpPorcentaje: string;
   titulo: string;
 
   constructor(
@@ -260,7 +259,6 @@ export class configuracion {
     notificacionesEnabled: string = '1',
     ingresoAnuladoSumaStockEnabled: string = '1',
     permitirStockCeroEnabled: string = '1',
-    pvpPorcentaje: string = '0',
     titulo: string = 'Gestor Comercial'
   ) {
     this.id = id;
@@ -274,7 +272,6 @@ export class configuracion {
     this.ingresoAnuladoSumaStockEnabled = ingresoAnuladoSumaStockEnabled;
     this.permitirStockCeroEnabled = permitirStockCeroEnabled;
     this.notificacionesEnabled = notificacionesEnabled;
-    this.pvpPorcentaje = pvpPorcentaje;
     this.titulo = titulo;
   }
 }

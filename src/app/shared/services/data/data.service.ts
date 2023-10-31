@@ -58,7 +58,7 @@ export class DataService {
   }
 
 /*   public getPvp(costPrice: any): number {
-    const margin = (this.currentConfiguracion.pvpPorcentaje / 100);
+    const margin = (this.currentConfiguracion.margenBeneficio / 100);
     return parseFloat(costPrice) * (1 + margin);
   } */
 

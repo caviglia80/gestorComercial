@@ -54,7 +54,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
           date: item.date,
           category: item.category,
           amount: item.amount,
-          pvpPorcentaje: item.pvpPorcentaje,
+          margenBeneficio: item.margenBeneficio,
         }));
 
         this.init();
@@ -84,7 +84,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
     for (const entry of data) {
       const month = entry.date.substring(0, 7);
       const amountt: number = parseFloat(entry.amount);
-      const margen: number = parseFloat(entry.amount) !== 0 ? (amountt - ((parseFloat(entry.pvpPorcentaje) / 2) * amountt / 100)) : 0;
+      const margen: number = parseFloat(entry.amount) !== 0 ? (amountt - ((parseFloat(entry.margenBeneficio) / 2) * amountt / 100)) : 0;
 
       if (groupedData[month]) {
         /* groupedData[month].total += parseFloat(entry.amount); */

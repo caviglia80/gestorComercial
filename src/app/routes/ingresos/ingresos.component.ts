@@ -39,7 +39,7 @@ export class IngresosComponent implements AfterViewInit {
     /*     method: 'Método de Pago', */
     category: 'Rubro',
     /*     invoice: 'Comprobante', */
-    /*     pvpPorcentaje: 'PVP', */
+    /*     margenBeneficio: 'PVP', */
     /*     description: 'Descripción', */
     actions: 'Operaciones'
   };
@@ -91,7 +91,7 @@ export class IngresosComponent implements AfterViewInit {
           this.inventarioControl.reset();
         }
       }
-      this.Item.pvpPorcentaje = inventario.margenBeneficio;
+      this.Item.margenBeneficio = inventario.margenBeneficio;
     } else {
       this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
     }
@@ -194,7 +194,7 @@ export class IngresosComponent implements AfterViewInit {
       this.fullNameProducto = (prod.id + ' - ') + (prod.idExterno !== '' ? prod.idExterno + ' - ' : ' - ') + (prod.nombre);
     this.Item.currency = item.currency;
     this.Item.amount = item.amount;
-    this.Item.pvpPorcentaje = item.pvpPorcentaje;
+    this.Item.margenBeneficio = item.margenBeneficio;
     this.Item.method = item.method;
     this.Item.category = item.category;
     this.Item.invoice = item.invoice;
@@ -213,7 +213,7 @@ export class IngresosComponent implements AfterViewInit {
         idInventario: this.Item.idInventario,
         currency: this.Item.currency,
         amount: this.Item.amount,
-        pvpPorcentaje: this.Item.pvpPorcentaje,
+        margenBeneficio: this.Item.margenBeneficio,
         method: this.Item.method,
         category: this.Item.category,
         invoice: this.Item.invoice,

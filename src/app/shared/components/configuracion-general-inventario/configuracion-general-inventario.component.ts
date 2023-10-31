@@ -16,21 +16,21 @@ export class ConfiguracionGeneralInventarioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataInit();
+   /*  this.dataInit();*/
   }
 
-  private dataInit() {
+/*   private dataInit() {
     this.dataService.Configuracion$.subscribe((data) => {
       this.dataConfig = data[0];
       if (this.dataConfig !== undefined) {
-        this.pvp = this.dataConfig.pvpPorcentaje;
+        this.pvp = this.dataConfig.margenBeneficio;
       }
     });
   }
 
   public setPvp(pvp: string) {
-    if (pvp !== this.dataConfig.pvpPorcentaje)
-      this.dataService.fetchConfiguracion('PUT', { id: 1, pvpPorcentaje: pvp });
-  }
+    if (pvp !== this.dataConfig.margenBeneficio)
+      this.dataService.fetchConfiguracion('PUT', { id: 1, margenBeneficio: pvp });
+  } */
 
 }
