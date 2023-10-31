@@ -88,7 +88,7 @@ export class Role {
   }
 }
 
-export class supplier {
+export class proveedor {
   id: number;
   company: string;
   contactFullname: string;

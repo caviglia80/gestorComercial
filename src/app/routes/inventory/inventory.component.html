@@ -201,7 +201,8 @@
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Precio Lista:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(sharedService.getPrecioLista(Item['costo'], Item['margenBeneficio']))">
+          <td style="width: 100%;"
+            (dblclick)="sharedService.copy(sharedService.getPrecioLista(Item['costo'], Item['margenBeneficio']))">
             {{
             sharedService.getPrecioLista(Item['costo'], Item['margenBeneficio'])
             | currency:'$':'symbol' }}
@@ -279,10 +280,6 @@
     <p class="form-field-description">Ingrese Margen-Beneficio %</p>
     <input matInput placeholder="Margen-Beneficio %" [(ngModel)]="Item.margenBeneficio" type="number">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
-    <p class="form-field-description">Ingrese Ingrese Proveedor</p>
-    <input matInput placeholder="Proveedor" [(ngModel)]="Item.proveedor">
-  </mat-form-field>
   <mat-form-field class="full-width" *ngIf="Item.tipo==='Servicio'">
     <p class="form-field-description">Ingrese Ingrese duración</p>
     <input matInput placeholder="Duración" [(ngModel)]="Item.duracion">
@@ -290,6 +287,17 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese Ingrese categoría</p>
     <input matInput placeholder="Categoría" [(ngModel)]="Item.categoria">
+  </mat-form-field>
+  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+    <p class="form-field-description">Ingresar proveedor</p>
+    <input type="text" placeholder="Proveedor" matInput [formControl]="proveedorControl" [matAutocomplete]="auto"
+      [(ngModel)]="Item.proveedor" (focus)="getProveedor()">
+    <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
+      <mat-option *ngFor="let proveedor of proveedorFiltered | async"
+        [value]="proveedor.company + ' - ' + proveedor.contactFullname">
+        {{ proveedor.company }} - {{ proveedor.contactFullname }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese descripción</p>
@@ -339,10 +347,6 @@
     <p class="form-field-description">Ingrese Margen-Beneficio %</p>
     <input matInput placeholder="Margen-Beneficio %" [(ngModel)]="Item.margenBeneficio" type="number">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
-    <p class="form-field-description">Ingrese Ingrese Proveedor</p>
-    <input matInput placeholder="Proveedor" [(ngModel)]="Item.proveedor">
-  </mat-form-field>
   <mat-form-field class="full-width" *ngIf="Item.tipo==='Servicio'">
     <p class="form-field-description">Ingrese Ingrese duración</p>
     <input matInput placeholder="Duración" [(ngModel)]="Item.duracion">
@@ -350,6 +354,17 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese Ingrese categoría</p>
     <input matInput placeholder="Categoría" [(ngModel)]="Item.categoria">
+  </mat-form-field>
+  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+    <p class="form-field-description">Ingresar proveedor</p>
+    <input type="text" placeholder="Proveedor" matInput [formControl]="proveedorControl" [matAutocomplete]="auto"
+      [(ngModel)]="Item.proveedor" (focus)="getProveedor()">
+    <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
+      <mat-option *ngFor="let proveedor of proveedorFiltered | async"
+        [value]="proveedor.company + ' - ' + proveedor.contactFullname">
+        {{ proveedor.company }} - {{ proveedor.contactFullname }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese descripción</p>
@@ -400,8 +415,15 @@
     <input matInput placeholder="Margen-Beneficio %" [(ngModel)]="Item.margenBeneficio" type="number">
   </mat-form-field>
   <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
-    <p class="form-field-description">Ingrese Ingrese Proveedor</p>
-    <input matInput placeholder="Proveedor" [(ngModel)]="Item.proveedor">
+    <p class="form-field-description">Ingresar proveedor</p>
+    <input type="text" placeholder="Proveedor" matInput [formControl]="proveedorControl" [matAutocomplete]="auto"
+      [(ngModel)]="Item.proveedor" (focus)="getProveedor()">
+    <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
+      <mat-option *ngFor="let proveedor of proveedorFiltered | async"
+        [value]="proveedor.company + ' - ' + proveedor.contactFullname">
+        {{ proveedor.company }} - {{ proveedor.contactFullname }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <mat-form-field class="full-width" *ngIf="Item.tipo==='Servicio'">
     <p class="form-field-description">Ingrese Ingrese duración</p>

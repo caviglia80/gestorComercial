@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { supplier } from '@models/mainClasses/main-classes';
+import { proveedor } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 
@@ -13,7 +13,7 @@ import { DataService } from '@services/data/data.service';
 })
 
 export class ProveedoresComponent implements AfterViewInit {
-  public dataSource = new MatTableDataSource<supplier>;
+  public dataSource = new MatTableDataSource<proveedor>;
   public isLoading = true;
   public Item: any = {};
   public create: boolean = false;
@@ -90,21 +90,21 @@ export class ProveedoresComponent implements AfterViewInit {
     this.create = visible;
   }
 
-  public viewItem(item: supplier) {
+  public viewItem(item: proveedor) {
     this.Detail(true);
     this.rellenarRecord(item);
   }
 
-  public editItem(item: supplier) {
+  public editItem(item: proveedor) {
     this.Edit(true);
     this.rellenarRecord(item);
   }
 
-  public deleteItem(item: supplier) {
+  public deleteItem(item: proveedor) {
     this.dataService.fetchProveedores('DELETE', { id: item.id, company: item.company });
   }
 
-  private rellenarRecord(item: supplier) {
+  private rellenarRecord(item: proveedor) {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.company = item.company;
@@ -120,7 +120,7 @@ export class ProveedoresComponent implements AfterViewInit {
 
   public record(method: string) {
     try {
-      const body: supplier = {
+      const body: proveedor = {
         id: this.Item.id,
         company: this.Item.company,
         contactFullname: this.Item.contactFullname,

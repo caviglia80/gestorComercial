@@ -275,10 +275,14 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['beneficiary_provider'] | lowercase }} <span
-        class="red-asterisk">*</span></p>
-    <input matInput placeholder="{{ Columns['beneficiary_provider'] }}" [(ngModel)]="Item.beneficiary_provider"
-      required>
+    <p class="form-field-description">Ingresar proveedor/beneficiario <span class="red-asterisk">*</span></p>
+    <input type="text" placeholder="{{ Columns['beneficiary_provider'] }}" matInput [formControl]="proveedorControl"
+      [matAutocomplete]="auto" [(ngModel)]="Item.beneficiary_provider" (focus)="getProveedor()" required>
+    <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
+      <mat-option *ngFor="let proveedor of proveedorFiltered | async" [value]="proveedor.company + ' - ' + proveedor.contactFullname">
+        {{ proveedor.company }} - {{ proveedor.contactFullname }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -344,10 +348,14 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['beneficiary_provider'] | lowercase }} <span
-        class="red-asterisk">*</span></p>
-    <input matInput placeholder="{{ Columns['beneficiary_provider'] }}" [(ngModel)]="Item.beneficiary_provider"
-      required>
+    <p class="form-field-description">Ingresar proveedor/beneficiario <span class="red-asterisk">*</span></p>
+    <input type="text" placeholder="{{ Columns['beneficiary_provider'] }}" matInput [formControl]="proveedorControl"
+      [matAutocomplete]="auto" [(ngModel)]="Item.beneficiary_provider" (focus)="getProveedor()" required>
+    <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
+      <mat-option *ngFor="let proveedor of proveedorFiltered | async" [value]="proveedor.company + ' - ' + proveedor.contactFullname">
+        {{ proveedor.company }} - {{ proveedor.contactFullname }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -356,5 +364,5 @@
   </mat-form-field>
 
   <button mat-button (click)="record('PUT')"
-  [disabled]="!Item.date || !Item.amount || !Item.method|| !Item.category || !Item.beneficiary_provider">Guardar</button>
+    [disabled]="!Item.date || !Item.amount || !Item.method|| !Item.category || !Item.beneficiary_provider">Guardar</button>
 </div>

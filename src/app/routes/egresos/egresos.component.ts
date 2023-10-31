@@ -2,10 +2,12 @@ import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { moneyOutlays } from '@models/mainClasses/main-classes';
+import { moneyOutlays, proveedor } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
-
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 @Component({
   selector: 'app-egresos',
   templateUrl: './egresos.component.html',
@@ -13,6 +15,9 @@ import { DataService } from '@services/data/data.service';
 })
 
 export class EgresosComponent implements AfterViewInit {
+  public proveedorControl = new FormControl();
+  public proveedorFiltered: Observable<any[]>;
+  public proveedorData: proveedor[] = [];
   public dataSource = new MatTableDataSource<moneyOutlays>;
   public isLoading = true;
   public Item: any = {};
@@ -38,7 +43,12 @@ export class EgresosComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef,
     public dataService: DataService,
     public sharedService: SharedService
-  ) { }
+  ) {
+    this.proveedorFiltered = this.proveedorControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterProveedor(value))
+    );
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -46,6 +56,7 @@ export class EgresosComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataInit();
+    this.dataInit_Proveedor();
   }
 
   private dataInit() {
@@ -61,8 +72,31 @@ export class EgresosComponent implements AfterViewInit {
     this.dataService.fetchEgresos('GET');
   }
 
+  private dataInit_Proveedor() {
+    this.dataService.Proveedores$.subscribe((data) => {
+      this.proveedorData = data;
+    });
+    this.getProveedor();
+  }
+
   public getInventario() {
     this.dataService.fetchInventario('GET');
+  }
+
+  private _filterProveedor(value: string): any[] {
+    if (this.proveedorData.length === 0)
+      this.getProveedor();
+    if (value != null) {
+      const filterValue = value.toLowerCase();
+      return this.proveedorData.filter(item =>
+        item.company.toLowerCase().includes(filterValue) ||
+        item.contactFullname.toString().toLowerCase().includes(filterValue)
+      );
+    } else return [];
+  }
+
+  public getProveedor() {
+    this.dataService.fetchProveedores('GET');
   }
 
   private loading(state: boolean) {
