@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data/data.service';
+import { Router } from '@angular/router';
 
 declare global {
   interface Date {
@@ -23,11 +24,13 @@ export class AppComponent implements OnInit {
   private dataSource: any;
 
   constructor(
-    public dataService: DataService
-  ) { }
+    public dataService: DataService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.dataInit();
+
   }
 
   private dataInit() {
