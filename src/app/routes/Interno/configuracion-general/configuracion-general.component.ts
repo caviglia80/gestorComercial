@@ -6,29 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./configuracion-general.component.css']
 })
 export class ConfiguracionGeneralComponent {
-
-  constructor(
-
-  ) { }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  constructor() { }
 }
 
 

@@ -42,7 +42,7 @@
           </th>
           <td [matTooltip]="element.company" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.company)">
-            {{element.company | truncate:15 }}
+            {{element.company | slice:0:15 }}
           </td>
         </ng-container>
 
@@ -51,7 +51,7 @@
             {{ Columns['contactFullname'] }}
           </th>
           <td [matTooltip]="element.contactFullname" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.contactFullname)"> {{element.contactFullname | truncate:15 }}
+            (dblclick)="sharedService.copy(element.contactFullname)"> {{element.contactFullname | slice:0:15 }}
           </td>
         </ng-container>
 
@@ -60,7 +60,7 @@
             {{ Columns['phone'] }}
           </th>
           <td [matTooltip]="element.phone" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.phone)"> {{element.phone | truncate:15 }}
+            (dblclick)="sharedService.copy(element.phone)"> {{element.phone | slice:0:15 }}
           </td>
         </ng-container>
 
@@ -69,7 +69,7 @@
             correo
           </th>
           <td [matTooltip]="element.email" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.email)"> {{element.email | truncate:15 }} </td>
+            (dblclick)="sharedService.copy(element.email)"> {{element.email | slice:0:15 }} </td>
         </ng-container>
 
         <ng-container matColumnDef="address">
@@ -77,7 +77,7 @@
             {{ Columns['address'] }}
           </th>
           <td [matTooltip]="element.address" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.address)">{{ element.address | truncate:15 }}</td>
+            (dblclick)="sharedService.copy(element.address)">{{ element.address | slice:0:15 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="website">
@@ -85,7 +85,7 @@
             {{ Columns['website'] }}
           </th>
           <td [matTooltip]="element.website" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.website)">{{ element.website | truncate:15 }}</td>
+            (dblclick)="sharedService.copy(element.website)">{{ element.website | slice:0:15 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="accountNumber">
@@ -93,7 +93,7 @@
             {{ Columns['accountNumber'] }}
           </th>
           <td [matTooltip]="element.accountNumber" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.accountNumber)">{{ element.accountNumber | truncate:15 }}</td>
+            (dblclick)="sharedService.copy(element.accountNumber)">{{ element.accountNumber | slice:0:15 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="supply">
@@ -101,7 +101,7 @@
             {{ Columns['supply'] }}
           </th>
           <td [matTooltip]="element.supply" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.supply)">{{ element.supply | truncate:15 }}</td>
+            (dblclick)="sharedService.copy(element.supply)">{{ element.supply | slice:0:15 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="observation">
@@ -109,7 +109,7 @@
             {{ Columns['observation'] }}
           </th>
           <td [matTooltip]="element.observation" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.observation)">{{ element.observation | truncate:15 }}</td>
+            (dblclick)="sharedService.copy(element.observation)">{{ element.observation | slice:0:15 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions">

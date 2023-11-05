@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { DataService } from '@services/data/data.service';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements AfterViewInit {
+export class NavComponent implements OnInit {
   public sidenavOpened: boolean = true;
   public icono: any = '';
 
@@ -14,7 +14,7 @@ export class NavComponent implements AfterViewInit {
     public dataService: DataService
   ) { }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.dataInit();
   }
 

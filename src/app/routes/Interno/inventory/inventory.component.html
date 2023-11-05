@@ -50,7 +50,7 @@
           </th>
           <td [matTooltip]="element.nombre" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.nombre)">
-            {{element.nombre | truncate:15 }}
+            {{element.nombre | slice:0:15 }}
           </td>
         </ng-container>
 
@@ -109,7 +109,7 @@
           </th>
           <td [matTooltip]="element.descripcion" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.descripcion)">
-            {{element.descripcion | truncate:12 }}
+            {{element.descripcion | slice:0:12 }}
           </td>
         </ng-container> -->
 

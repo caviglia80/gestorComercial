@@ -10,9 +10,7 @@ export class LandingPageComponent {
 
   constructor(private router: Router) { }
 
-
   navigateToSidebar() {
     this.router.navigate(['/nav/dashboard']);
   }
-
 }

@@ -42,7 +42,7 @@
           </th>
           <td [matTooltip]="element.name" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.name)">
-            {{element.name | truncate:30 }}
+            {{element.name | slice:0:30 }}
           </td>
         </ng-container>
 
@@ -68,7 +68,7 @@
             {{ Columns['description'] }}
           </th>
           <td [matTooltip]="element.description" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.description)"> {{element.description | truncate:60 }} </td>
+            (dblclick)="sharedService.copy(element.description)"> {{element.description | slice:0:60 }} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
