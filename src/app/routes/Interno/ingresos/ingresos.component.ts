@@ -23,10 +23,10 @@ export class IngresosComponent implements AfterViewInit {
   public dataInventario: Inventario[] = [];
   public isLoading = true;
   public Item: any = {};
-  public create: boolean = false;
-  public edit: boolean = false;
-  public detail: boolean = false;
-  public fullNameProducto: string = '';
+  public create = false;
+  public edit = false;
+  public detail = false;
+  public fullNameProducto = '';
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */

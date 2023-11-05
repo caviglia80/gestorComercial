@@ -13,9 +13,9 @@ import { DataService } from '@services/data/data.service';
 })
 export class ReportesEgresosRubroComponent {
   public dataSource = new MatTableDataSource<reportesEgresosRubro>;
-  public isLoading: boolean = true;
-  public fechaDesde: string = ''
-  public fechaHasta: string = ''
+  public isLoading = true;
+  public fechaDesde = ''
+  public fechaHasta = ''
 
   public Columns: { [key: string]: string } = {
     rubro: 'Rubro',

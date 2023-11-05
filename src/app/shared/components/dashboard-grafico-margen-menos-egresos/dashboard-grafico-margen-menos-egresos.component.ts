@@ -9,7 +9,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-margen-menos-egresos.component.css']
 })
 export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
-  public chartTootilp: string = 'Ingresos Totales: son todos los ingresos generados por las ventas de productos o servicios. Costos Operativos: incluyen todos los gastos directamente relacionados con las operaciones del negocio. Utilidad Operativa = Ingresos Totales - Costos Operativos';
+  public chartTootilp = 'Ingresos Totales: son todos los ingresos generados por las ventas de productos o servicios. Costos Operativos: incluyen todos los gastos directamente relacionados con las operaciones del negocio. Utilidad Operativa = Ingresos Totales - Costos Operativos';
   private currentConfiguracion: configuracion = new configuracion();
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -34,9 +34,9 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   public groupedIncomeData: any[] = [];
 
   public Years: string[] = [];
-  public selectedYear: string = '';
+  public selectedYear = '';
   public Categories: string[] = [];
-  public selectedCategory: string = 'Todos los rubros';
+  public selectedCategory = 'Todos los rubros';
 
   constructor(
     public dataService: DataService) {

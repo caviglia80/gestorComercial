@@ -7,7 +7,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  public sidenavOpened: boolean = true;
+  public sidenavOpened = true;
   public icono: any = '';
 
   constructor(

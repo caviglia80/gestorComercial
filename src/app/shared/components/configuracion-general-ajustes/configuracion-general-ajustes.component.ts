@@ -10,14 +10,14 @@ import { configuracion } from '@models/mainClasses/main-classes';
 })
 export class ConfiguracionGeneralAjustesComponent implements OnInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
-  public errorMessageImg: boolean = false;
+  public errorMessageImg = false;
   public dataConfig: configuracion = new configuracion();
-  public Color1: string = '#000000';
-  public Color2: string = '#000000';
-  public colorPickerIsOpen: boolean = false;
-  public copyEnabled: boolean = false;
-  public notificacionesEnabled: boolean = false;
-  public titulo: string = '';
+  public Color1 = '#000000';
+  public Color2 = '#000000';
+  public colorPickerIsOpen = false;
+  public copyEnabled = false;
+  public notificacionesEnabled = false;
+  public titulo = '';
 
   constructor(
     public dataService: DataService,

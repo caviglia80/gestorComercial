@@ -32,7 +32,7 @@ export class AfipService {
     );
   }
 
-  public fetchWSAA(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchWSAA(method = '', body: any = {}, proxy = false): void {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }

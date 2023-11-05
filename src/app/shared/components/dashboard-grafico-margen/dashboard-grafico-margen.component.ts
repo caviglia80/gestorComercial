@@ -9,7 +9,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-margen.component.css']
 })
 export class DashboardGraficoMargenComponent implements OnInit {
-  public chartTootilp: string = 'Representa la diferencia entre los ingresos totales generados por la venta de productos o servicios y el costo de los bienes o servicios vendidos. Utilidad Bruta = Ingresos Totales - Costo de Bienes o Servicios Vendidos';
+  public chartTootilp = 'Representa la diferencia entre los ingresos totales generados por la venta de productos o servicios y el costo de los bienes o servicios vendidos. Utilidad Bruta = Ingresos Totales - Costo de Bienes o Servicios Vendidos';
   private currentConfiguracion: configuracion = new configuracion();
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -30,9 +30,9 @@ export class DashboardGraficoMargenComponent implements OnInit {
   public filteredData: any[] = [];
 
   public Years: string[] = [];
-  public selectedYear: string = '';
+  public selectedYear = '';
   public Categories: string[] = [];
-  public selectedCategory: string = 'Todos los rubros';
+  public selectedCategory = 'Todos los rubros';
 
   constructor(
     public dataService: DataService) {

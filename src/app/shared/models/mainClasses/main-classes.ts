@@ -12,17 +12,17 @@ export class Inventario {
   descripcion?: string;
 
   constructor(
-    id: number = 0,
-    idExterno: string = '',
-    nombre: string = '',
-    existencias: number = 0,
-    costo: number = 0,
-    margenBeneficio: number = 0,
-    tipo: string = '',
-    proveedor: string = '',
-    duracion: string = '',
-    categoria: string = '',
-    descripcion: string = '',
+    id = 0,
+    idExterno = '',
+    nombre = '',
+    existencias = 0,
+    costo = 0,
+    margenBeneficio = 0,
+    tipo = '',
+    proveedor = '',
+    duracion = '',
+    categoria = '',
+    descripcion = '',
   ) {
     this.id = id;
     this.idExterno = idExterno;
@@ -48,13 +48,13 @@ export class User {
   password: string;
 
   constructor(
-    id: number = 0,
-    username: string = '',
-    fullname: string = '',
-    position: string = '',
-    phone: string = '',
-    email: string = '',
-    password: string = ''
+    id = 0,
+    username = '',
+    fullname = '',
+    position = '',
+    phone = '',
+    email = '',
+    password = ''
   ) {
     this.id = id;
     this.username = username;
@@ -74,11 +74,11 @@ export class Role {
   description: string;
 
   constructor(
-    id: number = 0,
-    name: string = '',
-    menus: string = '',
-    permits: string = '',
-    description: string = ''
+    id = 0,
+    name = '',
+    menus = '',
+    permits = '',
+    description = ''
   ) {
     this.id = id;
     this.name = name;
@@ -101,16 +101,16 @@ export class proveedor {
   observation: string;
 
   constructor(
-    id: number = 0,
-    company: string = '',
-    contactFullname: string = '',
-    phone: string = '',
-    email: string = '',
-    address: string = '',
-    website: string = '',
-    accountNumber: string = '',
-    supply: string = '',
-    observation: string = ''
+    id = 0,
+    company = '',
+    contactFullname = '',
+    phone = '',
+    email = '',
+    address = '',
+    website = '',
+    accountNumber = '',
+    supply = '',
+    observation = ''
   ) {
     this.id = id;
     this.company = company;
@@ -140,18 +140,18 @@ export class moneyIncome {
   description?: string;
 
   constructor(
-    id: number = 0,
-    date: string = '',
-    idInventario: string = '',
-    currency: string = '',
-    amount: number = 0,
-    margenBeneficio: number = 0,
-    method: string = '',
-    category: string = '',
-    invoice: string = '',
-    anulado: string = '0',
-    cliente: string = '',
-    description: string = ''
+    id = 0,
+    date = '',
+    idInventario = '',
+    currency = '',
+    amount = 0,
+    margenBeneficio = 0,
+    method = '',
+    category = '',
+    invoice = '',
+    anulado = '0',
+    cliente = '',
+    description = ''
   ) {
     this.id = id;
     this.date = date;
@@ -180,15 +180,15 @@ export class moneyOutlays {
   description?: string;
 
   constructor(
-    id: number = 0,
-    date: string = '',
-    currency: string = '',
-    amount: number = 0,
-    method: string = '',
-    category: string = '',
-    invoice: string = '',
-    beneficiary_provider: string = '',
-    description: string = ''
+    id = 0,
+    date = '',
+    currency = '',
+    amount = 0,
+    method = '',
+    category = '',
+    invoice = '',
+    beneficiary_provider = '',
+    description = ''
   ) {
     this.id = id;
     this.date = date;
@@ -213,14 +213,14 @@ export class facturacionAuth {
   llave: string | null;
 
   constructor(
-    id: number = 1,
-    cuit: string = '',
-    sign: string = '',
-    token: string = '',
-    expirationTime: string = '',
-    uniqueId: string = '',
-    certificado: string = '',
-    llave: string = ''
+    id = 1,
+    cuit = '',
+    sign = '',
+    token = '',
+    expirationTime = '',
+    uniqueId = '',
+    certificado = '',
+    llave = ''
   ) {
     this.id = id;
     this.cuit = cuit;
@@ -248,18 +248,18 @@ export class configuracion {
   titulo: string;
 
   constructor(
-    id: number = 1,
-    icono: string = 'assets/defaultLogo.png',
-    copyEnabled: string = '1',
-    color1: string = '#846bf3',
-    color2: string = '#4c28ec',
-    ingresoRapidoEnabled: string = '1',
-    egresoRapidoEnabled: string = '1',
-    ingresoRestaStockEnabled: string = '1',
-    notificacionesEnabled: string = '1',
-    ingresoAnuladoSumaStockEnabled: string = '1',
-    permitirStockCeroEnabled: string = '0',
-    titulo: string = 'Gestor Comercial'
+    id = 1,
+    icono = 'assets/defaultLogo.png',
+    copyEnabled = '1',
+    color1 = '#846bf3',
+    color2 = '#4c28ec',
+    ingresoRapidoEnabled = '1',
+    egresoRapidoEnabled = '1',
+    ingresoRestaStockEnabled = '1',
+    notificacionesEnabled = '1',
+    ingresoAnuladoSumaStockEnabled = '1',
+    permitirStockCeroEnabled = '0',
+    titulo = 'Gestor Comercial'
   ) {
     this.id = id;
     this.icono = icono;
@@ -284,11 +284,11 @@ export class reportesIngresos {
   margenGanancias: string;
 
   constructor(
-    id: number = 0,
-    name: string = '',
-    cantidadIngresos: string = '0',
-    totalIngresos: string = '0',
-    margenGanancias: string = '0',
+    id = 0,
+    name = '',
+    cantidadIngresos = '0',
+    totalIngresos = '0',
+    margenGanancias = '0',
   ) {
     this.id = id;
     this.name = name;
@@ -304,9 +304,9 @@ export class reportesEgresosRubro {
   montoTotalEgresos: string;
 
   constructor(
-    rubro: string = '',
-    cantidadEgresos: string = '0',
-    montoTotalEgresos: string = '0'
+    rubro = '',
+    cantidadEgresos = '0',
+    montoTotalEgresos = '0'
   ) {
     this.rubro = rubro;
     this.cantidadEgresos = cantidadEgresos;
@@ -320,9 +320,9 @@ export class reportesEgresosBP {
   montoTotalEgresos: string;
 
   constructor(
-    bp: string = '',
-    cantidadEgresos: string = '0',
-    montoTotalEgresos: string = '0'
+    bp = '',
+    cantidadEgresos = '0',
+    montoTotalEgresos = '0'
   ) {
     this.bp = bp;
     this.cantidadEgresos = cantidadEgresos;

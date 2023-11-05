@@ -13,9 +13,9 @@ import { DataService } from '@services/data/data.service';
 })
 export class ReportesEgresosBPComponent {
   public dataSource = new MatTableDataSource<reportesEgresosBP>;
-  public isLoading: boolean = true;
-  public fechaDesde: string = ''
-  public fechaHasta: string = ''
+  public isLoading = true;
+  public fechaDesde = ''
+  public fechaHasta = ''
 
   public Columns: { [key: string]: string } = {
     bp: 'Beneficiario/Proveedor',

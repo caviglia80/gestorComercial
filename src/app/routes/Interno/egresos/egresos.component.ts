@@ -21,9 +21,9 @@ export class EgresosComponent implements AfterViewInit {
   public dataSource = new MatTableDataSource<moneyOutlays>;
   public isLoading = true;
   public Item: any = {};
-  public create: boolean = false;
-  public edit: boolean = false;
-  public detail: boolean = false;
+  public create = false;
+  public edit = false;
+  public detail = false;
   /*   private currentConfiguracion: any; */
 
   public Columns: { [key: string]: string } = {

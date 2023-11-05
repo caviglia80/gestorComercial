@@ -10,10 +10,10 @@ import { configuracion } from '@models/mainClasses/main-classes';
 export class ConfiguracionGeneralIngresoComponent {
 
   public dataConfig: configuracion = new configuracion();
-  public ingresoRestaStockEnabled: boolean = false;
-  public ingresoRapidoEnabled: boolean = false;
-  public ingresoAnuladoSumaStockEnabled: boolean = false;
-  public permitirStockCeroEnabled: boolean = false;
+  public ingresoRestaStockEnabled = false;
+  public ingresoRapidoEnabled = false;
+  public ingresoAnuladoSumaStockEnabled = false;
+  public permitirStockCeroEnabled = false;
 
   constructor(
     public dataService: DataService

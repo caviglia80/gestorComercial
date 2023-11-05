@@ -12,14 +12,14 @@ import { AfipRequest } from '@models/afipRequest/afip-request';
 })
 export class ConfiguracionGeneralFacturacionComponent implements AfterViewInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
-  public errorMessageCrt: boolean = false;
-  public errorMessageKey: boolean = false;
+  public errorMessageCrt = false;
+  public errorMessageKey = false;
   public fAuthStore = new facturacionAuth;
-  public online: boolean = false;
-  public loading: boolean = true;
-  public error: boolean = false;
-  public isConfigurated: boolean = false;
-  public systemStatus: boolean = false;
+  public online = false;
+  public loading = true;
+  public error = false;
+  public isConfigurated = false;
+  public systemStatus = false;
 
   constructor(
     public dataService: DataService,
@@ -79,7 +79,7 @@ export class ConfiguracionGeneralFacturacionComponent implements AfterViewInit {
     }
   }
 
-  private sendBase64(base644: string, fileType: string, id: number = 1) {
+  private sendBase64(base644: string, fileType: string, id = 1) {
     if (fileType === 'crt')
       this.dataService.fetchFacturacionAuth('PUT', { id: 1, certificado: base644 });
     else if (fileType === 'key')
@@ -161,7 +161,7 @@ export class ConfiguracionGeneralFacturacionComponent implements AfterViewInit {
   }
 
   public GetPuntosDeVenta() {
-    let body = new AfipRequest().FEParamGetPtosVenta();
+    const body = new AfipRequest().FEParamGetPtosVenta();
     const xmlRequest = new DOMParser().parseFromString(body, 'text/xml');
     xmlRequest.querySelector('Token')!.textContent = this.sharedService.decodeBase64(this.fAuthStore.token!);
     xmlRequest.querySelector('Sign')!.textContent = this.sharedService.decodeBase64(this.fAuthStore.sign!);
@@ -179,7 +179,7 @@ export class ConfiguracionGeneralFacturacionComponent implements AfterViewInit {
   }
 
   public FECAESolicitar_C() {
-    let body = new AfipRequest().FECAESolicitar('c');
+    const body = new AfipRequest().FECAESolicitar('c');
     const xmlRequest = new DOMParser().parseFromString(body, 'text/xml');
 
     xmlRequest.querySelector('Token')!.textContent = this.sharedService.decodeBase64(this.fAuthStore.token!);

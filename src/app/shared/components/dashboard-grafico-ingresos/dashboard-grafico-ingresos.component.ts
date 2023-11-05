@@ -29,9 +29,9 @@ export class DashboardGraficoIngresosComponent implements OnInit {
   public filteredData: any[] = [];
 
   public Years: string[] = [];
-  public selectedYear: string = '';
+  public selectedYear = '';
   public Categories: string[] = [];
-  public selectedCategory: string = 'Todos los rubros';
+  public selectedCategory = 'Todos los rubros';
 
   constructor(
     public dataService: DataService) {

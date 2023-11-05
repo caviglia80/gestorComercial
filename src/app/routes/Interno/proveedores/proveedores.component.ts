@@ -16,9 +16,9 @@ export class ProveedoresComponent implements AfterViewInit {
   public dataSource = new MatTableDataSource<proveedor>;
   public isLoading = true;
   public Item: any = {};
-  public create: boolean = false;
-  public edit: boolean = false;
-  public detail: boolean = false;
+  public create = false;
+  public edit = false;
+  public detail = false;
 
   public Columns: { [key: string]: string } = {
     /* id: 'ID', */

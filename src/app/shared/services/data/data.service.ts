@@ -62,7 +62,7 @@ export class DataService {
     return parseFloat(costPrice) * (1 + margin);
   } */
 
-  public fetchInventario(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchInventario(method = '', body: any = {}, proxy = false): void {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -119,7 +119,7 @@ export class DataService {
     }
   }
 
-  public fetchUsuarios(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchUsuarios(method = '', body: any = {}, proxy = false): void {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -176,7 +176,7 @@ export class DataService {
     }
   }
 
-  public fetchRoles(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchRoles(method = '', body: any = {}, proxy = false): void {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -233,7 +233,7 @@ export class DataService {
     }
   }
 
-  public fetchProveedores(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchProveedores(method = '', body: any = {}, proxy = false): void {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -290,7 +290,7 @@ export class DataService {
     }
   }
 
-  public fetchIngresos(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchIngresos(method = '', body: any = {}, proxy = false): void {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -347,7 +347,7 @@ export class DataService {
     }
   }
 
-  public fetchEgresos(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchEgresos(method = '', body: any = {}, proxy = false): void {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -404,7 +404,7 @@ export class DataService {
     }
   }
 
-  public fetchFacturacionAuth(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchFacturacionAuth(method = '', body: any = {}, proxy = false): void {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -437,7 +437,7 @@ export class DataService {
     }
   }
 
-  public fetchConfiguracion(method: string = '', body: any = {}, proxy: boolean = false): void {
+  public fetchConfiguracion(method = '', body: any = {}, proxy = false): void {
     if (!SharedService.isProduction) console.log(body);
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
@@ -470,7 +470,7 @@ export class DataService {
     }
   }
 
-  public fetchReportes(method: string = '', params: string, tipo: string, proxy: boolean = false): void {
+  public fetchReportes(method = '', params: string, tipo: string, proxy = false): void {
     let url = SharedService.host + 'DB/reportes.php' + params;
     if (proxy) url = SharedService.proxy + url;
     if (method === 'GET') {

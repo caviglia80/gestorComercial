@@ -9,7 +9,7 @@ import { configuracion } from '@models/mainClasses/main-classes';
 })
 export class ConfiguracionGeneralEgresoComponent {
   public dataConfig: configuracion = new configuracion();
-  public egresoRapidoEnabled: boolean = false;
+  public egresoRapidoEnabled = false;
 
   constructor(
     public dataService: DataService

@@ -9,7 +9,7 @@ import { configuracion } from '@models/mainClasses/main-classes';
 })
 export class ConfiguracionGeneralInventarioComponent implements OnInit {
   public dataConfig: configuracion = new configuracion();
-  public pvp: string = '0';
+  public pvp = '0';
 
   constructor(
     public dataService: DataService
