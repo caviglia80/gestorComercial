@@ -13,4 +13,5 @@ export class LandingPageComponent {
   navigateToSidebar() {
     this.router.navigate(['/nav/dashboard']);
   }
+
 }
