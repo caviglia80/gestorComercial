@@ -1,7 +1,162 @@
-<p>landing-page works!</p>
+<!-- <p>landing-page works!</p>
 
 <button mat-button (click)="navigateToSidebar('/nav/dashboard')">TEST</button> <br> <br>
 <button mat-button (click)="navigateToSidebar('/nav')">TEST</button> <br> <br>
 <button mat-button (click)="navigateToSidebar('/login')">TEST</button> <br> <br>
 <button mat-button (click)="navigateToSidebar('/register')">TEST</button> <br> <br>
 <button mat-button (click)="navigateToSidebar('/payment')">TEST</button> <br> <br>
+ -->
+
+
+
+
+
+
+<body id="page-top">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container px-4 px-lg-5">
+      <a class="navbar-brand" href="#page-top">Compy</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#about">Acerca</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Aplicación</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+          <li class="nav-item"><a class="nav-link" href="#x1">Ingreso</a></li>
+          <li class="nav-item"><a class="nav-link" href="#x1">Registro</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Masthead-->
+  <header class="masthead">
+    <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+      <div class="d-flex justify-content-center">
+        <div class="text-center">
+          <h1 class="mx-auto my-0 text-uppercase">Compy</h1>
+          <h2 class="text-white-50 mx-auto mt-2 mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+          <a class="btn btn-primary" href="#about">Comenzar</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- About-->
+  <section class="about-section text-center" id="about">
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="text-white mb-4">Lorem ipsum dolor sit amet.</h2>
+          <p class="text-white-50">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus consequuntur mollitia quos esse
+            velit incidunt officiis dolorem dignissimos maxime eligendi dolorum quo expedita modi eius, tempore culpa
+            beatae quas! Doloremque.
+            <a href="https://google.com">registrese para comenzar</a>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, odio!
+          </p>
+        </div>
+      </div>
+      <img class="img-fluid" src="assets/img/ipad.png" alt="..." />
+    </div>
+  </section>
+  <!-- Projects-->
+  <section class="projects-section bg-light" id="projects">
+    <div class="container px-4 px-lg-5">
+      <!-- Featured Project Row-->
+      <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
+        <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/bg-masthead.jpg" alt="..." />
+        </div>
+        <div class="col-xl-4 col-lg-5">
+          <div class="featured-text text-center text-lg-left">
+            <h4>Loremx</h4>
+            <p class="text-black-50 mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed delectus nihil
+              ullam eligendi vitae architecto ipsa maiores asperiores in? Iusto tempora aliquam sint dolorem perferendis
+              magni aliquid nesciunt cum</p>
+          </div>
+        </div>
+      </div>
+      <!-- Project One Row-->
+      <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+        <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-01.jpg" alt="..." /></div>
+        <div class="col-lg-6">
+          <div class="bg-black text-center h-100 project">
+            <div class="d-flex h-100">
+              <div class="project-text w-100 my-auto text-center text-lg-left">
+                <h4 class="text-white">lorem1</h4>
+                <p class="mb-0 text-white-50">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos, debitis!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Project Two Row-->
+      <div class="row gx-0 justify-content-center">
+        <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-02.jpg" alt="..." /></div>
+        <div class="col-lg-6 order-lg-first">
+          <div class="bg-black text-center h-100 project">
+            <div class="d-flex h-100">
+              <div class="project-text w-100 my-auto text-center text-lg-right">
+                <h4 class="text-white">lorem2</h4>
+                <p class="mb-0 text-white-50">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos, debitis!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Contact-->
+  <section class="contact-section bg-black" id="contact">
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="card py-4 h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+              <h4 class="text-uppercase m-0">Address</h4>
+              <hr class="my-4 mx-auto" />
+              <div class="small text-black-50">4923 Market Street, Orlando FL</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="card py-4 h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-envelope text-primary mb-2"></i>
+              <h4 class="text-uppercase m-0">Email</h4>
+              <hr class="my-4 mx-auto" />
+              <div class="small text-black-50"><a href="#!">hello@yourdomain.com</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="card py-4 h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-mobile-alt text-primary mb-2"></i>
+              <h4 class="text-uppercase m-0">Phone</h4>
+              <hr class="my-4 mx-auto" />
+              <div class="small text-black-50">+1 (555) 902-8832</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="social d-flex justify-content-center">
+        <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+        <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+        <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </section>
+  <!-- Footer-->
+  <footer class="footer bg-black small text-center text-white-50">
+    <div class="container px-4 px-lg-5">Copyright &copy; Compy 2023</div>
+  </footer>
+
+</body>
