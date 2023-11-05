@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { InventoryComponent } from '@routes/Interno/inventory/inventory.component';
+import { inventarioComponent } from '@routes/Interno/inventario/inventario.component';
 import { SharedMaterialModule } from '@modules/shared/shared.module';
 
 const routes: Routes = [
-  { path: '', component: InventoryComponent },
+  { path: '', component: inventarioComponent },
 ];
 
 @NgModule({
-  declarations: [InventoryComponent],
+  declarations: [inventarioComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedMaterialModule
   ],
 })
-export class InventoryModule { }
+export class inventarioModule { }

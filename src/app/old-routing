@@ -11,8 +11,8 @@ import { NavComponent } from '@routes/interno/nav/nav.component';
 import { DashboardComponent } from '@routes/Interno/dashboard/dashboard.component';
 import { IngresosComponent } from '@routes/Interno/ingresos/ingresos.component';
 import { EgresosComponent } from '@routes/Interno/egresos/egresos.component';
-import { InventoryComponent } from '@routes/Interno/inventory/inventory.component';
-import { ReportsComponent } from '@routes/Interno/reports/reports.component';
+import { inventarioComponent } from '@routes/Interno/inventario/inventario.component';
+import { ReportsComponent } from '@routes/Interno/reportes/reportes.component';
 import { ProveedoresComponent } from '@routes/Interno/proveedores/proveedores.component';
 import { ConfiguracionGeneralComponent } from '@routes/Interno/configuracion-general/configuracion-general.component';
 import { UsuariosComponent } from '@routes/Interno/usuarios/usuarios.component';
@@ -28,9 +28,9 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent }, // Ruta predeterminada dentro del nav
       { path: 'ingresos', component: IngresosComponent },
       { path: 'egresos', component: EgresosComponent },
-      { path: 'inventory', component: InventoryComponent },
+      { path: 'inventario', component: inventarioComponent },
       { path: 'proveedores', component: ProveedoresComponent },
-      { path: 'reports', component: ReportsComponent },
+      { path: 'reportes', component: ReportsComponent },
       { path: 'configuracionGeneral', component: ConfiguracionGeneralComponent },
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'roles', component: RolesComponent },

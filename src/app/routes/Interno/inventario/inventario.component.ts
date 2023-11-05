@@ -10,12 +10,12 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-inventory',
-  templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.css']
+  selector: 'app-inventario',
+  templateUrl: './inventario.component.html',
+  styleUrls: ['./inventario.component.css']
 })
 
-export class InventoryComponent implements AfterViewInit {
+export class inventarioComponent implements AfterViewInit {
   public proveedorControl = new FormControl();
   public proveedorFiltered: Observable<any[]>;
   public proveedorData: proveedor[] = [];
