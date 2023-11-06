@@ -166,7 +166,7 @@ body {
 }
 
 .projects-section {
-  padding: 10rem 0;
+  padding-top: 10rem;
 }
 .projects-section .featured-text {
   padding: 2rem;
@@ -247,3 +247,9 @@ body {
 .footer {
   padding: 5rem 0;
 }
+
+.pricing-section {
+  padding: 15rem 0;
+}
+
+
