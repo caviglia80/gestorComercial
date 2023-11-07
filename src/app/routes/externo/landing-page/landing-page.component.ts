@@ -8,6 +8,7 @@ import * as bootstrap from 'bootstrap';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements AfterViewInit {
+  public isNavbarOpen = false;
 
   constructor(private router: Router) { }
 
