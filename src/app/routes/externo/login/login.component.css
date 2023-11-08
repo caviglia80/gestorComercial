@@ -1,0 +1,26 @@
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+@keyframes movimiento {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+body {
+  background: linear-gradient(120deg,
+      rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .8),
+      rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .6),
+      rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .4),
+      rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .2));
+  background-size: 200% 200%;
+  animation: movimiento 8s alternate-reverse infinite;
+}
