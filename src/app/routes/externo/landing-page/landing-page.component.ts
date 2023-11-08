@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as bootstrap from 'bootstrap';
+import { GlobalVariables } from 'src/app/app.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -9,6 +10,7 @@ import * as bootstrap from 'bootstrap';
 })
 export class LandingPageComponent implements AfterViewInit {
   public isNavbarOpen = false;
+  public WspNumber = GlobalVariables.wspNumer;
 
   constructor(private router: Router) { }
 

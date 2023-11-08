@@ -1,0 +1,15 @@
+.float-button {
+    cursor: pointer !important;
+    transition: all .2s !important;
+    z-index: 9999 !important;
+  }
+  
+  .float-button:hover {
+    transform: scale(120%);
+    filter: brightness(120%);
+  }
+  
+  .float-button:hover svg {
+    /*   fill: #25D366; */
+    fill: #09ae45 !important;
+  }

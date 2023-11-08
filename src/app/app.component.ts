@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data/data.service';
-import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 
 declare global {
   interface Date {
@@ -24,9 +24,8 @@ export class AppComponent implements OnInit {
   private dataSource: any;
 
   constructor(
-    public dataService: DataService,
-    private router: Router
-  ) {}
+    public dataService: DataService
+  ) { }
 
   ngOnInit() {
     this.dataInit();
@@ -55,4 +54,10 @@ export class AppComponent implements OnInit {
     this.title = titulo;
   }
 
+}
+
+@Injectable()
+export class GlobalVariables {
+  public static wspNumer: string = '+5492364336228';
+  public static wspTxt: string = '';
 }

@@ -16,7 +16,8 @@
   --bs-btn-disabled-border-color: var(--externo-color-2);
 }
 
-.about-section p a {
+.about-section p a,
+.feature-section p a {
   color: rgba(255, 255, 255, .5) !important;
 }
 
@@ -26,6 +27,7 @@
 }
 
 .about-section p a:hover,
+.feature-section p a:hover,
 .card-body a:hover {
   color: var(--externo-color-2) !important;
 }
@@ -202,6 +204,7 @@ body {
   /* background: linear-gradient(to bottom, var(--externo-color-2) 0%, var(--externo-color-1) 75%, rgba(0, 0, 0, 0.1) 100%); */
   background: linear-gradient(to bottom,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 0%,
+      rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 5%,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .5) 50%,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 100%),
     url("/assets/defaultLogo.png");
@@ -219,31 +222,35 @@ body {
   max-width: 250px;
 }
 
-.projects-section {
-  padding-top: 2rem;
+.feature-section {
+  padding-top: 6rem;
   background: linear-gradient(to bottom,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 0%,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .5) 50%,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 100%);
 }
 
-.projects-section .featured-text {
+.feature-section .featured-text {
   padding: 2rem;
 }
 
+.feature-section .container svg {
+  padding: 1rem;
+}
+
 @media (min-width: 992px) {
-  .projects-section .featured-text {
+  .feature-section .featured-text {
     padding: 0 0 0 2rem;
   }
 }
 
-.projects-section .project-text {
+.feature-section .project-text {
   padding: 3rem;
   font-size: 90%;
 }
 
 @media (min-width: 992px) {
-  .projects-section .project-text {
+  .feature-section .project-text {
     padding: 5rem;
   }
 }
@@ -270,7 +277,10 @@ body {
 
 .contact-section {
   padding-top: 5rem;
-  background: linear-gradient(to bottom, var(--externo-color-2) 0%, var(--externo-color-1) 100%);
+  background: linear-gradient(to bottom,
+  rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 0%,
+  rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .8) 50%,
+  rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .6) 100%);
 }
 
 .contact-section .card {
@@ -323,6 +333,10 @@ body {
 
 .pricing-section {
   padding: 15rem 0;
+  background: linear-gradient(to bottom,
+  rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 0%,
+  rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .5) 50%,
+  rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 100%);
 }
 
 .free {
@@ -332,10 +346,6 @@ body {
 
 .background-color1 {
   background-color: var(--externo-color-1);
-}
-
-.background-color2 {
-  background-color: transparent;
 }
 
 .landing-navbar-icon {
