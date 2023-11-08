@@ -16,7 +16,9 @@
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
 
     <div class="fixed-top">
-      <img class="landing-navbar-icon m-2" src="assets/defaultLogo.png" alt="Icono">
+      <a href="#">
+        <img class="landing-navbar-icon m-2" src="assets/defaultLogo.png" alt="Icono">
+      </a>
       <button class="navbar-toggler m-2" type="button" (click)="isNavbarOpen=!isNavbarOpen">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -26,7 +28,7 @@
       <div class="collapse navbar-collapse" [ngClass]="{'show': isNavbarOpen}">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#Acerca">Acerca</a></li>
-          <li class="nav-item"><a class="nav-link" href="#caracteristicas">Aplicación</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Aplicación</a></li>
           <li class="nav-item"><a class="nav-link" href="#pricing">Precios</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Ingresar</a></li>
@@ -48,6 +50,8 @@
       </div>
     </div>
   </header>
+
+
   <!-- Acerca-->
   <section class="about-section text-center" id="Acerca">
     <div class="container px-4 px-lg-5">
@@ -59,20 +63,21 @@
             Compy es un sistema de gestión online para administración de empresas y pymes. Pensado por empresarios para
             empresarios, sin necesidad de conocimientos avanzados en contabilidad o programas de gestión. Siempre
             tendras un flujo de trabajo claro y personalizable para que siempre tengas una visión amplia de las
-            oportunidades de tu negocio.<a href="#">Regístrate</a> y comienza a administrar tu
+            oportunidades de tu negocio.<a class="text-white-50" href="#">Regístrate</a> y comienza a administrar tu
             empresa en forma rápida y sencilla.
           </p>
           <div class="row gx-0">
             <a class="btn btn-primary m-1" href="#">REGISTRARSE</a>
-            <a class="btn btn-primary m-1" href="#caracteristicas">CARACTERISTICAS</a>
+            <a class="btn btn-primary m-1" href="#features">CARACTERISTICAS</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+
   <!-- features-->
-  <section class="feature-section" id="caracteristicas">
+  <section class="feature-section" id="features">
     <div class="container px-4 px-lg-5">
       <!-- Full Feature-->
       <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
@@ -82,7 +87,8 @@
             <p class="text-white-50 mb-0">Con nuestra aplicación web de gestión empresarial, usted está en control total
               de su empresa. Ya sea una pequeña empresa o una corporación, nuestra plataforma se adapta a sus
               necesidades y le ayuda a mantenerse en el camino hacia el éxito financiero. Simplifique sus operaciones y
-              maximice sus beneficios con nuestra solución de gestión empresarial. <br> <a href="#">¡Póngase en marcha
+              maximice sus beneficios con nuestra solución de gestión empresarial. <br> <a class="text-white-50"
+                href="#">¡Póngase en marcha
                 hoy mismo!</a></p>
           </div>
         </div>
@@ -284,7 +290,7 @@
         </div>
       </div>
       <!-- feature-->
-      <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+      <div class="row gx-0 mb-0 justify-content-center">
         <div class="col-lg-6 text-center">
           <svg xmlns="http://www.w3.org/2000/svg" height="250px"
             viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -312,6 +318,7 @@
       </div>
     </div>
   </section>
+
 
   <section class="pricing-section" id="pricing">
     <div class="container px-4 px-lg-5">
@@ -363,6 +370,7 @@
     </div>
   </section>
 
+
   <!-- Contact-->
   <section class="contact-section" id="contact">
     <div class="container px-4 px-lg-5">
@@ -378,7 +386,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-5 col-lg-4 mb-3 mb-md-0">
           <div class="card py-4 h-100">
             <div class="card-body text-center">
@@ -391,7 +398,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="social d-flex justify-content-center pb-3">
@@ -400,7 +406,9 @@
       </div>
     </div>
   </section>
+
+
   <div class="d-flex flex-column position-fixed end-0 bottom-0 z-index-9999 text-center">
     <app-whatsapp-btn></app-whatsapp-btn>
-</div>
+  </div>
 </body>
