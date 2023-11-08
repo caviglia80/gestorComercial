@@ -1,10 +1,10 @@
-<!-- <p>landing-page works!</p>
-
-<button mat-button (click)="navigateToSidebar('/nav/dashboard')">TEST</button> <br> <br>
-<button mat-button (click)="navigateToSidebar('/nav')">TEST</button> <br> <br>
-<button mat-button (click)="navigateToSidebar('/login')">TEST</button> <br> <br>
-<button mat-button (click)="navigateToSidebar('/register')">TEST</button> <br> <br>
-<button mat-button (click)="navigateToSidebar('/payment')">TEST</button> <br> <br>
+<!--
+  <p>landing-page works!</p>
+<button mat-button (click)="navigateTo('/nav/dashboard')">TEST</button> <br> <br>
+<button mat-button (click)="navigateTo('/nav')">TEST</button> <br> <br>
+<button mat-button (click)="navigateTo('/login')">TEST</button> <br> <br>
+<button mat-button (click)="navigateTo('/register')">TEST</button> <br> <br>
+<button mat-button (click)="navigateTo('/payment')">TEST</button> <br> <br>
  -->
 
 <head>
@@ -31,8 +31,8 @@
           <li class="nav-item"><a class="nav-link" href="#features">Aplicación</a></li>
           <li class="nav-item"><a class="nav-link" href="#pricing">Precios</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Ingresar</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Registrarse</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/login">Ingresar</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/register">Registrarse</a></li>
         </ul>
       </div>
     </div>
@@ -63,11 +63,12 @@
             Compy es un sistema de gestión online para administración de empresas y pymes. Pensado por empresarios para
             empresarios, sin necesidad de conocimientos avanzados en contabilidad o programas de gestión. Siempre
             tendras un flujo de trabajo claro y personalizable para que siempre tengas una visión amplia de las
-            oportunidades de tu negocio.<a class="text-white-50" href="#">Regístrate</a> y comienza a administrar tu
+            oportunidades de tu negocio.<a class="text-white-50" routerLink="/register">Regístrate</a> y comienza a
+            administrar tu
             empresa en forma rápida y sencilla.
           </p>
           <div class="row gx-0">
-            <a class="btn btn-primary m-1" href="#">REGISTRARSE</a>
+            <a class="btn btn-primary m-1" routerLink="/register">REGISTRARSE</a>
             <a class="btn btn-primary m-1" href="#features">CARACTERISTICAS</a>
           </div>
         </div>
@@ -88,7 +89,7 @@
               de su empresa. Ya sea una pequeña empresa o una corporación, nuestra plataforma se adapta a sus
               necesidades y le ayuda a mantenerse en el camino hacia el éxito financiero. Simplifique sus operaciones y
               maximice sus beneficios con nuestra solución de gestión empresarial. <br> <a class="text-white-50"
-                href="#">¡Póngase en marcha
+                routerLink="/register">¡Póngase en marcha
                 hoy mismo!</a></p>
           </div>
         </div>
@@ -334,7 +335,7 @@
               <ul class="list-unstyled mt-3 mb-4">
                 <li>Comience con un mes gratis!</li>
               </ul>
-              <button type="button" class="w-100 btn btn-lg btn-primary">COMENZAR GRATIS</button>
+              <button type="button" class="w-100 btn btn-lg btn-primary" routerLink="/register">COMENZAR GRATIS</button>
             </div>
           </div>
         </div>
@@ -348,7 +349,7 @@
               <ul class="list-unstyled mt-3 mb-4">
                 <li>Ahorre adelantando 6 meses!</li>
               </ul>
-              <button type="button" class="w-100 btn btn-lg btn-primary">COMENZAR GRATIS</button>
+              <button type="button" class="w-100 btn btn-lg btn-primary" routerLink="/register">COMENZAR GRATIS</button>
             </div>
           </div>
         </div>
@@ -362,7 +363,7 @@
               <ul class="list-unstyled mt-3 mb-4">
                 <li>Ahorre adelantando 1 año!</li>
               </ul>
-              <button type="button" class="w-100 btn btn-lg btn-primary">COMENZAR GRATIS</button>
+              <button type="button" class="w-100 btn btn-lg btn-primary" routerLink="/register">COMENZAR GRATIS</button>
             </div>
           </div>
         </div>
