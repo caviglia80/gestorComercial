@@ -24,3 +24,7 @@ body {
   background-size: 200% 200%;
   animation: movimiento 8s alternate-reverse infinite;
 }
+
+.error-message {
+  color: rgb(221, 45, 45);
+}
