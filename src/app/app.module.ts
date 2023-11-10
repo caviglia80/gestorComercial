@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import localeEsES from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CheckJwtInterceptor } from '@interceptors/check-jwt/check-jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,11 @@ import { registerLocaleData } from '@angular/common';
     MatSnackBarModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CheckJwtInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
