@@ -9,6 +9,7 @@ import localeEsES from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CheckJwtInterceptor } from '@interceptors/check-jwt/check-jwt.interceptor';
+import { SetJwtInterceptor } from '@interceptors/set-jwt/set-jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,11 @@ import { CheckJwtInterceptor } from '@interceptors/check-jwt/check-jwt.intercept
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CheckJwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SetJwtInterceptor,
       multi: true
     }
   ],
