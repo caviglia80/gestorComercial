@@ -80,7 +80,7 @@
         </mat-expansion-panel>
       </mat-accordion>
 
-      <mat-list-item class="exit">
+      <mat-list-item class="exit" (click)="tokenService.logout();">
         <mat-icon>power_settings_new</mat-icon>
         <span>Salir</span>
       </mat-list-item>

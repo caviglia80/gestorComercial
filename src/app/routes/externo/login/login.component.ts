@@ -15,7 +15,15 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private tokenService: TokenService,
-    private router: Router) { }
+    private router: Router) {
+
+    const token = localStorage.getItem('jwt');
+    if (token && token.split('.').length === 3) {
+      if (!this.tokenService.isExpired(token)) {
+        this.router.navigate(['/nav']);
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.username = localStorage.getItem("username") || "";

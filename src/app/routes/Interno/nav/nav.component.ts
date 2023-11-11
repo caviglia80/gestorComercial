@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data/data.service';
+import { TokenService } from '@services/token/token.service';
 
 @Component({
   selector: 'app-nav',
@@ -11,7 +12,8 @@ export class NavComponent implements OnInit {
   public icono: any = '';
 
   constructor(
-    public dataService: DataService
+    public dataService: DataService,
+    public tokenService: TokenService
   ) { }
 
   ngOnInit() {

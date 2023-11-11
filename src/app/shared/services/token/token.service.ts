@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SharedService } from '@services/shared/shared.service';
 import { jwtDecode } from 'jwt-decode';
-import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -35,27 +34,34 @@ export class TokenService {
     this.router.navigate(['/login']);
   }
 
+  public isExpired(token: string): boolean {
+    try {
+      const decoded = jwtDecode<any>(token);
+      const currentTime = Date.now() / 1000; // Tiempo actual en segundos
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  public verifyToken(token: string): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(SharedService.host + 'JWT/JWTvalidate.php?action=verify', {}, { headers });
+      if (decoded.exp < currentTime) {
+        return true; // Token expirado
+      }
+      return false; // Token válido y no expirado
+    } catch (error) {
+      return true; // Token inválido o error al decodificar
+    }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

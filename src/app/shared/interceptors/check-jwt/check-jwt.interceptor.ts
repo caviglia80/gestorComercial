@@ -9,7 +9,6 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TokenService } from '@services/token/token.service';
-import { jwtDecode } from 'jwt-decode';
 
 @Injectable()
 export class CheckJwtInterceptor implements HttpInterceptor {
@@ -30,7 +29,7 @@ export class CheckJwtInterceptor implements HttpInterceptor {
       return throwError(new Error('Token inválido'));
     }
 
-    if (!token || token.split('.').length !== 3 || this.isExpired(token)) {
+    if (this.tokenService.isExpired(token)) {
       // Si el token ha expirado
       this.tokenService.logout(); // Cierra la sesión
       return throwError(new Error('Token expirado'));
@@ -47,17 +46,4 @@ export class CheckJwtInterceptor implements HttpInterceptor {
     );
   }
 
-  private isExpired(token: string): boolean {
-    try {
-      const decoded = jwtDecode<any>(token);
-      const currentTime = Date.now() / 1000; // Tiempo actual en segundos
-
-      if (decoded.exp < currentTime) {
-        return true; // Token expirado
-      }
-      return false; // Token válido y no expirado
-    } catch (error) {
-      return true; // Token inválido o error al decodificar
-    }
-  }
 }
