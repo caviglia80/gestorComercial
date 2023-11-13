@@ -16,7 +16,6 @@ export class ConfiguracionGeneralAjustesComponent implements OnInit {
   public Color2 = '#000000';
   public colorPickerIsOpen = false;
   public copyEnabled = false;
-  public notificacionesEnabled = false;
   public titulo = '';
 
   constructor(
@@ -36,7 +35,6 @@ export class ConfiguracionGeneralAjustesComponent implements OnInit {
         this.Color1 = this.dataConfig.color1;
         this.Color2 = this.dataConfig.color2;
         this.titulo = this.dataConfig.titulo;
-        this.notificacionesEnabled = this.dataConfig.notificacionesEnabled === '1';
       }
     });
   }
@@ -94,9 +92,5 @@ export class ConfiguracionGeneralAjustesComponent implements OnInit {
   public setTitulo(titulo: string) {
     if (titulo !== this.dataConfig.titulo)
       this.dataService.fetchConfiguracion('PUT', { id: 1, titulo: titulo });
-  }
-
-  public habilitaNotificaciones(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, notificacionesEnabled: isChecked ? "1" : "0" });
   }
 }

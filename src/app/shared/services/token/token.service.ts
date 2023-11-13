@@ -47,21 +47,4 @@ export class TokenService {
       return true; // Token inválido o error al decodificar
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -242,7 +242,6 @@ export class configuracion {
   ingresoRapidoEnabled: string;
   egresoRapidoEnabled: string;
   ingresoRestaStockEnabled: string;
-  notificacionesEnabled: string;
   ingresoAnuladoSumaStockEnabled: string;
   permitirStockCeroEnabled: string;
   titulo: string;
@@ -256,7 +255,6 @@ export class configuracion {
     ingresoRapidoEnabled = '1',
     egresoRapidoEnabled = '1',
     ingresoRestaStockEnabled = '1',
-    notificacionesEnabled = '1',
     ingresoAnuladoSumaStockEnabled = '1',
     permitirStockCeroEnabled = '0',
     titulo = 'Gestor Comercial'
@@ -271,7 +269,6 @@ export class configuracion {
     this.ingresoRestaStockEnabled = ingresoRestaStockEnabled;
     this.ingresoAnuladoSumaStockEnabled = ingresoAnuladoSumaStockEnabled;
     this.permitirStockCeroEnabled = permitirStockCeroEnabled;
-    this.notificacionesEnabled = notificacionesEnabled;
     this.titulo = titulo;
   }
 }
