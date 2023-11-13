@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { reportesEgresosBP } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
+import { CacheService } from '@services/cache/cache.service';
 
 @Component({
   selector: 'app-reportes-egresos-bp',
@@ -26,7 +27,8 @@ export class ReportesEgresosBPComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     public dataService: DataService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private cacheService: CacheService
   ) {
     this.fechaDesde = this.sharedService.obtenerFechaPrimerDiaDelMes();
     this.fechaHasta = this.sharedService.obtenerFechaUltimoDiaDelMes();
@@ -69,6 +71,7 @@ export class ReportesEgresosBPComponent {
 
   public onFechaChange() {
     if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta)) {
+      this.cacheService.remove('ReporteEgresoBP');
       this.loading(true);
       this.dataService.fetchReporteEgresoBP(`?reporte=4&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
     }

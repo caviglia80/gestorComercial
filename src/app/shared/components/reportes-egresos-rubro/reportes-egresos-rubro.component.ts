@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { reportesEgresosRubro } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
+import { CacheService } from '@services/cache/cache.service';
 
 @Component({
   selector: 'app-reportes-egresos-rubro',
@@ -26,7 +27,8 @@ export class ReportesEgresosRubroComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     public dataService: DataService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private cacheService: CacheService
   ) {
     this.fechaDesde = this.sharedService.obtenerFechaPrimerDiaDelMes();
     this.fechaHasta = this.sharedService.obtenerFechaUltimoDiaDelMes();
@@ -69,6 +71,7 @@ export class ReportesEgresosRubroComponent {
 
   public onFechaChange() {
     if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta)) {
+      this.cacheService.remove('ReporteEgresoRubro');
       this.loading(true);
       this.dataService.fetchReporteEgresoRubro(`?reporte=3&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
     }

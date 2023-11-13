@@ -41,7 +41,7 @@
         <span>Proveedores</span>
       </mat-list-item>
 
-<!--       <mat-list-item routerLinkActive="active-link" routerLink="/nav/billing" (click)="toggleSidenav()">
+      <!--       <mat-list-item routerLinkActive="active-link" routerLink="/nav/billing" (click)="toggleSidenav()">
         <mat-icon>list_alt</mat-icon>
         <span>Facturación</span>
       </mat-list-item> -->
@@ -72,7 +72,8 @@
             <span>Usuarios</span>
           </mat-list-item>
 
-          <mat-list-item class="subMenu" routerLinkActive="active-link" routerLink="/nav/roles" (click)="toggleSidenav()">
+          <mat-list-item class="subMenu" routerLinkActive="active-link" routerLink="/nav/roles"
+            (click)="toggleSidenav()">
             <mat-icon>verified_user</mat-icon>
             <span>Roles</span>
           </mat-list-item>
@@ -80,7 +81,7 @@
         </mat-expansion-panel>
       </mat-accordion>
 
-      <mat-list-item class="exit" (click)="tokenService.logout();">
+      <mat-list-item class="exit" (click)="salir()">
         <mat-icon>power_settings_new</mat-icon>
         <span>Salir</span>
       </mat-list-item>

@@ -80,7 +80,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('Inventario', data, 120);
+            this.cacheService.set('Inventario', data);
             this.ds_Inventario.next(data);
           },
           error: (error) => {
@@ -147,7 +147,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('Usuarios', data, 120);
+            this.cacheService.set('Usuarios', data);
             this.ds_Usuarios.next(data);
           },
           error: (error) => {
@@ -214,7 +214,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('Roles', data, 120);
+            this.cacheService.set('Roles', data);
             this.ds_Roles.next(data);
           },
           error: (error) => {
@@ -281,7 +281,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('Proveedores', data, 120);
+            this.cacheService.set('Proveedores', data);
             this.ds_Proveedores.next(data);
           },
           error: (error) => {
@@ -348,7 +348,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('Ingresos', data, 120);
+            this.cacheService.set('Ingresos', data);
             this.ds_Ingresos.next(data);
           },
           error: (error) => {
@@ -415,7 +415,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('Egresos', data, 120);
+            this.cacheService.set('Egresos', data);
             this.ds_Egresos.next(data);
           },
           error: (error) => {
@@ -482,7 +482,7 @@ export class DataService {
       this.http.get<facturacionAuth[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('FacturacionAuth', data, 120);
+            this.cacheService.set('FacturacionAuth', data);
             this.ds_FacturacionAuth.next(data);
           },
           error: (error) => {
@@ -523,7 +523,7 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('Configuracion', data, 120);
+            this.cacheService.set('Configuracion', data);
             this.ds_Configuracion.next(data);
           },
           error: (error) => {
@@ -561,7 +561,7 @@ export class DataService {
     this.http.get<any[]>(url)
       .subscribe({
         next: (data) => {
-          this.cacheService.set('ReporteIngreso', data, 120);
+          this.cacheService.set('ReporteIngreso', data);
           this.ds_ReporteIngreso.next(data);
         },
         error: (error) => {
@@ -585,7 +585,7 @@ export class DataService {
     this.http.get<any[]>(url)
       .subscribe({
         next: (data) => {
-          this.cacheService.set('ReporteEgresoRubro', data, 120);
+          this.cacheService.set('ReporteEgresoRubro', data);
           this.ds_ReporteEgresoRubro.next(data);
         },
         error: (error) => {
@@ -609,7 +609,7 @@ export class DataService {
     this.http.get<any[]>(url)
       .subscribe({
         next: (data) => {
-          this.cacheService.set('ReporteEgresoBP', data, 120);
+          this.cacheService.set('ReporteEgresoBP', data);
           this.ds_ReporteEgresoBP.next(data);
         },
         error: (error) => {
@@ -619,19 +619,4 @@ export class DataService {
       });
     if (!SharedService.isProduction) console.log('GET');
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

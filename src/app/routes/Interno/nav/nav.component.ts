@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 import { TokenService } from '@services/token/token.service';
+import { CacheService } from '@services/cache/cache.service';
 
 @Component({
   selector: 'app-nav',
@@ -13,10 +14,12 @@ export class NavComponent implements OnInit {
 
   constructor(
     public dataService: DataService,
-    public tokenService: TokenService
+    public tokenService: TokenService,
+    private cacheService: CacheService
   ) { }
 
   ngOnInit() {
+    this.cacheService.clear();
     this.dataInit();
   }
 
@@ -26,8 +29,13 @@ export class NavComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Configuracion$.subscribe((data) => {
-      this.icono = data[0] !== undefined ? data[0].icono : ''
+      this.icono = data[0] !== undefined ? data[0].icono : '';
     });
+  }
+
+  salir() {
+    this.cacheService.clear();
+    this.tokenService.logout();
   }
 }
 

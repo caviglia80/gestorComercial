@@ -4,12 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CacheService {
+  private time: number = 60 * 3; // segundos
   private cache: Map<string, { data: any; expiresAt: number }> = new Map<string, { data: any; expiresAt: number }>();
 
-  constructor() {}
+  constructor() { }
 
   // Agregar un valor a la caché con un tiempo de vida (en segundos)
-  set(key: string, value: any, expiresIn: number): void {
+  set(key: string, value: any, expiresIn: number = this.time): void {
     const expiresAt = Date.now() + expiresIn * 1000;
     this.cache.set(key, { data: value, expiresAt });
   }
