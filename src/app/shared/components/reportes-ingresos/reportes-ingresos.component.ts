@@ -43,7 +43,7 @@ export class ReportesIngresosComponent {
   }
 
   private dataInit() {
-    this.dataService.reportesIngresos$.subscribe({
+    this.dataService.ReporteIngreso$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
         this.loading(false);
@@ -52,7 +52,7 @@ export class ReportesIngresosComponent {
         this.loading(false);
       }
     });
-    this.dataService.fetchReportes('GET', `?reporte=2&startd=${this.fechaDesde}&endd=${this.fechaHasta}`, 'ingresos');
+    this.dataService.fetchReporteIngreso(`?reporte=2&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
   }
 
   private loading(state: boolean) {
@@ -70,9 +70,9 @@ export class ReportesIngresosComponent {
   }
 
   public onFechaChange() {
-      if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta)) {
-        this.loading(true);
-        this.dataService.fetchReportes('GET', `?reporte=2&startd=${this.fechaDesde}&endd=${this.fechaHasta}`, 'ingresos');
-      }
+    if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta)) {
+      this.loading(true);
+      this.dataService.fetchReporteIngreso(`?reporte=2&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
+    }
   }
 }

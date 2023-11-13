@@ -192,6 +192,8 @@ export class IngresosComponent implements AfterViewInit {
     const prod: Inventario = this._getProduct(item.idInventario);
     if (prod)
       this.fullNameProducto = (prod.id + ' - ') + (prod.idExterno !== '' ? prod.idExterno + ' - ' : ' - ') + (prod.nombre);
+    else
+      this.fullNameProducto = item.idInventario + ' (No encontrado en inventario)';
     this.Item.currency = item.currency;
     this.Item.amount = item.amount;
     this.Item.margenBeneficio = item.margenBeneficio;

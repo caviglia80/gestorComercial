@@ -41,7 +41,7 @@ export class ReportesEgresosRubroComponent {
   }
 
   private dataInit() {
-    this.dataService.reportesEgresosRubro$.subscribe({
+    this.dataService.ReporteEgresoRubro$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
         this.loading(false);
@@ -50,7 +50,7 @@ export class ReportesEgresosRubroComponent {
         this.loading(false);
       }
     });
-    this.dataService.fetchReportes('GET', `?reporte=3&startd=${this.fechaDesde}&endd=${this.fechaHasta}`, 'reportesEgresosRubro');
+    this.dataService.fetchReporteEgresoRubro(`?reporte=3&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
   }
 
   private loading(state: boolean) {
@@ -70,7 +70,7 @@ export class ReportesEgresosRubroComponent {
   public onFechaChange() {
     if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta)) {
       this.loading(true);
-      this.dataService.fetchReportes('GET', `?reporte=3&startd=${this.fechaDesde}&endd=${this.fechaHasta}`, 'reportesEgresosRubro');
+      this.dataService.fetchReporteEgresoRubro(`?reporte=3&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
     }
   }
 }
