@@ -10,6 +10,7 @@ import { DataService } from '@services/data/data.service';
   providedIn: 'root',
 })
 export class SharedService {
+  public static isProduction = environment.production;
   public static host = 'https://francisco-caviglia.com.ar/francisco-caviglia/php/'; /* localhost/ */
   public static proxy = 'https://cors-anywhere.herokuapp.com/';
   public currencys: string[] = [
@@ -57,7 +58,7 @@ export class SharedService {
   ) { }
 
   public message(text: string, action = 'Cerrar') {
-      if (!environment.production) {
+      if (!SharedService.isProduction) {
         this.notificationQueue.push({ text, action });
         if (!this.isNotificationDisplayed)
           this.showNextNotification();
