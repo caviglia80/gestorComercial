@@ -69,7 +69,7 @@ export class EgresosComponent implements AfterViewInit {
         this.loading(false);
       }
     });
-    this.dataService.fetchEgresos('GET');
+    this.getProveedor();
   }
 
   private dataInit_Proveedor() {
@@ -79,13 +79,8 @@ export class EgresosComponent implements AfterViewInit {
     this.getProveedor();
   }
 
-  public getInventario() {
-    this.dataService.fetchInventario('GET');
-  }
-
   private _filterProveedor(value: string): any[] {
-    if (this.proveedorData.length === 0)
-      this.getProveedor();
+    this.getProveedor();
     if (value != null) {
       const filterValue = value.toLowerCase();
       return this.proveedorData.filter(item =>

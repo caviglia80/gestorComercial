@@ -74,7 +74,7 @@ export class IngresosComponent implements AfterViewInit {
         this.loading(false);
       }
     });
-    this.dataService.fetchIngresos('GET');
+    this.getInventario();
   }
 
   public onProductoSeleccionado(event: any): void {
@@ -98,7 +98,6 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   private _filterProduct(value: string): any[] {
-    if (this.dataInventario.length === 0)
       this.getInventario();
     if (value != null) {
       const filterValue = value.toLowerCase();
@@ -111,8 +110,7 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   public _getProduct(idInventario: any): Inventario {
-    if (this.dataInventario.length === 0)
-      this.getInventario();
+    this.getInventario();
     if (idInventario !== null && idInventario !== undefined) {
       return this.dataInventario.filter(item =>
         item.id.toString().toLowerCase() === idInventario.toLowerCase()
