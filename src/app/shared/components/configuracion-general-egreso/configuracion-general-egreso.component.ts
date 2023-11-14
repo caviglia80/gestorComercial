@@ -7,7 +7,7 @@ import { empresa } from '@models/mainClasses/main-classes';
   templateUrl: './configuracion-general-egreso.component.html',
   styleUrls: ['./configuracion-general-egreso.component.css']
 })
-export class EmpresaGeneralEgresoComponent implements OnInit {
+export class EmpresaConfiguracionEgresoComponent implements OnInit {
   public dataConfig: empresa = new empresa();
   public egresoRapidoEnabled = false;
 

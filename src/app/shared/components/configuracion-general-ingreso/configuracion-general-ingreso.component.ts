@@ -7,7 +7,7 @@ import { empresa } from '@models/mainClasses/main-classes';
   templateUrl: './configuracion-general-ingreso.component.html',
   styleUrls: ['./configuracion-general-ingreso.component.css']
 })
-export class EmpresaGeneralIngresoComponent implements OnInit {
+export class EmpresaConfiguracionIngresoComponent implements OnInit {
 
   public dataConfig: empresa = new empresa();
   public ingresoRestaStockEnabled = false;

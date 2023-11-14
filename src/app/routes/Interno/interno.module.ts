@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: 'inventario', loadChildren: () => import('@routes/Interno/inventario/inventario.module').then((m) => m.inventarioModule) },
       { path: 'proveedores', loadChildren: () => import('@routes/Interno/proveedores/proveedores.module').then((m) => m.ProveedoresModule) },
       { path: 'reportes', loadChildren: () => import('@app/routes/Interno/reportes/reportes.module').then((m) => m.ReportsModule) },
-      { path: 'empresaGeneral', loadChildren: () => import('@routes/Interno/configuracion-general/configuracion-general.module').then((m) => m.EmpresaGeneralModule) },
+      { path: 'empresaConfiguracion', loadChildren: () => import('@routes/Interno/configuracion-general/configuracion-general.module').then((m) => m.EmpresaConfiguracionModule) },
       { path: 'usuarios', loadChildren: () => import('@routes/Interno/usuarios/usuarios.module').then((m) => m.UsuariosModule) },
       { path: 'roles', loadChildren: () => import('@routes/Interno/roles/roles.module').then((m) => m.RolesModule) },
       { path: '**', loadChildren: () => import('@routes/Interno/dashboard/dashboard.module').then((m) => m.DashboardModule) },

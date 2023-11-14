@@ -8,7 +8,7 @@ import { empresa } from '@models/mainClasses/main-classes';
   templateUrl: './configuracion-general-ajustes.component.html',
   styleUrls: ['./configuracion-general-ajustes.component.css']
 })
-export class EmpresaGeneralAjustesComponent implements OnInit {
+export class EmpresaConfiguracionAjustesComponent implements OnInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageImg = false;
   public dataConfig: empresa = new empresa();
