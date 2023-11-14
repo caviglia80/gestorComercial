@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '@services/data/data.service';
+import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 
 declare global {
@@ -19,41 +18,12 @@ Date.prototype.addHours = function (hours: number): Date {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = '';
   private dataSource: any;
 
   constructor(
-    public dataService: DataService
   ) { }
-
-  ngOnInit() {
-    this.dataInit();
-
-  }
-
-  private dataInit() {
-    this.dataService.Empresa$.subscribe((data) => {
-      this.dataSource = data[0];
-      if (this.dataSource !== undefined) {
-        this.cargarIcono(this.dataSource.icono !== undefined ? this.dataSource.icono : '');
-        document.documentElement.style.setProperty('--color-1', this.dataSource.color1);
-        document.documentElement.style.setProperty('--color-2', this.dataSource.color2);
-        this.cargarTitulo(this.dataSource.titulo);
-      }
-    });
-  }
-
-  private cargarIcono(icon: string) {
-    const link = document.querySelector('#page-icon') as HTMLLinkElement;
-    link.href = icon;
-  }
-
-  private cargarTitulo(titulo: string) {
-    document.title = titulo;
-    this.title = titulo;
-  }
-
 }
 
 @Injectable()

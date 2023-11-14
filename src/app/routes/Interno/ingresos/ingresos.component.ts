@@ -17,6 +17,7 @@ import { Inventario } from '@models/mainClasses/main-classes';
 })
 
 export class IngresosComponent implements OnInit, AfterViewInit {
+  public dataConfig: empresa = new empresa();
   public inventarioControl = new FormControl();
   public filteredInventario: Observable<any[]>;
   public dataSource = new MatTableDataSource<moneyIncome>;
@@ -66,6 +67,11 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   private dataInit() {
+    this.dataService.Empresa$.subscribe((data) => {
+      this.dataConfig = data[0];
+    });
+    this.dataService.fetchEmpresa('GET');
+
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
@@ -87,7 +93,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     const inventario: Inventario = this._getProduct(event.option.value);
     if (inventario)
       if (inventario.tipo === 'Producto') {
-        if (this.dataService.getCurrentEmpresa().permitirStockCeroEnabled === '1') {
+        if (this.dataConfig.permitirStockCeroEnabled === '1') {
           this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
         } else {
           if (inventario.existencias != 0) {
@@ -154,7 +160,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
-    if (this.dataService.getCurrentEmpresa().ingresoRapidoEnabled === '1')
+    if (this.dataConfig.ingresoRapidoEnabled === '1')
       this.Item = this.sharedService.rellenoCampos_IE('i');
     this.create = visible;
   }
@@ -176,7 +182,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public anularItem(item: moneyIncome) {
     item.anulado = '1';
     this.dataService.fetchIngresos('PUT', item);
-    if (this.dataService.getCurrentEmpresa().ingresoAnuladoSumaStockEnabled === '1')
+    if (this.dataConfig.ingresoAnuladoSumaStockEnabled === '1')
       this.sumarStock(this._getProduct(item.idInventario));
   }
 
@@ -205,7 +211,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public record(method: string) {
     if (!this.productoValido()) return;
     try {
-      const config: empresa = this.dataService.getCurrentEmpresa();
       const body: moneyIncome = {
         id: this.Item.id,
         date: this.Item.date,
@@ -221,7 +226,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         description: this.Item.description
       };
       this.dataService.fetchIngresos(method, body);
-      if (config.ingresoRestaStockEnabled === '1' && method === 'POST')
+      if (this.dataConfig.ingresoRestaStockEnabled === '1' && method === 'POST')
         this.restarStock(this._getProduct(this.Item.idInventario));
     } catch (error) {
       console.error('Se ha producido un error:', error);

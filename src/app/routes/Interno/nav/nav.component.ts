@@ -25,7 +25,21 @@ export class NavComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.icono = data[0] && data[0].icono ? data[0].icono : '';
+
+      if (data[0]) {
+        if (data[0].icono) {
+          this.icono = data[0].icono;
+          const link = document.querySelector('#page-icon') as HTMLLinkElement;
+          link.href = data[0].icono;
+        }
+        if (data[0].color1 && data[0].color2) {
+          document.documentElement.style.setProperty('--color-1', data[0].color1);
+          document.documentElement.style.setProperty('--color-2', data[0].color2);
+        }
+        if (data[0].titulo) {
+          document.title = data[0].titulo;
+        }
+      }
     });
     this.dataService.fetchEmpresa('GET');
   }

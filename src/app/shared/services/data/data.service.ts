@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
-import { facturacionAuth } from '@models/mainClasses/main-classes';
-import { empresa } from '@models/mainClasses/main-classes';
+/* import { facturacionAuth } from '@models/mainClasses/main-classes'; */
 import { CacheService } from '@services/cache/cache.service';
 
 @Injectable({
@@ -28,12 +27,11 @@ export class DataService {
   private ds_Egresos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Egresos$: Observable<any[]> = this.ds_Egresos.asObservable();
 
-  private ds_FacturacionAuth: BehaviorSubject<facturacionAuth[]> = new BehaviorSubject<facturacionAuth[]>([]);
-  public FacturacionAuth$: Observable<facturacionAuth[]> = this.ds_FacturacionAuth.asObservable();
+/*   private ds_FacturacionAuth: BehaviorSubject<facturacionAuth[]> = new BehaviorSubject<facturacionAuth[]>([]);
+  public FacturacionAuth$: Observable<facturacionAuth[]> = this.ds_FacturacionAuth.asObservable(); */
 
   private ds_Empresa: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Empresa$: Observable<any[]> = this.ds_Empresa.asObservable();
-  private currentEmpresa: any;
 
   private ds_ReporteIngreso: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public ReporteIngreso$: Observable<any[]> = this.ds_ReporteIngreso.asObservable();
@@ -49,20 +47,7 @@ export class DataService {
     public sharedService: SharedService,
     private cacheService: CacheService
   ) {
-    this.Empresa$.subscribe((data) => {
-      this.currentEmpresa = data[0];
-    });
-    this.fetchEmpresa('GET');
   }
-
-  public getCurrentEmpresa(): empresa {
-    return this.currentEmpresa;
-  }
-
-  /*   public getPvp(costPrice: any): number {
-      const margin = (this.currentEmpresa.margenBeneficio / 100);
-      return parseFloat(costPrice) * (1 + margin);
-    } */
 
   public fetchInventario(method = '', body: any = {}, proxy = false): void {
     body = JSON.stringify(body);
@@ -466,13 +451,12 @@ export class DataService {
     if (!SharedService.isProduction) console.log(method);
   }
 
-  public fetchFacturacionAuth(method = '', body: any = {}, proxy = false): void {
+ /*  public fetchFacturacionAuth(method = '', body: any = {}, proxy = false): void {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/facturacionAuth.php';
     if (proxy) url = SharedService.proxy + url;
 
-    // Verificar si los datos están en caché
     if (this.cacheService.has('FacturacionAuth') && method === 'GET') {
       this.ds_FacturacionAuth.next(this.cacheService.get('FacturacionAuth'));
       return;
@@ -505,7 +489,7 @@ export class DataService {
         });
     }
     if (!SharedService.isProduction) console.log(method);
-  }
+  } */
 
   public fetchEmpresa(method = '', body: any = {}, proxy = false): void {
     body = JSON.stringify(body);

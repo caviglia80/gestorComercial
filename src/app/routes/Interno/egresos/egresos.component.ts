@@ -8,6 +8,8 @@ import { DataService } from '@services/data/data.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { empresa } from '@models/mainClasses/main-classes';
+
 @Component({
   selector: 'app-egresos',
   templateUrl: './egresos.component.html',
@@ -15,6 +17,7 @@ import { startWith, map } from 'rxjs/operators';
 })
 
 export class EgresosComponent implements OnInit, AfterViewInit {
+  public dataConfig: empresa = new empresa();
   public proveedorControl = new FormControl();
   public proveedorFiltered: Observable<any[]>;
   public proveedorData: proveedor[] = [];
@@ -61,6 +64,11 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   }
 
   private dataInit() {
+    this.dataService.Empresa$.subscribe((data) => {
+      this.dataConfig = data[0];
+    });
+    this.dataService.fetchEmpresa('GET');
+
     this.dataService.Egresos$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
@@ -120,7 +128,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
-    if (this.dataService.getCurrentEmpresa().egresoRapidoEnabled === '1')
+    if (this.dataConfig.egresoRapidoEnabled === '1')
       this.Item = this.sharedService.rellenoCampos_IE('e');
     this.create = visible;
   }

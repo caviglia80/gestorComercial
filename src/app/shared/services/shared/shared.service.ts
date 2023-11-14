@@ -1,10 +1,9 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import { Observable, from } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { DataService } from '@services/data/data.service';
 
 @Injectable({
   providedIn: 'root',
@@ -46,23 +45,21 @@ export class SharedService {
     'Producto',
     'Servicio'
   ];
-  private currentEmpresa: any;
   private notificationQueue: { text: string; action?: string }[] = [];
   private isNotificationDisplayed = false;
   private snackBarRef: MatSnackBarRef<any> | null = null;
 
   constructor(
-    private injector: Injector,
     private ng2ImgMax: Ng2ImgMaxService,
     private snackBar: MatSnackBar
   ) { }
 
   public message(text: string, action = 'Cerrar') {
-      if (!SharedService.isProduction) {
-        this.notificationQueue.push({ text, action });
-        if (!this.isNotificationDisplayed)
-          this.showNextNotification();
-      }
+    if (!SharedService.isProduction) {
+      this.notificationQueue.push({ text, action });
+      if (!this.isNotificationDisplayed)
+        this.showNextNotification();
+    }
   }
 
   private showNextNotification() {
@@ -83,20 +80,16 @@ export class SharedService {
   }
 
   public copy(textToCopy: any) {
-    this.currentEmpresa = this.injector.get(DataService).getCurrentEmpresa();
-    if (this.currentEmpresa.copyEnabled !== undefined)
-      if (this.currentEmpresa.copyEnabled === '1') {
-        const el = document.createElement('textarea');
-        el.value = String(textToCopy);
-        document.body.appendChild(el);
-        el.select();
-        try {
-          document.execCommand('copy');
-          this.message('Texto copiado !');
-        } finally {
-          document.body.removeChild(el);
-        }
-      }
+    const TA = document.createElement('textarea');
+    TA.value = String(textToCopy);
+    document.body.appendChild(TA);
+    TA.select();
+    try {
+      document.execCommand('copy');
+      this.message('Texto copiado !');
+    } finally {
+      document.body.removeChild(TA);
+    }
   }
 
   public encodeBase64(text: string): string {
