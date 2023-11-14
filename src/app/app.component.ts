@@ -20,7 +20,6 @@ Date.prototype.addHours = function (hours: number): Date {
 })
 export class AppComponent {
   title = '';
-  private dataSource: any;
 
   constructor(
   ) { }

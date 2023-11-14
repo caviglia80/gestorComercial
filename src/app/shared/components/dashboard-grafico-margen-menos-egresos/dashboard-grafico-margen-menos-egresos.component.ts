@@ -132,6 +132,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   }
 
   public globalFilter() {
+    if (!this.currentEmpresa) return;
     if (!this.ingresosData.length || !this.egresosData.length) return;
     if (!this.selectedYear.length || !this.selectedCategory.length) return;
 

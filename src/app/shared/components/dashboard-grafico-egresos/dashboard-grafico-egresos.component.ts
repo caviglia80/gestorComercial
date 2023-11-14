@@ -93,6 +93,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
   }
 
   public globalFilter() {
+    if (!this.currentEmpresa) return;
     if (!this.incomeData.length) return;
     if (!this.selectedYear.length || !this.selectedCategory.length) return;
     this.filteredData = this.incomeData.filter(entry => entry.date.startsWith(this.selectedYear));
