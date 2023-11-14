@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -15,7 +15,7 @@ import { startWith, map } from 'rxjs/operators';
   styleUrls: ['./inventario.component.css']
 })
 
-export class inventarioComponent implements AfterViewInit {
+export class inventarioComponent implements OnInit, AfterViewInit {
   public proveedorControl = new FormControl();
   public proveedorFiltered: Observable<any[]>;
   public proveedorData: proveedor[] = [];
@@ -40,7 +40,6 @@ export class inventarioComponent implements AfterViewInit {
   };
 
   constructor(
-    private cdr: ChangeDetectorRef,
     public dataService: DataService,
     public sharedService: SharedService
   ) {
@@ -48,15 +47,17 @@ export class inventarioComponent implements AfterViewInit {
       startWith(''),
       map(value => this._filterProveedor(value))
     );
-   }
+  }
+
+  ngOnInit() {
+    this.dataInit();
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataInit();
-    this.dataInit_Proveedor();
   }
 
   private dataInit() {
@@ -70,9 +71,7 @@ export class inventarioComponent implements AfterViewInit {
       }
     });
     this.dataService.fetchInventario('GET');
-  }
 
-  private dataInit_Proveedor() {
     this.dataService.Proveedores$.subscribe((data) => {
       this.proveedorData = data;
     });
@@ -84,20 +83,20 @@ export class inventarioComponent implements AfterViewInit {
   }
 
   private _filterProveedor(value: string): any[] {
-    if (this.proveedorData.length === 0)
-      this.getProveedor();
-    if (value != null) {
-      const filterValue = value.toLowerCase();
-      return this.proveedorData.filter(item =>
-        item.company.toLowerCase().includes(filterValue) ||
-        item.contactFullname.toString().toLowerCase().includes(filterValue)
-      );
+    this.getProveedor();
+    if (value) {
+      const filterValue = value?.toString().toLowerCase();
+      if (filterValue)
+        return this.proveedorData.filter(item =>
+          item.company?.toString().toLowerCase().includes(filterValue) ||
+          item.contactFullname?.toString().toLowerCase().includes(filterValue)
+        );
+      else return [];
     } else return [];
   }
 
   private loading(state: boolean) {
     this.isLoading = state;
-    this.cdr.detectChanges();
   }
 
   public getColumnsKeys() {
@@ -105,8 +104,8 @@ export class inventarioComponent implements AfterViewInit {
   }
 
   public searchFilter(filterValue: string) {
-    filterValue = filterValue.trim().toLowerCase();
-    this.dataSource.filter = filterValue === '' ? '' : filterValue;
+    filterValue = filterValue?.toString().toLowerCase().trim();
+    this.dataSource.filter = filterValue ? filterValue : '';
   }
 
   public Detail(visible: boolean) {
@@ -141,7 +140,7 @@ export class inventarioComponent implements AfterViewInit {
 
   public duplicateItem(item: Inventario) {
     this.Double(true);
-    const originalExternalID: string = item.idExterno == null ? "" : item.idExterno;
+    const originalExternalID: string = item.idExterno ? item.idExterno : "";
     item.idExterno = 'Duplicado - ' + item.idExterno;
     this.rellenarRecord(item);
     item.idExterno = originalExternalID;
@@ -172,9 +171,9 @@ export class inventarioComponent implements AfterViewInit {
         id: this.Item.id,
         idExterno: this.Item.idExterno,
         nombre: this.Item.nombre,
-        existencias: this.Item.existencias == null ? 0 : this.Item.existencias,
-        costo: this.Item.costo == null ? 0 : this.Item.costo,
-        margenBeneficio: this.Item.margenBeneficio == null ? 0 : this.Item.margenBeneficio,
+        existencias: this.Item.existencias ? this.Item.existencias : 0,
+        costo: this.Item.costo ? this.Item.costo : 0,
+        margenBeneficio: this.Item.margenBeneficio ? this.Item.margenBeneficio : 0,
         tipo: this.Item.tipo,
         proveedor: this.Item.proveedor,
         duracion: this.Item.duracion,
