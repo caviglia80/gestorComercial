@@ -1,4 +1,6 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~material-icons/iconfont/material-icons.css';
+@import '~roboto-font/css/fonts.css';
 
 :root {
   /* colores globales - de mas claro a mas oscuro */
@@ -29,8 +31,6 @@
   --externo-color-2-R: 76;
   --externo-color-2-G: 40;
   --externo-color-2-B: 236;
-
-
 }
 
 * {
@@ -44,7 +44,7 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, Helvetica, Arial, sans-serif !important;
+  font-family: 'Roboto', Arial, sans-serif !important;
 }
 
 h4 {
