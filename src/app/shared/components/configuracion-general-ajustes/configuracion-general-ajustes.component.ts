@@ -15,7 +15,6 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
   public Color1 = '#000000';
   public Color2 = '#000000';
   public colorPickerIsOpen = false;
-  public copyEnabled = false;
   public nombre = '';
 
   constructor(
@@ -31,7 +30,6 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
     this.dataService.Empresa$.subscribe((data) => {
       this.dataConfig = data[0];
       if (this.dataConfig !== undefined) {
-        this.copyEnabled = this.dataConfig.copyEnabled === '1';
         this.Color1 = this.dataConfig.color1;
         this.Color2 = this.dataConfig.color2;
         this.nombre = this.dataConfig.nombre;
@@ -62,10 +60,6 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
 
   public restauracionDeFabrica() {
     this.dataService.fetchEmpresa('PUT', new empresa());
-  }
-
-  public habilitarCopy(isChecked: boolean) {
-    this.dataService.fetchEmpresa('PUT', { id: 1, copyEnabled: isChecked ? "1" : "0" });
   }
 
   public color1(color: string) {
