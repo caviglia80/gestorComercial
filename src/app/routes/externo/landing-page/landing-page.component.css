@@ -204,7 +204,7 @@ body {
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 5%,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .5) 50%,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 100%),
-    url("/assets/defaultLogo.png");
+    url("/assets/logo.png");
   background-repeat: no-repeat;
   background-position: center top;
   height: 100vh;

@@ -1,10 +1,10 @@
 <mat-form-field class="full-width">
-  <p class="form-field-description">Ingrese título</p>
-  <input matInput placeholder="Título" [(ngModel)]="nombre" (blur)="setNombre(nombre)">
+  <p class="form-field-description">Nombre de empresa</p>
+  <input matInput placeholder="Empresa" [(ngModel)]="nombre" (blur)="setNombre(nombre)">
 </mat-form-field>
 
 <div class="form-group container-fluid py-3">
-  <p class="mb-1">Logo (*.png)</p>
+  <p class="mb-1">Logo de empresa (*.png)</p>
   <input type="file" class="form-control" id="crtFile" #fileInput (change)="onFileSelected($event, 'png')">
   <div class="text-danger m-2" *ngIf="errorMessageImg">Solo se permiten imagenes con extensión .png</div>
 </div>

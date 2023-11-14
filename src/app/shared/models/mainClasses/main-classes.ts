@@ -248,7 +248,7 @@ export class empresa {
 
   constructor(
     id = 1,
-    icono = 'assets/defaultLogo.png',
+    icono = 'assets/logo.png',
     copyEnabled = '1',
     color1 = '#846bf3',
     color2 = '#4c28ec',
@@ -257,7 +257,7 @@ export class empresa {
     ingresoRestaStockEnabled = '1',
     ingresoAnuladoSumaStockEnabled = '1',
     permitirStockCeroEnabled = '0',
-    nombre = 'Gestor Comercial'
+    nombre = 'Compy'
   ) {
     this.id = id;
     this.icono = icono;
