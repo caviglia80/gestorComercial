@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -16,7 +16,7 @@ import { Inventario } from '@models/mainClasses/main-classes';
   styleUrls: ['./ingresos.component.css']
 })
 
-export class IngresosComponent implements AfterViewInit {
+export class IngresosComponent implements OnInit, AfterViewInit {
   public inventarioControl = new FormControl();
   public filteredInventario: Observable<any[]>;
   public dataSource = new MatTableDataSource<moneyIncome>;
@@ -45,7 +45,6 @@ export class IngresosComponent implements AfterViewInit {
   };
 
   constructor(
-    private cdr: ChangeDetectorRef,
     public dataService: DataService,
     public sharedService: SharedService
   ) {
@@ -55,13 +54,16 @@ export class IngresosComponent implements AfterViewInit {
     );
   }
 
+  ngOnInit() {
+    this.dataInit();
+    this.dataInit_Inventario();
+  }
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataInit();
-    this.dataInit_Inventario();
   }
 
   private dataInit() {
@@ -74,48 +76,49 @@ export class IngresosComponent implements AfterViewInit {
         this.loading(false);
       }
     });
-    this.getInventario();
+    this.dataService.fetchIngresos('GET');
   }
 
   public onProductoSeleccionado(event: any): void {
     const inventario: Inventario = this._getProduct(event.option.value);
-    if (inventario.tipo === 'Producto') {
-      if (this.dataService.getCurrentConfiguracion().permitirStockCeroEnabled === '1') {
-        this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
-      } else {
-        if (inventario.existencias != 0) {
+    if (inventario)
+      if (inventario.tipo === 'Producto') {
+        if (this.dataService.getCurrentConfiguracion().permitirStockCeroEnabled === '1') {
           this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
         } else {
-          this.sharedService.message('Advertencia: el producto no tiene stock');
-          this.Item.amount = 0;
-          this.inventarioControl.reset();
+          if (inventario.existencias != 0) {
+            this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
+          } else {
+            this.sharedService.message('Advertencia: el producto no tiene stock');
+            this.Item.amount = 0;
+            this.inventarioControl.reset();
+          }
         }
+        this.Item.margenBeneficio = inventario.margenBeneficio;
+      } else {
+        this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
       }
-      this.Item.margenBeneficio = inventario.margenBeneficio;
-    } else {
-      this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
-    }
   }
 
   private _filterProduct(value: string): any[] {
-      this.getInventario();
+    this.getInventario();
     if (value != null) {
-      const filterValue = value.toLowerCase();
+      const filterValue = value?.toString().toLowerCase();
       return this.dataInventario.filter(item =>
-        item.nombre?.toLowerCase().includes(filterValue) ||
-        item.id.toString().toLowerCase().includes(filterValue) ||
-        item.idExterno?.toLowerCase().includes(filterValue)
+        item.nombre?.toString().toLowerCase().includes(filterValue) ||
+        item.id?.toString().toLowerCase().includes(filterValue) ||
+        item.idExterno?.toString().toLowerCase().includes(filterValue)
       );
     } else return [];
   }
 
   public _getProduct(idInventario: any): Inventario {
     this.getInventario();
-    if (idInventario !== null && idInventario !== undefined) {
+    if (idInventario)
       return this.dataInventario.filter(item =>
-        item.id.toString().toLowerCase() === idInventario.toLowerCase()
+        item.id?.toString().toLowerCase() === idInventario?.toString().toLowerCase()
       )[0];
-    } else return null!;
+    else return null!;
   }
 
   private dataInit_Inventario() {
@@ -131,7 +134,6 @@ export class IngresosComponent implements AfterViewInit {
 
   private loading(state: boolean) {
     this.isLoading = state;
-    this.cdr.detectChanges();
   }
 
   public getColumnsKeys() {
@@ -139,8 +141,8 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   public searchFilter(filterValue: string) {
-    filterValue = filterValue.trim().toLowerCase();
-    this.dataSource.filter = filterValue === '' ? '' : filterValue;
+    filterValue = filterValue?.toString().toLowerCase().trim();
+    this.dataSource.filter = filterValue ? filterValue : '';
   }
 
   public Detail(visible: boolean) {
@@ -186,10 +188,10 @@ export class IngresosComponent implements AfterViewInit {
     this.Item.id = item.id;
     this.Item.date = item.date;
     this.Item.idInventario = item.idInventario;
-    this.fullNameProducto = item.idInventario != null ? item.idInventario : '';
+    this.fullNameProducto = item.idInventario ? item.idInventario : '';
     const prod: Inventario = this._getProduct(item.idInventario);
     if (prod)
-      this.fullNameProducto = (prod.id + ' - ') + (prod.idExterno !== '' ? prod.idExterno + ' - ' : ' - ') + (prod.nombre);
+      this.fullNameProducto = (prod.id + ' - ') + (prod.idExterno ? prod.idExterno + ' - ' : ' - ') + (prod.nombre);
     else
       this.fullNameProducto = item.idInventario + ' (No encontrado en inventario)';
     this.Item.currency = item.currency;
@@ -233,9 +235,9 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   private restarStock(inventario: Inventario) {
-    if (inventario !== undefined) {
+    if (inventario) {
       if (inventario.tipo === 'Producto') {
-        let existenciasCount: number = inventario.existencias == null ? 0 : inventario.existencias;
+        let existenciasCount: number = inventario.existencias ? inventario.existencias : 0;
         if (existenciasCount > 0) {
           existenciasCount--;
           this.dataService.fetchInventario('PUT', { id: inventario.id, existencias: existenciasCount });
@@ -249,7 +251,7 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   private productoValido(): boolean {
-    if (this._getProduct(this.Item.idInventario) === undefined) {
+    if (!this._getProduct(this.Item.idInventario)) {
       this.sharedService.message('Advertencia: seleccione un producto válido.');
       this.Item.amount = 0;
       this.inventarioControl.reset();
@@ -259,9 +261,9 @@ export class IngresosComponent implements AfterViewInit {
   }
 
   private sumarStock(inventario: Inventario) {
-    if (inventario !== undefined) {
+    if (inventario) {
       if (inventario.tipo === 'Producto') {
-        let existenciasCount: number = inventario.existencias == null ? 0 : inventario.existencias;
+        let existenciasCount: number = inventario.existencias ? inventario.existencias : 0;
         existenciasCount++;
         this.dataService.fetchInventario('PUT', { id: inventario.id, existencias: existenciasCount });
         this.sharedService.message('Se sumó una unidad al stock.');
@@ -273,9 +275,9 @@ export class IngresosComponent implements AfterViewInit {
 
   public getName(inventario: Inventario): string {
     if (inventario.idExterno)
-      return inventario.id.toString() + ' - ' + inventario.idExterno.toString() + ' - ' + inventario.nombre;
+      return inventario.id?.toString() + ' - ' + inventario.idExterno?.toString() + ' - ' + inventario.nombre;
     else
-      return inventario.id.toString() + ' - ' + inventario.nombre;
+      return inventario.id?.toString() + ' - ' + inventario.nombre;
   }
 }
 
