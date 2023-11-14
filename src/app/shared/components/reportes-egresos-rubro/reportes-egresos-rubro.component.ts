@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -12,7 +12,7 @@ import { CacheService } from '@services/cache/cache.service';
   templateUrl: './reportes-egresos-rubro.component.html',
   styleUrls: ['./reportes-egresos-rubro.component.css']
 })
-export class ReportesEgresosRubroComponent {
+export class ReportesEgresosRubroComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<reportesEgresosRubro>;
   public isLoading = true;
   public fechaDesde = ''
@@ -25,7 +25,6 @@ export class ReportesEgresosRubroComponent {
   };
 
   constructor(
-    private cdr: ChangeDetectorRef,
     public dataService: DataService,
     public sharedService: SharedService,
     private cacheService: CacheService
@@ -34,12 +33,15 @@ export class ReportesEgresosRubroComponent {
     this.fechaHasta = this.sharedService.obtenerFechaUltimoDiaDelMes();
   }
 
+  ngOnInit() {
+    this.dataInit();
+  }
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataInit();
   }
 
   private dataInit() {
@@ -57,7 +59,6 @@ export class ReportesEgresosRubroComponent {
 
   private loading(state: boolean) {
     this.isLoading = state;
-    this.cdr.detectChanges();
   }
 
   public getColumnsKeys() {
@@ -65,8 +66,8 @@ export class ReportesEgresosRubroComponent {
   }
 
   public searchFilter(filterValue: string) {
-    filterValue = filterValue.trim().toLowerCase();
-    this.dataSource.filter = filterValue === '' ? '' : filterValue;
+    filterValue = filterValue?.toString().toLowerCase().trim();
+    this.dataSource.filter = filterValue ? filterValue : '';
   }
 
   public onFechaChange() {

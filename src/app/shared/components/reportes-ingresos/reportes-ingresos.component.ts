@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -12,7 +12,7 @@ import { CacheService } from '@services/cache/cache.service';
   templateUrl: './reportes-ingresos.component.html',
   styleUrls: ['./reportes-ingresos.component.css']
 })
-export class ReportesIngresosComponent {
+export class ReportesIngresosComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<reportesIngresos>;
   public isLoading = true;
   public fechaDesde = ''
@@ -27,7 +27,6 @@ export class ReportesIngresosComponent {
   };
 
   constructor(
-    private cdr: ChangeDetectorRef,
     public dataService: DataService,
     public sharedService: SharedService,
     private cacheService: CacheService
@@ -36,12 +35,15 @@ export class ReportesIngresosComponent {
     this.fechaHasta = this.sharedService.obtenerFechaUltimoDiaDelMes();
   }
 
+  ngOnInit() {
+    this.dataInit();
+  }
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataInit();
   }
 
   private dataInit() {
@@ -59,7 +61,6 @@ export class ReportesIngresosComponent {
 
   private loading(state: boolean) {
     this.isLoading = state;
-    this.cdr.detectChanges();
   }
 
   public getColumnsKeys() {
@@ -67,8 +68,8 @@ export class ReportesIngresosComponent {
   }
 
   public searchFilter(filterValue: string) {
-    filterValue = filterValue.trim().toLowerCase();
-    this.dataSource.filter = filterValue === '' ? '' : filterValue;
+    filterValue = filterValue?.toString().toLowerCase().trim();
+    this.dataSource.filter = filterValue ? filterValue : '';
   }
 
   public onFechaChange() {
