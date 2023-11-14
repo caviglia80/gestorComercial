@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { inventarioComponent } from '@routes/Interno/inventario/inventario.component';
-import { SharedMaterialModule } from '@modules/shared/shared.module';
+import { MaterialModule } from '@app/shared/modules/material/material.module';
 
 const routes: Routes = [
   { path: '', component: inventarioComponent },
@@ -13,7 +13,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedMaterialModule
+    MaterialModule
   ],
 })
 export class inventarioModule { }

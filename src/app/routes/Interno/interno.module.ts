@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { NavComponent } from '@routes/Interno/nav/nav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { SharedMaterialModule } from '@modules/shared/shared.module';
+import { MaterialModule } from '@app/shared/modules/material/material.module';
 import { MatListModule } from '@angular/material/list';
 
 const routes: Routes = [
@@ -33,7 +33,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedMaterialModule,
+    MaterialModule,
     MatSidenavModule,
     MatListModule
   ]

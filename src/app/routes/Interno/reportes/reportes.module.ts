@@ -5,7 +5,7 @@ import { ReportsComponent } from '@app/routes/Interno/reportes/reportes.componen
 import { ReportesEgresosRubroComponent } from '@components/reportes-egresos-rubro/reportes-egresos-rubro.component';
 import { ReportesEgresosBPComponent } from '@components/reportes-egresos-bp/reportes-egresos-bp.component';
 import { ReportesIngresosComponent } from '@components/reportes-ingresos/reportes-ingresos.component';
-import { SharedMaterialModule } from '@modules/shared/shared.module';
+import { MaterialModule } from '@app/shared/modules/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [
@@ -22,7 +22,7 @@ const routes: Routes = [
   imports: [
   CommonModule,
   RouterModule.forChild(routes),
-  SharedMaterialModule,
+  MaterialModule,
   FlexLayoutModule
   ],
 })

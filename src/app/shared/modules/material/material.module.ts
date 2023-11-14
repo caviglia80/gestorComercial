@@ -44,4 +44,4 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonToggleModule
   ]
 })
-export class SharedMaterialModule { }
+export class MaterialModule { }

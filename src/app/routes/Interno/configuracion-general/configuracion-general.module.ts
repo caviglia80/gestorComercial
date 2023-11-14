@@ -6,7 +6,7 @@ import { EmpresaConfiguracionAjustesComponent } from '@components/configuracion-
 import { EmpresaConfiguracionEgresoComponent } from '@components/configuracion-general-egreso/configuracion-general-egreso.component';
 import { EmpresaConfiguracionIngresoComponent } from '@components/configuracion-general-ingreso/configuracion-general-ingreso.component';
 import { EmpresaConfiguracionInventarioComponent } from '@components/configuracion-general-inventario/configuracion-general-inventario.component';
-import { SharedMaterialModule } from '@modules/shared/shared.module';
+import { MaterialModule } from '@app/shared/modules/material/material.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 const routes: Routes = [
@@ -24,7 +24,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedMaterialModule,
+    MaterialModule,
     ColorPickerModule
   ],
 })

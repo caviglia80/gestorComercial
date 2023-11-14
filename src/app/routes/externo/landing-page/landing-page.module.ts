@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from '@routes/Externo/landing-page/landing-page.component';
-import { SharedMaterialModule } from '@modules/shared/shared.module';
+import { MaterialModule } from '@app/shared/modules/material/material.module';
 import { WhatsappBtnComponent } from '@components/whatsapp-btn/whatsapp-btn.component';
 
 const routes: Routes = [
@@ -16,7 +16,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedMaterialModule
+    MaterialModule
   ],
 })
 export class LandingPageModule { }
