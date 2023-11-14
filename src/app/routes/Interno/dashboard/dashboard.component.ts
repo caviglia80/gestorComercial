@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 
 @Component({
@@ -6,19 +6,11 @@ import { DataService } from '@services/data/data.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   view = "0";
 
   constructor(
     public dataService: DataService
     ) { }
 
-  ngOnInit() {
-    this.dataInit();
-  }
-
-  private dataInit() {
-    this.dataService.fetchIngresos('GET');
-    this.dataService.fetchEgresos('GET');
-  }
 }

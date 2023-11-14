@@ -56,7 +56,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataInit();
-    this.dataInit_Inventario();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -77,6 +76,11 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       }
     });
     this.dataService.fetchIngresos('GET');
+
+    this.dataService.Inventario$.subscribe((data) => {
+      this.dataInventario = data;
+    });
+    this.getInventario();
   }
 
   public onProductoSeleccionado(event: any): void {
@@ -119,13 +123,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         item.id?.toString().toLowerCase() === idInventario?.toString().toLowerCase()
       )[0];
     else return null!;
-  }
-
-  private dataInit_Inventario() {
-    this.dataService.Inventario$.subscribe((data) => {
-      this.dataInventario = data;
-    });
-    this.getInventario();
   }
 
   public getInventario() {
