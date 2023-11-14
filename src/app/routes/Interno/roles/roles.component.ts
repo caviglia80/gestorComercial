@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -12,7 +12,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./roles.component.css']
 })
 
-export class RolesComponent implements AfterViewInit {
+export class RolesComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<Role>;
   public isLoading = true;
   public Item: any = {};
@@ -31,7 +31,6 @@ export class RolesComponent implements AfterViewInit {
   };
 
   constructor(
-    private cdr: ChangeDetectorRef,
     public dataService: DataService,
     public sharedService: SharedService
   ) { }
@@ -55,12 +54,15 @@ export class RolesComponent implements AfterViewInit {
     }
   }
 
+  ngOnInit() {
+    this.dataInit();
+  }
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataInit();
   }
 
   private dataInit() {
@@ -78,7 +80,6 @@ export class RolesComponent implements AfterViewInit {
 
   private loading(state: boolean) {
     this.isLoading = state;
-    this.cdr.detectChanges();
   }
 
   public getColumnsKeys() {
@@ -86,8 +87,8 @@ export class RolesComponent implements AfterViewInit {
   }
 
   public searchFilter(filterValue: string) {
-    filterValue = filterValue.trim().toLowerCase();
-    this.dataSource.filter = filterValue === '' ? '' : filterValue;
+    filterValue = filterValue?.toString().toLowerCase().trim();
+    this.dataSource.filter = filterValue ? filterValue : '';
   }
 
   public Detail(visible: boolean) {

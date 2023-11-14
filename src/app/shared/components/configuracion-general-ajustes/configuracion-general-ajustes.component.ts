@@ -37,6 +37,7 @@ export class ConfiguracionGeneralAjustesComponent implements OnInit {
         this.titulo = this.dataConfig.titulo;
       }
     });
+    this.dataService.fetchConfiguracion('GET');
   }
 
   private clearFileInput() {

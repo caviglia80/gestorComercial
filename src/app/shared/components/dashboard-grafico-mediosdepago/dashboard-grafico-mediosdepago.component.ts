@@ -36,8 +36,6 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
 
   ngOnInit() {
     this.dataInit();
-    if (this.incomeData.length === 0)
-      this.dataService.fetchIngresos('GET');
   }
 
   private dataInit() {
@@ -56,6 +54,7 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
         console.error(error)
       }
     });
+    this.dataService.fetchIngresos('GET');
   }
 
   private init() {
@@ -64,8 +63,8 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
   }
 
   public globalFilter() {
-    if (this.incomeData.length == 0) return;
-    if (this.selectedYear.length === 0 || this.selectedCategory.length === 0) return;
+    if (!this.incomeData.length) return;
+    if (!this.selectedYear.length || !this.selectedCategory.length) return;
     this.filteredData = this.incomeData.filter(entry => entry.date.startsWith(this.selectedYear));
     this.setCategories(this.incomeData);
     if (!this.selectedCategory.includes('Todos los rubros'))
@@ -84,7 +83,7 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
   }
 
   private setYears(data: any) {
-    if (data.length == 0) return;
+    if (!data) return;
     const years = new Set<string>();
     for (const entry of this.incomeData)
       years.add(entry.date.substring(0, 4));
@@ -93,7 +92,7 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
   }
 
   private setCategories(data: any) {
-    if (data.length == 0) return;
+    if (!data) return;
     const filteredCategoriesSet = new Set<string>();
     for (const entry of data)
       filteredCategoriesSet.add(entry.category);

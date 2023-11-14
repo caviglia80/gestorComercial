@@ -23,14 +23,15 @@ export class NavComponent implements OnInit {
     this.dataInit();
   }
 
-  public toggleSidenav() {
-    this.sidenavOpened = !this.sidenavOpened;
-  }
-
   private dataInit() {
     this.dataService.Configuracion$.subscribe((data) => {
-      this.icono = data[0] !== undefined ? data[0].icono : '';
+      this.icono = data[0] && data[0].icono ? data[0].icono : '';
     });
+    this.dataService.fetchConfiguracion('GET');
+  }
+
+  public toggleSidenav() {
+    this.sidenavOpened = !this.sidenavOpened;
   }
 
   salir() {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 import { configuracion } from '@models/mainClasses/main-classes';
 
@@ -7,7 +7,7 @@ import { configuracion } from '@models/mainClasses/main-classes';
   templateUrl: './configuracion-general-egreso.component.html',
   styleUrls: ['./configuracion-general-egreso.component.css']
 })
-export class ConfiguracionGeneralEgresoComponent {
+export class ConfiguracionGeneralEgresoComponent implements OnInit {
   public dataConfig: configuracion = new configuracion();
   public egresoRapidoEnabled = false;
 
@@ -22,10 +22,11 @@ export class ConfiguracionGeneralEgresoComponent {
   private dataInit() {
     this.dataService.Configuracion$.subscribe((data) => {
       this.dataConfig = data[0];
-      if (this.dataConfig !== undefined) {
+      if (this.dataConfig) {
         this.egresoRapidoEnabled = this.dataConfig.egresoRapidoEnabled === '1';
       }
     });
+    this.dataService.fetchConfiguracion('GET');
   }
 
   public habilitarEgresoRapido(isChecked: boolean) {

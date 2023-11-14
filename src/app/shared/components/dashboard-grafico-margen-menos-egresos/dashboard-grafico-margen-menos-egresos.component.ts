@@ -40,25 +40,18 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
 
   constructor(
     public dataService: DataService) {
-    this.confInit();
   }
 
   ngOnInit() {
-    this.IngresosDataInit();
-    this.EgresosdataInit();
-    if (this.ingresosData.length === 0)
-      this.dataService.fetchIngresos('GET');
-    if (this.egresosData.length === 0)
-      this.dataService.fetchEgresos('GET');
+    this.dataInit();
   }
 
-  private confInit() {
+  private dataInit() {
     this.dataService.Configuracion$.subscribe((data) => {
       this.currentConfiguracion = data[0];
     });
-  }
+    this.dataService.fetchConfiguracion('GET');
 
-  private IngresosDataInit() {
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
         data = data.filter(entry => entry.anulado.includes('0'));
@@ -74,9 +67,8 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
         console.error(error)
       }
     });
-  }
+    this.dataService.fetchIngresos('GET');
 
-  private EgresosdataInit() {
     this.dataService.Egresos$.subscribe({
       next: (data) => {
         this.egresosData = data.map((item) => ({
@@ -90,6 +82,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
         console.error(error)
       }
     });
+    this.dataService.fetchEgresos('GET');
   }
 
   private init() {
@@ -139,8 +132,8 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   }
 
   public globalFilter() {
-    if (this.ingresosData.length + this.egresosData.length == 0) return;
-    if (this.selectedYear.length === 0 || this.selectedCategory.length === 0) return;
+    if (!this.ingresosData.length || !this.egresosData.length) return;
+    if (!this.selectedYear.length || !this.selectedCategory.length) return;
 
     this.IngresosFilteredData = this.ingresosData.filter(entry => entry.date.startsWith(this.selectedYear));
     this.setCategories(this.ingresosData);
@@ -158,10 +151,10 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     this.lineChartData = [{
       label: 'Utilidad Operativa',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.currentConfiguracion.color2 === undefined ? 'transparent' : this.currentConfiguracion.color2,
-      borderColor: this.currentConfiguracion.color1 === undefined ? 'transparent' : this.currentConfiguracion.color1,
-      pointBackgroundColor: this.currentConfiguracion.color2 === undefined ? 'transparent' : this.currentConfiguracion.color2,
-      pointBorderColor: this.currentConfiguracion.color1 === undefined ? 'transparent' : this.currentConfiguracion.color1,
+      backgroundColor: this.currentConfiguracion.color2 ? this.currentConfiguracion.color2 : 'transparent',
+      borderColor: this.currentConfiguracion.color1 ? this.currentConfiguracion.color1 : 'transparent',
+      pointBackgroundColor: this.currentConfiguracion.color2 ? this.currentConfiguracion.color2 : 'transparent',
+      pointBorderColor: this.currentConfiguracion.color1 ? this.currentConfiguracion.color1 : 'transparent',
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,
@@ -170,7 +163,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   }
 
   private setYears(data: any) {
-    if (data.length == 0) return;
+    if (!data) return;
     const years = new Set<string>();
     for (const entry of data)
       years.add(entry.date.substring(0, 4));
@@ -181,7 +174,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   }
 
   private setCategories(data: any) {
-    if (data.length == 0) return;
+    if (!data) return;
     const filteredCategoriesSet = new Set<string>();
     for (const entry of data)
       filteredCategoriesSet.add(entry.category);
@@ -191,4 +184,3 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     this.Categories = Array.from(filteredCategoriesSet);
   }
 }
-

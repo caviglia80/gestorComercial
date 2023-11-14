@@ -36,16 +36,18 @@ export class DashboardGraficoMargenComponent implements OnInit {
 
   constructor(
     public dataService: DataService) {
-    this.confInit();
   }
 
   ngOnInit() {
     this.dataInit();
-    if (this.incomeData.length === 0)
-      this.dataService.fetchIngresos('GET');
   }
 
   private dataInit() {
+    this.dataService.Configuracion$.subscribe((data) => {
+      this.currentConfiguracion = data[0];
+    });
+    this.dataService.fetchConfiguracion('GET');
+
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
         data = data.filter(entry => entry.anulado.includes('0'));
@@ -63,12 +65,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
         console.error(error)
       }
     });
-  }
-
-  private confInit() {
-    this.dataService.Configuracion$.subscribe((data) => {
-      this.currentConfiguracion = data[0];
-    });
+    this.dataService.fetchIngresos('GET');
   }
 
   private init() {
@@ -102,8 +99,8 @@ export class DashboardGraficoMargenComponent implements OnInit {
   }
 
   public globalFilter() {
-    if (this.incomeData.length == 0) return;
-    if (this.selectedYear.length === 0 || this.selectedCategory.length === 0) return;
+    if (!this.incomeData.length) return;
+    if (!this.selectedYear.length || !this.selectedCategory.length) return;
     this.filteredData = this.incomeData.filter(entry => entry.date.startsWith(this.selectedYear));
     this.setCategories(this.incomeData);
     if (!this.selectedCategory.includes('Todos los rubros'))
@@ -114,10 +111,10 @@ export class DashboardGraficoMargenComponent implements OnInit {
     this.lineChartData = [{
       label: 'Utilidad Bruta',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.currentConfiguracion.color2 === undefined ? 'transparent' : this.currentConfiguracion.color2,
-      borderColor: this.currentConfiguracion.color1 === undefined ? 'transparent' : this.currentConfiguracion.color1,
-      pointBackgroundColor: this.currentConfiguracion.color2 === undefined ? 'transparent' : this.currentConfiguracion.color2,
-      pointBorderColor: this.currentConfiguracion.color1 === undefined ? 'transparent' : this.currentConfiguracion.color1,
+      backgroundColor: this.currentConfiguracion.color2 ? this.currentConfiguracion.color2 : 'transparent',
+      borderColor: this.currentConfiguracion.color1 ? this.currentConfiguracion.color1 : 'transparent',
+      pointBackgroundColor: this.currentConfiguracion.color2 ? this.currentConfiguracion.color2 : 'transparent',
+      pointBorderColor: this.currentConfiguracion.color1 ? this.currentConfiguracion.color1 : 'transparent',
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,
@@ -126,7 +123,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
   }
 
   private setYears(data: any) {
-    if (data.length == 0) return;
+     if (!data) return;
     const years = new Set<string>();
     for (const entry of this.incomeData)
       years.add(entry.date.substring(0, 4));
@@ -135,7 +132,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
   }
 
   private setCategories(data: any) {
-    if (data.length == 0) return;
+     if (!data) return;
     const filteredCategoriesSet = new Set<string>();
     for (const entry of data)
       filteredCategoriesSet.add(entry.category);

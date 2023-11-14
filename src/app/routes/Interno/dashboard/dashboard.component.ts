@@ -10,7 +10,8 @@ export class DashboardComponent implements OnInit {
   view = "0";
 
   constructor(
-    public dataService: DataService) { }
+    public dataService: DataService
+    ) { }
 
   ngOnInit() {
     this.dataInit();
