@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 import { TokenService } from '@services/token/token.service';
 import { CacheService } from '@services/cache/cache.service';
-
+import { empresa } from '@models/mainClasses/main-classes';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  public Empresa: empresa | null = null;
   public sidenavOpened = true;
   public icono: any = '';
 
@@ -25,19 +26,19 @@ export class NavComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-
       if (data[0]) {
-        if (data[0].icono) {
-          this.icono = data[0].icono;
+        this.Empresa = data[0];
+        if (this.Empresa!.icono) {
+          this.icono = this.Empresa!.icono;
           const link = document.querySelector('#page-icon') as HTMLLinkElement;
-          link.href = data[0].icono;
+          link.href = this.Empresa!.icono;
         }
-        if (data[0].color1 && data[0].color2) {
-          document.documentElement.style.setProperty('--color-1', data[0].color1);
-          document.documentElement.style.setProperty('--color-2', data[0].color2);
+        if (this.Empresa!.color1 && this.Empresa!.color2) {
+          document.documentElement.style.setProperty('--color-1', this.Empresa!.color1);
+          document.documentElement.style.setProperty('--color-2', this.Empresa!.color2);
         }
-        if (data[0].nombre) {
-          document.title = data[0].nombre;
+        if (this.Empresa!.nombre) {
+          document.title = this.Empresa!.nombre;
         }
       }
     });
