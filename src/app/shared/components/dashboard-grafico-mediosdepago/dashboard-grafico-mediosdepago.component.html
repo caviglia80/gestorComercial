@@ -1,4 +1,4 @@
-<div class="chart-container mat-elevation-z3 m-1" *ngIf="incomeData.length !== 0">
+<div class="chart-container mat-elevation-z3 m-1" *ngIf="incomeData">
   <div class="chart">
     <mat-select [(ngModel)]="selectedYear" (selectionChange)="globalFilter()">
       <mat-option *ngFor="let year of Years" [value]="year">{{ year }}</mat-option>

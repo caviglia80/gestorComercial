@@ -9,8 +9,8 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-margen-menos-egresos.component.css']
 })
 export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
+  public Empresa: empresa | null = null;
   public chartTootilp = 'Ingresos Totales: son todos los ingresos generados por las ventas de productos o servicios. Costos Operativos: incluyen todos los gastos directamente relacionados con las operaciones del negocio. Utilidad Operativa = Ingresos Totales - Costos Operativos';
-  private currentEmpresa: empresa = new empresa();
   public lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -48,7 +48,8 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.currentEmpresa = data[0];
+      if (data[0])
+        this.Empresa = data[0];
     });
     this.dataService.fetchEmpresa('GET');
 
@@ -132,7 +133,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   }
 
   public globalFilter() {
-    if (!this.currentEmpresa) return;
+    if (!this.Empresa) return;
     if (!this.ingresosData.length || !this.egresosData.length) return;
     if (!this.selectedYear.length || !this.selectedCategory.length) return;
 
@@ -152,10 +153,10 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     this.lineChartData = [{
       label: 'Utilidad Operativa',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.currentEmpresa.color2 ? this.currentEmpresa.color2 : 'transparent',
-      borderColor: this.currentEmpresa.color1 ? this.currentEmpresa.color1 : 'transparent',
-      pointBackgroundColor: this.currentEmpresa.color2 ? this.currentEmpresa.color2 : 'transparent',
-      pointBorderColor: this.currentEmpresa.color1 ? this.currentEmpresa.color1 : 'transparent',
+      backgroundColor: this.Empresa.color2 ? this.Empresa.color2 : 'transparent',
+      borderColor: this.Empresa.color1 ? this.Empresa.color1 : 'transparent',
+      pointBackgroundColor: this.Empresa.color2 ? this.Empresa.color2 : 'transparent',
+      pointBorderColor: this.Empresa.color1 ? this.Empresa.color1 : 'transparent',
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,

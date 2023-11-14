@@ -9,7 +9,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-ingresos.component.css']
 })
 export class DashboardGraficoIngresosComponent implements OnInit {
-  private currentEmpresa: empresa = new empresa();
+  public Empresa: empresa | null = null;
   public lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -43,7 +43,8 @@ export class DashboardGraficoIngresosComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.currentEmpresa = data[0];
+      if (data[0])
+        this.Empresa = data[0];
     });
     this.dataService.fetchEmpresa('GET');
 
@@ -95,7 +96,7 @@ export class DashboardGraficoIngresosComponent implements OnInit {
   }
 
   public globalFilter() {
-    if (!this.currentEmpresa) return;
+    if (!this.Empresa) return;
     if (!this.incomeData.length) return;
     if (!this.selectedYear.length || !this.selectedCategory.length) return;
     this.filteredData = this.incomeData.filter(entry => entry.date.startsWith(this.selectedYear));
@@ -107,10 +108,10 @@ export class DashboardGraficoIngresosComponent implements OnInit {
     this.lineChartData = [{
       label: 'Ingresos',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.currentEmpresa.color2 ? this.currentEmpresa.color2 : 'transparent',
-      borderColor: this.currentEmpresa.color1 ? this.currentEmpresa.color1 : 'transparent',
-      pointBackgroundColor: this.currentEmpresa.color2 ? this.currentEmpresa.color2 : 'transparent',
-      pointBorderColor: this.currentEmpresa.color1 ? this.currentEmpresa.color1 : 'transparent',
+      backgroundColor: this.Empresa.color2 ? this.Empresa.color2 : 'transparent',
+      borderColor: this.Empresa.color1 ? this.Empresa.color1 : 'transparent',
+      pointBackgroundColor: this.Empresa.color2 ? this.Empresa.color2 : 'transparent',
+      pointBorderColor: this.Empresa.color1 ? this.Empresa.color1 : 'transparent',
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,
