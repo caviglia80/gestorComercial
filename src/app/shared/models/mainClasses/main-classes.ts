@@ -233,7 +233,7 @@ export class facturacionAuth {
   }
 }
 
-export class configuracion {
+export class empresa {
   id: number;
   icono: string;
   copyEnabled: string;

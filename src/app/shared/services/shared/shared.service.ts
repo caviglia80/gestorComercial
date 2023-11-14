@@ -46,7 +46,7 @@ export class SharedService {
     'Producto',
     'Servicio'
   ];
-  private currentConfiguracion: any;
+  private currentEmpresa: any;
   private notificationQueue: { text: string; action?: string }[] = [];
   private isNotificationDisplayed = false;
   private snackBarRef: MatSnackBarRef<any> | null = null;
@@ -83,9 +83,9 @@ export class SharedService {
   }
 
   public copy(textToCopy: any) {
-    this.currentConfiguracion = this.injector.get(DataService).getCurrentConfiguracion();
-    if (this.currentConfiguracion.copyEnabled !== undefined)
-      if (this.currentConfiguracion.copyEnabled === '1') {
+    this.currentEmpresa = this.injector.get(DataService).getCurrentEmpresa();
+    if (this.currentEmpresa.copyEnabled !== undefined)
+      if (this.currentEmpresa.copyEnabled === '1') {
         const el = document.createElement('textarea');
         el.value = String(textToCopy);
         document.body.appendChild(el);

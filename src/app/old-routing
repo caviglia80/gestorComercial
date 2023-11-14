@@ -14,7 +14,7 @@ import { EgresosComponent } from '@routes/Interno/egresos/egresos.component';
 import { inventarioComponent } from '@routes/Interno/inventario/inventario.component';
 import { ReportsComponent } from '@routes/Interno/reportes/reportes.component';
 import { ProveedoresComponent } from '@routes/Interno/proveedores/proveedores.component';
-import { ConfiguracionGeneralComponent } from '@routes/Interno/configuracion-general/configuracion-general.component';
+import { EmpresaGeneralComponent } from '@routes/Interno/configuracion-general/configuracion-general.component';
 import { UsuariosComponent } from '@routes/Interno/usuarios/usuarios.component';
 import { RolesComponent } from '@routes/Interno/roles/roles.component';
 
@@ -31,7 +31,7 @@ const routes: Routes = [
       { path: 'inventario', component: inventarioComponent },
       { path: 'proveedores', component: ProveedoresComponent },
       { path: 'reportes', component: ReportsComponent },
-      { path: 'configuracionGeneral', component: ConfiguracionGeneralComponent },
+      { path: 'empresaGeneral', component: EmpresaGeneralComponent },
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'roles', component: RolesComponent },
       // Otras rutas dentro del nav

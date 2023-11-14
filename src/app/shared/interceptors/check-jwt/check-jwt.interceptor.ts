@@ -17,7 +17,7 @@ export class CheckJwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const publicRoutes = ['login', 'register', 'payment', 'JWT', 'configuracion'];
+    const publicRoutes = ['login', 'register', 'payment', 'JWT', 'empresa'];
     const isPublicRoute = publicRoutes.some(route => request.url.includes(route));
     if (isPublicRoute)
       return next.handle(request);

@@ -10,7 +10,7 @@ import { AfipRequest } from '@models/afipRequest/afip-request';
   templateUrl: './configuracion-general-facturacion.component.html',
   styleUrls: ['./configuracion-general-facturacion.component.css']
 })
-export class ConfiguracionGeneralFacturacionComponent implements AfterViewInit {
+export class EmpresaGeneralFacturacionComponent implements AfterViewInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageCrt = false;
   public errorMessageKey = false;

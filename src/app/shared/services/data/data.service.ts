@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { facturacionAuth } from '@models/mainClasses/main-classes';
-import { configuracion } from '@models/mainClasses/main-classes';
+import { empresa } from '@models/mainClasses/main-classes';
 import { CacheService } from '@services/cache/cache.service';
 
 @Injectable({
@@ -31,9 +31,9 @@ export class DataService {
   private ds_FacturacionAuth: BehaviorSubject<facturacionAuth[]> = new BehaviorSubject<facturacionAuth[]>([]);
   public FacturacionAuth$: Observable<facturacionAuth[]> = this.ds_FacturacionAuth.asObservable();
 
-  private ds_Configuracion: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  public Configuracion$: Observable<any[]> = this.ds_Configuracion.asObservable();
-  private currentConfiguracion: any;
+  private ds_Empresa: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public Empresa$: Observable<any[]> = this.ds_Empresa.asObservable();
+  private currentEmpresa: any;
 
   private ds_ReporteIngreso: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public ReporteIngreso$: Observable<any[]> = this.ds_ReporteIngreso.asObservable();
@@ -49,18 +49,18 @@ export class DataService {
     public sharedService: SharedService,
     private cacheService: CacheService
   ) {
-    this.Configuracion$.subscribe((data) => {
-      this.currentConfiguracion = data[0];
+    this.Empresa$.subscribe((data) => {
+      this.currentEmpresa = data[0];
     });
-    this.fetchConfiguracion('GET');
+    this.fetchEmpresa('GET');
   }
 
-  public getCurrentConfiguracion(): configuracion {
-    return this.currentConfiguracion;
+  public getCurrentEmpresa(): empresa {
+    return this.currentEmpresa;
   }
 
   /*   public getPvp(costPrice: any): number {
-      const margin = (this.currentConfiguracion.margenBeneficio / 100);
+      const margin = (this.currentEmpresa.margenBeneficio / 100);
       return parseFloat(costPrice) * (1 + margin);
     } */
 
@@ -507,15 +507,15 @@ export class DataService {
     if (!SharedService.isProduction) console.log(method);
   }
 
-  public fetchConfiguracion(method = '', body: any = {}, proxy = false): void {
+  public fetchEmpresa(method = '', body: any = {}, proxy = false): void {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'DB/configuracion.php';
+    let url = SharedService.host + 'DB/empresa.php';
     if (proxy) url = SharedService.proxy + url;
 
     // Verificar si los datos están en caché
-    if (this.cacheService.has('Configuracion') && method === 'GET') {
-      this.ds_Configuracion.next(this.cacheService.get('Configuracion'));
+    if (this.cacheService.has('Empresa') && method === 'GET') {
+      this.ds_Empresa.next(this.cacheService.get('Empresa'));
       return;
     }
 
@@ -523,8 +523,8 @@ export class DataService {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('Configuracion', data);
-            this.ds_Configuracion.next(data);
+            this.cacheService.set('Empresa', data);
+            this.ds_Empresa.next(data);
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -536,8 +536,8 @@ export class DataService {
         .subscribe({
           next: () => {
             this.sharedService.message('Configuración actualizada !');
-            this.cacheService.remove('Configuracion');
-            this.fetchConfiguracion('GET');
+            this.cacheService.remove('Empresa');
+            this.fetchEmpresa('GET');
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));

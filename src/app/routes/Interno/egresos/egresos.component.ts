@@ -24,7 +24,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   public create = false;
   public edit = false;
   public detail = false;
-  /*   private currentConfiguracion: any; */
+  /*   private currentEmpresa: any; */
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -120,7 +120,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
-    if (this.dataService.getCurrentConfiguracion().egresoRapidoEnabled === '1')
+    if (this.dataService.getCurrentEmpresa().egresoRapidoEnabled === '1')
       this.Item = this.sharedService.rellenoCampos_IE('e');
     this.create = visible;
   }

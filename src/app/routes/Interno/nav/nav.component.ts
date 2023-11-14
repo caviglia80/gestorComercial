@@ -24,10 +24,10 @@ export class NavComponent implements OnInit {
   }
 
   private dataInit() {
-    this.dataService.Configuracion$.subscribe((data) => {
+    this.dataService.Empresa$.subscribe((data) => {
       this.icono = data[0] && data[0].icono ? data[0].icono : '';
     });
-    this.dataService.fetchConfiguracion('GET');
+    this.dataService.fetchEmpresa('GET');
   }
 
   public toggleSidenav() {

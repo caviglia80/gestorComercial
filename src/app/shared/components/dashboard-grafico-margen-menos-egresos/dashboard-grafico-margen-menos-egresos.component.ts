@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
-import { moneyIncome, moneyOutlays, configuracion } from '@models/mainClasses/main-classes';
+import { moneyIncome, moneyOutlays, empresa } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { DataService } from '@services/data/data.service';
 })
 export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   public chartTootilp = 'Ingresos Totales: son todos los ingresos generados por las ventas de productos o servicios. Costos Operativos: incluyen todos los gastos directamente relacionados con las operaciones del negocio. Utilidad Operativa = Ingresos Totales - Costos Operativos';
-  private currentConfiguracion: configuracion = new configuracion();
+  private currentEmpresa: empresa = new empresa();
   public lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -47,10 +47,10 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   }
 
   private dataInit() {
-    this.dataService.Configuracion$.subscribe((data) => {
-      this.currentConfiguracion = data[0];
+    this.dataService.Empresa$.subscribe((data) => {
+      this.currentEmpresa = data[0];
     });
-    this.dataService.fetchConfiguracion('GET');
+    this.dataService.fetchEmpresa('GET');
 
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
@@ -151,10 +151,10 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     this.lineChartData = [{
       label: 'Utilidad Operativa',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.currentConfiguracion.color2 ? this.currentConfiguracion.color2 : 'transparent',
-      borderColor: this.currentConfiguracion.color1 ? this.currentConfiguracion.color1 : 'transparent',
-      pointBackgroundColor: this.currentConfiguracion.color2 ? this.currentConfiguracion.color2 : 'transparent',
-      pointBorderColor: this.currentConfiguracion.color1 ? this.currentConfiguracion.color1 : 'transparent',
+      backgroundColor: this.currentEmpresa.color2 ? this.currentEmpresa.color2 : 'transparent',
+      borderColor: this.currentEmpresa.color1 ? this.currentEmpresa.color1 : 'transparent',
+      pointBackgroundColor: this.currentEmpresa.color2 ? this.currentEmpresa.color2 : 'transparent',
+      pointBorderColor: this.currentEmpresa.color1 ? this.currentEmpresa.color1 : 'transparent',
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,

@@ -1,17 +1,17 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
-import { configuracion } from '@models/mainClasses/main-classes';
+import { empresa } from '@models/mainClasses/main-classes';
 
 @Component({
   selector: 'app-configuracion-general-ajustes',
   templateUrl: './configuracion-general-ajustes.component.html',
   styleUrls: ['./configuracion-general-ajustes.component.css']
 })
-export class ConfiguracionGeneralAjustesComponent implements OnInit {
+export class EmpresaGeneralAjustesComponent implements OnInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageImg = false;
-  public dataConfig: configuracion = new configuracion();
+  public dataConfig: empresa = new empresa();
   public Color1 = '#000000';
   public Color2 = '#000000';
   public colorPickerIsOpen = false;
@@ -28,7 +28,7 @@ export class ConfiguracionGeneralAjustesComponent implements OnInit {
   }
 
   private dataInit() {
-    this.dataService.Configuracion$.subscribe((data) => {
+    this.dataService.Empresa$.subscribe((data) => {
       this.dataConfig = data[0];
       if (this.dataConfig !== undefined) {
         this.copyEnabled = this.dataConfig.copyEnabled === '1';
@@ -37,7 +37,7 @@ export class ConfiguracionGeneralAjustesComponent implements OnInit {
         this.titulo = this.dataConfig.titulo;
       }
     });
-    this.dataService.fetchConfiguracion('GET');
+    this.dataService.fetchEmpresa('GET');
   }
 
   private clearFileInput() {
@@ -54,28 +54,28 @@ export class ConfiguracionGeneralAjustesComponent implements OnInit {
       } else {
         this.errorMessageImg = false;
         this.sharedService.encodeImgToBase64(selectedFile).subscribe((Base64) => {
-          this.dataService.fetchConfiguracion('PUT', { id: 1, icono: Base64 });
+          this.dataService.fetchEmpresa('PUT', { id: 1, icono: Base64 });
         });
       }
     }
   }
 
   public restauracionDeFabrica() {
-    this.dataService.fetchConfiguracion('PUT', new configuracion());
+    this.dataService.fetchEmpresa('PUT', new empresa());
   }
 
   public habilitarCopy(isChecked: boolean) {
-    this.dataService.fetchConfiguracion('PUT', { id: 1, copyEnabled: isChecked ? "1" : "0" });
+    this.dataService.fetchEmpresa('PUT', { id: 1, copyEnabled: isChecked ? "1" : "0" });
   }
 
   public color1(color: string) {
     if (color !== this.dataConfig.color1)
-      this.dataService.fetchConfiguracion('PUT', { id: 1, color1: color });
+      this.dataService.fetchEmpresa('PUT', { id: 1, color1: color });
   }
 
   public color2(color: string) {
     if (color !== this.dataConfig.color2)
-      this.dataService.fetchConfiguracion('PUT', { id: 1, color2: color });
+      this.dataService.fetchEmpresa('PUT', { id: 1, color2: color });
   }
 
   public ColorPickerIsOpen(open: boolean) {
@@ -92,6 +92,6 @@ export class ConfiguracionGeneralAjustesComponent implements OnInit {
 
   public setTitulo(titulo: string) {
     if (titulo !== this.dataConfig.titulo)
-      this.dataService.fetchConfiguracion('PUT', { id: 1, titulo: titulo });
+      this.dataService.fetchEmpresa('PUT', { id: 1, titulo: titulo });
   }
 }

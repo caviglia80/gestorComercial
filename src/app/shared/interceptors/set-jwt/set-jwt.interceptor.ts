@@ -14,7 +14,7 @@ export class SetJwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    const publicRoutes = ['login', 'register', 'payment', 'JWT', 'configuracion'];
+    const publicRoutes = ['login', 'register', 'payment', 'JWT', 'empresa'];
     const isPublicRoute = publicRoutes.some(route => request.url.includes(route));
     if (isPublicRoute)
       return next.handle(request);

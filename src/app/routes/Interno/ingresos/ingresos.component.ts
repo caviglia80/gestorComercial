@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { configuracion, moneyIncome } from '@models/mainClasses/main-classes';
+import { empresa, moneyIncome } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { startWith, map } from 'rxjs/operators';
@@ -87,7 +87,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     const inventario: Inventario = this._getProduct(event.option.value);
     if (inventario)
       if (inventario.tipo === 'Producto') {
-        if (this.dataService.getCurrentConfiguracion().permitirStockCeroEnabled === '1') {
+        if (this.dataService.getCurrentEmpresa().permitirStockCeroEnabled === '1') {
           this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
         } else {
           if (inventario.existencias != 0) {
@@ -154,7 +154,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
-    if (this.dataService.getCurrentConfiguracion().ingresoRapidoEnabled === '1')
+    if (this.dataService.getCurrentEmpresa().ingresoRapidoEnabled === '1')
       this.Item = this.sharedService.rellenoCampos_IE('i');
     this.create = visible;
   }
@@ -176,7 +176,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public anularItem(item: moneyIncome) {
     item.anulado = '1';
     this.dataService.fetchIngresos('PUT', item);
-    if (this.dataService.getCurrentConfiguracion().ingresoAnuladoSumaStockEnabled === '1')
+    if (this.dataService.getCurrentEmpresa().ingresoAnuladoSumaStockEnabled === '1')
       this.sumarStock(this._getProduct(item.idInventario));
   }
 
@@ -205,7 +205,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public record(method: string) {
     if (!this.productoValido()) return;
     try {
-      const config: configuracion = this.dataService.getCurrentConfiguracion();
+      const config: empresa = this.dataService.getCurrentEmpresa();
       const body: moneyIncome = {
         id: this.Item.id,
         date: this.Item.date,

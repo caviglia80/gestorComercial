@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   }
 
   private dataInit() {
-    this.dataService.Configuracion$.subscribe((data) => {
+    this.dataService.Empresa$.subscribe((data) => {
       this.dataSource = data[0];
       if (this.dataSource !== undefined) {
         this.cargarIcono(this.dataSource.icono !== undefined ? this.dataSource.icono : '');
