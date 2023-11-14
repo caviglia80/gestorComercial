@@ -35,14 +35,14 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.tokenService.login(this.username, this.password, this.remember).subscribe(
-      response => {
+    this.tokenService.login(this.username, this.password, this.remember).subscribe({
+      next: (data) => {
         this.loginError = false;
       },
-      error => {
+      error: (error) => {
         console.error(error);
         this.loginError = true;
       }
-    );
+    });
   }
 }
