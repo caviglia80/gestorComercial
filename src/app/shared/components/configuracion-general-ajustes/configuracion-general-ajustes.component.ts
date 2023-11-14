@@ -16,7 +16,7 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
   public Color2 = '#000000';
   public colorPickerIsOpen = false;
   public copyEnabled = false;
-  public titulo = '';
+  public nombre = '';
 
   constructor(
     public dataService: DataService,
@@ -34,7 +34,7 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
         this.copyEnabled = this.dataConfig.copyEnabled === '1';
         this.Color1 = this.dataConfig.color1;
         this.Color2 = this.dataConfig.color2;
-        this.titulo = this.dataConfig.titulo;
+        this.nombre = this.dataConfig.nombre;
       }
     });
     this.dataService.fetchEmpresa('GET');
@@ -90,8 +90,8 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
     document.documentElement.style.setProperty('--color-2', color);
   }
 
-  public setTitulo(titulo: string) {
-    if (titulo !== this.dataConfig.titulo)
-      this.dataService.fetchEmpresa('PUT', { id: 1, titulo: titulo });
+  public setNombre(nombre: string) {
+    if (nombre !== this.dataConfig.nombre)
+      this.dataService.fetchEmpresa('PUT', { id: 1, nombre: nombre });
   }
 }

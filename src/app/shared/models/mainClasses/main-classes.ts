@@ -244,7 +244,7 @@ export class empresa {
   ingresoRestaStockEnabled: string;
   ingresoAnuladoSumaStockEnabled: string;
   permitirStockCeroEnabled: string;
-  titulo: string;
+  nombre: string;
 
   constructor(
     id = 1,
@@ -257,7 +257,7 @@ export class empresa {
     ingresoRestaStockEnabled = '1',
     ingresoAnuladoSumaStockEnabled = '1',
     permitirStockCeroEnabled = '0',
-    titulo = 'Gestor Comercial'
+    nombre = 'Gestor Comercial'
   ) {
     this.id = id;
     this.icono = icono;
@@ -269,7 +269,7 @@ export class empresa {
     this.ingresoRestaStockEnabled = ingresoRestaStockEnabled;
     this.ingresoAnuladoSumaStockEnabled = ingresoAnuladoSumaStockEnabled;
     this.permitirStockCeroEnabled = permitirStockCeroEnabled;
-    this.titulo = titulo;
+    this.nombre = nombre;
   }
 }
 

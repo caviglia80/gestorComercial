@@ -36,8 +36,8 @@ export class NavComponent implements OnInit {
           document.documentElement.style.setProperty('--color-1', data[0].color1);
           document.documentElement.style.setProperty('--color-2', data[0].color2);
         }
-        if (data[0].titulo) {
-          document.title = data[0].titulo;
+        if (data[0].nombre) {
+          document.title = data[0].nombre;
         }
       }
     });
