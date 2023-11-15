@@ -23,7 +23,7 @@
       </button>
     </div>
 
-    <div class="table-wrapper" [ngClass]="{'noVisible': dataSource.data.length === 0 || isLoading }">
+    <div class="table-wrapper" [ngClass]="{'noVisible': !dataSource.data || isLoading }">
 
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
@@ -63,7 +63,7 @@
       <p><mat-icon class="spin">hourglass_empty</mat-icon><br>
         Cargando..</p>
     </div>
-    <div class="text-center sinDatos" *ngIf="dataSource.data.length === 0 && !isLoading">
+    <div class="text-center sinDatos" *ngIf="!dataSource.data && !isLoading">
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
     <mat-paginator class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons
