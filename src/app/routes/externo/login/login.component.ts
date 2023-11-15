@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenService } from '@services/token/token.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,16 +13,8 @@ export class LoginComponent implements OnInit {
   public remember: boolean = false;
 
   constructor(
-    private tokenService: TokenService,
-    private router: Router) {
-
-    const token = localStorage.getItem('jwt');
-    if (token && token.split('.').length === 3) {
-      if (!this.tokenService.isExpired(token)) {
-        this.router.navigate(['/nav']);
-      }
-    }
-  }
+    private tokenService: TokenService
+  ) { }
 
   ngOnInit(): void {
     this.username = localStorage.getItem("username") || "";

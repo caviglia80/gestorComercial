@@ -2,6 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { GlobalVariables } from 'src/app/app.component';
+import { TokenService } from '@services/token/token.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -12,7 +13,10 @@ export class LandingPageComponent implements AfterViewInit {
   public isNavbarOpen = false;
   public WspNumber = GlobalVariables.wspNumer;
 
-  constructor(private router: Router) { }
+  constructor(
+    private tokenService: TokenService,
+    private router: Router) {
+  }
 
   ngAfterViewInit(): void {
     // Navbar shrink function
@@ -55,9 +59,18 @@ export class LandingPageComponent implements AfterViewInit {
     });
   }
 
-
   navigateToSidebar(str: string) {
     this.router.navigate([str]);
+  }
+
+  login() {
+    const token = localStorage.getItem('jwt');
+    if (token && token.split('.').length === 3)
+      if (!this.tokenService.isExpired(token)) {
+        this.router.navigate(['/nav']);
+        return;
+      }
+    this.router.navigate(['/login']);
   }
 }
 
