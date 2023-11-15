@@ -5,12 +5,12 @@
     <div fxLayout="row">
       <mat-form-field fxFlex="50%">
         <p class="form-field-description">Fecha desde:</p>
-        <input type="date" matInput [(ngModel)]="fechaDesde" (ngModelChange)="onFechaChange()">
+        <input type="date" class="py-1" matInput [(ngModel)]="fechaDesde" (ngModelChange)="onFechaChange()">
       </mat-form-field>
 
       <mat-form-field fxFlex="50%">
         <p class="form-field-description">Fecha hasta:</p>
-        <input type="date" matInput [(ngModel)]="fechaHasta" (ngModelChange)="onFechaChange()">
+        <input type="date" class="py-1" matInput [(ngModel)]="fechaHasta" (ngModelChange)="onFechaChange()">
       </mat-form-field>
     </div>
 
@@ -81,8 +81,8 @@
     <div class="text-center sinDatos m-5 p-5" *ngIf="!dataSource.data.length && !isLoading">
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
-    <mat-paginator *ngIf="dataSource.data.length && !isLoading"  class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons
-      aria-label="Select page of periodic elements">
+    <mat-paginator *ngIf="dataSource.data.length && !isLoading" class="custom-paginator"
+      [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </div>

@@ -5,12 +5,12 @@
     <div fxLayout="row">
       <mat-form-field fxFlex="50%">
         <p class="form-field-description">Fecha desde:</p>
-        <input type="date" matInput [(ngModel)]="fechaDesde" (ngModelChange)="onFechaChange()">
+        <input type="date" class="py-1" matInput [(ngModel)]="fechaDesde" (ngModelChange)="onFechaChange()">
       </mat-form-field>
 
       <mat-form-field fxFlex="50%">
         <p class="form-field-description">Fecha hasta:</p>
-        <input type="date" matInput [(ngModel)]="fechaHasta" (ngModelChange)="onFechaChange()">
+        <input type="date" class="py-1" matInput [(ngModel)]="fechaHasta" (ngModelChange)="onFechaChange()">
       </mat-form-field>
     </div>
 
