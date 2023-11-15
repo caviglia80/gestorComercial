@@ -4,9 +4,9 @@ import { moneyIncome, moneyOutlays, empresa } from '@models/mainClasses/main-cla
 import { DataService } from '@services/data/data.service';
 
 @Component({
-  selector: 'app-dashboard-grafico-margen-menos-egresos',
-  templateUrl: './dashboard-grafico-margen-menos-egresos.component.html',
-  styleUrls: ['./dashboard-grafico-margen-menos-egresos.component.css']
+  selector: 'app-dashboard-grafico-utilidad-operativa',
+  templateUrl: './dashboard-grafico-utilidad-operativa.component.html',
+  styleUrls: ['./dashboard-grafico-utilidad-operativa.component.css']
 })
 export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   public Empresa: empresa | null = null;

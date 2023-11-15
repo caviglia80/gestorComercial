@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardGraficoMargenMenosEgresosComponent } from './dashboard-grafico-margen-menos-egresos.component';
+import { DashboardGraficoMargenMenosEgresosComponent } from './dashboard-grafico-utilidad-operativa.component';
 
 describe('DashboardGraficoMargenMenosEgresosComponent', () => {
   let component: DashboardGraficoMargenMenosEgresosComponent;

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardGraficoMargenComponent } from './dashboard-grafico-margen.component';
+import { DashboardGraficoMargenComponent } from './dashboard-grafico-utilidad-bruta.component';
 
 describe('DashboardGraficoMargenComponent', () => {
   let component: DashboardGraficoMargenComponent;
