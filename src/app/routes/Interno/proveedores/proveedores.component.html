@@ -30,7 +30,7 @@
       </button>
     </div>
 
-    <div class="table-wrapper" [ngClass]="{'noVisible': !dataSource.data || isLoading }">
+    <div class="table-wrapper" [ngClass]="{'noVisible': !dataSource.data.length || isLoading }">
 
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
@@ -143,15 +143,15 @@
     <div class="loading-overlay" *ngIf="isLoading">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
-    <div class="text-center sinDatos" *ngIf="isLoading">
+    <div class="text-center sinDatos m-5 p-5" *ngIf="isLoading">
       <p><mat-icon class="spin">hourglass_empty</mat-icon><br>
         Cargando..</p>
     </div>
-    <div class="text-center sinDatos" *ngIf="!dataSource.data && !isLoading">
+    <div class="text-center sinDatos m-5 p-5" *ngIf="!dataSource.data.length && !isLoading">
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
 
-    <mat-paginator class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons
+    <mat-paginator *ngIf="dataSource.data.length && !isLoading"  class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons
       aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>

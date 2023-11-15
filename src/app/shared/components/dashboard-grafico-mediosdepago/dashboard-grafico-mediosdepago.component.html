@@ -7,7 +7,7 @@
     <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [type]="chartType" [options]="chartOptions"
       *ngIf="filteredData"></canvas>
 
-    <div class="text-center sinDatos" *ngIf="!filteredData">
+    <div class="text-center sinDatos m-5 p-5" *ngIf="!filteredData">
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
 

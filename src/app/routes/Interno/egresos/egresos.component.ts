@@ -67,7 +67,8 @@ export class EgresosComponent implements OnInit, AfterViewInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.dataConfig = data[0];
+      if (data[0])
+        this.dataConfig = data[0];
     });
     this.dataService.fetchEmpresa('GET');
 
