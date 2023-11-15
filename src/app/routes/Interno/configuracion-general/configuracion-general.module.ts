@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { EmpresaConfiguracionComponent } from '@routes/Interno/configuracion-general/configuracion-general.component';
-import { EmpresaConfiguracionAjustesComponent } from '@components/configuracion-general-ajustes/configuracion-general-ajustes.component';
-import { EmpresaConfiguracionEgresoComponent } from '@components/configuracion-general-egreso/configuracion-general-egreso.component';
-import { EmpresaConfiguracionIngresoComponent } from '@components/configuracion-general-ingreso/configuracion-general-ingreso.component';
-import { EmpresaConfiguracionInventarioComponent } from '@components/configuracion-general-inventario/configuracion-general-inventario.component';
+import { EmpresaConfiguracionAjustesComponent } from './configuracion-general-ajustes/configuracion-general-ajustes.component';
+import { EmpresaConfiguracionEgresoComponent } from './configuracion-general-egreso/configuracion-general-egreso.component';
+import { EmpresaConfiguracionIngresoComponent } from './configuracion-general-ingreso/configuracion-general-ingreso.component';
+import { EmpresaConfiguracionInventarioComponent } from './configuracion-general-inventario/configuracion-general-inventario.component';
 import { MaterialModule } from '@app/shared/modules/material/material.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 
