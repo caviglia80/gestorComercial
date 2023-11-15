@@ -10,6 +10,7 @@ import { DataService } from '@services/data/data.service';
 })
 export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   public Empresa: empresa | null = null;
+  public loading: boolean = true;
   public chartTootilp = 'Ingresos Totales: son todos los ingresos generados por las ventas de productos o servicios. Costos Operativos: incluyen todos los gastos directamente relacionados con las operaciones del negocio. Utilidad Operativa = Ingresos Totales - Costos Operativos';
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -162,6 +163,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
       lineTension: 0.1,
       borderWidth: 2,
     }];
+    this.loading = false;
   }
 
   private setYears(data: any) {

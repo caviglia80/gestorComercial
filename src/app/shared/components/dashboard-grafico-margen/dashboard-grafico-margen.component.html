@@ -1,14 +1,24 @@
-<div class="chart mat-elevation-z3 m-1" *ngIf="incomeData && Empresa">
-  <mat-select [(ngModel)]="selectedYear" (selectionChange)="globalFilter()">
-    <mat-option *ngFor="let year of Years" [value]="year">{{ year }}</mat-option>
-  </mat-select>
+<section chart class="text-center">
 
-  <canvas [matTooltip]="chartTootilp" [matTooltipShowDelay]="2000" baseChart [datasets]="lineChartData"
-    [labels]="lineChartLabels" [type]="lineChartType" [options]="lineChartOptions">
-  </canvas>
+  <div class="p-5 m-5 g-5" *ngIf="loading">
+    <div class="spinner-grow text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 
-  <mat-select [(ngModel)]="selectedCategory" (selectionChange)="globalFilter()">
-    <mat-option *ngFor="let selectedCategory of Categories" [value]="selectedCategory">{{ selectedCategory
-      }}</mat-option>
-  </mat-select>
-</div>
+  <div class="chart mat-elevation-z3 m-1" *ngIf="incomeData && Empresa && !loading">
+    <mat-select [(ngModel)]="selectedYear" (selectionChange)="globalFilter()">
+      <mat-option *ngFor="let year of Years" [value]="year">{{ year }}</mat-option>
+    </mat-select>
+
+    <canvas [matTooltip]="chartTootilp" [matTooltipShowDelay]="2000" baseChart [datasets]="lineChartData"
+      [labels]="lineChartLabels" [type]="lineChartType" [options]="lineChartOptions">
+    </canvas>
+
+    <mat-select [(ngModel)]="selectedCategory" (selectionChange)="globalFilter()">
+      <mat-option *ngFor="let selectedCategory of Categories" [value]="selectedCategory">{{ selectedCategory
+        }}</mat-option>
+    </mat-select>
+  </div>
+
+</section>

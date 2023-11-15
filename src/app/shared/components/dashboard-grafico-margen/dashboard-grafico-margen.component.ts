@@ -10,6 +10,7 @@ import { DataService } from '@services/data/data.service';
 })
 export class DashboardGraficoMargenComponent implements OnInit {
   public Empresa: empresa | null = null;
+  public loading: boolean = true;
   public chartTootilp = 'Representa la diferencia entre los ingresos totales generados por la venta de productos o servicios y el costo de los bienes o servicios vendidos. Utilidad Bruta = Ingresos Totales - Costo de Bienes o Servicios Vendidos';
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -122,6 +123,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
       lineTension: 0.1,
       borderWidth: 2,
     }];
+    this.loading = false;
   }
 
   private setYears(data: any) {

@@ -10,6 +10,7 @@ import { DataService } from '@services/data/data.service';
 })
 export class DashboardGraficoEgresosComponent implements OnInit {
   public Empresa: empresa | null = null;
+  public loading: boolean = true;
   public lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -116,6 +117,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
       lineTension: 0.1,
       borderWidth: 2,
     }];
+    this.loading = false;
   }
 
   private setYears(data: any) {
