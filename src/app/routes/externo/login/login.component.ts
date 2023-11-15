@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.tokenService.login(this.username, this.password, this.remember).subscribe({
-      next: (data) => {
+      next: () => {
         this.loginError = false;
       },
       error: (error) => {

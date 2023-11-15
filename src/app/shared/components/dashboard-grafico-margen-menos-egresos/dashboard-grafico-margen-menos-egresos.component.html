@@ -1,4 +1,4 @@
-<section chart class="text-center">
+<section class="text-center">
 
   <div class="p-5 m-5 g-5" *ngIf="loading">
     <div class="spinner-grow text-primary" role="status">
@@ -6,7 +6,7 @@
     </div>
   </div>
 
-  <div class="chart mat-elevation-z3 m-1" *ngIf="ingresosData && egresosData && Empresa && !loading">
+  <div class="chart mat-elevation-z3 m-1 text-start" *ngIf="ingresosData && egresosData && Empresa && !loading">
     <mat-select [(ngModel)]="selectedYear" (selectionChange)="globalFilter()">
       <mat-option *ngFor="let year of Years" [value]="year">{{ year }}</mat-option>
     </mat-select>
