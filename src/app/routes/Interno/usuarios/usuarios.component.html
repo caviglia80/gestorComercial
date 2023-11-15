@@ -126,8 +126,8 @@
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
 
-    <mat-paginator *ngIf="dataSource.data.length && !isLoading"  class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons
-      aria-label="Select page of periodic elements">
+    <mat-paginator *ngIf="dataSource.data.length && !isLoading" class="custom-paginator"
+      [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </div>
@@ -236,13 +236,15 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese contraseña <span class="red-asterisk">*</span>
-    </p>
+    <p class="form-field-description">Ingrese contraseña <span class="red-asterisk">*</span></p>
     <input matInput placeholder="Contraseña" [(ngModel)]="Item.password" required>
+    <div *ngIf="Item.password?.length >= 1 && Item.password?.length <= 7" style="color: red; font-size: small;">
+      La contraseña debe tener al menos 8 caracteres.
+    </div>
   </mat-form-field>
 
   <button mat-button (click)="record('POST')"
-    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password">Guardar</button>
+    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password || Item.password?.length <= 7">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -290,11 +292,13 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese contraseña <span class="red-asterisk">*</span>
-    </p>
+    <p class="form-field-description">Ingrese contraseña <span class="red-asterisk">*</span></p>
     <input matInput placeholder="Contraseña" [(ngModel)]="Item.password" required>
+    <div *ngIf="Item.password?.length >= 1 && Item.password?.length <= 7" style="color: red; font-size: small;">
+      La contraseña debe tener al menos 8 caracteres.
+    </div>
   </mat-form-field>
 
   <button mat-button (click)="record('PUT')"
-    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password">Guardar</button>
+    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password || Item.password?.length <= 7">Guardar</button>
 </div>
