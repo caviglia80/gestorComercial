@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
-/* import { facturacionAuth } from '@models/mainClasses/main-classes'; */
 import { CacheService } from '@services/cache/cache.service';
 
 @Injectable({
@@ -26,9 +25,6 @@ export class DataService {
 
   private ds_Egresos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Egresos$: Observable<any[]> = this.ds_Egresos.asObservable();
-
-/*   private ds_FacturacionAuth: BehaviorSubject<facturacionAuth[]> = new BehaviorSubject<facturacionAuth[]>([]);
-  public FacturacionAuth$: Observable<facturacionAuth[]> = this.ds_FacturacionAuth.asObservable(); */
 
   private ds_Empresa: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Empresa$: Observable<any[]> = this.ds_Empresa.asObservable();
