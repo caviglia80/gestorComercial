@@ -2,13 +2,12 @@ import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, moneyIncome } from '@models/mainClasses/main-classes';
+import { empresa, moneyIncome, Inventario } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Inventario } from '@models/mainClasses/main-classes';
 import { CacheService } from '@services/cache/cache.service';
 
 @Component({
