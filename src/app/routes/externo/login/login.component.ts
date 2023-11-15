@@ -7,6 +7,7 @@ import { TokenService } from '@services/token/token.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  public loading: boolean = false;
   public username: string = '';
   public password: string = '';
   public loginError: boolean = false;
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
+    this.loading = true;
     this.tokenService.login(this.username, this.password, this.remember).subscribe({
       next: () => {
         this.loginError = false;
@@ -33,6 +35,7 @@ export class LoginComponent implements OnInit {
       error: (error) => {
         console.error(error);
         this.loginError = true;
+        this.loading = false;
       }
     });
   }
