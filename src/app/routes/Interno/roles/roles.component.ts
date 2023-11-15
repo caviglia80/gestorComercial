@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { Role } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
+import { CacheService } from '@services/cache/cache.service';
 
 @Component({
   selector: 'app-roles',
@@ -32,7 +33,8 @@ export class RolesComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dataService: DataService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private cacheService: CacheService
   ) { }
 
   public menusHabilitacion: { id: string, name: string, habilitado: boolean }[] = [
@@ -163,6 +165,12 @@ export class RolesComponent implements OnInit, AfterViewInit {
       this.Edit(false);
       this.Double(false);
     }
+  }
+
+  refresh() {
+    this.isLoading = true;
+    this.cacheService.remove('Roles');
+    this.dataService.fetchRoles('GET');
   }
 }
 

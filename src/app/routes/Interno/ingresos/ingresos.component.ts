@@ -9,6 +9,7 @@ import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Inventario } from '@models/mainClasses/main-classes';
+import { CacheService } from '@services/cache/cache.service';
 
 @Component({
   selector: 'app-ingresos',
@@ -47,7 +48,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dataService: DataService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private cacheService: CacheService
   ) {
     this.filteredInventario = this.inventarioControl.valueChanges.pipe(
       startWith(''),
@@ -280,6 +282,13 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       return inventario.id?.toString() + ' - ' + inventario.idExterno?.toString() + ' - ' + inventario.nombre;
     else
       return inventario.id?.toString() + ' - ' + inventario.nombre;
+  }
+
+  refresh() {
+    this.isLoading = true;
+    this.cacheService.remove('Ingresos');
+    this.dataService.fetchIngresos('GET');
+    this.getInventario();
   }
 }
 

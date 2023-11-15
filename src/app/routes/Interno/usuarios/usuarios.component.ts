@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { User } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
+import { CacheService } from '@services/cache/cache.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -33,7 +34,8 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dataService: DataService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private cacheService: CacheService
   ) { }
 
   ngOnInit() {
@@ -131,6 +133,12 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
       this.Create(false);
       this.Edit(false);
     }
+  }
+
+  refresh() {
+    this.isLoading = true;
+    this.cacheService.remove('Usuarios');
+    this.dataService.fetchUsuarios('GET');
   }
 }
 

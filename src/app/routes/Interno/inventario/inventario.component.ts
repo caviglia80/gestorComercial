@@ -8,6 +8,7 @@ import { DataService } from '@services/data/data.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { CacheService } from '@services/cache/cache.service';
 
 @Component({
   selector: 'app-inventario',
@@ -41,7 +42,8 @@ export class inventarioComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dataService: DataService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private cacheService: CacheService
   ) {
     this.proveedorFiltered = this.proveedorControl.valueChanges.pipe(
       startWith(''),
@@ -190,6 +192,12 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     }
   }
 
+  refresh() {
+    this.isLoading = true;
+    this.cacheService.remove('Inventario');
+    this.dataService.fetchInventario('GET');
+    this.getProveedor();
+  }
 }
 
 

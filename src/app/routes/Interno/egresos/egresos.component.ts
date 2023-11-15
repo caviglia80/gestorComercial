@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { empresa } from '@models/mainClasses/main-classes';
+import { CacheService } from '@services/cache/cache.service';
 
 @Component({
   selector: 'app-egresos',
@@ -44,7 +45,8 @@ export class EgresosComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dataService: DataService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private cacheService: CacheService
   ) {
     this.proveedorFiltered = this.proveedorControl.valueChanges.pipe(
       startWith(''),
@@ -180,6 +182,13 @@ export class EgresosComponent implements OnInit, AfterViewInit {
       this.Create(false);
       this.Edit(false);
     }
+  }
+
+  refresh() {
+    this.isLoading = true;
+    this.cacheService.remove('Egresos');
+    this.dataService.fetchEgresos('GET');
+    this.getProveedor();
   }
 }
 

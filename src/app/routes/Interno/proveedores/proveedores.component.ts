@@ -1,10 +1,11 @@
-import { Component, ViewChild, OnInit,AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { proveedor } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
+import { CacheService } from '@services/cache/cache.service';
 
 @Component({
   selector: 'app-proveedores',
@@ -12,7 +13,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./proveedores.component.css']
 })
 
-export class ProveedoresComponent implements OnInit,AfterViewInit {
+export class ProveedoresComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<proveedor>;
   public isLoading = true;
   public Item: any = {};
@@ -36,7 +37,8 @@ export class ProveedoresComponent implements OnInit,AfterViewInit {
 
   constructor(
     public dataService: DataService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private cacheService: CacheService
   ) { }
 
   ngOnInit() {
@@ -140,6 +142,12 @@ export class ProveedoresComponent implements OnInit,AfterViewInit {
       this.Create(false);
       this.Edit(false);
     }
+  }
+
+  refresh() {
+    this.isLoading = true;
+    this.cacheService.remove('Proveedores');
+    this.dataService.fetchProveedores('GET');
   }
 }
 
