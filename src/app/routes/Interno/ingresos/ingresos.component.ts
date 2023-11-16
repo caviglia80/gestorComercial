@@ -184,7 +184,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public anularItem(item: moneyIncome) {
     item.anulado = '1';
     this.dataService.fetchIngresos('PUT', item);
-    if (this.dataConfig.ingresoAnuladoSumaStockEnabled === '1')
+    if (this.dataConfig.ingresoAnuladoSumaStockEnabled === '1' && this.dataConfig.validarInventarioEnabled === '1')
       this.sumarStock(this._getProduct(item.idInventario));
   }
 
@@ -211,7 +211,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   public record(method: string) {
-    if (!this.productoValido()) return;
+    if (this.dataConfig.validarInventarioEnabled === '1' && !this.productoValido()) return;
     try {
       const body: moneyIncome = {
         id: this.Item.id,
@@ -228,7 +228,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         description: this.Item.description
       };
       this.dataService.fetchIngresos(method, body);
-      if (this.dataConfig.ingresoRestaStockEnabled === '1' && method === 'POST')
+      if (this.dataConfig.ingresoRestaStockEnabled === '1' && this.dataConfig.validarInventarioEnabled === '1' && method === 'POST')
         this.restarStock(this._getProduct(this.Item.idInventario));
     } catch (error) {
       console.error('Se ha producido un error:', error);

@@ -14,6 +14,7 @@ export class EmpresaConfiguracionIngresoComponent implements OnInit {
   public ingresoRapidoEnabled = false;
   public ingresoAnuladoSumaStockEnabled = false;
   public permitirStockCeroEnabled = false;
+  public validarInventarioEnabled = false;
 
   constructor(
     public dataService: DataService
@@ -31,6 +32,7 @@ export class EmpresaConfiguracionIngresoComponent implements OnInit {
         this.ingresoRapidoEnabled = this.dataConfig.ingresoRapidoEnabled === '1';
         this.ingresoAnuladoSumaStockEnabled = this.dataConfig.ingresoAnuladoSumaStockEnabled === '1';
         this.permitirStockCeroEnabled = this.dataConfig.permitirStockCeroEnabled === '1';
+        this.validarInventarioEnabled = this.dataConfig.validarInventarioEnabled === '1';
       }
     });
     this.dataService.fetchEmpresa('GET');
@@ -50,5 +52,9 @@ export class EmpresaConfiguracionIngresoComponent implements OnInit {
 
   public habilitarPermitirStockCeroEnabled(isChecked: boolean) {
     this.dataService.fetchEmpresa('PUT', { id: 1, permitirStockCeroEnabled: isChecked ? "1" : "0" });
+  }
+
+  public habilitarvalidarInventarioEnabled(isChecked: boolean) {
+    this.dataService.fetchEmpresa('PUT', { id: 1, validarInventarioEnabled: isChecked ? "1" : "0" });
   }
 }

@@ -235,6 +235,7 @@ export class facturacionAuth {
 
 export class empresa {
   id: number;
+  nombre: string;
   icono: string;
   copyEnabled: string;
   color1: string;
@@ -244,10 +245,11 @@ export class empresa {
   ingresoRestaStockEnabled: string;
   ingresoAnuladoSumaStockEnabled: string;
   permitirStockCeroEnabled: string;
-  nombre: string;
+  validarInventarioEnabled: string;
 
   constructor(
     id = 1,
+    nombre = 'Compy',
     icono = 'assets/logo.png',
     copyEnabled = '1',
     color1 = '#846bf3',
@@ -257,9 +259,10 @@ export class empresa {
     ingresoRestaStockEnabled = '1',
     ingresoAnuladoSumaStockEnabled = '1',
     permitirStockCeroEnabled = '0',
-    nombre = 'Compy'
+    validarInventarioEnabled = '1'
   ) {
     this.id = id;
+    this.nombre = nombre;
     this.icono = icono;
     this.copyEnabled = copyEnabled;
     this.color1 = color1;
@@ -269,7 +272,7 @@ export class empresa {
     this.ingresoRestaStockEnabled = ingresoRestaStockEnabled;
     this.ingresoAnuladoSumaStockEnabled = ingresoAnuladoSumaStockEnabled;
     this.permitirStockCeroEnabled = permitirStockCeroEnabled;
-    this.nombre = nombre;
+    this.validarInventarioEnabled = validarInventarioEnabled;
   }
 }
 

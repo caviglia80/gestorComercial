@@ -9,7 +9,9 @@
       ingreso</mat-checkbox>
       <mat-checkbox [(ngModel)]="ingresoAnuladoSumaStockEnabled"
       (ngModelChange)="habilitarAnularIngresoSumaStock(ingresoAnuladoSumaStockEnabled)">Sumar stock al anular ingreso</mat-checkbox>
+      <mat-checkbox [(ngModel)]="validarInventarioEnabled"
+      (ngModelChange)="habilitarvalidarInventarioEnabled(validarInventarioEnabled)">Permitir ingreso solo si existe en inventario (deshabilitarlo podra generar reportes imprecisos)</mat-checkbox>
       <mat-checkbox [(ngModel)]="permitirStockCeroEnabled"
-      (ngModelChange)="habilitarPermitirStockCeroEnabled(permitirStockCeroEnabled)">Permitir ingreso con Stock 0</mat-checkbox>
+      (ngModelChange)="habilitarPermitirStockCeroEnabled(permitirStockCeroEnabled)">Permitir ingreso de productos con Stock 0</mat-checkbox>
   </div>
 </div>
