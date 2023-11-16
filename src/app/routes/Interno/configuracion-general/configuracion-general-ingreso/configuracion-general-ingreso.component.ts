@@ -9,7 +9,7 @@ import { empresa } from '@models/mainClasses/main-classes';
 })
 export class EmpresaConfiguracionIngresoComponent implements OnInit {
 
-  public dataConfig: empresa = new empresa();
+  public dataEmpresa: empresa = new empresa();
   public ingresoRestaStockEnabled = false;
   public ingresoRapidoEnabled = false;
   public ingresoAnuladoSumaStockEnabled = false;
@@ -26,13 +26,13 @@ export class EmpresaConfiguracionIngresoComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.dataConfig = data[0];
-      if (this.dataConfig) {
-        this.ingresoRestaStockEnabled = this.dataConfig.ingresoRestaStockEnabled === '1';
-        this.ingresoRapidoEnabled = this.dataConfig.ingresoRapidoEnabled === '1';
-        this.ingresoAnuladoSumaStockEnabled = this.dataConfig.ingresoAnuladoSumaStockEnabled === '1';
-        this.permitirStockCeroEnabled = this.dataConfig.permitirStockCeroEnabled === '1';
-        this.validarInventarioEnabled = this.dataConfig.validarInventarioEnabled === '1';
+      this.dataEmpresa = data[0];
+      if (this.dataEmpresa) {
+        this.ingresoRestaStockEnabled = this.dataEmpresa.ingresoRestaStockEnabled === '1';
+        this.ingresoRapidoEnabled = this.dataEmpresa.ingresoRapidoEnabled === '1';
+        this.ingresoAnuladoSumaStockEnabled = this.dataEmpresa.ingresoAnuladoSumaStockEnabled === '1';
+        this.permitirStockCeroEnabled = this.dataEmpresa.permitirStockCeroEnabled === '1';
+        this.validarInventarioEnabled = this.dataEmpresa.validarInventarioEnabled === '1';
       }
     });
     this.dataService.fetchEmpresa('GET');

@@ -8,7 +8,7 @@ import { empresa } from '@models/mainClasses/main-classes';
   styleUrls: ['./configuracion-general-egreso.component.css']
 })
 export class EmpresaConfiguracionEgresoComponent implements OnInit {
-  public dataConfig: empresa = new empresa();
+  public dataEmpresa: empresa = new empresa();
   public egresoRapidoEnabled = false;
 
   constructor(
@@ -21,9 +21,9 @@ export class EmpresaConfiguracionEgresoComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.dataConfig = data[0];
-      if (this.dataConfig) {
-        this.egresoRapidoEnabled = this.dataConfig.egresoRapidoEnabled === '1';
+      this.dataEmpresa = data[0];
+      if (this.dataEmpresa) {
+        this.egresoRapidoEnabled = this.dataEmpresa.egresoRapidoEnabled === '1';
       }
     });
     this.dataService.fetchEmpresa('GET');

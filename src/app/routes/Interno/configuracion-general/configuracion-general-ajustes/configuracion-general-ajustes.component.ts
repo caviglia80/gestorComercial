@@ -11,7 +11,7 @@ import { empresa } from '@models/mainClasses/main-classes';
 export class EmpresaConfiguracionAjustesComponent implements OnInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   public errorMessageImg = false;
-  public dataConfig: empresa = new empresa();
+  public dataEmpresa: empresa = new empresa();
   public Color1 = '#000000';
   public Color2 = '#000000';
   public colorPickerIsOpen = false;
@@ -28,11 +28,11 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.dataConfig = data[0];
-      if (this.dataConfig !== undefined) {
-        this.Color1 = this.dataConfig.color1;
-        this.Color2 = this.dataConfig.color2;
-        this.nombre = this.dataConfig.nombre;
+      this.dataEmpresa = data[0];
+      if (this.dataEmpresa !== undefined) {
+        this.Color1 = this.dataEmpresa.color1;
+        this.Color2 = this.dataEmpresa.color2;
+        this.nombre = this.dataEmpresa.nombre;
       }
     });
     this.dataService.fetchEmpresa('GET');
@@ -63,12 +63,12 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
   }
 
   public color1(color: string) {
-    if (color !== this.dataConfig.color1)
+    if (color !== this.dataEmpresa.color1)
       this.dataService.fetchEmpresa('PUT', { id: 1, color1: color });
   }
 
   public color2(color: string) {
-    if (color !== this.dataConfig.color2)
+    if (color !== this.dataEmpresa.color2)
       this.dataService.fetchEmpresa('PUT', { id: 1, color2: color });
   }
 
@@ -85,7 +85,7 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
   }
 
   public setNombre(nombre: string) {
-    if (nombre !== this.dataConfig.nombre)
+    if (nombre !== this.dataEmpresa.nombre)
       this.dataService.fetchEmpresa('PUT', { id: 1, nombre: nombre });
   }
 }

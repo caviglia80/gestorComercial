@@ -8,7 +8,7 @@ import { empresa } from '@models/mainClasses/main-classes';
   styleUrls: ['./configuracion-general-inventario.component.css']
 })
 export class EmpresaConfiguracionInventarioComponent implements OnInit {
-  public dataConfig: empresa = new empresa();
+  public dataEmpresa: empresa = new empresa();
 
   constructor(
     public dataService: DataService
@@ -20,8 +20,8 @@ export class EmpresaConfiguracionInventarioComponent implements OnInit {
 
    private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.dataConfig = data[0];
-      if (this.dataConfig) {
+      this.dataEmpresa = data[0];
+      if (this.dataEmpresa) {
 
       }
     });

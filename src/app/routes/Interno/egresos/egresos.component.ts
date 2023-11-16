@@ -17,7 +17,7 @@ import { CacheService } from '@services/cache/cache.service';
 })
 
 export class EgresosComponent implements OnInit, AfterViewInit {
-  public dataConfig: empresa = new empresa();
+  public dataEmpresa: empresa = new empresa();
   public proveedorControl = new FormControl();
   public proveedorFiltered: Observable<any[]>;
   public proveedorData: proveedor[] = [];
@@ -67,7 +67,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
       if (data[0])
-        this.dataConfig = data[0];
+        this.dataEmpresa = data[0];
     });
     this.dataService.fetchEmpresa('GET');
 
@@ -130,7 +130,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
 
   public Create(visible: boolean) {
     this.Item = {};
-    if (this.dataConfig.egresoRapidoEnabled === '1')
+    if (this.dataEmpresa.egresoRapidoEnabled === '1')
       this.Item = this.sharedService.rellenoCampos_IE('e');
     this.create = visible;
   }
