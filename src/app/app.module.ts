@@ -10,6 +10,7 @@ import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CheckJwtInterceptor } from '@interceptors/check-jwt/check-jwt.interceptor';
 import { SetJwtInterceptor } from '@interceptors/set-jwt/set-jwt.interceptor';
+import { RetryInterceptor } from '@interceptors/retry/retry.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,11 @@ import { SetJwtInterceptor } from '@interceptors/set-jwt/set-jwt.interceptor';
     MatSnackBarModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RetryInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CheckJwtInterceptor,

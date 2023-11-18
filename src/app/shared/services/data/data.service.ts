@@ -334,6 +334,7 @@ export class DataService {
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.ds_Ingresos.next([]);
             this.sharedService.message('Error al intentar obtener registros.');
           }
         });

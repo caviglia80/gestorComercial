@@ -1,5 +1,5 @@
 <!-- Vista de Resultados -->
-<div class="tableResultados" [ngClass]="{'noVisible': detail || create || edit}">
+<div class="tableResultados" [ngClass]="{'noVisible': detail || create || edit || remito}">
 
   <div class="title">
     <div class="col-md-12">
@@ -30,9 +30,9 @@
       </button>
     </div>
 
-    <div class="table-wrapper" [ngClass]="{'noVisible': !dataSource.data.length || isLoading }">
+    <div class="table-wrapper" [ngClass]="{'noVisible': !dataIngreso.data.length || isLoading }">
 
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataIngreso" matSort class="mat-elevation-z8">
 
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id">
@@ -162,11 +162,11 @@
       <p><mat-icon class="spin">hourglass_empty</mat-icon><br>
         Cargando..</p>
     </div>
-    <div class="text-center sinDatos m-5 p-5" *ngIf="!dataSource.data.length && !isLoading">
+    <div class="text-center sinDatos m-5 p-5" *ngIf="!dataIngreso.data.length && !isLoading">
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
 
-    <mat-paginator *ngIf="dataSource.data.length && !isLoading" class="custom-paginator"
+    <mat-paginator *ngIf="dataIngreso.data.length && !isLoading" class="custom-paginator"
       [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
@@ -344,15 +344,17 @@
 
 
 
-
+  <!-- record('POST') -->
   <button mat-button (click)="record('POST')"
     [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">Guardar</button>
 
 
-  <button mat-button>
+
+  <!--
+  <button mat-button (click)="AddMore()">
     <mat-icon>add</mat-icon>
   </button>
-
+ -->
 
 
 </div>
@@ -434,4 +436,91 @@
 
   <button mat-button (click)="record('PUT')"
     [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">Guardar</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Vista de Crear Remito -->
+<div class="crearRemito" *ngIf="remito">
+  <div class="title">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header-danger">
+          <h4 class="card-title">Ingresos / Remito</h4>
+          <button (click)="Remito(false)">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-container mt-3">
+    <div class="table-wrapper">
+
+
+
+
+
+
+
+
+
+
+      <div class="col-md-12 col-lg-12 order-md-last">
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-sm overflow-hidden"
+            *ngFor="let ingreso of consolidateItems()">
+            <div
+              style="flex-grow: 1; flex-shrink: 1; max-width: 75%;  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              <h6 class="my-0">
+                {{ getInventario_Nombre(ingreso.idInventario) }} ({{ getInventario_Codigos(ingreso.idInventario) }})
+              </h6>
+              <small class="text-body-secondary" style="max-width: 100%;">
+                {{ getInventario_Descripcion(ingreso.idInventario) }}
+              </small>
+            </div>
+            <span class="text-body-secondary px-3">x{{ ingreso.cantidad }}</span>
+            <span class="text-body-secondary" style="max-width: 100px;">${{ ingreso.amount }}</span>
+          </li>
+
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total (USD)</span>
+            <strong>${{ TotalRemito() }}</strong>
+          </li>
+        </ul>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
 </div>

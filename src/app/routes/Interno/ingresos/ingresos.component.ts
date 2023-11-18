@@ -2,13 +2,13 @@ import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, moneyIncome, Inventario } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CacheService } from '@services/cache/cache.service';
+import { empresa, moneyIncome, Inventario } from '@models/mainClasses/main-classes';
 
 @Component({
   selector: 'app-ingresos',
@@ -20,14 +20,16 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public dataEmpresa: empresa = new empresa();
   public inventarioControl = new FormControl();
   public filteredInventario: Observable<any[]>;
-  public dataSource = new MatTableDataSource<moneyIncome>;
+  public dataIngreso = new MatTableDataSource<moneyIncome>;
   public dataInventario: Inventario[] = [];
   public isLoading = true;
   public Item: any = {};
   public create = false;
   public edit = false;
   public detail = false;
+  public remito = false;
   public fullNameProducto = '';
+  public itemRemito: moneyIncome[] = [];
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -63,8 +65,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataIngreso.paginator = this.paginator;
+    this.dataIngreso.sort = this.sort;
   }
 
   private dataInit() {
@@ -76,7 +78,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        this.dataIngreso.data = data;
         this.loading(false);
       },
       error: () => {
@@ -147,7 +149,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public searchFilter(filterValue: string) {
     filterValue = filterValue?.toString().toLowerCase().trim();
-    this.dataSource.filter = filterValue ? filterValue : '';
+    this.dataIngreso.filter = filterValue ? filterValue : '';
   }
 
   public Detail(visible: boolean) {
@@ -158,6 +160,11 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public Edit(visible: boolean) {
     this.Item = {};
     this.edit = visible;
+  }
+
+  public Remito(visible: boolean) {
+    this.Item = {};
+    this.remito = visible;
   }
 
   public Create(visible: boolean) {
@@ -184,8 +191,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public anularItem(item: moneyIncome) {
     item.anulado = '1';
     this.dataService.fetchIngresos('PUT', item);
-    if (this.dataEmpresa.ingresoAnuladoSumaStockEnabled === '1' && this.dataEmpresa.validarInventarioEnabled === '1')
-      this.sumarStock(this._getProduct(item.idInventario));
+    /*     if (this.dataEmpresa.ingresoAnuladoSumaStockEnabled === '1' && this.dataEmpresa.validarInventarioEnabled === '1')
+          this.sumarStock(this._getProduct(item.idInventario)); */
   }
 
   private rellenarRecord(item: moneyIncome) {
@@ -208,34 +215,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.Item.anulado = item.anulado;
     this.Item.cliente = item.cliente;
     this.Item.description = item.description;
-  }
-
-  public record(method: string) {
-    if (this.dataEmpresa.validarInventarioEnabled === '1' && !this.productoValido()) return;
-    try {
-      const body: moneyIncome = {
-        id: this.Item.id,
-        date: this.Item.date,
-        idInventario: this.Item.idInventario,
-        currency: this.Item.currency,
-        amount: this.Item.amount,
-        margenBeneficio: this.Item.margenBeneficio,
-        method: this.Item.method,
-        category: this.Item.category,
-        invoice: this.Item.invoice,
-        anulado: method === 'PUT' ? this.Item.anulado : '0',
-        cliente: this.Item.cliente,
-        description: this.Item.description
-      };
-      this.dataService.fetchIngresos(method, body);
-      if (this.dataEmpresa.ingresoRestaStockEnabled === '1' && this.dataEmpresa.validarInventarioEnabled === '1' && method === 'POST')
-        this.restarStock(this._getProduct(this.Item.idInventario));
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-    } finally {
-      this.Create(false);
-      this.Edit(false);
-    }
   }
 
   private restarStock(inventario: Inventario) {
@@ -290,6 +269,104 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.dataService.fetchIngresos('GET');
     this.getInventario();
   }
+
+  public record(method: string) {
+    if (this.dataEmpresa.validarInventarioEnabled === '1' && !this.productoValido()) return;
+    try {
+      const body: moneyIncome = {
+        id: this.Item.id,
+        date: this.Item.date,
+        idInventario: this.Item.idInventario,
+        currency: this.Item.currency,
+        amount: this.Item.amount,
+        margenBeneficio: this.Item.margenBeneficio,
+        method: this.Item.method,
+        category: this.Item.category,
+        invoice: this.Item.invoice,
+        anulado: method === 'PUT' ? this.Item.anulado : '0',
+        cliente: this.Item.cliente,
+        description: this.Item.description
+      };
+
+      this.itemRemito.push(body);
+
+
+
+
+
+      /*   this.dataService.fetchIngresos(method, body); */
+
+
+
+      /*       if (this.dataEmpresa.ingresoRestaStockEnabled === '1' && this.dataEmpresa.validarInventarioEnabled === '1' && method === 'POST')
+              this.restarStock(this._getProduct(this.Item.idInventario)); */
+    } catch (error) {
+      console.error('Se ha producido un error:', error);
+    } finally {
+      this.Create(false);
+      this.Edit(false);
+      this.Remito(true);
+    }
+  }
+
+  public getInventario_Nombre(id: any): string {
+    const inventario: Inventario = this._getProduct(id);
+    if (inventario)
+      return inventario.nombre;
+    else
+      return id.toString();
+  }
+
+  public getInventario_Codigos(id: any): string {
+    const inventario: Inventario = this._getProduct(id);
+    if (inventario)
+      if (inventario.idExterno)
+        return inventario.id?.toString() + ' - ' + inventario.idExterno?.toString();
+      else
+        return inventario.id?.toString();
+    else
+      return '...';
+  }
+
+  public getInventario_Descripcion(id: any): string {
+    const inventario: Inventario = this._getProduct(id);
+    if (inventario)
+      return inventario.descripcion ? inventario.descripcion : '';
+    else
+      return '...';
+  }
+
+  public TotalRemito(): string {
+    let total = 0;
+    for (const ingreso of this.itemRemito) {
+      total += ingreso.amount ? ingreso.amount : 0;
+    }
+    return total.toString();
+  }
+
+  // En tu componente TypeScript
+  public consolidateItems(): any[] {
+    const consolidatedItems: any[] = [];
+    for (const ingreso of this.itemRemito) {
+      const existingItem = consolidatedItems.find((item) => item.idInventario === ingreso.idInventario && item.amount === ingreso.amount);
+      if (existingItem) {
+        existingItem.cantidad += 1;
+      } else {
+        consolidatedItems.push({ ...ingreso, cantidad: 1 });
+      }
+    }
+    return consolidatedItems;
+  }
+
+
+
+
+
+
+
+
+
+
 }
 
 
