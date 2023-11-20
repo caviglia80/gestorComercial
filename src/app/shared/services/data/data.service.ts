@@ -66,6 +66,7 @@ export class DataService {
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.ds_Inventario.next([]);
             this.sharedService.message('Error al intentar obtener registros.');
           }
         });
@@ -133,6 +134,7 @@ export class DataService {
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.ds_Usuarios.next([]);
             this.sharedService.message('Error al intentar obtener registros.');
           }
         });
@@ -200,6 +202,7 @@ export class DataService {
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.ds_Roles.next([]);
             this.sharedService.message('Error al intentar obtener registros.');
           }
         });
@@ -267,6 +270,7 @@ export class DataService {
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.ds_Proveedores.next([]);
             this.sharedService.message('Error al intentar obtener registros.');
           }
         });
@@ -402,6 +406,7 @@ export class DataService {
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.ds_Egresos.next([]);
             this.sharedService.message('Error al intentar obtener registros.');
           }
         });
@@ -448,45 +453,45 @@ export class DataService {
     if (!SharedService.isProduction) console.log(method);
   }
 
- /*  public fetchFacturacionAuth(method = '', body: any = {}, proxy = false): void {
-    body = JSON.stringify(body);
-    const headers: {} = { 'Content-Type': 'application/json' }
-    let url = SharedService.host + 'DB/facturacionAuth.php';
-    if (proxy) url = SharedService.proxy + url;
+  /*  public fetchFacturacionAuth(method = '', body: any = {}, proxy = false): void {
+     body = JSON.stringify(body);
+     const headers: {} = { 'Content-Type': 'application/json' }
+     let url = SharedService.host + 'DB/facturacionAuth.php';
+     if (proxy) url = SharedService.proxy + url;
 
-    if (this.cacheService.has('FacturacionAuth') && method === 'GET') {
-      this.ds_FacturacionAuth.next(this.cacheService.get('FacturacionAuth'));
-      return;
-    }
+     if (this.cacheService.has('FacturacionAuth') && method === 'GET') {
+       this.ds_FacturacionAuth.next(this.cacheService.get('FacturacionAuth'));
+       return;
+     }
 
-    if (method === 'GET') {
-      this.http.get<facturacionAuth[]>(url)
-        .subscribe({
-          next: (data) => {
-            this.cacheService.set('FacturacionAuth', data);
-            this.ds_FacturacionAuth.next(data);
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Error al intentar obtener registros.');
-          }
-        });
-    } else if (method === 'PUT') {
-      this.http.put<any[]>(url, body, headers)
-        .subscribe({
-          next: () => {
-            this.sharedService.message('Facturacion: registro actualizado.');
-            this.cacheService.remove('FacturacionAuth');
-            this.fetchFacturacionAuth('GET');
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Error al intentar editar el registro.');
-          }
-        });
-    }
-    if (!SharedService.isProduction) console.log(method);
-  } */
+     if (method === 'GET') {
+       this.http.get<facturacionAuth[]>(url)
+         .subscribe({
+           next: (data) => {
+             this.cacheService.set('FacturacionAuth', data);
+             this.ds_FacturacionAuth.next(data);
+           },
+           error: (error) => {
+             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+             this.sharedService.message('Error al intentar obtener registros.');
+           }
+         });
+     } else if (method === 'PUT') {
+       this.http.put<any[]>(url, body, headers)
+         .subscribe({
+           next: () => {
+             this.sharedService.message('Facturacion: registro actualizado.');
+             this.cacheService.remove('FacturacionAuth');
+             this.fetchFacturacionAuth('GET');
+           },
+           error: (error) => {
+             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+             this.sharedService.message('Error al intentar editar el registro.');
+           }
+         });
+     }
+     if (!SharedService.isProduction) console.log(method);
+   } */
 
   public fetchEmpresa(method = '', body: any = {}, proxy = false): void {
     body = JSON.stringify(body);
@@ -509,6 +514,7 @@ export class DataService {
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.ds_Empresa.next([]);
             this.sharedService.message('Error al intentar obtener registros.');
           }
         });
@@ -547,6 +553,7 @@ export class DataService {
         },
         error: (error) => {
           if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+          this.ds_ReporteIngreso.next([]);
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
@@ -571,6 +578,7 @@ export class DataService {
         },
         error: (error) => {
           if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+          this.ds_ReporteEgresoRubro.next([]);
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
@@ -595,6 +603,7 @@ export class DataService {
         },
         error: (error) => {
           if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+          this.ds_ReporteEgresoBP.next([]);
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });

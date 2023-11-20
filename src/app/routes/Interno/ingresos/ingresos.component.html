@@ -223,6 +223,7 @@
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['amount'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['amount'])">{{ Item['amount'] |
             currency:'$':'symbol' }}</td>
+        </tr>
 
         <tr *ngIf="Item['margenBeneficio']">
           <td style="font-weight: bold; white-space: nowrap;">Margen-Beneficio:</td>
@@ -248,13 +249,6 @@
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['invoice'])">{{
             Item['invoice'] }}</td>
         </tr>
-
-        <!--         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['margenBeneficio'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['margenBeneficio'])">{{ Item['margenBeneficio'] + '%'
-            }}
-          </td>
-        </tr> -->
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Descripción:</td>
@@ -282,7 +276,7 @@
     </div>
   </div>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" *ngIf="itemRemito.length === 0">
     <p class="form-field-description">Ingrese {{ Columns['date'] | lowercase }} <span class="red-asterisk">*</span></p>
     <input class="my-2" type="date" matInput [(ngModel)]="Item.date" required>
   </mat-form-field>
@@ -299,12 +293,12 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" *ngIf="itemRemito.length === 0">
     <p class="form-field-description">Ingrese {{ Columns[ 'cliente'] | lowercase }}</p>
     <input matInput placeholder="{{ Columns['cliente'] }}" [(ngModel)]="Item.cliente">
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" *ngIf="itemRemito.length === 0">
     <p class="form-field-description">Ingrese moneda</p>
     <mat-select placeholder="Moneda" [(ngModel)]="Item.currency">
       <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
@@ -317,14 +311,14 @@
     <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" *ngIf="itemRemito.length === 0">
     <p class="form-field-description">Ingrese método de Pago <span class="red-asterisk">*</span></p>
     <mat-select placeholder="Método de Pago" [(ngModel)]="Item.method" required>
       <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" *ngIf="itemRemito.length === 0">
     <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
     <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category" required>
@@ -332,31 +326,23 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" *ngIf="itemRemito.length === 0">
     <p class="form-field-description">Ingrese comprobante</p>
     <input matInput placeholder="Comprobante" [(ngModel)]="Item.invoice">
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" *ngIf="itemRemito.length === 0">
     <p class="form-field-description">Ingrese descripción</p>
     <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
-
-
-  <!-- record('POST') -->
-  <button mat-button (click)="record('POST')"
+  <button mat-button (click)="remitoCreate(false)"
     [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">Guardar</button>
 
-
-
-  <!--
-  <button mat-button (click)="AddMore()">
+  <button mat-button (click)="remitoCreate(true)"
+    [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">
     <mat-icon>add</mat-icon>
   </button>
- -->
-
-
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -434,7 +420,7 @@
     <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="record('PUT')"
+  <button mat-button (click)="recordEdit()"
     [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">Guardar</button>
 </div>
 
@@ -459,9 +445,7 @@
 
 
 
-
-
-<!-- Vista de Crear Remito -->
+<!-- Vista de Remito -->
 <div class="crearRemito" *ngIf="remito">
   <div class="title">
     <div class="col-md-12">
@@ -475,17 +459,56 @@
       </div>
     </div>
   </div>
-  <div class="table-container mt-3">
+  <div class="table-container mt-1">
     <div class="table-wrapper">
 
+      <table class="m-4">
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">{{ Columns['date'] }}:</td>
+          <td style="width: 100%;">{{ Item.date | date:'dd/MM/yyyy'
+            }}
+          </td>
+        </tr>
 
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">{{ Columns['cliente'] }}:</td>
+          <td style="width: 100%;">{{ Item.cliente }}</td>
+        </tr>
 
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">Moneda:</td>
+          <td style="width: 100%;">{{ Item.currency }}</td>
+        </tr>
 
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">{{ Columns['amount'] }}:</td>
+          <td style="width: 100%;">{{ Item.amount |
+            currency:'$':'symbol' }}</td>
+        </tr>
 
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">Método de pago:</td>
+          <td style="width: 100%;">{{ Item.method }}
+          </td>
+        </tr>
 
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">{{ Columns['category'] }}:</td>
+          <td style="width: 100%;">{{ Item.category }}
+          </td>
+        </tr>
 
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">Comprobante:</td>
+          <td style="width: 100%;">{{ Item.invoice }}</td>
+        </tr>
 
-
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">Descripción:</td>
+          <td style="width: 100%;">{{ Item.description }}
+          </td>
+        </tr>
+      </table>
 
       <div class="col-md-12 col-lg-12 order-md-last">
         <ul class="list-group mb-3">
@@ -511,16 +534,7 @@
         </ul>
       </div>
 
-
-
-
-
-
-
-
-
-
-
     </div>
   </div>
+  <button mat-button (click)="remitoRecord()">Confirmar Pago</button>
 </div>

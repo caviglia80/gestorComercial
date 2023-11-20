@@ -30,6 +30,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public remito = false;
   public fullNameProducto = '';
   public itemRemito: moneyIncome[] = [];
+  //  public detallesCargados = false;
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -163,14 +164,25 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   public Remito(visible: boolean) {
-    this.Item = {};
+    if (!visible) {
+      this.Item = {};
+      this.itemRemito = [];
+    }
     this.remito = visible;
   }
 
   public Create(visible: boolean) {
-    this.Item = {};
-    if (this.dataEmpresa.ingresoRapidoEnabled === '1')
-      this.Item = this.sharedService.rellenoCampos_IE('i');
+    if (visible) {
+      this.Item.idInventario = '';
+      this.Item.amount = 0;
+    }
+
+    // Primer inicio
+    if (visible && this.itemRemito.length === 0) {
+      this.Item = {};
+      if (this.dataEmpresa.ingresoRapidoEnabled === '1')
+        this.Item = this.sharedService.rellenoCampos_IE('i');
+    }
     this.create = visible;
   }
 
@@ -270,7 +282,81 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.getInventario();
   }
 
-  public record(method: string) {
+  public remitoCreate(moreItems: boolean) {
+    if (this.dataEmpresa.validarInventarioEnabled === '1' && !this.productoValido()) return;
+    try {
+      const body: moneyIncome = {
+        id: this.Item.id,
+        date: this.Item.date,
+        idInventario: this.Item.idInventario,
+        currency: this.Item.currency,
+        amount: this.Item.amount,
+        margenBeneficio: this._getProduct(this.Item.idInventario) ? this.Item.margenBeneficio : '-',
+        method: this.Item.method,
+        category: this.Item.category,
+        invoice: this.Item.invoice,
+        anulado: '0',
+        cliente: this.Item.cliente,
+        description: this.Item.description
+      };
+
+      this.itemRemito.push(body);
+
+      if (!moreItems) {
+        this.Create(false);
+        this.Remito(true);
+      } else {
+        this.Create(true);
+      }
+    } catch (error) {
+      console.error('Se ha producido un error:', error);
+      this.Create(false);
+      this.Edit(false);
+      this.Remito(false);
+    } finally { }
+  }
+
+  public remitoRecord() {
+    try {
+      this.itemRemito.forEach((ingreso) => {
+        this.dataService.fetchIngresos('POST', ingreso);
+
+        if (this.dataEmpresa.ingresoRestaStockEnabled === '1' && this.dataEmpresa.validarInventarioEnabled === '1')
+          this.restarStock(this._getProduct(ingreso.idInventario));
+      });
+
+    } catch (error) {
+      console.error('Se ha producido un error:', error);
+      this.Create(false);
+      this.Edit(false);
+      this.Remito(false);
+    } finally {
+      this.Remito(false);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public recordEdit() {
     if (this.dataEmpresa.validarInventarioEnabled === '1' && !this.productoValido()) return;
     try {
       const body: moneyIncome = {
@@ -283,29 +369,15 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         method: this.Item.method,
         category: this.Item.category,
         invoice: this.Item.invoice,
-        anulado: method === 'PUT' ? this.Item.anulado : '0',
+        anulado: this.Item.anulado,
         cliente: this.Item.cliente,
         description: this.Item.description
       };
-
-      this.itemRemito.push(body);
-
-
-
-
-
-      /*   this.dataService.fetchIngresos(method, body); */
-
-
-
-      /*       if (this.dataEmpresa.ingresoRestaStockEnabled === '1' && this.dataEmpresa.validarInventarioEnabled === '1' && method === 'POST')
-              this.restarStock(this._getProduct(this.Item.idInventario)); */
+      this.dataService.fetchIngresos('PUT', body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
-      this.Create(false);
       this.Edit(false);
-      this.Remito(true);
     }
   }
 
@@ -344,7 +416,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     return total.toString();
   }
 
-  // En tu componente TypeScript
   public consolidateItems(): any[] {
     const consolidatedItems: any[] = [];
     for (const ingreso of this.itemRemito) {
@@ -357,16 +428,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     }
     return consolidatedItems;
   }
-
-
-
-
-
-
-
-
-
-
 }
 
 
