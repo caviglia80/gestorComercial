@@ -424,27 +424,6 @@
     [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">Guardar</button>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- Vista de Remito -->
 <div class="crearRemito" *ngIf="remito">
   <div class="title">
@@ -473,11 +452,6 @@
         <tr>
           <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">{{ Columns['cliente'] }}:</td>
           <td style="width: 100%;">{{ Item.cliente }}</td>
-        </tr>
-
-        <tr>
-          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">Moneda:</td>
-          <td style="width: 100%;">{{ Item.currency }}</td>
         </tr>
 
         <tr>
@@ -528,7 +502,7 @@
           </li>
 
           <li class="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
+            <span>Total ({{ Item.currency }})</span>
             <strong>${{ TotalRemito() }}</strong>
           </li>
         </ul>

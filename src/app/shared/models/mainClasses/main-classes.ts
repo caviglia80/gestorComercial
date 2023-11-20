@@ -329,3 +329,22 @@ export class reportesEgresosBP {
     this.montoTotalEgresos = montoTotalEgresos;
   }
 }
+
+export class Remito {
+  idEmpresa?: number;
+  ingresos?: string;
+  comprobante?: string;
+  fecha?: string;
+
+  constructor(
+    idEmpresa = 0,
+    ingresos = '',
+    comprobante = '',
+    fecha = '',
+  ) {
+    this.idEmpresa = idEmpresa;
+    this.ingresos = ingresos;
+    this.comprobante = comprobante;
+    this.fecha = fecha;
+  }
+}

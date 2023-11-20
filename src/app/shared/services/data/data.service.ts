@@ -38,6 +38,9 @@ export class DataService {
   private ds_ReporteEgresoBP: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public ReporteEgresoBP$: Observable<any[]> = this.ds_ReporteEgresoBP.asObservable();
 
+  private ds_Remito: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public Remito$: Observable<any[]> = this.ds_Remito.asObservable();
+
   constructor(
     private http: HttpClient,
     public sharedService: SharedService,
@@ -53,6 +56,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('Inventario') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
       this.ds_Inventario.next(this.cacheService.get('Inventario'));
       return;
     }
@@ -110,7 +114,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method);
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 
   public fetchUsuarios(method = '', body: any = {}, proxy = false): void {
@@ -121,6 +125,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('Usuarios') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
       this.ds_Usuarios.next(this.cacheService.get('Usuarios'));
       return;
     }
@@ -178,7 +183,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method);
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 
   public fetchRoles(method = '', body: any = {}, proxy = false): void {
@@ -189,6 +194,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('Roles') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
       this.ds_Roles.next(this.cacheService.get('Roles'));
       return;
     }
@@ -246,7 +252,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method);
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 
   public fetchProveedores(method = '', body: any = {}, proxy = false): void {
@@ -257,6 +263,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('Proveedores') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
       this.ds_Proveedores.next(this.cacheService.get('Proveedores'));
       return;
     }
@@ -314,7 +321,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method);
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 
   public fetchIngresos(method = '', body: any = {}, proxy = false): void {
@@ -325,6 +332,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('Ingresos') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
       this.ds_Ingresos.next(this.cacheService.get('Ingresos'));
       return;
     }
@@ -382,7 +390,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method);
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 
   public fetchEgresos(method = '', body: any = {}, proxy = false): void {
@@ -393,6 +401,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('Egresos') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
       this.ds_Egresos.next(this.cacheService.get('Egresos'));
       return;
     }
@@ -450,7 +459,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method);
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 
   /*  public fetchFacturacionAuth(method = '', body: any = {}, proxy = false): void {
@@ -460,6 +469,7 @@ export class DataService {
      if (proxy) url = SharedService.proxy + url;
 
      if (this.cacheService.has('FacturacionAuth') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
        this.ds_FacturacionAuth.next(this.cacheService.get('FacturacionAuth'));
        return;
      }
@@ -490,7 +500,7 @@ export class DataService {
            }
          });
      }
-     if (!SharedService.isProduction) console.log(method);
+     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
    } */
 
   public fetchEmpresa(method = '', body: any = {}, proxy = false): void {
@@ -501,6 +511,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('Empresa') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
       this.ds_Empresa.next(this.cacheService.get('Empresa'));
       return;
     }
@@ -532,7 +543,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method);
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 
   public fetchReporteIngreso(params: string, proxy = false): void {
@@ -608,5 +619,48 @@ export class DataService {
         }
       });
     if (!SharedService.isProduction) console.log('GET');
+  }
+
+  public fetchRemito(method = '', body: any = {}, proxy = false): void {
+    body = JSON.stringify(body);
+    const headers: {} = { 'Content-Type': 'application/json' }
+    let url = SharedService.host + 'DB/remito.php';
+    if (proxy) url = SharedService.proxy + url;
+
+    // Verificar si los datos están en caché
+    if (this.cacheService.has('Remito') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
+      this.ds_Remito.next(this.cacheService.get('Remito'));
+      return;
+    }
+
+    if (method === 'GET') {
+      this.http.get<any[]>(url)
+        .subscribe({
+          next: (data) => {
+            this.cacheService.set('Remito', data);
+            this.ds_Remito.next(data);
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.ds_Remito.next([]);
+            this.sharedService.message('Error al intentar obtener registros.');
+          }
+        });
+    } else if (method === 'POST') {
+      this.http.post<any[]>(url, body, headers)
+        .subscribe({
+          next: () => {
+            this.sharedService.message('Remito: registro guardado.');
+            this.cacheService.remove('Remito');
+            this.fetchRemito('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Error al intentar guardar el registro.');
+          }
+        });
+    }
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 }

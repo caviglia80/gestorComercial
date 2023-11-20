@@ -8,7 +8,7 @@ import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CacheService } from '@services/cache/cache.service';
-import { empresa, moneyIncome, Inventario } from '@models/mainClasses/main-classes';
+import { empresa, moneyIncome, Inventario, Remito } from '@models/mainClasses/main-classes';
 
 @Component({
   selector: 'app-ingresos',
@@ -291,7 +291,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         idInventario: this.Item.idInventario,
         currency: this.Item.currency,
         amount: this.Item.amount,
-        margenBeneficio: this._getProduct(this.Item.idInventario) ? this.Item.margenBeneficio : '-',
+        margenBeneficio: this._getProduct(this.Item.idInventario) ? this.Item.margenBeneficio : 0,
         method: this.Item.method,
         category: this.Item.category,
         invoice: this.Item.invoice,
@@ -318,18 +318,35 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public remitoRecord() {
     try {
-      this.itemRemito.forEach((ingreso) => {
-        this.dataService.fetchIngresos('POST', ingreso);
+      let idsIngreso: string[] = [];
 
-        if (this.dataEmpresa.ingresoRestaStockEnabled === '1' && this.dataEmpresa.validarInventarioEnabled === '1')
-          this.restarStock(this._getProduct(ingreso.idInventario));
-      });
+
+
+      console.log(this.itemRemito);
+      this.dataService.fetchIngresos('POST', this.itemRemito);
+
+
+
+
+      // logica para abrir vista impresion (nuevo componente)
+
+
+
+
+
+
+
+
+
 
     } catch (error) {
       console.error('Se ha producido un error:', error);
       this.Create(false);
       this.Edit(false);
       this.Remito(false);
+
+      // pagina de error o mensaje
+
     } finally {
       this.Remito(false);
     }
