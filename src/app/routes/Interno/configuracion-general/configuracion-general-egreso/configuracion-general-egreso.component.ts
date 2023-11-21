@@ -30,6 +30,6 @@ export class EmpresaConfiguracionEgresoComponent implements OnInit {
   }
 
   public habilitarEgresoRapido(isChecked: boolean) {
-    this.dataService.fetchEmpresa('PUT', { id: 1, egresoRapidoEnabled: isChecked ? "1" : "0" });
+    this.dataService.fetchEmpresa('PUT', { egresoRapidoEnabled: isChecked ? "1" : "0" });
   }
 }

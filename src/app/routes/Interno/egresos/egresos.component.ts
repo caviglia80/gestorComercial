@@ -166,6 +166,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     try {
       const body: moneyOutlays = {
         id: this.Item.id,
+        empresaId: this.dataEmpresa.id,
         date: this.Item.date,
         currency: this.Item.currency,
         amount: this.Item.amount,

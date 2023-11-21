@@ -39,22 +39,22 @@ export class EmpresaConfiguracionIngresoComponent implements OnInit {
   }
 
   public habilitarIngresoRestaStock(isChecked: boolean) {
-    this.dataService.fetchEmpresa('PUT', { id: 1, ingresoRestaStockEnabled: isChecked ? "1" : "0" });
+    this.dataService.fetchEmpresa('PUT', { ingresoRestaStockEnabled: isChecked ? "1" : "0" });
   }
 
   public habilitarIngresoRapido(isChecked: boolean) {
-    this.dataService.fetchEmpresa('PUT', { id: 1, ingresoRapidoEnabled: isChecked ? "1" : "0" });
+    this.dataService.fetchEmpresa('PUT', { ingresoRapidoEnabled: isChecked ? "1" : "0" });
   }
 
   public habilitarAnularIngresoSumaStock(isChecked: boolean) {
-    this.dataService.fetchEmpresa('PUT', { id: 1, ingresoAnuladoSumaStockEnabled: isChecked ? "1" : "0" });
+    this.dataService.fetchEmpresa('PUT', { ingresoAnuladoSumaStockEnabled: isChecked ? "1" : "0" });
   }
 
   public habilitarPermitirStockCeroEnabled(isChecked: boolean) {
-    this.dataService.fetchEmpresa('PUT', { id: 1, permitirStockCeroEnabled: isChecked ? "1" : "0" });
+    this.dataService.fetchEmpresa('PUT', { permitirStockCeroEnabled: isChecked ? "1" : "0" });
   }
 
   public habilitarvalidarInventarioEnabled(isChecked: boolean) {
-    this.dataService.fetchEmpresa('PUT', { id: 1, validarInventarioEnabled: isChecked ? "1" : "0" });
+    this.dataService.fetchEmpresa('PUT', { validarInventarioEnabled: isChecked ? "1" : "0" });
   }
 }

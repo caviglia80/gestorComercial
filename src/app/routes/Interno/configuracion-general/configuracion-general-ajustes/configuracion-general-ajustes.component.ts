@@ -52,7 +52,7 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
       } else {
         this.errorMessageImg = false;
         this.sharedService.encodeImgToBase64(selectedFile).subscribe((Base64) => {
-          this.dataService.fetchEmpresa('PUT', { id: 1, icono: Base64 });
+          this.dataService.fetchEmpresa('PUT', { icono: Base64 });
         });
       }
     }
@@ -64,12 +64,12 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
 
   public color1(color: string) {
     if (color !== this.dataEmpresa.color1)
-      this.dataService.fetchEmpresa('PUT', { id: 1, color1: color });
+      this.dataService.fetchEmpresa('PUT', { color1: color });
   }
 
   public color2(color: string) {
     if (color !== this.dataEmpresa.color2)
-      this.dataService.fetchEmpresa('PUT', { id: 1, color2: color });
+      this.dataService.fetchEmpresa('PUT', { color2: color });
   }
 
   public ColorPickerIsOpen(open: boolean) {
@@ -86,6 +86,6 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
 
   public setNombre(nombre: string) {
     if (nombre !== this.dataEmpresa.nombre)
-      this.dataService.fetchEmpresa('PUT', { id: 1, nombre: nombre });
+      this.dataService.fetchEmpresa('PUT', { nombre: nombre });
   }
 }

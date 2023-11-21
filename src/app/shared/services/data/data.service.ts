@@ -552,6 +552,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('ReporteIngreso')) {
+      if (!SharedService.isProduction) console.log('GET - Cache');
       this.ds_ReporteIngreso.next(this.cacheService.get('ReporteIngreso'));
       return;
     }
@@ -568,7 +569,7 @@ export class DataService {
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
-    if (!SharedService.isProduction) console.log('GET');
+    if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
   }
 
   public fetchReporteEgresoRubro(params: string, proxy = false): void {
@@ -577,6 +578,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('ReporteEgresoRubro')) {
+      if (!SharedService.isProduction) console.log('GET - Cache');
       this.ds_ReporteEgresoRubro.next(this.cacheService.get('ReporteEgresoRubro'));
       return;
     }
@@ -593,7 +595,7 @@ export class DataService {
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
-    if (!SharedService.isProduction) console.log('GET');
+      if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
   }
 
   public fetchReporteEgresoBP(params: string, proxy = false): void {
@@ -602,6 +604,7 @@ export class DataService {
 
     // Verificar si los datos están en caché
     if (this.cacheService.has('ReporteEgresoBP')) {
+      if (!SharedService.isProduction) console.log('GET - Cache');
       this.ds_ReporteEgresoBP.next(this.cacheService.get('ReporteEgresoBP'));
       return;
     }
@@ -618,7 +621,7 @@ export class DataService {
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
-    if (!SharedService.isProduction) console.log('GET');
+      if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
   }
 
   public fetchRemito(method = '', body: any = {}, proxy = false): void {

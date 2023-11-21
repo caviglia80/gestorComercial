@@ -287,6 +287,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     try {
       const body: moneyIncome = {
         id: this.Item.id,
+        empresaId: this.dataEmpresa.id,
         date: this.Item.date,
         idInventario: this.Item.idInventario,
         currency: this.Item.currency,
@@ -318,9 +319,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public remitoRecord() {
     try {
-      let idsIngreso: string[] = [];
-
-
 
       console.log(this.itemRemito);
       this.dataService.fetchIngresos('POST', this.itemRemito);
@@ -378,6 +376,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     try {
       const body: moneyIncome = {
         id: this.Item.id,
+        empresaId: this.dataEmpresa.id,
         date: this.Item.date,
         idInventario: this.Item.idInventario,
         currency: this.Item.currency,

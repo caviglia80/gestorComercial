@@ -1,5 +1,6 @@
 export class Inventario {
   id: number;
+  empresaId: number;
   idExterno: string;
   nombre: string;
   existencias?: number;
@@ -13,6 +14,7 @@ export class Inventario {
 
   constructor(
     id = 0,
+    empresaId = 0,
     idExterno = '',
     nombre = '',
     existencias = 0,
@@ -25,6 +27,7 @@ export class Inventario {
     descripcion = '',
   ) {
     this.id = id;
+    this.empresaId = empresaId;
     this.idExterno = idExterno;
     this.nombre = nombre;
     this.existencias = existencias;
@@ -40,6 +43,7 @@ export class Inventario {
 
 export class User {
   id: number;
+  empresaId: number;
   username: string;
   fullname: string;
   position: string;
@@ -49,6 +53,7 @@ export class User {
 
   constructor(
     id = 0,
+    empresaId = 0,
     username = '',
     fullname = '',
     position = '',
@@ -57,6 +62,7 @@ export class User {
     password = ''
   ) {
     this.id = id;
+    this.empresaId = empresaId;
     this.username = username;
     this.fullname = fullname;
     this.position = position;
@@ -68,6 +74,7 @@ export class User {
 
 export class Role {
   id: number;
+  empresaId: number;
   name: string;
   menus: string;
   permits: string;
@@ -75,12 +82,14 @@ export class Role {
 
   constructor(
     id = 0,
+    empresaId = 0,
     name = '',
     menus = '',
     permits = '',
     description = ''
   ) {
     this.id = id;
+    this.empresaId = empresaId;
     this.name = name;
     this.menus = menus;
     this.permits = permits;
@@ -90,6 +99,7 @@ export class Role {
 
 export class proveedor {
   id: number;
+  empresaId: number;
   company: string;
   contactFullname: string;
   phone: string;
@@ -102,6 +112,7 @@ export class proveedor {
 
   constructor(
     id = 0,
+    empresaId = 0,
     company = '',
     contactFullname = '',
     phone = '',
@@ -113,6 +124,7 @@ export class proveedor {
     observation = ''
   ) {
     this.id = id;
+    this.empresaId = empresaId;
     this.company = company;
     this.contactFullname = contactFullname;
     this.phone = phone;
@@ -127,6 +139,7 @@ export class proveedor {
 
 export class moneyIncome {
   id?: number;
+  empresaId?: number;
   date: string;
   idInventario?: string;
   currency?: string;
@@ -141,6 +154,7 @@ export class moneyIncome {
 
   constructor(
     id = 0,
+    empresaId = 0,
     date = '',
     idInventario = '',
     currency = '',
@@ -154,6 +168,7 @@ export class moneyIncome {
     description = ''
   ) {
     this.id = id;
+    this.empresaId = empresaId;
     this.date = date;
     this.idInventario = idInventario;
     this.currency = currency;
@@ -170,6 +185,7 @@ export class moneyIncome {
 
 export class moneyOutlays {
   id?: number;
+  empresaId?: number;
   date: string;
   currency?: string;
   amount: number;
@@ -181,6 +197,7 @@ export class moneyOutlays {
 
   constructor(
     id = 0,
+    empresaId = 0,
     date = '',
     currency = '',
     amount = 0,
@@ -191,6 +208,7 @@ export class moneyOutlays {
     description = ''
   ) {
     this.id = id;
+    this.empresaId = empresaId;
     this.date = date;
     this.currency = currency;
     this.amount = amount;
@@ -204,6 +222,7 @@ export class moneyOutlays {
 
 export class facturacionAuth {
   id: number;
+  empresaId: number;
   cuit: string | null;
   sign: string | null;
   token: string | null;
@@ -214,6 +233,7 @@ export class facturacionAuth {
 
   constructor(
     id = 1,
+    empresaId = 0,
     cuit = '',
     sign = '',
     token = '',
@@ -223,6 +243,7 @@ export class facturacionAuth {
     llave = ''
   ) {
     this.id = id;
+    this.empresaId = empresaId;
     this.cuit = cuit;
     this.sign = sign;
     this.token = token;
@@ -248,7 +269,7 @@ export class empresa {
   validarInventarioEnabled: string;
 
   constructor(
-    id = 1,
+    id = 0,
     nombre = 'Compy',
     icono = 'assets/logo.png',
     copyEnabled = '1',
@@ -331,18 +352,18 @@ export class reportesEgresosBP {
 }
 
 export class Remito {
-  idEmpresa?: number;
+  empresaId?: number;
   ingresos?: string;
   comprobante?: string;
   fecha?: string;
 
   constructor(
-    idEmpresa = 0,
+    empresaId = 0,
     ingresos = '',
     comprobante = '',
     fecha = '',
   ) {
-    this.idEmpresa = idEmpresa;
+    this.empresaId = empresaId;
     this.ingresos = ingresos;
     this.comprobante = comprobante;
     this.fecha = fecha;

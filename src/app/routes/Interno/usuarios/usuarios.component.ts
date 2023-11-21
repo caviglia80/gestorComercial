@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { User } from '@models/mainClasses/main-classes';
+import { empresa, User } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
@@ -14,6 +14,7 @@ import { CacheService } from '@services/cache/cache.service';
 })
 
 export class UsuariosComponent implements OnInit, AfterViewInit {
+  public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<User>;
   public isLoading = true;
   public Item: any = {};
@@ -50,6 +51,12 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   }
 
   private dataInit() {
+    this.dataService.Empresa$.subscribe((data) => {
+      if (data[0])
+        this.dataEmpresa = data[0];
+    });
+    this.dataService.fetchEmpresa('GET');
+
     this.dataService.Usuarios$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
@@ -119,6 +126,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     try {
       const body: User = {
         id: this.Item.id,
+        empresaId: this.dataEmpresa.id,
         username: this.Item.username,
         fullname: this.Item.fullname,
         position: this.Item.position,

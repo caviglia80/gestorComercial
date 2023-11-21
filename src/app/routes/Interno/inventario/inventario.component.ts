@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { Inventario, proveedor } from '@models/mainClasses/main-classes';
+import { empresa, Inventario, proveedor } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { FormControl } from '@angular/forms';
@@ -17,6 +17,7 @@ import { CacheService } from '@services/cache/cache.service';
 })
 
 export class inventarioComponent implements OnInit, AfterViewInit {
+  public dataEmpresa: empresa = new empresa();
   public proveedorControl = new FormControl();
   public proveedorFiltered: Observable<any[]>;
   public proveedorData: proveedor[] = [];
@@ -63,6 +64,12 @@ export class inventarioComponent implements OnInit, AfterViewInit {
   }
 
   private dataInit() {
+    this.dataService.Empresa$.subscribe((data) => {
+      if (data[0])
+        this.dataEmpresa = data[0];
+    });
+    this.dataService.fetchEmpresa('GET');
+
     this.dataService.Inventario$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
@@ -171,6 +178,7 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     try {
       const body: Inventario = {
         id: this.Item.id,
+        empresaId: this.dataEmpresa.id,
         idExterno: this.Item.idExterno,
         nombre: this.Item.nombre,
         existencias: this.Item.existencias ? this.Item.existencias : 0,
