@@ -213,9 +213,9 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.Item.date = item.date;
     this.Item.idInventario = item.idInventario;
     this.fullNameProducto = item.idInventario ? item.idInventario : '';
-    const prod: Inventario = this._getProduct(item.idInventario);
-    if (prod)
-      this.fullNameProducto = (prod.id + ' - ') + (prod.idExterno ? prod.idExterno + ' - ' : ' - ') + (prod.nombre);
+    const inv: Inventario = this._getProduct(item.idInventario);
+    if (inv)
+      this.fullNameProducto = (inv.id + ' - ') + (inv.idExterno ? inv.idExterno + ' - ' : ' - ') + (inv.nombre);
     else
       this.fullNameProducto = item.idInventario + ' (No encontrado en inventario)';
     this.Item.currency = item.currency;
@@ -227,6 +227,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.Item.anulado = item.anulado;
     this.Item.cliente = item.cliente;
     this.Item.description = item.description;
+    this.Item.tipo = inv.tipo;
   }
 
   private restarStock(inventario: Inventario) {
@@ -292,7 +293,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         idInventario: this.Item.idInventario,
         currency: this.Item.currency,
         amount: this.Item.amount,
-        margenBeneficio: this._getProduct(this.Item.idInventario) ? this.Item.margenBeneficio : 0,
+        margenBeneficio: this._getProduct(this.Item.idInventario).tipo === 'Producto' ? this.Item.margenBeneficio : 0,
         method: this.Item.method,
         category: this.Item.category,
         invoice: this.Item.invoice,

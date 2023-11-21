@@ -225,7 +225,7 @@
             currency:'$':'symbol' }}</td>
         </tr>
 
-        <tr *ngIf="Item['margenBeneficio']">
+        <tr *ngIf="Item.tipo === 'Producto'">
           <td style="font-weight: bold; white-space: nowrap;">Margen-Beneficio:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['margenBeneficio'])">{{ Item['margenBeneficio']
             }}%
