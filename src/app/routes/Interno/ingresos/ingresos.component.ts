@@ -169,11 +169,12 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   public Remito(visible: boolean) {
-    this.R = this.R.getRemito(this.itemRemito, this.dataInventario);
     if (!visible) {
       this.R = new Remito()
       this.Item = {};
       this.itemRemito = [];
+    } else {
+      this.R = this.R.getRemito(this.itemRemito, this.dataInventario);
     }
     this.remito = visible;
   }
@@ -234,7 +235,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.Item.anulado = item.anulado;
     this.Item.cliente = item.cliente;
     this.Item.description = item.description;
-    this.Item.tipo = inv.tipo;
+    this.Item.tipo = inv ? inv.tipo : '';
   }
 
   private restarStock(inventario: Inventario) {
@@ -300,7 +301,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         idInventario: this.Item.idInventario,
         currency: this.Item.currency,
         amount: this.Item.amount,
-        margenBeneficio: this._getProduct(this.Item.idInventario).tipo === 'Producto' ? this.Item.margenBeneficio : 0,
+        margenBeneficio: this._getProduct(this.Item.idInventario) ? (this._getProduct(this.Item.idInventario).tipo === 'Producto' ? this.Item.margenBeneficio : 0) : 0,
         method: this.Item.method,
         category: this.Item.category,
         invoice: this.Item.invoice,
@@ -328,7 +329,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public remitoRecord(descargarRemito: boolean) {
     try {
 
-      console.log(this.itemRemito);
+      if (!SharedService.isProduction) console.log(this.itemRemito);
       this.dataService.fetchIngresos('POST', this.itemRemito);
       if (descargarRemito)
         this.R.generateAndDownloadPDF(this.R);
