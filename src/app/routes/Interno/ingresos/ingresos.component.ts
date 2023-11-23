@@ -8,7 +8,8 @@ import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CacheService } from '@services/cache/cache.service';
-import { empresa, moneyIncome, Inventario, Remito } from '@models/mainClasses/main-classes';
+import { empresa, moneyIncome, Inventario } from '@models/mainClasses/main-classes';
+import { Remito } from '@models/remito/remito';
 
 @Component({
   selector: 'app-ingresos',
@@ -30,7 +31,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public remito = false;
   public fullNameProducto = '';
   public itemRemito: moneyIncome[] = [];
-  //  public detallesCargados = false;
+  public R: Remito = new Remito();
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -92,6 +93,10 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       this.dataInventario = data;
     });
     this.getInventario();
+
+    this.dataService.PDF$.subscribe((data) => {
+      //  this.PDF = data;
+    });
   }
 
   public onProductoSeleccionado(event: any): void {
@@ -164,7 +169,9 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   public Remito(visible: boolean) {
+    this.R = this.R.getRemito(this.itemRemito, this.dataInventario);
     if (!visible) {
+      this.R = new Remito()
       this.Item = {};
       this.itemRemito = [];
     }
@@ -318,26 +325,13 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     } finally { }
   }
 
-  public remitoRecord() {
+  public remitoRecord(descargarRemito: boolean) {
     try {
 
       console.log(this.itemRemito);
       this.dataService.fetchIngresos('POST', this.itemRemito);
-
-
-
-
-      // logica para abrir vista impresion (nuevo componente)
-
-
-
-
-
-
-
-
-
-
+      if (descargarRemito)
+        this.R.generateAndDownloadPDF(this.R);
     } catch (error) {
       console.error('Se ha producido un error:', error);
       this.Create(false);
@@ -350,27 +344,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       this.Remito(false);
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   public recordEdit() {
     if (this.dataEmpresa.validarInventarioEnabled === '1' && !this.productoValido()) return;
@@ -398,53 +371,13 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public getInventario_Nombre(id: any): string {
-    const inventario: Inventario = this._getProduct(id);
-    if (inventario)
-      return inventario.nombre;
-    else
-      return id.toString();
-  }
 
-  public getInventario_Codigos(id: any): string {
-    const inventario: Inventario = this._getProduct(id);
-    if (inventario)
-      if (inventario.idExterno)
-        return inventario.id?.toString() + ' - ' + inventario.idExterno?.toString();
-      else
-        return inventario.id?.toString();
-    else
-      return '...';
-  }
 
-  public getInventario_Descripcion(id: any): string {
-    const inventario: Inventario = this._getProduct(id);
-    if (inventario)
-      return inventario.descripcion ? inventario.descripcion : '';
-    else
-      return '...';
-  }
 
-  public TotalRemito(): string {
-    let total = 0;
-    for (const ingreso of this.itemRemito) {
-      total += ingreso.amount ? ingreso.amount : 0;
-    }
-    return total.toString();
-  }
 
-  public consolidateItems(): any[] {
-    const consolidatedItems: any[] = [];
-    for (const ingreso of this.itemRemito) {
-      const existingItem = consolidatedItems.find((item) => item.idInventario === ingreso.idInventario && item.amount === ingreso.amount);
-      if (existingItem) {
-        existingItem.cantidad += 1;
-      } else {
-        consolidatedItems.push({ ...ingreso, cantidad: 1 });
-      }
-    }
-    return consolidatedItems;
-  }
+
+
+
 }
 
 

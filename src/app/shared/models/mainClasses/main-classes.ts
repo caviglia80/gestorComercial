@@ -351,7 +351,7 @@ export class reportesEgresosBP {
   }
 }
 
-export class Remito {
+export class Venta {
   empresaId?: number;
   ingresos?: string;
   comprobante?: string;

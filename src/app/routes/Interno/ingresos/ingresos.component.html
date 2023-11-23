@@ -444,42 +444,30 @@
       <table class="m-4">
         <tr>
           <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">{{ Columns['date'] }}:</td>
-          <td style="width: 100%;">{{ Item.date | date:'dd/MM/yyyy'
+          <td style="width: 100%;">{{ R.fecha | date:'dd/MM/yyyy'
             }}
           </td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">{{ Columns['cliente'] }}:</td>
-          <td style="width: 100%;">{{ Item.cliente }}</td>
-        </tr>
-
-        <tr>
-          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">{{ Columns['amount'] }}:</td>
-          <td style="width: 100%;">{{ Item.amount |
-            currency:'$':'symbol' }}</td>
+          <td style="width: 100%;">{{ R.cliente }}</td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">Método de pago:</td>
-          <td style="width: 100%;">{{ Item.method }}
-          </td>
-        </tr>
-
-        <tr>
-          <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">{{ Columns['category'] }}:</td>
-          <td style="width: 100%;">{{ Item.category }}
+          <td style="width: 100%;">{{ R.metodoPago }}
           </td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">Comprobante:</td>
-          <td style="width: 100%;">{{ Item.invoice }}</td>
+          <td style="width: 100%;">{{ R.comprobante }}</td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap; padding-right: 5px;">Descripción:</td>
-          <td style="width: 100%;">{{ Item.description }}
+          <td style="width: 100%;">{{ R.descripcion }}
           </td>
         </tr>
       </table>
@@ -487,28 +475,27 @@
       <div class="col-md-12 col-lg-12 order-md-last">
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-sm overflow-hidden"
-            *ngFor="let ingreso of consolidateItems()">
-            <div
-              style="flex-grow: 1; flex-shrink: 1; max-width: 75%;  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-              <h6 class="my-0">
-                {{ getInventario_Nombre(ingreso.idInventario) }} ({{ getInventario_Codigos(ingreso.idInventario) }})
-              </h6>
+            *ngFor="let item of R.items">
+            <div style="flex-grow: 1; flex-shrink: 1; max-width: 75%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              <h6 class="my-0">{{ item.nombre }} ({{ item.codigo }})</h6>
               <small class="text-body-secondary" style="max-width: 100%;">
-                {{ getInventario_Descripcion(ingreso.idInventario) }}
+                {{ item.descripcion }}
               </small>
             </div>
-            <span class="text-body-secondary px-3">x{{ ingreso.cantidad }}</span>
-            <span class="text-body-secondary" style="max-width: 100px;">${{ ingreso.amount }}</span>
+            <span class="text-body-secondary px-3">x{{ item.cantidad }}</span>
+            <span class="text-body-secondary" style="max-width: 100px;">${{ item.precio }}</span>
           </li>
 
           <li class="list-group-item d-flex justify-content-between">
-            <span>Total ({{ Item.currency }})</span>
-            <strong>${{ TotalRemito() }}</strong>
+            <span>Total ({{ R.moneda }})</span>
+            <strong>${{ R.total }}</strong>
           </li>
         </ul>
       </div>
 
+
     </div>
   </div>
-  <button mat-button (click)="remitoRecord()">Confirmar Pago</button>
+  <button mat-button (click)="remitoRecord(false)">Confirmar</button>
+  <button mat-button (click)="remitoRecord(true)">Confirmar y Descargar Remito</button>
 </div>

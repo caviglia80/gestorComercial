@@ -41,6 +41,9 @@ export class DataService {
   private ds_Remito: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Remito$: Observable<any[]> = this.ds_Remito.asObservable();
 
+  public ds_PDF = new BehaviorSubject<any>(null);
+  public PDF$: Observable<any> = this.ds_PDF.asObservable();
+
   constructor(
     private http: HttpClient,
     public sharedService: SharedService,
@@ -366,7 +369,9 @@ export class DataService {
     } else if (method === 'POST') {
       this.http.post<any[]>(url, body, headers)
         .subscribe({
-          next: () => {
+          next: (data) => {
+            if (!SharedService.isProduction) console.log(data);
+            this.ds_PDF.next(data);
             this.sharedService.message('Ingresos: registro guardado.');
             this.cacheService.remove('Ingresos');
             this.fetchIngresos('GET');
@@ -595,7 +600,7 @@ export class DataService {
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
-      if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
+    if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
   }
 
   public fetchReporteEgresoBP(params: string, proxy = false): void {
@@ -621,7 +626,7 @@ export class DataService {
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
-      if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
+    if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
   }
 
   public fetchRemito(method = '', body: any = {}, proxy = false): void {
