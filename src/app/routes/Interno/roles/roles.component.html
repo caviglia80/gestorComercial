@@ -218,7 +218,7 @@
     <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="record('POST')" [disabled]="!Item.name">Guardar</button>
+  <button mat-button (click)="record('POST')" [disabled]="!Item.name || Item.name == false">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -263,7 +263,7 @@
     <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="record('PUT')" [disabled]="!Item.name">Guardar</button>
+  <button mat-button (click)="record('PUT')" [disabled]="!Item.name || Item.name == false">Guardar</button>
 </div>
 
 <!-- Vista de duplicado de registros -->
@@ -308,5 +308,5 @@
     <input matInput placeholder="{{ Columns['description'] }}" [(ngModel)]="Item.description">
   </mat-form-field>
 
-  <button mat-button (click)="record('POST')" [disabled]="!Item.name">Guardar</button>
+  <button mat-button (click)="record('POST')" [disabled]="!Item.name || Item.name == false">Guardar</button>
 </div>

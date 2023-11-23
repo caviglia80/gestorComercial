@@ -337,10 +337,10 @@
   </mat-form-field>
 
   <button mat-button (click)="remitoCreate(false)"
-    [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">Guardar</button>
+    [disabled]="!Item.date || !Item.idInventario || Item.idInventario == false || !Item.amount || !Item.method || !Item.category">Guardar</button>
 
   <button mat-button (click)="remitoCreate(true)"
-    [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">
+    [disabled]="!Item.date || !Item.idInventario || Item.idInventario == false || !Item.amount || !Item.method || !Item.category">
     <mat-icon>add</mat-icon>
   </button>
 </div>
@@ -421,7 +421,7 @@
   </mat-form-field>
 
   <button mat-button (click)="recordEdit()"
-    [disabled]="!Item.date || !Item.idInventario || !Item.amount || !Item.method || !Item.category">Guardar</button>
+    [disabled]="!Item.date || !Item.idInventario || Item.idInventario == false || !Item.amount || !Item.method || !Item.category">Guardar</button>
 </div>
 
 <!-- Vista de Remito -->

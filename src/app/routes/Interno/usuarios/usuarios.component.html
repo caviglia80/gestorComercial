@@ -244,7 +244,13 @@
   </mat-form-field>
 
   <button mat-button (click)="record('POST')"
-    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password || Item.password?.length <= 7">Guardar</button>
+    [disabled]="!Item.username || Item.username == false ||
+    !Item.fullname || Item.fullname == false ||
+    !Item.position || Item.position == false ||
+    !Item.email || Item.email == false ||
+    !Item.phone || Item.phone == false ||
+    !Item.password || Item.password == false ||
+    Item.password?.length <= 7">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -300,5 +306,11 @@
   </mat-form-field>
 
   <button mat-button (click)="record('PUT')"
-    [disabled]="!Item.username || !Item.fullname || !Item.position || !Item.email || !Item.phone || !Item.password || Item.password?.length <= 7">Guardar</button>
+    [disabled]="!Item.username || Item.username == false ||
+    !Item.fullname || Item.fullname == false ||
+    !Item.position || Item.position == false ||
+    !Item.email || Item.email == false ||
+    !Item.phone || Item.phone == false ||
+    !Item.password || Item.password == false ||
+    Item.password?.length <= 7">Guardar</button>
 </div>
