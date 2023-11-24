@@ -6,6 +6,7 @@ import { empresa, Role } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
+import { ExcelExportService } from '@services/excel-export/excel-export.service';
 
 @Component({
   selector: 'app-roles',
@@ -35,7 +36,8 @@ export class RolesComponent implements OnInit, AfterViewInit {
   constructor(
     public dataService: DataService,
     public sharedService: SharedService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private excelExportService: ExcelExportService
   ) { }
 
   public menusHabilitacion: { id: string, name: string, habilitado: boolean }[] = [
@@ -179,6 +181,16 @@ export class RolesComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.cacheService.remove('Roles');
     this.dataService.fetchRoles('GET');
+  }
+
+  ExportToExcel() {
+    const columns = [
+      { header: 'ID', key: 'id', width: 10 },
+      { header: 'Nombre', key: 'name', width: 20 },
+      { header: 'Menús', key: 'menus', width: 25 },
+      { header: 'Descripción', key: 'description', width: 30 }
+    ];
+    this.excelExportService.exportToExcel(columns, this.dataSource.data, 'Roles');
   }
 }
 

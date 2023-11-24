@@ -6,6 +6,7 @@ import { empresa, proveedor } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
+import { ExcelExportService } from '@services/excel-export/excel-export.service';
 
 @Component({
   selector: 'app-proveedores',
@@ -39,7 +40,8 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
   constructor(
     public dataService: DataService,
     public sharedService: SharedService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private excelExportService: ExcelExportService
   ) { }
 
   ngOnInit() {
@@ -156,6 +158,22 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.cacheService.remove('Proveedores');
     this.dataService.fetchProveedores('GET');
+  }
+
+  ExportToExcel() {
+    const columns = [
+      { header: 'ID', key: 'id', width: 10 },
+      { header: 'Empresa', key: 'company', width: 20 },
+      { header: 'Nombre Completo del Contacto', key: 'contactFullname', width: 25 },
+      { header: 'Teléfono', key: 'phone', width: 15 },
+      { header: 'Email', key: 'email', width: 25 },
+      { header: 'Dirección', key: 'address', width: 25 },
+      { header: 'Sitio Web', key: 'website', width: 20 },
+      { header: 'Número de Cuenta', key: 'accountNumber', width: 20 },
+      { header: 'Tipo de Suministro', key: 'tipoSuministro', width: 20 },
+      { header: 'Observación', key: 'observation', width: 30 }
+    ];
+    this.excelExportService.exportToExcel(columns, this.dataSource.data, 'Proveedores');
   }
 }
 

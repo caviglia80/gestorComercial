@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { CacheService } from '@services/cache/cache.service';
+import { ExcelExportService } from '@services/excel-export/excel-export.service';
 
 @Component({
   selector: 'app-egresos',
@@ -45,7 +46,8 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   constructor(
     public dataService: DataService,
     public sharedService: SharedService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private excelExportService: ExcelExportService
   ) {
     this.proveedorFiltered = this.proveedorControl.valueChanges.pipe(
       startWith(''),
@@ -190,6 +192,21 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     this.cacheService.remove('Egresos');
     this.dataService.fetchEgresos('GET');
     this.getProveedor();
+  }
+
+  ExportToExcel() {
+    const columns = [
+      { header: 'ID', key: 'id', width: 10 },
+      { header: 'Fecha', key: 'date', width: 15 },
+      { header: 'Moneda', key: 'moneda', width: 15 },
+      { header: 'Monto', key: 'monto', width: 15 },
+      { header: 'Método', key: 'method', width: 15 },
+      { header: 'Categoría', key: 'category', width: 20 },
+      { header: 'Comprobante', key: 'comprobante', width: 20 },
+      { header: 'Beneficiario', key: 'beneficiario', width: 20 },
+      { header: 'Descripción', key: 'description', width: 25 }
+    ];
+    this.excelExportService.exportToExcel(columns, this.dataSource.data, 'Egresos');
   }
 }
 

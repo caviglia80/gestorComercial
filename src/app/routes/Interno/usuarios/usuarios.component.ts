@@ -6,6 +6,7 @@ import { empresa, User } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
+import { ExcelExportService } from '@services/excel-export/excel-export.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -36,7 +37,8 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   constructor(
     public dataService: DataService,
     public sharedService: SharedService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private excelExportService: ExcelExportService
   ) { }
 
   ngOnInit() {
@@ -147,6 +149,18 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.cacheService.remove('Usuarios');
     this.dataService.fetchUsuarios('GET');
+  }
+
+  ExportToExcel() {
+    const columns = [
+      { header: 'ID', key: 'id', width: 10 },
+      { header: 'Usuario', key: 'username', width: 20 },
+      { header: 'Nombre Completo', key: 'fullname', width: 25 },
+      { header: 'Cargo', key: 'position', width: 20 },
+      { header: 'Teléfono', key: 'phone', width: 15 },
+      { header: 'Email', key: 'email', width: 25 }
+    ];
+    this.excelExportService.exportToExcel(columns, this.dataSource.data, 'Usuarios');
   }
 }
 

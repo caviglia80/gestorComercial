@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { CacheService } from '@services/cache/cache.service';
 import { empresa, moneyIncome, Inventario } from '@models/mainClasses/main-classes';
 import { Remito } from '@models/remito/remito';
+import { ExcelExportService } from '@services/excel-export/excel-export.service';
 
 @Component({
   selector: 'app-ingresos',
@@ -21,7 +22,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public dataEmpresa: empresa = new empresa();
   public inventarioControl = new FormControl();
   public filteredInventario: Observable<any[]>;
-  public dataIngreso = new MatTableDataSource<moneyIncome>;
+  public dataSource = new MatTableDataSource<moneyIncome>;
   public dataInventario: Inventario[] = [];
   public isLoading = true;
   public Item: any = {};
@@ -52,7 +53,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   constructor(
     public dataService: DataService,
     public sharedService: SharedService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private excelExportService: ExcelExportService
   ) {
     this.filteredInventario = this.inventarioControl.valueChanges.pipe(
       startWith(''),
@@ -67,8 +69,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
-    this.dataIngreso.paginator = this.paginator;
-    this.dataIngreso.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   private dataInit() {
@@ -80,7 +82,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
-        this.dataIngreso.data = data;
+        this.dataSource.data = data;
         this.loading(false);
       },
       error: () => {
@@ -155,7 +157,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public searchFilter(filterValue: string) {
     filterValue = filterValue?.toString().toLowerCase().trim();
-    this.dataIngreso.filter = filterValue ? filterValue : '';
+    this.dataSource.filter = filterValue ? filterValue : '';
   }
 
   public Detail(visible: boolean) {
@@ -372,13 +374,23 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-
-
-
-
-
-
+  ExportToExcel() {
+    const columns = [
+      { header: 'ID', key: 'id', width: 10 },
+      { header: 'Fecha', key: 'date', width: 15 },
+      { header: 'ID Inventario', key: 'inventarioId', width: 20 },
+      { header: 'Moneda', key: 'moneda', width: 15 },
+      { header: 'Monto', key: 'monto', width: 15 },
+      { header: 'Margen de Beneficio', key: 'margenBeneficio', width: 20 },
+      { header: 'Método', key: 'method', width: 15 },
+      { header: 'Categoría', key: 'category', width: 20 },
+      { header: 'Comprobante', key: 'comprobante', width: 20 },
+      { header: 'Anulado', key: 'anulado', width: 15 },
+      { header: 'Cliente', key: 'cliente', width: 20 },
+      { header: 'Descripción', key: 'description', width: 25 }
+    ];
+    this.excelExportService.exportToExcel(columns, this.dataSource.data, 'Ingresos');
+  }
 }
 
 
