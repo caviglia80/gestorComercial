@@ -32,7 +32,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
     date: 'Fecha',
-    beneficiario: 'Beneficiario/Proveedor',
+    beneficiario: 'Beneficiario',
     /*     moneda: 'Moneda', */
     category: 'Rubro',
     monto: 'Monto',

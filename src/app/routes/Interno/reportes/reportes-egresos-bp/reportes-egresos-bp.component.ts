@@ -19,7 +19,7 @@ export class ReportesEgresosBPComponent implements OnInit, AfterViewInit {
   public fechaHasta = ''
 
   public Columns: { [key: string]: string } = {
-    bp: 'Beneficiario/Proveedor',
+    bp: 'Beneficiario',
     cantidadEgresos: 'Cantidad de Egresos',
     montoTotalEgresos: 'Monto Total'
   };

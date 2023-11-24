@@ -18,7 +18,7 @@
     <div class="mat-elevation-z4 m-4 rounded">
       <mat-radio-group [(ngModel)]="filtro">
         <mat-radio-button value="rubro">Egresos por Rubro</mat-radio-button>
-        <mat-radio-button value="bp">Egresos por Beneficiario/Proveedor</mat-radio-button>
+        <mat-radio-button value="bp">Egresos por Beneficiario</mat-radio-button>
       </mat-radio-group>
     </div>
     <app-reportes-egresos-rubro *ngIf="filtro==='rubro'"></app-reportes-egresos-rubro>
