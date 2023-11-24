@@ -189,7 +189,22 @@ export class RolesComponent implements OnInit, AfterViewInit {
       { header: 'Menús', key: 'menus', width: 25 },
       { header: 'Descripción', key: 'description', width: 30 }
     ];
-    this.excelExportService.exportToExcel(columns, this.dataSource.data, 'Roles');
+
+    const dataCopy = this.dataSource.data.map(row => ({
+      ...row,
+      menus: this.menusHabilitados(row.menus)
+    }));
+
+    this.excelExportService.exportToExcel(columns, dataCopy, 'Roles');
+  }
+
+  private menusHabilitados(jsonString: string): string {
+    const lista = JSON.parse(jsonString);
+    // Filtrar los elementos habilitados y extraer sus nombres
+    const nombresHabilitados = lista
+      .filter((item: any) => item.habilitado)
+      .map((item: any) => item.name);
+    return nombresHabilitados.join(', ');
   }
 }
 
