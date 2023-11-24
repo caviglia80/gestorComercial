@@ -7,6 +7,9 @@
         <div class="card-header-danger">
           <h4 class="card-title left-align">Inventario</h4>
           <div class="right-align">
+            <button (click)="ExportToExcel()">
+              <mat-icon>file_download</mat-icon>
+            </button>
             <button (click)="refresh()">
               <mat-icon>refresh</mat-icon>
             </button>
@@ -308,7 +311,8 @@
     <p class="form-field-description">Ingrese descripción</p>
     <input matInput placeholder="Descripción" [(ngModel)]="Item.descripcion">
   </mat-form-field>
-  <button mat-button (click)="record('POST')" [disabled]="!Item.nombre || Item.nombre == false || !Item.tipo">Guardar</button>
+  <button mat-button (click)="record('POST')"
+    [disabled]="!Item.nombre || Item.nombre == false || !Item.tipo">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -375,7 +379,8 @@
     <p class="form-field-description">Ingrese descripción</p>
     <input matInput placeholder="Descripción" [(ngModel)]="Item.descripcion">
   </mat-form-field>
-  <button mat-button (click)="record('PUT')" [disabled]="!Item.nombre || Item.nombre == false || !Item.tipo">Guardar</button>
+  <button mat-button (click)="record('PUT')"
+    [disabled]="!Item.nombre || Item.nombre == false || !Item.tipo">Guardar</button>
 </div>
 
 <!-- Vista de duplicado de registros -->
@@ -442,5 +447,6 @@
     <p class="form-field-description">Ingrese descripción</p>
     <input matInput placeholder="Descripción" [(ngModel)]="Item.descripcion">
   </mat-form-field>
-  <button mat-button (click)="record('POST')" [disabled]="!Item.nombre || Item.nombre == false || !Item.tipo">Guardar</button>
+  <button mat-button (click)="record('POST')"
+    [disabled]="!Item.nombre || Item.nombre == false || !Item.tipo">Guardar</button>
 </div>

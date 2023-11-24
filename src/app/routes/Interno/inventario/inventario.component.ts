@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { CacheService } from '@services/cache/cache.service';
+import { ExcelExportService } from '@services/excel-export/excel-export.service';
 
 @Component({
   selector: 'app-inventario',
@@ -37,14 +38,14 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     tipo: 'Tipo',
     listPrice: 'Precio lista',
     /*     existencias: 'Existencias', */
-    /*     margenBeneficio: 'Margen-Beneficio', */
     actions: 'Operaciones'
   };
 
   constructor(
     public dataService: DataService,
     public sharedService: SharedService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private excelExportService: ExcelExportService
   ) {
     this.proveedorFiltered = this.proveedorControl.valueChanges.pipe(
       startWith(''),
@@ -206,8 +207,24 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     this.dataService.fetchInventario('GET');
     this.getProveedor();
   }
-}
 
+  ExportToExcel() {
+    const columns = [
+      { header: 'ID', key: 'id', width: 10 },
+      { header: 'ID Externo', key: 'idExterno', width: 20 },
+      { header: 'Nombre', key: 'nombre', width: 20 },
+      { header: 'Existencias', key: 'existencias', width: 15 },
+      { header: 'Costo', key: 'costo', width: 15 },
+      { header: 'Margen de Beneficio', key: 'margenBeneficio', width: 20 },
+      { header: 'Tipo', key: 'tipo', width: 15 },
+      { header: 'Proveedor', key: 'proveedor', width: 20 },
+      { header: 'Duración', key: 'duracion', width: 15 },
+      { header: 'Categoría', key: 'categoria', width: 20 },
+      { header: 'Descripción', key: 'descripcion', width: 25 }
+    ];
+    this.excelExportService.exportToExcel(columns, this.dataSource.data, 'Inventario');
+  }
+}
 
 
 
