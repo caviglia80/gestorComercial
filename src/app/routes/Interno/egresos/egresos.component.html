@@ -296,7 +296,7 @@
   </mat-form-field>
 
   <button mat-button (click)="record('POST')"
-    [disabled]="!Item.date || !Item.monto || !Item.method|| !Item.category || !Item.beneficiario || Item.beneficiario == false">Guardar</button>
+    [disabled]="!Item.date || !Item.monto || Item.monto < 1 || !Item.method|| !Item.category || !Item.beneficiario || Item.beneficiario == false">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -369,5 +369,5 @@
   </mat-form-field>
 
   <button mat-button (click)="record('PUT')"
-    [disabled]="!Item.date || !Item.monto || !Item.method|| !Item.category || !Item.beneficiario || Item.beneficiario == false">Guardar</button>
+    [disabled]="!Item.date || !Item.monto || Item.monto < 1 || !Item.method|| !Item.category || !Item.beneficiario || Item.beneficiario == false">Guardar</button>
 </div>

@@ -23,12 +23,12 @@ export class RetryInterceptor implements HttpInterceptor {
                 return next.handle(req); // Intenta la solicitud nuevamente
               } else {
                 console.log('Se agotaron los intentos de reenvío debido a la falta de conexión.');
-                return throwError('Se agotaron los intentos de reenvío debido a la falta de conexión.');
+                return throwError(() => new Error('Se agotaron los intentos de reenvío debido a la falta de conexión.'));
               }
             })
           );
         }
-        return throwError(error); // Maneja otros errores
+        return throwError(() => error); // Maneja otros errores
       })
     );
   }
