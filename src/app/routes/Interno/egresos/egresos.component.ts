@@ -196,7 +196,6 @@ export class EgresosComponent implements OnInit, AfterViewInit {
 
   ExportToExcel() {
     const columns = [
-      { header: 'ID', key: 'id', width: 10 },
       { header: 'Fecha', key: 'date', width: 15 },
       { header: 'Moneda', key: 'moneda', width: 15 },
       { header: 'Monto', key: 'monto', width: 15 },

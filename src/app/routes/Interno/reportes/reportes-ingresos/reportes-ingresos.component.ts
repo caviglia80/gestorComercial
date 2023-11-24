@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -14,6 +14,8 @@ import { CacheService } from '@services/cache/cache.service';
 })
 export class ReportesIngresosComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<reportesIngresos>;
+  @Output() variableChange = new EventEmitter<MatTableDataSource<reportesIngresos>>();
+
   public isLoading = true;
   public fechaDesde = ''
   public fechaHasta = ''
@@ -50,6 +52,7 @@ export class ReportesIngresosComponent implements OnInit, AfterViewInit {
     this.dataService.ReporteIngreso$.subscribe({
       next: (data) => {
         this.dataSource.data = data;
+        this.variableChange.emit(this.dataSource);
         this.loading(false);
       },
       error: () => {

@@ -185,7 +185,6 @@ export class RolesComponent implements OnInit, AfterViewInit {
 
   ExportToExcel() {
     const columns = [
-      { header: 'ID', key: 'id', width: 10 },
       { header: 'Nombre', key: 'name', width: 20 },
       { header: 'Menús', key: 'menus', width: 25 },
       { header: 'Descripción', key: 'description', width: 30 }

@@ -2,15 +2,20 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header-danger">
-        <h4 class="card-title">Reportes</h4>
+        <h4 class="card-title left-align">Reportes</h4>
+        <div class="right-align">
+          <button (click)="ExportToExcel()">
+            <mat-icon>file_download</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<mat-tab-group dynamicHeight>
+<mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex">
   <mat-tab label="Ingresos">
-    <app-reportes-ingresos></app-reportes-ingresos>
+    <app-reportes-ingresos (variableChange)="getDataIngresos($event)"></app-reportes-ingresos>
   </mat-tab>
 
   <mat-tab label="Egresos">
@@ -21,7 +26,7 @@
         <mat-radio-button value="bp">Egresos por Beneficiario</mat-radio-button>
       </mat-radio-group>
     </div>
-    <app-reportes-egresos-rubro *ngIf="filtro==='rubro'"></app-reportes-egresos-rubro>
-    <app-reportes-egresos-bp *ngIf="filtro==='bp'"></app-reportes-egresos-bp>
+    <app-reportes-egresos-rubro *ngIf="filtro==='rubro'" (variableChange)="getDataERubro($event)"></app-reportes-egresos-rubro>
+    <app-reportes-egresos-bp *ngIf="filtro==='bp'" (variableChange)="getDataEBP($event)"></app-reportes-egresos-bp>
   </mat-tab>
 </mat-tab-group>

@@ -153,7 +153,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
 
   ExportToExcel() {
     const columns = [
-      { header: 'ID', key: 'id', width: 10 },
       { header: 'Usuario', key: 'username', width: 20 },
       { header: 'Nombre Completo', key: 'fullname', width: 25 },
       { header: 'Cargo', key: 'position', width: 20 },

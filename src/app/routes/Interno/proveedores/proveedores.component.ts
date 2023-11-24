@@ -162,7 +162,6 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
 
   ExportToExcel() {
     const columns = [
-      { header: 'ID', key: 'id', width: 10 },
       { header: 'Empresa', key: 'company', width: 20 },
       { header: 'Nombre Completo del Contacto', key: 'contactFullname', width: 25 },
       { header: 'Teléfono', key: 'phone', width: 15 },

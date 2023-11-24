@@ -376,7 +376,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   ExportToExcel() {
     const columns = [
-      { header: 'ID', key: 'id', width: 10 },
       { header: 'Fecha', key: 'date', width: 15 },
       { header: 'ID Inventario', key: 'inventarioId', width: 20 },
       { header: 'Moneda', key: 'moneda', width: 15 },
@@ -389,7 +388,15 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       { header: 'Cliente', key: 'cliente', width: 20 },
       { header: 'Descripción', key: 'description', width: 25 }
     ];
-    this.excelExportService.exportToExcel(columns, this.dataSource.data, 'Ingresos');
+
+    const dataCopy = this.dataSource.data.map(row => ({
+      ...row,
+      anulado: typeof row.anulado === 'string' ?
+               (row.anulado === '0' ? 'NO' : row.anulado === '1' ? 'SI' : row.anulado) :
+               (row.anulado === 0 ? 'NO' : row.anulado === 1 ? 'SI' : row.anulado),
+    }));
+
+    this.excelExportService.exportToExcel(columns, dataCopy, 'Ingresos');
   }
 }
 
