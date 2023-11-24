@@ -60,7 +60,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
         this.ingresosData = data.map((item) => ({
           date: item.date,
           category: item.category,
-          amount: item.amount,
+          monto: item.monto,
           margenBeneficio: item.margenBeneficio ? item.margenBeneficio : 0,
         }));
         this.init();
@@ -76,7 +76,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
         this.egresosData = data.map((item) => ({
           date: item.date,
           category: item.category,
-          amount: item.amount,
+          monto: item.monto,
         }));
         this.init();
       },
@@ -95,16 +95,16 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
 
   private groupAndSumByMonth(ingresosData: any[], egresosData: any[]): any[] {
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach(month => {
-      ingresosData.push({ date: this.selectedYear + '-' + month + '-01', amount: 0 });
+      ingresosData.push({ date: this.selectedYear + '-' + month + '-01', monto: 0 });
     });
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach(month => {
-      egresosData.push({ date: this.selectedYear + '-' + month + '-01', amount: 0 });
+      egresosData.push({ date: this.selectedYear + '-' + month + '-01', monto: 0 });
     });
     const groupedData: { [key: string]: any } = {};
     for (const entry of ingresosData) {
       const month = entry.date.substring(0, 7);
-      const amountt: number = parseFloat(entry.amount);
-      const margen: number = parseFloat(entry.amount) !== 0 ? (amountt - ((parseFloat(entry.margenBeneficio) / 2) * amountt / 100)) : 0;
+      const montot: number = parseFloat(entry.monto);
+      const margen: number = parseFloat(entry.monto) !== 0 ? (montot - ((parseFloat(entry.margenBeneficio) / 2) * montot / 100)) : 0;
 
       if (groupedData[month]) {
         groupedData[month].total += margen;
@@ -118,13 +118,13 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
 
     for (const entry of egresosData) {
       const month = entry.date.substring(0, 7);
-      const amount: number = parseFloat(entry.amount);
+      const monto: number = parseFloat(entry.monto);
       if (groupedData[month]) {
-        groupedData[month].total -= amount;
+        groupedData[month].total -= monto;
       } else {
         groupedData[month] = {
           month: month,
-          total: -amount,
+          total: -monto,
         };
       }
     }

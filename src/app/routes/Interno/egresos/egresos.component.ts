@@ -32,12 +32,12 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
     date: 'Fecha',
-    beneficiary_provider: 'Beneficiario/Proveedor',
-    /*     currency: 'Moneda', */
+    beneficiario: 'Beneficiario/Proveedor',
+    /*     moneda: 'Moneda', */
     category: 'Rubro',
-    amount: 'Monto',
+    monto: 'Monto',
     /*     method: 'Método de Gasto', */
-    /*     invoice: 'Comprobante', */
+    /*     comprobante: 'Comprobante', */
     /*     description: 'Descripción', */
     actions: 'Operaciones'
   };
@@ -153,12 +153,12 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.date = item.date;
-    this.Item.currency = item.currency;
-    this.Item.amount = item.amount;
+    this.Item.moneda = item.moneda;
+    this.Item.monto = item.monto;
     this.Item.method = item.method;
     this.Item.category = item.category;
-    this.Item.invoice = item.invoice;
-    this.Item.beneficiary_provider = item.beneficiary_provider;
+    this.Item.comprobante = item.comprobante;
+    this.Item.beneficiario = item.beneficiario;
     this.Item.description = item.description;
   }
 
@@ -168,12 +168,12 @@ export class EgresosComponent implements OnInit, AfterViewInit {
         id: this.Item.id,
         empresaId: this.dataEmpresa.id,
         date: this.Item.date,
-        currency: this.Item.currency,
-        amount: this.Item.amount,
+        moneda: this.Item.moneda,
+        monto: this.Item.monto,
         method: this.Item.method,
         category: this.Item.category,
-        invoice: this.Item.invoice,
-        beneficiary_provider: this.Item.beneficiary_provider,
+        comprobante: this.Item.comprobante,
+        beneficiario: this.Item.beneficiario,
         description: this.Item.description
       };
       this.dataService.fetchEgresos(method, body);

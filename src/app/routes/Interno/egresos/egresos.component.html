@@ -51,19 +51,19 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="currency">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by currency">
-            {{ Columns['currency'] }}
+        <ng-container matColumnDef="moneda">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by moneda">
+            {{ Columns['moneda'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.currency)"> {{element.currency}}
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.moneda)"> {{element.moneda}}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by amount">
-            {{ Columns['amount'] }}
+        <ng-container matColumnDef="monto">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by monto">
+            {{ Columns['monto'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.amount)"> {{element.amount |
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.monto)"> {{element.monto |
             currency:'$':'symbol' }} </td>
         </ng-container>
 
@@ -85,22 +85,22 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="invoice">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by invoice">
-            {{ Columns['invoice'] }}
+        <ng-container matColumnDef="comprobante">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by comprobante">
+            {{ Columns['comprobante'] }}
           </th>
-          <td [matTooltip]="element.invoice" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.invoice)">
-            {{element.invoice}} </td>
+          <td [matTooltip]="element.comprobante" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.comprobante)">
+            {{element.comprobante}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="beneficiary_provider">
+        <ng-container matColumnDef="beneficiario">
           <th mat-header-cell *matHeaderCellDef mat-sort-header
-            sortActionbeneficiary_provider="Sort by beneficiary_provider">
-            {{ Columns['beneficiary_provider'] }}
+            sortActionbeneficiario="Sort by beneficiario">
+            {{ Columns['beneficiario'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.beneficiary_provider)">
-            {{element.beneficiary_provider}} </td>
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.beneficiario)">
+            {{element.beneficiario}} </td>
         </ng-container>
 
         <ng-container matColumnDef="description">
@@ -180,20 +180,20 @@
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['beneficiary_provider'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['beneficiary_provider'])">{{
-            Item['beneficiary_provider'] }}
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['beneficiario'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['beneficiario'])">{{
+            Item['beneficiario'] }}
           </td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Moneda:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['currency'])">{{ Item['currency'] }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['moneda'])">{{ Item['moneda'] }}</td>
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['amount'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['amount'])">{{ Item['amount'] |
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['monto'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['monto'])">{{ Item['monto'] |
             currency:'$':'symbol' }}</td>
         </tr>
 
@@ -211,8 +211,8 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Comprobante:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['invoice'])">{{
-            Item['invoice'] }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['comprobante'])">{{
+            Item['comprobante'] }}</td>
         </tr>
 
         <tr>
@@ -248,15 +248,15 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese moneda</p>
-    <mat-select placeholder="Moneda" [(ngModel)]="Item.currency">
-      <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
+    <mat-select placeholder="Moneda" [(ngModel)]="Item.moneda">
+      <mat-option *ngFor="let moneda of sharedService.monedas" [value]="moneda">{{ moneda }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['amount'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['monto'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number" required>
+    <input matInput placeholder="{{ Columns['monto'] }}" [(ngModel)]="Item.monto" type="number" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -276,13 +276,13 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese comprobante</p>
-    <input matInput placeholder="Comprobante" [(ngModel)]="Item.invoice">
+    <input matInput placeholder="Comprobante" [(ngModel)]="Item.comprobante">
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingresar proveedor/beneficiario <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="{{ Columns['beneficiary_provider'] }}" matInput [formControl]="proveedorControl"
-      [matAutocomplete]="auto" [(ngModel)]="Item.beneficiary_provider" (focus)="getProveedor()" required>
+    <input type="text" placeholder="{{ Columns['beneficiario'] }}" matInput [formControl]="proveedorControl"
+      [matAutocomplete]="auto" [(ngModel)]="Item.beneficiario" (focus)="getProveedor()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
       <mat-option *ngFor="let proveedor of proveedorFiltered | async" [value]="proveedor.company + ' - ' + proveedor.contactFullname">
         {{ proveedor.company }} - {{ proveedor.contactFullname }}
@@ -296,7 +296,7 @@
   </mat-form-field>
 
   <button mat-button (click)="record('POST')"
-    [disabled]="!Item.date || !Item.amount || !Item.method|| !Item.category || !Item.beneficiary_provider || Item.beneficiary_provider == false">Guardar</button>
+    [disabled]="!Item.date || !Item.monto || !Item.method|| !Item.category || !Item.beneficiario || Item.beneficiario == false">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -321,15 +321,15 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese moneda</p>
-    <mat-select placeholder="Moneda" [(ngModel)]="Item.currency">
-      <mat-option *ngFor="let currency of sharedService.currencys" [value]="currency">{{ currency }}</mat-option>
+    <mat-select placeholder="Moneda" [(ngModel)]="Item.moneda">
+      <mat-option *ngFor="let moneda of sharedService.monedas" [value]="moneda">{{ moneda }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['amount'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['monto'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['amount'] }}" [(ngModel)]="Item.amount" type="number" required>
+    <input matInput placeholder="{{ Columns['monto'] }}" [(ngModel)]="Item.monto" type="number" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -349,13 +349,13 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese comprobante</p>
-    <input matInput placeholder="Comprobante" [(ngModel)]="Item.invoice">
+    <input matInput placeholder="Comprobante" [(ngModel)]="Item.comprobante">
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingresar proveedor/beneficiario <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="{{ Columns['beneficiary_provider'] }}" matInput [formControl]="proveedorControl"
-      [matAutocomplete]="auto" [(ngModel)]="Item.beneficiary_provider" (focus)="getProveedor()" required>
+    <input type="text" placeholder="{{ Columns['beneficiario'] }}" matInput [formControl]="proveedorControl"
+      [matAutocomplete]="auto" [(ngModel)]="Item.beneficiario" (focus)="getProveedor()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
       <mat-option *ngFor="let proveedor of proveedorFiltered | async" [value]="proveedor.company + ' - ' + proveedor.contactFullname">
         {{ proveedor.company }} - {{ proveedor.contactFullname }}
@@ -369,5 +369,5 @@
   </mat-form-field>
 
   <button mat-button (click)="record('PUT')"
-    [disabled]="!Item.date || !Item.amount || !Item.method|| !Item.category || !Item.beneficiary_provider || Item.beneficiary_provider == false">Guardar</button>
+    [disabled]="!Item.date || !Item.monto || !Item.method|| !Item.category || !Item.beneficiario || Item.beneficiario == false">Guardar</button>
 </div>

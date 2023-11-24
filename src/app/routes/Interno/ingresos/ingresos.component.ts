@@ -37,13 +37,13 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     /*     id: 'ID', */
     date: 'Fecha',
     anulado: 'Anulado',
-    idInventario: 'Inventario',
+    inventarioId: 'Inventario',
     cliente: 'Cliente',
-    /*     currency: 'Moneda', */
-    amount: 'Monto',
+    /*     moneda: 'Moneda', */
+    monto: 'Monto',
     /*     method: 'Método de Pago', */
     category: 'Rubro',
-    /*     invoice: 'Comprobante', */
+    /*     comprobante: 'Comprobante', */
     /*     margenBeneficio: 'PVP', */
     /*     description: 'Descripción', */
     actions: 'Operaciones'
@@ -104,19 +104,19 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     if (inventario)
       if (inventario.tipo === 'Producto') {
         if (this.dataEmpresa.permitirStockCeroEnabled === '1') {
-          this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
+          this.Item.monto = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
         } else {
           if (inventario.existencias != 0) {
-            this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
+            this.Item.monto = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
           } else {
             this.sharedService.message('Advertencia: el producto no tiene stock');
-            this.Item.amount = 0;
+            this.Item.monto = 0;
             this.inventarioControl.reset();
           }
         }
         this.Item.margenBeneficio = inventario.margenBeneficio;
       } else {
-        this.Item.amount = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
+        this.Item.monto = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
       }
   }
 
@@ -132,11 +132,11 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     } else return [];
   }
 
-  public _getProduct(idInventario: any): Inventario {
+  public _getProduct(inventarioId: any): Inventario {
     this.getInventario();
-    if (idInventario)
+    if (inventarioId)
       return this.dataInventario.filter(item =>
-        item.id?.toString().toLowerCase() === idInventario?.toString().toLowerCase()
+        item.id?.toString().toLowerCase() === inventarioId?.toString().toLowerCase()
       )[0];
     else return null!;
   }
@@ -181,8 +181,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public Create(visible: boolean) {
     if (visible) {
-      this.Item.idInventario = '';
-      this.Item.amount = 0;
+      this.Item.inventarioId = '';
+      this.Item.monto = 0;
     }
 
     // Primer inicio
@@ -212,26 +212,26 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     item.anulado = '1';
     this.dataService.fetchIngresos('PUT', item);
     /*     if (this.dataEmpresa.ingresoAnuladoSumaStockEnabled === '1' && this.dataEmpresa.validarInventarioEnabled === '1')
-          this.sumarStock(this._getProduct(item.idInventario)); */
+          this.sumarStock(this._getProduct(item.inventarioId)); */
   }
 
   private rellenarRecord(item: moneyIncome) {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.date = item.date;
-    this.Item.idInventario = item.idInventario;
-    this.fullNameProducto = item.idInventario ? item.idInventario : '';
-    const inv: Inventario = this._getProduct(item.idInventario);
+    this.Item.inventarioId = item.inventarioId;
+    this.fullNameProducto = item.inventarioId ? item.inventarioId : '';
+    const inv: Inventario = this._getProduct(item.inventarioId);
     if (inv)
       this.fullNameProducto = (inv.id + ' - ') + (inv.idExterno ? inv.idExterno + ' - ' : ' - ') + (inv.nombre);
     else
-      this.fullNameProducto = item.idInventario + ' (No encontrado en inventario)';
-    this.Item.currency = item.currency;
-    this.Item.amount = item.amount;
+      this.fullNameProducto = item.inventarioId + ' (No encontrado en inventario)';
+    this.Item.moneda = item.moneda;
+    this.Item.monto = item.monto;
     this.Item.margenBeneficio = item.margenBeneficio;
     this.Item.method = item.method;
     this.Item.category = item.category;
-    this.Item.invoice = item.invoice;
+    this.Item.comprobante = item.comprobante;
     this.Item.anulado = item.anulado;
     this.Item.cliente = item.cliente;
     this.Item.description = item.description;
@@ -255,9 +255,9 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   private productoValido(): boolean {
-    if (!this._getProduct(this.Item.idInventario)) {
+    if (!this._getProduct(this.Item.inventarioId)) {
       this.sharedService.message('Advertencia: seleccione un producto válido.');
-      this.Item.amount = 0;
+      this.Item.monto = 0;
       this.inventarioControl.reset();
       return false;
     }
@@ -298,13 +298,13 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         id: this.Item.id,
         empresaId: this.dataEmpresa.id,
         date: this.Item.date,
-        idInventario: this.Item.idInventario,
-        currency: this.Item.currency,
-        amount: this.Item.amount,
-        margenBeneficio: this._getProduct(this.Item.idInventario) ? (this._getProduct(this.Item.idInventario).tipo === 'Producto' ? this.Item.margenBeneficio : 0) : 0,
+        inventarioId: this.Item.inventarioId,
+        moneda: this.Item.moneda,
+        monto: this.Item.monto,
+        margenBeneficio: this._getProduct(this.Item.inventarioId) ? (this._getProduct(this.Item.inventarioId).tipo === 'Producto' ? this.Item.margenBeneficio : 0) : 0,
         method: this.Item.method,
         category: this.Item.category,
-        invoice: this.Item.invoice,
+        comprobante: this.Item.comprobante,
         anulado: '0',
         cliente: this.Item.cliente,
         description: this.Item.description
@@ -353,13 +353,13 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         id: this.Item.id,
         empresaId: this.dataEmpresa.id,
         date: this.Item.date,
-        idInventario: this.Item.idInventario,
-        currency: this.Item.currency,
-        amount: this.Item.amount,
+        inventarioId: this.Item.inventarioId,
+        moneda: this.Item.moneda,
+        monto: this.Item.monto,
         margenBeneficio: this.Item.margenBeneficio,
         method: this.Item.method,
         category: this.Item.category,
-        invoice: this.Item.invoice,
+        comprobante: this.Item.comprobante,
         anulado: this.Item.anulado,
         cliente: this.Item.cliente,
         description: this.Item.description

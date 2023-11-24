@@ -107,7 +107,7 @@ export class proveedor {
   address: string;
   website: string;
   accountNumber: string;
-  supply: string;
+  tipoSuministro: string;
   observation: string;
 
   constructor(
@@ -120,7 +120,7 @@ export class proveedor {
     address = '',
     website = '',
     accountNumber = '',
-    supply = '',
+    tipoSuministro = '',
     observation = ''
   ) {
     this.id = id;
@@ -132,7 +132,7 @@ export class proveedor {
     this.address = address;
     this.website = website;
     this.accountNumber = accountNumber;
-    this.supply = supply;
+    this.tipoSuministro = tipoSuministro;
     this.observation = observation;
   }
 }
@@ -141,13 +141,13 @@ export class moneyIncome {
   id?: number;
   empresaId?: number;
   date: string;
-  idInventario?: string;
-  currency?: string;
-  amount?: number;
+  inventarioId?: string;
+  moneda?: string;
+  monto?: number;
   margenBeneficio?: number;
   method?: string;
   category: string;
-  invoice?: string;
+  comprobante?: string;
   anulado?: string;
   cliente?: string;
   description?: string;
@@ -156,13 +156,13 @@ export class moneyIncome {
     id = 0,
     empresaId = 0,
     date = '',
-    idInventario = '',
-    currency = '',
-    amount = 0,
+    inventarioId = '',
+    moneda = '',
+    monto = 0,
     margenBeneficio = 0,
     method = '',
     category = '',
-    invoice = '',
+    comprobante = '',
     anulado = '0',
     cliente = '',
     description = ''
@@ -170,13 +170,13 @@ export class moneyIncome {
     this.id = id;
     this.empresaId = empresaId;
     this.date = date;
-    this.idInventario = idInventario;
-    this.currency = currency;
-    this.amount = amount;
+    this.inventarioId = inventarioId;
+    this.moneda = moneda;
+    this.monto = monto;
     this.margenBeneficio = margenBeneficio;
     this.method = method;
     this.category = category;
-    this.invoice = invoice;
+    this.comprobante = comprobante;
     this.anulado = anulado;
     this.cliente = cliente;
     this.description = description;
@@ -187,35 +187,35 @@ export class moneyOutlays {
   id?: number;
   empresaId?: number;
   date: string;
-  currency?: string;
-  amount: number;
+  moneda?: string;
+  monto: number;
   method?: string;
   category: string;
-  invoice?: string;
-  beneficiary_provider?: string;
+  comprobante?: string;
+  beneficiario?: string;
   description?: string;
 
   constructor(
     id = 0,
     empresaId = 0,
     date = '',
-    currency = '',
-    amount = 0,
+    moneda = '',
+    monto = 0,
     method = '',
     category = '',
-    invoice = '',
-    beneficiary_provider = '',
+    comprobante = '',
+    beneficiario = '',
     description = ''
   ) {
     this.id = id;
     this.empresaId = empresaId;
     this.date = date;
-    this.currency = currency;
-    this.amount = amount;
+    this.moneda = moneda;
+    this.monto = monto;
     this.method = method;
     this.category = category;
-    this.invoice = invoice;
-    this.beneficiary_provider = beneficiary_provider;
+    this.comprobante = comprobante;
+    this.beneficiario = beneficiario;
     this.description = description;
   }
 }

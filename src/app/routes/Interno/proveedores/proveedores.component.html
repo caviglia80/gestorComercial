@@ -101,12 +101,12 @@
             (dblclick)="sharedService.copy(element.accountNumber)">{{ element.accountNumber | slice:0:15 }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="supply">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by supply">
-            {{ Columns['supply'] }}
+        <ng-container matColumnDef="tipoSuministro">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by tipoSuministro">
+            {{ Columns['tipoSuministro'] }}
           </th>
-          <td [matTooltip]="element.supply" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.supply)">{{ element.supply | slice:0:15 }}</td>
+          <td [matTooltip]="element.tipoSuministro" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.tipoSuministro)">{{ element.tipoSuministro | slice:0:15 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="observation">
@@ -219,7 +219,7 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Suministro:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['supply'])">{{ Item['supply'] }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['tipoSuministro'])">{{ Item['tipoSuministro'] }}
           </td>
         </tr>
 
@@ -289,7 +289,7 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese suministro </p>
-    <input matInput placeholder="{{ Columns['supply'] }}" [(ngModel)]="Item.supply">
+    <input matInput placeholder="{{ Columns['tipoSuministro'] }}" [(ngModel)]="Item.tipoSuministro">
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -355,7 +355,7 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese suministro </p>
-    <input matInput placeholder="{{ Columns['supply'] }}" [(ngModel)]="Item.supply">
+    <input matInput placeholder="{{ Columns['tipoSuministro'] }}" [(ngModel)]="Item.tipoSuministro">
   </mat-form-field>
 
   <mat-form-field class="full-width">

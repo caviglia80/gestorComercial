@@ -31,7 +31,7 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
     /*  address: 'Dirección', */
     website: 'Sitio web',
     /* accountNumber: 'Número de cuenta', */
-    supply: 'Suministro',
+    tipoSuministro: 'Suministro',
     /* observation: 'Observación', */
     actions: 'Operaciones'
   };
@@ -124,7 +124,7 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
     this.Item.address = item.address;
     this.Item.website = item.website;
     this.Item.accountNumber = item.accountNumber;
-    this.Item.supply = item.supply;
+    this.Item.tipoSuministro = item.tipoSuministro;
     this.Item.observation = item.observation;
   }
 
@@ -140,7 +140,7 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
         address: this.Item.address,
         website: this.Item.website,
         accountNumber: this.Item.accountNumber,
-        supply: this.Item.supply,
+        tipoSuministro: this.Item.tipoSuministro,
         observation: this.Item.observation
       };
       this.dataService.fetchProveedores(method, body);

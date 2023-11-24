@@ -12,7 +12,7 @@ export class SharedService {
   public static isProduction = environment.production;
   public static host = 'https://francisco-caviglia.com.ar/francisco-caviglia/php/'; /* localhost/ */
   public static proxy = 'https://cors-anywhere.herokuapp.com/';
-  public currencys: string[] = [
+  public monedas: string[] = [
     'ARS',
     'USD',
     'EUR'
@@ -165,8 +165,8 @@ export class SharedService {
     const mm = String(today.getMonth() + 1).padStart(2, '0'); // Enero es 0
     const dd = String(today.getDate()).padStart(2, '0');
     Item.date = `${yyyy}-${mm}-${dd}`;
-    if (this.currencys.length > 0)
-      Item.currency = this.currencys[0];
+    if (this.monedas.length > 0)
+      Item.moneda = this.monedas[0];
     if (this.paidMethods.length > 0)
       Item.method = this.paidMethods[0];
     if (type === 'i')

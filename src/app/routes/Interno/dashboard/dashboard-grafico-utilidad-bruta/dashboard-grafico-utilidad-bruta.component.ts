@@ -57,7 +57,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
         this.incomeData = data.map((item) => ({
           date: item.date,
           category: item.category,
-          amount: item.amount,
+          monto: item.monto,
           margenBeneficio: item.margenBeneficio ? item.margenBeneficio : 0,
         }));
 
@@ -77,16 +77,16 @@ export class DashboardGraficoMargenComponent implements OnInit {
 
   private groupAndSumByMonth(data: any[]): any[] {
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach(month => {
-      data.push({ date: this.selectedYear + '-' + month + '-01', amount: 0 });
+      data.push({ date: this.selectedYear + '-' + month + '-01', monto: 0 });
     });
     const groupedData: { [key: string]: any } = {};
     for (const entry of data) {
       const month = entry.date.substring(0, 7);
-      const amountt: number = parseFloat(entry.amount);
-      const margen: number = parseFloat(entry.amount) !== 0 ? (amountt - ((parseFloat(entry.margenBeneficio) / 2) * amountt / 100)) : 0;
+      const montot: number = parseFloat(entry.monto);
+      const margen: number = parseFloat(entry.monto) !== 0 ? (montot - ((parseFloat(entry.margenBeneficio) / 2) * montot / 100)) : 0;
 
       if (groupedData[month]) {
-        /* groupedData[month].total += parseFloat(entry.amount); */
+        /* groupedData[month].total += parseFloat(entry.monto); */
         groupedData[month].total += margen;
       } else {
         groupedData[month] = {

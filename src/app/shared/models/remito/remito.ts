@@ -49,16 +49,16 @@ export class Remito {
     remito.fecha = primerItem.date;
     remito.cliente = primerItem.cliente;
     remito.metodoPago = primerItem.method;
-    remito.comprobante = primerItem.invoice;
+    remito.comprobante = primerItem.comprobante;
     remito.descripcion = primerItem.description;
-    remito.moneda = primerItem.currency;
+    remito.moneda = primerItem.moneda;
 
     remito.items = itemsConsolidados.map(item => ({
-      nombre: this.getInventario_Nombre(item.idInventario, inventario),
-      codigo: this.getInventario_Codigos(item.idInventario, inventario),
-      descripcion: this.getInventario_Descripcion(item.idInventario, inventario),
+      nombre: this.getInventario_Nombre(item.inventarioId, inventario),
+      codigo: this.getInventario_Codigos(item.inventarioId, inventario),
+      descripcion: this.getInventario_Descripcion(item.inventarioId, inventario),
       cantidad: item.cantidad,
-      precio: parseFloat(parseFloat(item.amount).toFixed(2))
+      precio: parseFloat(parseFloat(item.monto).toFixed(2))
     }));
 
     remito.total = parseFloat(parseFloat(this.TotalRemito(itemRemito)).toFixed(2));
@@ -68,7 +68,7 @@ export class Remito {
   private consolidateItems(itemRemito: moneyIncome[]): any[] {
     const consolidatedItems: any[] = [];
     for (const ingreso of itemRemito) {
-      const existingItem = consolidatedItems.find((item) => item.idInventario === ingreso.idInventario && item.amount === ingreso.amount);
+      const existingItem = consolidatedItems.find((item) => item.inventarioId === ingreso.inventarioId && item.monto === ingreso.monto);
       if (existingItem) {
         existingItem.cantidad += 1;
       } else {
@@ -108,15 +108,15 @@ export class Remito {
   private TotalRemito(itemRemito: moneyIncome[]): string {
     let total = 0;
     for (const ingreso of itemRemito) {
-      total += ingreso.amount ? ingreso.amount : 0;
+      total += ingreso.monto ? ingreso.monto : 0;
     }
     return total.toString();
   }
 
-  private _getProduct(idInventario: any, inventario: Inventario[]): Inventario {
-    if (idInventario)
+  private _getProduct(inventarioId: any, inventario: Inventario[]): Inventario {
+    if (inventarioId)
       return inventario.filter(item =>
-        item.id?.toString().toLowerCase() === idInventario?.toString().toLowerCase()
+        item.id?.toString().toLowerCase() === inventarioId?.toString().toLowerCase()
       )[0];
     else return null!;
   }

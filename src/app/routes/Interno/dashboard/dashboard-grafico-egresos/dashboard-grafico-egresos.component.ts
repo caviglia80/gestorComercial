@@ -55,7 +55,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
         this.incomeData = data.map((item) => ({
           date: item.date,
           category: item.category,
-          amount: item.amount,
+          monto: item.monto,
         }));
 
         this.init();
@@ -75,17 +75,17 @@ export class DashboardGraficoEgresosComponent implements OnInit {
   /* doughnut pie line */
   private groupAndSumByMonth(data: any[]): any[] {
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach(month => {
-      data.push({ date: this.selectedYear + '-' + month + '-01', amount: 0 });
+      data.push({ date: this.selectedYear + '-' + month + '-01', monto: 0 });
     });
     const groupedData: { [key: string]: any } = {};
     for (const entry of data) {
       const month = entry.date.substring(0, 7);
       if (groupedData[month]) {
-        groupedData[month].total += parseFloat(entry.amount);
+        groupedData[month].total += parseFloat(entry.monto);
       } else {
         groupedData[month] = {
           month: month,
-          total: parseFloat(entry.amount)
+          total: parseFloat(entry.monto)
         };
       }
     }
