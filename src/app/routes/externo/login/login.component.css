@@ -28,3 +28,21 @@ body {
 .error-message {
   color: rgb(221, 45, 45);
 }
+
+.logo {
+  animation: toBig 2s linear infinite;
+}
+
+@keyframes toBig {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

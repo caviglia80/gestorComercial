@@ -246,8 +246,7 @@
     </div>
   </mat-form-field>
 
-  <button mat-button (click)="record('POST')"
-    [disabled]="!Item.username || Item.username == false ||
+  <button mat-button (click)="record('POST')" [disabled]="!Item.username || Item.username == false ||
     !Item.fullname || Item.fullname == false ||
     !Item.position || Item.position == false ||
     !Item.email || Item.email == false ||
@@ -273,7 +272,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['username'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['username'] }}" [(ngModel)]="Item.username" required disabled>
+    <input matInput placeholder="{{ Columns['username'] }}" [(ngModel)]="Item.username" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -291,7 +290,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['email'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['email'] }}" [(ngModel)]="Item.email" required>
+    <input matInput placeholder="{{ Columns['email'] }}" [(ngModel)]="Item.email" required disabled>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -308,8 +307,7 @@
     </div>
   </mat-form-field>
 
-  <button mat-button (click)="record('PUT')"
-    [disabled]="!Item.username || Item.username == false ||
+  <button mat-button (click)="record('PUT')" [disabled]="!Item.username || Item.username == false ||
     !Item.fullname || Item.fullname == false ||
     !Item.position || Item.position == false ||
     !Item.email || Item.email == false ||

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from '@routes/Externo/register/register.component';
+import { MaterialModule } from '@app/shared/modules/material/material.module';
 
 const routes: Routes = [
   { path: '', component: RegisterComponent },
@@ -11,7 +12,8 @@ const routes: Routes = [
   declarations: [RegisterComponent],
   imports: [
   CommonModule,
-  RouterModule.forChild(routes)
+  RouterModule.forChild(routes),
+  MaterialModule
   ],
 })
 export class RegisterModule { }
