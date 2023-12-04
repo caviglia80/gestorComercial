@@ -11,6 +11,11 @@ export class RetryInterceptor implements HttpInterceptor {
   private resetSubject = new BehaviorSubject<null>(null);
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req);
+
+
+
+
     return next.handle(req).pipe(
       retry(this.maxRetryAttempts), // Intenta la solicitud un número máximo de veces
       catchError((error) => {

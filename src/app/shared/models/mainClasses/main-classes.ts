@@ -42,14 +42,15 @@ export class Inventario {
 }
 
 export class User {
-  id: number;
-  empresaId: number;
+  id?: number;
+  empresaId?: number;
   username: string;
   fullname: string;
   position: string;
   phone: string;
   email: string;
   password: string;
+  isNewAdmin?: string;
 
   constructor(
     id = 0,
@@ -59,7 +60,8 @@ export class User {
     position = '',
     phone = '',
     email = '',
-    password = ''
+    password = '',
+    isNewAdmin = '0'
   ) {
     this.id = id;
     this.empresaId = empresaId;
@@ -69,6 +71,7 @@ export class User {
     this.phone = phone;
     this.email = email;
     this.password = password;
+    this.isNewAdmin = isNewAdmin;
   }
 }
 
@@ -256,6 +259,7 @@ export class facturacionAuth {
 
 export class empresa {
   id: number;
+  usuarioId?: number;
   nombre: string;
   icono: string;
   copyEnabled: string;
@@ -270,6 +274,7 @@ export class empresa {
 
   constructor(
     id = 0,
+    usuarioId = 0,
     nombre = 'Compy',
     icono = 'assets/logo.png',
     copyEnabled = '1',
@@ -280,9 +285,10 @@ export class empresa {
     ingresoRestaStockEnabled = '1',
     ingresoAnuladoSumaStockEnabled = '1',
     permitirStockCeroEnabled = '0',
-    validarInventarioEnabled = '1'
+    validarInventarioEnabled = '1',
   ) {
     this.id = id;
+    this.usuarioId = usuarioId;
     this.nombre = nombre;
     this.icono = icono;
     this.copyEnabled = copyEnabled;

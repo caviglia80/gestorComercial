@@ -16,20 +16,20 @@ export class CheckJwtInterceptor implements HttpInterceptor {
   constructor(private tokenService: TokenService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    const publicRoutes = ['login', 'register', 'JWT'];
+    const publicRoutes = ['login', 'register', 'JWT', 'empresa', 'usuarios'];
     const isPublicRoute = publicRoutes.some(route => request.url.includes(route));
+
     if (isPublicRoute)
       return next.handle(request);
 
     const token = localStorage.getItem('jwt');
 
-    if (!token || token.split('.').length !== 3) {
+    if (!token || token!.split('.').length !== 3) {
       this.tokenService.logout();
       return throwError(() => new Error('Token inválido'));
     }
 
-    if (this.tokenService.isExpired(token)) {
+    if (this.tokenService.isExpired(token!)) {
       // Si el token ha expirado
       this.tokenService.logout(); // Cierra la sesión
       return throwError(() => new Error('Token expirado'));

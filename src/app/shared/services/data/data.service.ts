@@ -44,6 +44,9 @@ export class DataService {
   public ds_PDF = new BehaviorSubject<any>(null);
   public PDF$: Observable<any> = this.ds_PDF.asObservable();
 
+  //  public ds_NewEmpresa = new BehaviorSubject<any>(null);
+  //  public NewEmpresa$: Observable<any> = this.ds_NewEmpresa.asObservable();
+  //
   constructor(
     private http: HttpClient,
     public sharedService: SharedService,
@@ -164,8 +167,10 @@ export class DataService {
         .subscribe({
           next: () => {
             this.sharedService.message('Usuarios: registro guardado.');
-            this.cacheService.remove('Usuarios');
-            this.fetchUsuarios('GET');
+            if (!JSON.parse(body).isNewAdmin) {
+              this.cacheService.remove('Usuarios');
+              this.fetchUsuarios('GET');
+            }
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -531,7 +536,21 @@ export class DataService {
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
             this.ds_Empresa.next([]);
-            this.sharedService.message('Error al intentar obtener registros.');
+            this.sharedService.message('Empresa: Error al intentar obtener registros.');
+          }
+        });
+    } else if (method === 'POST') {
+      this.http.post<any>(url, body, headers)
+        .subscribe({
+          next: (data) => {
+            this.sharedService.message('Configuración actualizada !');
+            this.cacheService.remove('Empresa');
+            if (!data.empresaId) this.fetchEmpresa('GET');
+            //      this.ds_NewEmpresa.next(data);
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Empresa: Error al intentar guardar el registro.');
           }
         });
     } else if (method === 'PUT') {
@@ -544,7 +563,7 @@ export class DataService {
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Error al intentar editar el registro.');
+            this.sharedService.message('Empresa: Error al intentar editar el registro.');
           }
         });
     }

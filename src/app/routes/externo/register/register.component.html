@@ -4,34 +4,31 @@
     <div class="form-content mat-elevation-z8">
       <h1>Registro</h1>
       <div class="row">
-
         <div class="col-md-6">
           <div class="form-group my-2">
-            <input type="text" class="form-control" placeholder="Nombre completo *" value="" />
+            <input type="text" class="form-control" placeholder="Nombre completo *" [(ngModel)]="nombreCompleto" name="nombreCompleto" />
           </div>
           <div class="form-group my-2">
-            <input type="text" class="form-control" placeholder="Correo *" value="" />
+            <input type="text" class="form-control" placeholder="Correo *" [(ngModel)]="correo" name="correo" />
           </div>
           <div class="form-group my-2">
-            <input type="text" class="form-control" placeholder="Telefono *" value="" />
+            <input type="text" class="form-control" placeholder="Telefono *" [(ngModel)]="telefono" name="telefono" />
           </div>
         </div>
-
         <div class="col-md-6">
           <div class="form-group my-2">
-            <input type="text" class="form-control" placeholder="Usuario *" value="" />
+            <input type="text" class="form-control" placeholder="Usuario *" [(ngModel)]="usuario" name="usuario" />
           </div>
           <div class="form-group my-2">
-            <input type="password" class="form-control" placeholder="Contraseña *" value="" />
+            <input type="password" class="form-control" placeholder="Contraseña *" [(ngModel)]="clave" name="clave" />
           </div>
           <div class="form-group my-2">
-            <input type="password" class="form-control" placeholder="Confirmar contraseña *" value="" />
+            <input type="password" class="form-control" placeholder="Confirmar contraseña *" [(ngModel)]="confirmarClave" name="confirmarClave" />
           </div>
         </div>
-
       </div>
       <div class="text-end">
-        <button mat-button type="button">Registrarse</button>
+        <button mat-button type="button" (click)="Registro()">Registrarse</button>
       </div>
     </div>
   </div>
