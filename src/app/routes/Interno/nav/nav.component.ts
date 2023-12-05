@@ -4,7 +4,6 @@ import { TokenService } from '@services/token/token.service';
 import { CacheService } from '@services/cache/cache.service';
 import { empresa } from '@models/mainClasses/main-classes';
 import { AuthService } from '@services/auth/auth.service';
-
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',

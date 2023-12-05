@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import { SharedService } from '@services/shared/shared.service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
-
+import { AuthService } from '@services/auth/auth.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +13,9 @@ export class TokenService {
 
   constructor(
     private http: HttpClient,
-    private router: Router) { }
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   public login(email: string, password: string, remember: boolean): Observable<any> {
     return this.http.post(SharedService.host + 'JWT/JWT.php', { email, password }).pipe(
@@ -23,7 +25,8 @@ export class TokenService {
           if (remember)
             localStorage.setItem('email', email); else
             localStorage.removeItem('email');
-          this.router.navigate(['/nav']);
+            const firstRoute = this.authService.getFirstEnabledRoute();
+            this.router.navigate([firstRoute]);
         }
       })
     );

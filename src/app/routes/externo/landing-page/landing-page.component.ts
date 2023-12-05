@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { GlobalVariables } from 'src/app/app.component';
 import { TokenService } from '@services/token/token.service';
+import { AuthService } from '@services/auth/auth.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,7 +16,9 @@ export class LandingPageComponent implements AfterViewInit {
 
   constructor(
     private tokenService: TokenService,
-    private router: Router) {
+    private router: Router,
+    private authService: AuthService
+    ) {
   }
 
   ngAfterViewInit(): void {
@@ -67,10 +70,10 @@ export class LandingPageComponent implements AfterViewInit {
     const token = localStorage.getItem('jwt');
     if (token && token.split('.').length === 3)
       if (!this.tokenService.isExpired(token)) {
-        this.router.navigate(['/nav']);
+        const firstRoute = this.authService.getFirstEnabledRoute();
+        this.router.navigate([firstRoute]);
         return;
       }
     this.router.navigate(['/login']);
   }
 }
-
