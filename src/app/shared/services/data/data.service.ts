@@ -171,7 +171,7 @@ export class DataService {
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
             this.sharedService.message('Error al intentar guardar el registro.');
-            this.ds_Usuarios.next([{ "Estado": "error", "message": error.error.message }]);
+            this.ds_Usuarios.next([{ "Estado": "error", "message": error ? (error.error ? (error.error.message ? error.error.message : error) : 'Error desconocido.') : 'Error desconocido.' }]);
           }
         });
     } else if (method === 'PUT') {

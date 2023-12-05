@@ -2,11 +2,12 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, User } from '@models/mainClasses/main-classes';
+import { empresa, User, Role } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
 import { ExcelExportService } from '@services/excel-export/excel-export.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios',
@@ -15,6 +16,9 @@ import { ExcelExportService } from '@services/excel-export/excel-export.service'
 })
 
 export class UsuariosComponent implements OnInit, AfterViewInit {
+  public rolesControl = new FormControl();
+  public rolesData: Role[] = [];
+
   public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<User>;
   public isLoading = true;
@@ -69,6 +73,15 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
       }
     });
     this.dataService.fetchUsuarios('GET');
+
+    this.dataService.Roles$.subscribe((data) => {
+      this.rolesData = data;
+    });
+    this.getRoles();
+  }
+
+  public getRoles() {
+    this.dataService.fetchRoles('GET');
   }
 
   private loading(state: boolean) {
@@ -116,6 +129,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   private rellenarRecord(item: User) {
     this.Item = {};
     this.Item.id = item.id;
+    this.Item.rolId = item.rolId;
     this.Item.username = item.username;
     this.Item.fullname = item.fullname;
     this.Item.cargo = item.cargo;
@@ -129,6 +143,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
       const body: User = {
         id: this.Item.id,
         empresaId: this.dataEmpresa.id,
+        rolId: this.Item.rolId,
         username: this.Item.username,
         fullname: this.Item.fullname,
         cargo: this.Item.cargo,

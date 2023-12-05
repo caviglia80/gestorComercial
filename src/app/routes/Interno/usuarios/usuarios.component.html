@@ -227,6 +227,15 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese rol</p>
+    <mat-select placeholder="Rol" [formControl]="rolesControl" [(ngModel)]="Item.rolId" (focus)="getRoles()">
+      <mat-option *ngFor="let rol of rolesData" [value]="rol.id">
+        {{ rol.name }} - {{ rol.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['email'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
     <input matInput placeholder="{{ Columns['email'] }}" [(ngModel)]="Item.email" required>
@@ -285,6 +294,15 @@
     <p class="form-field-description">Ingrese {{ Columns['cargo'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
     <input matInput placeholder="{{ Columns['cargo'] }}" [(ngModel)]="Item.cargo" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Ingrese rol</p>
+    <mat-select placeholder="Rol" [formControl]="rolesControl" [(ngModel)]="Item.rolId" (focus)="getRoles()">
+      <mat-option *ngFor="let rol of rolesData" [value]="rol.id">
+        {{ rol.name }} - {{ rol.description }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">

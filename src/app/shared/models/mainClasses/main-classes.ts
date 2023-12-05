@@ -44,6 +44,7 @@ export class Inventario {
 export class User {
   id?: number;
   empresaId?: number;
+  rolId?: number;
   username: string;
   fullname: string;
   cargo: string;
@@ -55,6 +56,7 @@ export class User {
   constructor(
     id = 0,
     empresaId = 0,
+    rolId = 0,
     username = '',
     fullname = '',
     cargo = '',
@@ -65,6 +67,7 @@ export class User {
   ) {
     this.id = id;
     this.empresaId = empresaId;
+    this.rolId = rolId;
     this.username = username;
     this.fullname = fullname;
     this.cargo = cargo;
