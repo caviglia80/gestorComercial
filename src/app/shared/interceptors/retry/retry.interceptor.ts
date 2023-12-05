@@ -16,26 +16,9 @@ export class RetryInterceptor implements HttpInterceptor {
 
 
 
-    return next.handle(req).pipe(
-      retry(this.maxRetryAttempts), // Intenta la solicitud un número máximo de veces
-      catchError((error) => {
-        if (error.status === 0) {
-          return this.resetSubject.pipe(
-            take(1),
-            switchMap(() => {
-              if (this.retryAttempts < this.maxRetryAttempts) {
-                this.retryAttempts++;
-                return next.handle(req); // Intenta la solicitud nuevamente
-              } else {
-                console.log('Se agotaron los intentos de reenvío debido a la falta de conexión.');
-                return throwError(() => new Error('Se agotaron los intentos de reenvío debido a la falta de conexión.'));
-              }
-            })
-          );
-        }
-        return throwError(() => error); // Maneja otros errores
-      })
-    );
+
+
+
   }
 
   constructor() {

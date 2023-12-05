@@ -41,12 +41,6 @@ export class DataService {
   private ds_Remito: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Remito$: Observable<any[]> = this.ds_Remito.asObservable();
 
-  public ds_PDF = new BehaviorSubject<any>(null);
-  public PDF$: Observable<any> = this.ds_PDF.asObservable();
-
-  //  public ds_NewEmpresa = new BehaviorSubject<any>(null);
-  //  public NewEmpresa$: Observable<any> = this.ds_NewEmpresa.asObservable();
-  //
   constructor(
     private http: HttpClient,
     public sharedService: SharedService,
@@ -170,11 +164,14 @@ export class DataService {
             if (!JSON.parse(body).isNewAdmin) {
               this.cacheService.remove('Usuarios');
               this.fetchUsuarios('GET');
+            } else {
+              this.ds_Usuarios.next([{ "Estado": "generado" }]);
             }
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
             this.sharedService.message('Error al intentar guardar el registro.');
+            this.ds_Usuarios.next([{ "Estado": "error", "message": error.error.message }]);
           }
         });
     } else if (method === 'PUT') {
@@ -376,7 +373,6 @@ export class DataService {
         .subscribe({
           next: (data) => {
             if (!SharedService.isProduction) console.log(data);
-            this.ds_PDF.next(data);
             this.sharedService.message('Ingresos: registro guardado.');
             this.cacheService.remove('Ingresos');
             this.fetchIngresos('GET');

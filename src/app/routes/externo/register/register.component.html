@@ -6,7 +6,8 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group my-2">
-            <input type="text" class="form-control" placeholder="Nombre completo *" [(ngModel)]="nombreCompleto" name="nombreCompleto" />
+            <input type="text" class="form-control" placeholder="Nombre completo *" [(ngModel)]="nombreCompleto"
+              name="nombreCompleto" />
           </div>
           <div class="form-group my-2">
             <input type="text" class="form-control" placeholder="Correo *" [(ngModel)]="correo" name="correo" />
@@ -23,12 +24,23 @@
             <input type="password" class="form-control" placeholder="Contraseña *" [(ngModel)]="clave" name="clave" />
           </div>
           <div class="form-group my-2">
-            <input type="password" class="form-control" placeholder="Confirmar contraseña *" [(ngModel)]="confirmarClave" name="confirmarClave" />
+            <input type="password" class="form-control" placeholder="Confirmar contraseña *"
+              [(ngModel)]="confirmarClave" name="confirmarClave" />
           </div>
         </div>
       </div>
+
+      <div class="text-start" *ngIf="errorMsg">
+        <span class="mx-3 text-danger" role="alert">
+          {{ errorMsg }}
+        </span>
+      </div>
+
       <div class="text-end">
-        <button mat-button type="button" (click)="Registro()">Registrarse</button>
+        <div class="mt-3 mx-2 spinner-border text-primary" role="status" *ngIf="loading">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <button mat-button type="button" (click)="Registro()" *ngIf="!loading">Registrarse</button>
       </div>
     </div>
   </div>

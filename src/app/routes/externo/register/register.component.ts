@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { empresa, User } from '@models/mainClasses/main-classes';
+import { User } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,21 +15,35 @@ export class RegisterComponent implements OnInit {
   public usuario: string = "asd2";
   public clave: string = "asd";
   public confirmarClave: string = "confirmarClave";
-  //  private empresaId: string = ''; // son dos pasadas por NewEmpresa$, 1-data.empresaId, 2-data.usuarioId
+  public errorMsg: string = '';
+  public loading: boolean = false;
 
   constructor(
     public dataService: DataService,
+    private router: Router
   ) { }
 
-  ngOnInit() {
-    this.dataInit();
+  ngOnInit(): void {
+    this.dataService.Usuarios$
+      .subscribe({
+        next: (data) => {
+          this.loading = false;
+          if (data[0])
+            if (data[0].Estado)
+              if (data[0].Estado === 'generado')
+                this.router.navigate(['/login']);
+
+          if (data[0])
+            if (data[0].Estado)
+              if (data[0].Estado === 'error')
+                this.errorMsg = data[0].message;
+        }
+      });
   }
 
   public Registro() {
-
-
-
-
+    this.errorMsg = '';
+    this.loading = true;
 
     const body: User = {
       isNewAdmin: '1',
@@ -40,21 +55,5 @@ export class RegisterComponent implements OnInit {
       password: this.clave
     };
     this.dataService.fetchUsuarios('POST', body);
-
-
-
-
-
-
-    // this.dataService.fetchEmpresa('POST', new empresa()); // creo la mempresa
   }
-
-  private dataInit() {
-
-  }
-
-
-
-
-
 }

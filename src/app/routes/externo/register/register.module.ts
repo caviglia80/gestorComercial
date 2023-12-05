@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterComponent } from '@routes/externo/register/register.component';
+import { RegisterComponent } from '@routes/Externo/register/register.component';
 import { MaterialModule } from '@app/shared/modules/material/material.module';
 
 const routes: Routes = [

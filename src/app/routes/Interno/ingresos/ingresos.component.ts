@@ -95,10 +95,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       this.dataInventario = data;
     });
     this.getInventario();
-
-    this.dataService.PDF$.subscribe((data) => {
-      //  this.PDF = data;
-    });
   }
 
   public onProductoSeleccionado(event: any): void {
