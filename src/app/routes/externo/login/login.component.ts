@@ -8,7 +8,7 @@ import { TokenService } from '@services/token/token.service';
 })
 export class LoginComponent implements OnInit {
   public loading: boolean = false;
-  public username: string = '';
+  public email: string = '';
   public password: string = '';
   public loginError: boolean = false;
   public remember: boolean = false;
@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.username = localStorage.getItem("username") || "";
-    this.remember = localStorage.getItem("username") !== null;
+    this.email = localStorage.getItem("email") || "";
+    this.remember = localStorage.getItem("email") !== null;
   }
 
   onCheckboxChange(event: any) {
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.loading = true;
-    this.tokenService.login(this.username, this.password, this.remember).subscribe({
+    this.tokenService.login(this.email, this.password, this.remember).subscribe({
       next: () => {
         this.loginError = false;
       },

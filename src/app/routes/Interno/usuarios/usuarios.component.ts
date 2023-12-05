@@ -110,7 +110,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   }
 
   public deleteItem(item: User) {
-    this.dataService.fetchUsuarios('DELETE', { id: item.id, username: item.username });
+    this.dataService.fetchUsuarios('DELETE', { id: item.id });
   }
 
   private rellenarRecord(item: User) {

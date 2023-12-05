@@ -15,14 +15,14 @@ export class TokenService {
     private http: HttpClient,
     private router: Router) { }
 
-  public login(username: string, password: string, remember: boolean): Observable<any> {
-    return this.http.post(SharedService.host + 'JWT/JWT.php', { username, password }).pipe(
+  public login(email: string, password: string, remember: boolean): Observable<any> {
+    return this.http.post(SharedService.host + 'JWT/JWT.php', { email, password }).pipe(
       tap((response: any) => {
         if (response.jwt) {
           localStorage.setItem('jwt', response.jwt);
           if (remember)
-            localStorage.setItem('username', username); else
-            localStorage.removeItem('username');
+            localStorage.setItem('email', email); else
+            localStorage.removeItem('email');
           this.router.navigate(['/nav']);
         }
       })
