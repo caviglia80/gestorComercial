@@ -27,6 +27,7 @@
       "@modules/*": ["src/app/shared/modules/*"],
       "@components/*": ["src/app/shared/components/*"],
       "@services/*": ["src/app/shared/services/*"],
+      "@guards/*": ["src/app/shared/guards/*"],
       "@interceptors*": ["src/app/shared/interceptors/*"],
       "@environments/*": ["src/environments/*"],
       "@routes/*": ["src/app/routes/*"],

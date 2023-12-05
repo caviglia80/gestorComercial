@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 
 interface Menu {
-  id: string;
-  name: string;
+  ruta: string;
+  nombre: string;
   habilitado: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private userRoles: Menu[]; // Aquí userRoles es un arreglo de objetos Menu
+  private userRoles: Menu[];
 
   constructor() {
     this.userRoles = [
-      { "id": "1", "name": "Panel", "habilitado": false },
-      { "id": "2", "name": "Ingresos", "habilitado": true },
-      { "id": "3", "name": "Egresos", "habilitado": false },
-      { "id": "4", "name": "Inventario", "habilitado": false },
-      { "id": "5", "name": "Proveedores", "habilitado": false },
-      { "id": "6", "name": "Reportes", "habilitado": false },
-      { "id": "7", "name": "General", "habilitado": false },
-      { "id": "8", "name": "Usuarios", "habilitado": false },
-      { "id": "9", "name": "Roles", "habilitado": false }
+      { "ruta": "/nav/dashboard", "nombre": "Panel", "habilitado": true },
+      { "ruta": "/nav/ingresos", "nombre": "Ingresos", "habilitado": true },
+      { "ruta": "/nav/egresos", "nombre": "Egresos", "habilitado": true },
+      { "ruta": "/nav/inventario", "nombre": "Inventario", "habilitado": true },
+      { "ruta": "/nav/proveedores", "nombre": "Proveedores", "habilitado": true },
+      { "ruta": "/nav/reportes", "nombre": "Reportes", "habilitado": true },
+      { "ruta": "/nav/general", "nombre": "General", "habilitado": true },
+      { "ruta": "/nav/usuarios", "nombre": "Usuarios", "habilitado": true },
+      { "ruta": "/nav/roles", "nombre": "Roles", "habilitado": true }
     ];
   }
 
-  canAccess(menuId: string): boolean {
-    return this.userRoles.some(menu => menu.id === menuId && menu.habilitado);
+  canAccess(ruta: string): boolean {
+    return this.userRoles.some(menu => menu.ruta === ruta && menu.habilitado);
   }
 }
