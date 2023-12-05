@@ -27,7 +27,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     /*     id: 'ID', */
     username: 'Usuario',
     fullname: 'Nombre completo',
-    position: 'Cargo',
+    cargo: 'Cargo',
     phone: 'Teléfono',
     email: 'Correo',
     /*     password: 'Contraseña', */
@@ -118,7 +118,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     this.Item.id = item.id;
     this.Item.username = item.username;
     this.Item.fullname = item.fullname;
-    this.Item.position = item.position;
+    this.Item.cargo = item.cargo;
     this.Item.phone = item.phone;
     this.Item.email = item.email;
     this.Item.password = '';
@@ -131,7 +131,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
         empresaId: this.dataEmpresa.id,
         username: this.Item.username,
         fullname: this.Item.fullname,
-        position: this.Item.position,
+        cargo: this.Item.cargo,
         phone: this.Item.phone,
         email: this.Item.email,
         password: this.Item.password
@@ -155,7 +155,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     const columns = [
       { header: 'Usuario', key: 'username', width: 20 },
       { header: 'Nombre Completo', key: 'fullname', width: 25 },
-      { header: 'Cargo', key: 'position', width: 20 },
+      { header: 'Cargo', key: 'cargo', width: 20 },
       { header: 'Teléfono', key: 'phone', width: 15 },
       { header: 'Email', key: 'email', width: 25 }
     ];

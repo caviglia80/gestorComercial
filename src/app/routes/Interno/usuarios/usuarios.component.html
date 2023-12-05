@@ -63,12 +63,12 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by position">
-            {{ Columns['position'] }}
+        <ng-container matColumnDef="cargo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cargo">
+            {{ Columns['cargo'] }}
           </th>
-          <td [matTooltip]="element.position" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.position)"> {{element.position | slice:0:15 }}
+          <td [matTooltip]="element.cargo" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.cargo)"> {{element.cargo | slice:0:15 }}
           </td>
         </ng-container>
 
@@ -167,8 +167,8 @@
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['position'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['position'])">{{ Item['position'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['cargo'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['cargo'])">{{ Item['cargo'] }}</td>
         </tr>
 
         <tr>
@@ -221,9 +221,9 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['position'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['cargo'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['position'] }}" [(ngModel)]="Item.position" required>
+    <input matInput placeholder="{{ Columns['cargo'] }}" [(ngModel)]="Item.cargo" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -248,7 +248,7 @@
 
   <button mat-button (click)="record('POST')" [disabled]="!Item.username || Item.username == false ||
     !Item.fullname || Item.fullname == false ||
-    !Item.position || Item.position == false ||
+    !Item.cargo || Item.cargo == false ||
     !Item.email || Item.email == false ||
     !Item.phone || Item.phone == false ||
     !Item.password || Item.password == false ||
@@ -282,9 +282,9 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['position'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese {{ Columns['cargo'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['position'] }}" [(ngModel)]="Item.position" required>
+    <input matInput placeholder="{{ Columns['cargo'] }}" [(ngModel)]="Item.cargo" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -309,7 +309,7 @@
 
   <button mat-button (click)="record('PUT')" [disabled]="!Item.username || Item.username == false ||
     !Item.fullname || Item.fullname == false ||
-    !Item.position || Item.position == false ||
+    !Item.cargo || Item.cargo == false ||
     !Item.email || Item.email == false ||
     !Item.phone || Item.phone == false ||
     !Item.password || Item.password == false ||

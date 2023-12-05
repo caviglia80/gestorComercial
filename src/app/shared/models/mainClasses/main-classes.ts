@@ -46,7 +46,7 @@ export class User {
   empresaId?: number;
   username: string;
   fullname: string;
-  position: string;
+  cargo: string;
   phone: string;
   email: string;
   password: string;
@@ -57,7 +57,7 @@ export class User {
     empresaId = 0,
     username = '',
     fullname = '',
-    position = '',
+    cargo = '',
     phone = '',
     email = '',
     password = '',
@@ -67,7 +67,7 @@ export class User {
     this.empresaId = empresaId;
     this.username = username;
     this.fullname = fullname;
-    this.position = position;
+    this.cargo = cargo;
     this.phone = phone;
     this.email = email;
     this.password = password;
