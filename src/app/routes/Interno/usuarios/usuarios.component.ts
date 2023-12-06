@@ -8,7 +8,7 @@ import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
 import { ExcelExportService } from '@services/excel-export/excel-export.service';
 import { FormControl } from '@angular/forms';
-
+import { AuthService } from '@services/auth/auth.service';
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -42,7 +42,8 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     public dataService: DataService,
     public sharedService: SharedService,
     private cacheService: CacheService,
-    private excelExportService: ExcelExportService
+    private excelExportService: ExcelExportService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -157,6 +158,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     } finally {
       this.Create(false);
       this.Edit(false);
+      this.authService.fetchRol();
     }
   }
 

@@ -7,7 +7,7 @@ import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
 import { ExcelExportService } from '@services/excel-export/excel-export.service';
-
+import { AuthService } from '@services/auth/auth.service';
 interface Menu {
   ruta: string;
   nombre: string;
@@ -43,7 +43,8 @@ export class RolesComponent implements OnInit, AfterViewInit {
     public dataService: DataService,
     public sharedService: SharedService,
     private cacheService: CacheService,
-    private excelExportService: ExcelExportService
+    private excelExportService: ExcelExportService,
+    private authService: AuthService
   ) { }
 
   public menusHabilitacion: Menu[] = [
@@ -179,6 +180,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
       this.Create(false);
       this.Edit(false);
       this.Double(false);
+      this.authService.fetchRol();
     }
   }
 
