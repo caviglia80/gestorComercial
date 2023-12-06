@@ -164,7 +164,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let menu of menusHabilitacion; let i = index">
-            <td>{{ menu.name }}</td>
+            <td>{{ menu.nombre }}</td>
             <td>
               <mat-slide-toggle disabled [(ngModel)]="menu.habilitado">
                 <span *ngIf="menu.habilitado">Habilitado</span>
@@ -209,7 +209,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let menu of menusHabilitacion; let i = index">
-        <td>{{ menu.name }}</td>
+        <td>{{ menu.nombre }}</td>
         <td> <mat-slide-toggle [(ngModel)]="menu.habilitado"></mat-slide-toggle> </td>
       </tr>
     </tbody>
@@ -254,7 +254,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let menu of menusHabilitacion; let i = index">
-        <td>{{ menu.name }}</td>
+        <td>{{ menu.nombre }}</td>
         <td> <mat-slide-toggle [(ngModel)]="menu.habilitado"></mat-slide-toggle> </td>
       </tr>
     </tbody>
@@ -299,7 +299,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let menu of menusHabilitacion; let i = index">
-        <td>{{ menu.name }}</td>
+        <td>{{ menu.nombre }}</td>
         <td> <mat-slide-toggle [(ngModel)]="menu.habilitado"></mat-slide-toggle> </td>
       </tr>
     </tbody>

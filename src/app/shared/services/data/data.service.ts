@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { CacheService } from '@services/cache/cache.service';
-
+import { AuthService } from '@services/auth/auth.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -44,7 +44,8 @@ export class DataService {
   constructor(
     private http: HttpClient,
     public sharedService: SharedService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private authService: AuthService
   ) {
   }
 
@@ -181,6 +182,7 @@ export class DataService {
             this.sharedService.message('Usuarios: registro actualizado.');
             this.cacheService.remove('Usuarios');
             this.fetchUsuarios('GET');
+            this.authService.fetchRol();
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -258,6 +260,7 @@ export class DataService {
         });
     }
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+    if (method !== 'GET') this.authService.fetchRol();
   }
 
   public fetchProveedores(method = '', body: any = {}, proxy = false): void {

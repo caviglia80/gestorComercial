@@ -18,7 +18,7 @@ export class LandingPageComponent implements AfterViewInit {
     private tokenService: TokenService,
     private router: Router,
     private authService: AuthService
-    ) {
+  ) {
   }
 
   ngAfterViewInit(): void {
@@ -70,8 +70,10 @@ export class LandingPageComponent implements AfterViewInit {
     const token = localStorage.getItem('jwt');
     if (token && token.split('.').length === 3)
       if (!this.tokenService.isExpired(token)) {
-        const firstRoute = this.authService.getFirstEnabledRoute();
-        this.router.navigate([firstRoute]);
+        this.authService.fetchRol().then(() => {
+          const firstRoute = this.authService.getFirstEnabledRoute();
+          this.router.navigate([firstRoute]);
+        });
         return;
       }
     this.router.navigate(['/login']);

@@ -25,8 +25,10 @@ export class TokenService {
           if (remember)
             localStorage.setItem('email', email); else
             localStorage.removeItem('email');
-            const firstRoute = this.authService.getFirstEnabledRoute();
-            this.router.navigate([firstRoute]);
+            this.authService.fetchRol().then(() => {
+              const firstRoute = this.authService.getFirstEnabledRoute();
+              this.router.navigate([firstRoute]);
+            });
         }
       })
     );

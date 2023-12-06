@@ -8,6 +8,12 @@ import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
 import { ExcelExportService } from '@services/excel-export/excel-export.service';
 
+interface Menu {
+  ruta: string;
+  nombre: string;
+  habilitado: boolean;
+}
+
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
@@ -40,17 +46,16 @@ export class RolesComponent implements OnInit, AfterViewInit {
     private excelExportService: ExcelExportService
   ) { }
 
-  public menusHabilitacion: { id: string, name: string, habilitado: boolean }[] = [
-    { id: 'xxx', name: 'Panel', habilitado: true },
-    { id: 'xxx', name: 'Ingresos', habilitado: true },
-    { id: 'xxx', name: 'Egresos', habilitado: true },
-    { id: 'xxx', name: 'Inventario', habilitado: true },
-    { id: 'xxx', name: 'Proveedores', habilitado: true },
-    { id: 'xxx', name: 'Facturación', habilitado: true },
-    { id: 'xxx', name: 'Reportes', habilitado: true },
-    { id: 'xxx', name: 'General', habilitado: true },
-    { id: 'xxx', name: 'Usuarios', habilitado: true },
-    { id: 'xxx', name: 'Roles', habilitado: true }
+  public menusHabilitacion: Menu[] = [
+    { "ruta": "/nav/dashboard", "nombre": "Panel", "habilitado": false },
+    { "ruta": "/nav/ingresos", "nombre": "Ingresos", "habilitado": false },
+    { "ruta": "/nav/egresos", "nombre": "Egresos", "habilitado": false },
+    { "ruta": "/nav/inventario", "nombre": "Inventario", "habilitado": false },
+    { "ruta": "/nav/proveedores", "nombre": "Proveedores", "habilitado": false },
+    { "ruta": "/nav/reportes", "nombre": "Reportes", "habilitado": false },
+    { "ruta": "/nav/general", "nombre": "General", "habilitado": false },
+    { "ruta": "/nav/usuarios", "nombre": "Usuarios", "habilitado": false },
+    { "ruta": "/nav/roles", "nombre": "Roles", "habilitado": false }
   ];
 
   public menusHabilitacion_reset() {
