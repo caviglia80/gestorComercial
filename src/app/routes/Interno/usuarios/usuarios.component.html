@@ -167,6 +167,13 @@
         </tr>
 
         <tr>
+          <td style="font-weight: bold; white-space: nowrap;">Rol:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(rol)">
+            {{ rol }}
+          </td>
+        </tr>
+
+        <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['cargo'] }}:</td>
           <td style="width: 100%;" (dblclick)="sharedService.copy(Item['cargo'])">{{ Item['cargo'] }}</td>
         </tr>

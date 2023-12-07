@@ -7,8 +7,8 @@
       <span class="visually-hidden">Loading...</span>
     </div>
     <br><br>
-    <input type="text" id="email" class="form-control shadow" placeholder="Email" [(ngModel)]="email"
-      name="email" #emailField="ngModel" required autofocus>
+    <input type="text" id="email" class="form-control shadow" placeholder="Email" [(ngModel)]="email" name="email"
+      #emailField="ngModel" required autofocus>
     <br>
     <input type="password" id="password" class="form-control shadow" placeholder="Clave" [(ngModel)]="password"
       name="password" #passwordField="ngModel" required>
@@ -16,7 +16,7 @@
       <label> <input type="checkbox" [(ngModel)]="remember" name="remember" (change)="onCheckboxChange($event)">
         Recordarme</label>
     </div>
-    <label *ngIf="loginError && !loading" class="error-message mb-1">Credenciales inválidas</label>
+    <label *ngIf="errorMessage.length > 0 && !loading" class="error-message mb-1">{{ errorMessage }}</label>
     <button class="btn btn-lg btn-outline-light shadow" type="submit" [disabled]="!loginForm.valid">Iniciar
       sesión</button>
   </form>

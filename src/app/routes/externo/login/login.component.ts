@@ -10,8 +10,8 @@ export class LoginComponent implements OnInit {
   public loading: boolean = false;
   public email: string = '';
   public password: string = '';
-  public loginError: boolean = false;
   public remember: boolean = false;
+  public errorMessage: string = '';
 
   constructor(
     private tokenService: TokenService
@@ -29,13 +29,18 @@ export class LoginComponent implements OnInit {
   onLogin() {
     this.loading = true;
     this.tokenService.login(this.email, this.password, this.remember).subscribe({
-      next: () => {
-        this.loginError = false;
+      next: (response) => {
+        this.errorMessage = '';
+        this.loading = false;
+
+        if (response.rolValido === false)
+          this.errorMessage = 'Usuario con rol eliminado, ingrese con un usuario valido y asigne un nuevo rol.';
+        if (response.error)
+          this.errorMessage = 'Credenciales inválidas.';
       },
       error: (error) => {
-        console.error(error);
-        this.loginError = true;
         this.loading = false;
+        console.error(error);
       }
     });
   }

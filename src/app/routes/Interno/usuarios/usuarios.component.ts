@@ -26,6 +26,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   public create = false;
   public edit = false;
   public detail = false;
+  public rol = '';
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -131,6 +132,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.rolId = item.rolId;
+    this.rol = this.rolesData.find(item => item.id === this.Item.rolId)?.name || 'Desconocido.';
     this.Item.username = item.username;
     this.Item.fullname = item.fullname;
     this.Item.cargo = item.cargo;

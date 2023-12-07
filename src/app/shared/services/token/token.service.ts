@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { tap, map } from 'rxjs/operators';
 import { SharedService } from '@services/shared/shared.service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth/auth.service';
+import { switchMap, catchError, Observable, of } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,14 +23,29 @@ export class TokenService {
       tap((response: any) => {
         if (response.jwt) {
           localStorage.setItem('jwt', response.jwt);
-          if (remember)
-            localStorage.setItem('email', email); else
+          if (remember) {
+            localStorage.setItem('email', email);
+          } else {
             localStorage.removeItem('email');
-            this.authService.fetchRol().then(() => {
-              const firstRoute = this.authService.getFirstEnabledRoute();
-              this.router.navigate([firstRoute]);
-            });
+          }
         }
+      }),
+      switchMap((response: any) => {
+        if (!response.jwt) {
+          return of(response); // Si no hay JWT, simplemente devuelve la respuesta tal cual.
+        }
+        return this.authService.fetchRol().then(() => {
+          const firstRoute = this.authService.getFirstEnabledRoute();
+          this.router.navigate([firstRoute]);
+          response.rolValido = this.authService.availableMenus();
+          return response;
+        }).catch(() => {
+          response.rolValido = this.authService.availableMenus();
+          return response;
+        });
+      }),
+      catchError((error) => {
+        return of({ error: true, message: error.message });
       })
     );
   }

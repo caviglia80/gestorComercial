@@ -19,15 +19,15 @@ export class AuthService {
     public sharedService: SharedService
   ) {
     this.menus = [
-      { "ruta": "/nav/dashboard", "nombre": "Panel", "habilitado": false },
-      { "ruta": "/nav/ingresos", "nombre": "Ingresos", "habilitado": false },
-      { "ruta": "/nav/egresos", "nombre": "Egresos", "habilitado": false },
-      { "ruta": "/nav/inventario", "nombre": "Inventario", "habilitado": false },
-      { "ruta": "/nav/proveedores", "nombre": "Proveedores", "habilitado": false },
-      { "ruta": "/nav/reportes", "nombre": "Reportes", "habilitado": false },
-      { "ruta": "/nav/general", "nombre": "General", "habilitado": false },
-      { "ruta": "/nav/usuarios", "nombre": "Usuarios", "habilitado": false },
-      { "ruta": "/nav/roles", "nombre": "Roles", "habilitado": false }
+    //  { "ruta": "/nav/dashboard", "nombre": "Panel", "habilitado": false },
+    //  { "ruta": "/nav/ingresos", "nombre": "Ingresos", "habilitado": false },
+    //  { "ruta": "/nav/egresos", "nombre": "Egresos", "habilitado": false },
+    //  { "ruta": "/nav/inventario", "nombre": "Inventario", "habilitado": false },
+    //  { "ruta": "/nav/proveedores", "nombre": "Proveedores", "habilitado": false },
+    //  { "ruta": "/nav/reportes", "nombre": "Reportes", "habilitado": false },
+    //  { "ruta": "/nav/general", "nombre": "General", "habilitado": false },
+    //  { "ruta": "/nav/usuarios", "nombre": "Usuarios", "habilitado": false },
+    //  { "ruta": "/nav/roles", "nombre": "Roles", "habilitado": false }
     ];
   }
 
@@ -38,6 +38,10 @@ export class AuthService {
   getFirstEnabledRoute(): string {
     const firstEnabledMenu = this.menus.find(menu => menu.habilitado);
     return firstEnabledMenu ? firstEnabledMenu.ruta : '/nav/inicio';
+  }
+
+  availableMenus(): boolean {
+    return this.menus.length > 0;
   }
 
   // fetchRol(): void {
