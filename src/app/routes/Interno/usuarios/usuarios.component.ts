@@ -176,12 +176,22 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   ExportToExcel() {
     const columns = [
       { header: 'Usuario', key: 'username', width: 20 },
-      { header: 'Nombre Completo', key: 'fullname', width: 25 },
-      { header: 'Teléfono', key: 'phone', width: 15 },
-      { header: 'Email', key: 'email', width: 25 }
+      { header: 'Nombre Completo', key: 'fullname', width: 30 },
+      { header: 'Rol', key: 'rolId', width: 25 },
+      { header: 'Teléfono', key: 'phone', width: 20 },
+      { header: 'Email', key: 'email', width: 30 }
     ];
-    this.excelExportService.exportToExcel(columns, this.dataSource.data, 'Usuarios');
+
+    const datosMapeados = this.dataSource.data.map(item => {
+      return {
+        ...item,
+        rolId: this.rolesData.find(rol => rol.id === item.rolId)?.nombre || 'Desconocido'
+      };
+    });
+
+    this.excelExportService.exportToExcel(columns, datosMapeados, 'Usuarios');
   }
+
 }
 
 
