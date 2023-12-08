@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { SharedService } from '@services/shared/shared.service';
 import { Role } from '@models/mainClasses/main-classes';
 import { firstValueFrom } from 'rxjs';
-
 interface Menu {
   ruta: string;
   nombre: string;
@@ -13,25 +12,27 @@ interface Menu {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private menus: Menu[];
+  private isAdmin: boolean = false;
 
   constructor(
     private http: HttpClient,
     public sharedService: SharedService
   ) {
     this.menus = [
-    //  { "ruta": "/nav/dashboard", "nombre": "Panel", "habilitado": false },
-    //  { "ruta": "/nav/ingresos", "nombre": "Ingresos", "habilitado": false },
-    //  { "ruta": "/nav/egresos", "nombre": "Egresos", "habilitado": false },
-    //  { "ruta": "/nav/inventario", "nombre": "Inventario", "habilitado": false },
-    //  { "ruta": "/nav/proveedores", "nombre": "Proveedores", "habilitado": false },
-    //  { "ruta": "/nav/reportes", "nombre": "Reportes", "habilitado": false },
-    //  { "ruta": "/nav/general", "nombre": "General", "habilitado": false },
-    //  { "ruta": "/nav/usuarios", "nombre": "Usuarios", "habilitado": false },
-    //  { "ruta": "/nav/roles", "nombre": "Roles", "habilitado": false }
+      //  { "ruta": "/nav/dashboard", "nombre": "Panel", "habilitado": false },
+      //  { "ruta": "/nav/ingresos", "nombre": "Ingresos", "habilitado": false },
+      //  { "ruta": "/nav/egresos", "nombre": "Egresos", "habilitado": false },
+      //  { "ruta": "/nav/inventario", "nombre": "Inventario", "habilitado": false },
+      //  { "ruta": "/nav/proveedores", "nombre": "Proveedores", "habilitado": false },
+      //  { "ruta": "/nav/reportes", "nombre": "Reportes", "habilitado": false },
+      //  { "ruta": "/nav/general", "nombre": "General", "habilitado": false },
+      //  { "ruta": "/nav/usuarios", "nombre": "Usuarios", "habilitado": false },
+      //  { "ruta": "/nav/roles", "nombre": "Roles", "habilitado": false }
     ];
   }
 
   canAccess(ruta: string): boolean {
+    if (this.isAdmin) return true;
     return this.menus.some(menu => menu.ruta === ruta && menu.habilitado);
   }
 
@@ -44,21 +45,8 @@ export class AuthService {
     return this.menus.length > 0;
   }
 
-  // fetchRol(): void {
-  //   this.http.get<Role>(SharedService.host + 'DB/guard.php')
-  //     .subscribe({
-  //       next: (data) => {
-  //         this.menus = JSON.parse(data.menus);
-  //       },
-  //       error: (error) => {
-  //         if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-  //         this.menus = [];
-  //         this.sharedService.message('Error al intentar obtener registros.');
-  //       }
-  //     });
-  // }
-
   fetchRol(): Promise<Menu[]> {
+    this.menus = [];
     return firstValueFrom(this.http.get<Role>(SharedService.host + 'DB/guard.php'))
       .then((data) => {
         this.menus = JSON.parse(data ? data.menus : '[]');

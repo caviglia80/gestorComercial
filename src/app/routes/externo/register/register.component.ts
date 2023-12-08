@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  public nombreCompleto: string = "nombreCompleto";
-  public correo: string = "correo@123.com";
-  public telefono: string = "telefono";
-  public usuario: string = "asd2";
-  public clave: string = "asd";
-  public confirmarClave: string = "confirmarClave";
+  public nombreCompleto: string = "";
+  public correo: string = "";
+  public telefono: string = "";
+  public usuario: string = "";
+  public clave: string = "";
+  public confirmarClave: string = "";
   public errorMsg: string = '';
   public loading: boolean = false;
 

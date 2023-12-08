@@ -32,10 +32,9 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this.errorMessage = '';
         this.loading = false;
-
         if (response.rolValido === false)
           this.errorMessage = 'Usuario con rol eliminado, ingrese con un usuario valido y asigne un nuevo rol.';
-        if (response.error)
+        else if (response.error)
           this.errorMessage = 'Credenciales inválidas.';
       },
       error: (error) => {

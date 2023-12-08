@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { tap, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 import { SharedService } from '@services/shared/shared.service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
@@ -35,11 +35,12 @@ export class TokenService {
           return of(response); // Si no hay JWT, simplemente devuelve la respuesta tal cual.
         }
         return this.authService.fetchRol().then(() => {
+          response.rolValido = this.authService.availableMenus();
           const firstRoute = this.authService.getFirstEnabledRoute();
           this.router.navigate([firstRoute]);
-          response.rolValido = this.authService.availableMenus();
           return response;
         }).catch(() => {
+          this.logout();
           response.rolValido = this.authService.availableMenus();
           return response;
         });
