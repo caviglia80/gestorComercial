@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 import { Router } from '@angular/router';
+import { SharedService } from '@services/shared/shared.service';
 
 @Component({
   selector: 'app-register',
@@ -23,6 +24,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     public dataService: DataService,
+    public sharedService: SharedService,
     private router: Router
   ) { }
 
@@ -44,21 +46,11 @@ export class RegisterComponent implements OnInit {
       });
   }
 
-  isValidEmail(correo: string): boolean {
-    const regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return regexCorreo.test(correo);
-  }
-
-  onlyUser(correo: string): string {
-    return correo.split('@')[0];
-  }
-
   public Registro() {
-
     if (this.correo !== this.confirmarCorreo) {
       this.errorMsg = 'Ingreso mal el correo.';
       return;
-    } else if (!this.isValidEmail(this.correo)) {
+    } else if (!this.sharedService.isValidEmail(this.correo)) {
       this.errorMsg = 'Ingreso un correo invalido.';
       return;
     } else if (this.clave !== this.confirmarClave) {
@@ -74,7 +66,7 @@ export class RegisterComponent implements OnInit {
 
     const body: User = {
       isNewAdmin: '1',
-      username: this.onlyUser(this.correo).trim(),
+      username: this.sharedService.onlyUser(this.correo).trim(),
       fullname: this.nombreCompleto.trim(),
       phone: this.telefono.trim(),
       email: this.correo.trim(),

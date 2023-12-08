@@ -214,7 +214,7 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese rol</p>
+    <p class="form-field-description">Ingrese rol <span class="red-asterisk">*</span></p>
     <mat-select placeholder="Rol" [formControl]="rolesControl" [(ngModel)]="Item.rolId" (focus)="getRoles()">
       <mat-option *ngFor="let rol of rolesData" [value]="rol.id">
         {{ rol.nombre }} - {{ rol.descripcion }}
@@ -225,7 +225,14 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['email'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['email'] }}" [(ngModel)]="Item.email" required>
+    <input matInput placeholder="{{ Columns['email'] }}" [(ngModel)]="Item.email" (keyup)="correoEnUso=false" required>
+    <div *ngIf="!sharedService.isValidEmail(Item.email) && Item.email?.length > 0"
+      style="color: red; font-size: small;">
+      Correo invalido.
+    </div>
+    <div *ngIf="correoEnUso" style="color: red; font-size: small;">
+      Correo en uso.
+    </div>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -245,10 +252,10 @@
   <button mat-button (click)="record('POST')" [disabled]="
     !Item.username || Item.username == false ||
     !Item.fullname || Item.fullname == false ||
-    !Item.email || Item.email == false ||
+    !Item.email || Item.email == false || !sharedService.isValidEmail(Item.email) && Item.email?.length > 0 ||
     !Item.phone || Item.phone == false ||
-    !Item.password || Item.password == false ||
-    Item.password?.length <= 7">Guardar</button>
+    !Item.password || Item.password == false || Item.password?.length <= 7
+    ">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->

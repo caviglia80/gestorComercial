@@ -26,6 +26,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   public create = false;
   public edit = false;
   public detail = false;
+  public correoEnUso = false;
   public rol = '';
 
   public Columns: { [key: string]: string } = {
@@ -140,6 +141,11 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   }
 
   public record(method: string) {
+    this.correoEnUso = false;
+    if (this.dataSource.data.some(usuario => usuario.email === this.Item.email) && method === 'POST') {
+      this.correoEnUso = true;
+      return;
+    }
     try {
       const body: User = {
         id: this.Item.id,

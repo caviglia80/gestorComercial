@@ -205,7 +205,14 @@ export class SharedService {
     return (costo * (1 + margenBeneficio / 100));
   }
 
+  public isValidEmail(correo: string): boolean {
+    const regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return regexCorreo.test(correo);
+  }
 
+  public onlyUser(correo: string): string {
+    return correo.split('@')[0];
+  }
 
 
 
