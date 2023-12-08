@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, Role } from '@models/mainClasses/main-classes';
+import { empresa, Rol } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
@@ -22,7 +22,7 @@ interface Menu {
 
 export class RolesComponent implements OnInit, AfterViewInit {
   public dataEmpresa: empresa = new empresa();
-  public dataSource = new MatTableDataSource<Role>;
+  public dataSource = new MatTableDataSource<Rol>;
   public isLoading = true;
   public Item: any = {};
   public create = false;
@@ -32,10 +32,10 @@ export class RolesComponent implements OnInit, AfterViewInit {
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
-    name: 'Nombre',
+    nombre: 'Nombre',
     /*     menus: 'Menús', */
-    /*     permits: 'Permisos', */
-    description: 'Descripción',
+    /*     permisos: 'Permisos', */
+    descripcion: 'Descripción',
     actions: 'Operaciones'
   };
 
@@ -129,49 +129,49 @@ export class RolesComponent implements OnInit, AfterViewInit {
     this.create = visible;
   }
 
-  public viewItem(item: Role) {
+  public viewItem(item: Rol) {
     this.menusHabilitacion_reset();
     this.Detail(true);
     this.rellenarRecord(item);
   }
 
-  public editItem(item: Role) {
+  public editItem(item: Rol) {
     this.menusHabilitacion_reset();
     this.Edit(true);
     this.rellenarRecord(item);
   }
 
-  public duplicateItem(item: Role) {
+  public duplicateItem(item: Rol) {
     this.menusHabilitacion_reset();
     this.Double(true);
-    const originalName: string = item.name;
-    item.name = 'Duplicado - ' + item.name;
+    const originalName: string = item.nombre;
+    item.nombre = 'Duplicado - ' + item.nombre;
     this.rellenarRecord(item);
-    item.name = originalName;
+    item.nombre = originalName;
   }
 
-  public deleteItem(item: Role) {
-    this.dataService.fetchRoles('DELETE', { id: item.id, name: item.name });
+  public deleteItem(item: Rol) {
+    this.dataService.fetchRoles('DELETE', { id: item.id, nombre: item.nombre });
   }
 
-  private rellenarRecord(item: Role) {
+  private rellenarRecord(item: Rol) {
     this.Item = {};
     this.Item.id = item.id;
-    this.Item.name = item.name;
+    this.Item.nombre = item.nombre;
     this.menusHabilitacion = JSON.parse(item.menus);
-    this.Item.permits = '';
-    this.Item.description = item.description;
+    this.Item.permisos = '';
+    this.Item.descripcion = item.descripcion;
   }
 
   public record(method: string) {
     try {
-      const body: Role = {
+      const body: Rol = {
         id: this.Item.id,
         empresaId: this.dataEmpresa.id,
-        name: this.Item.name,
+        nombre: this.Item.nombre,
         menus: JSON.stringify(this.menusHabilitacion),
-        permits: this.Item.permits,
-        description: this.Item.description
+        permisos: this.Item.permisos,
+        descripcion: this.Item.descripcion
       };
       this.dataService.fetchRoles(method, body);
     } catch (error) {
@@ -192,9 +192,9 @@ export class RolesComponent implements OnInit, AfterViewInit {
 
   ExportToExcel() {
     const columns = [
-      { header: 'Nombre', key: 'name', width: 20 },
+      { header: 'Nombre', key: 'nombre', width: 20 },
       { header: 'Menús', key: 'menus', width: 25 },
-      { header: 'Descripción', key: 'description', width: 30 }
+      { header: 'Descripción', key: 'descripcion', width: 30 }
     ];
 
     const dataCopy = this.dataSource.data.map(row => ({
@@ -210,7 +210,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
     // Filtrar los elementos habilitados y extraer sus nombres
     const nombresHabilitados = lista
       .filter((item: any) => item.habilitado)
-      .map((item: any) => item.name);
+      .map((item: any) => item.nombre);
     return nombresHabilitados.join(', ');
   }
 }

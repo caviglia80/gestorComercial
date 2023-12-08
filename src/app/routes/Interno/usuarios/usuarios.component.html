@@ -217,7 +217,7 @@
     <p class="form-field-description">Ingrese rol</p>
     <mat-select placeholder="Rol" [formControl]="rolesControl" [(ngModel)]="Item.rolId" (focus)="getRoles()">
       <mat-option *ngFor="let rol of rolesData" [value]="rol.id">
-        {{ rol.name }} - {{ rol.description }}
+        {{ rol.nombre }} - {{ rol.descripcion }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -281,7 +281,7 @@
     <p class="form-field-description">Ingrese rol</p>
     <mat-select placeholder="Rol" [formControl]="rolesControl" [(ngModel)]="Item.rolId" (focus)="getRoles()">
       <mat-option *ngFor="let rol of rolesData" [value]="rol.id">
-        {{ rol.name }} - {{ rol.description }}
+        {{ rol.nombre }} - {{ rol.descripcion }}
       </mat-option>
     </mat-select>
   </mat-form-field>

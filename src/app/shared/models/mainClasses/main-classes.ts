@@ -75,28 +75,28 @@ export class User {
   }
 }
 
-export class Role {
+export class Rol {
   id: number;
   empresaId: number;
-  name: string;
+  nombre: string;
   menus: string;
-  permits: string;
-  description: string;
+  permisos: string;
+  descripcion: string;
 
   constructor(
     id = 0,
     empresaId = 0,
-    name = '',
+    nombre = '',
     menus = '',
-    permits = '',
-    description = ''
+    permisos = '',
+    descripcion = ''
   ) {
     this.id = id;
     this.empresaId = empresaId;
-    this.name = name;
+    this.nombre = nombre;
     this.menus = menus;
-    this.permits = permits;
-    this.description = description;
+    this.permisos = permisos;
+    this.descripcion = descripcion;
   }
 }
 

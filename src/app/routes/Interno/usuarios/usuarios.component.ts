@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, User, Role } from '@models/mainClasses/main-classes';
+import { empresa, User, Rol } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
@@ -17,7 +17,7 @@ import { AuthService } from '@services/auth/auth.service';
 
 export class UsuariosComponent implements OnInit, AfterViewInit {
   public rolesControl = new FormControl();
-  public rolesData: Role[] = [];
+  public rolesData: Rol[] = [];
 
   public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<User>;
@@ -131,7 +131,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.rolId = item.rolId;
-    this.rol = this.rolesData.find(item => item.id === this.Item.rolId)?.name || 'Desconocido.';
+    this.rol = this.rolesData.find(item => item.id === this.Item.rolId)?.nombre || 'Desconocido.';
     this.Item.username = item.username;
     this.Item.fullname = item.fullname;
     this.Item.phone = item.phone;
