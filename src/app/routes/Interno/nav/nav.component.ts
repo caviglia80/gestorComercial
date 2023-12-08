@@ -13,6 +13,15 @@ export class NavComponent implements OnInit {
   public Empresa: empresa | null = null;
   public sidenavOpened = true;
   public icono: any = '';
+  public dashboard: boolean = false;
+  public ingresos: boolean = false;
+  public egresos: boolean = false;
+  public inventario: boolean = false;
+  public proveedores: boolean = false;
+  public reportes: boolean = false;
+  public general: boolean = false;
+  public usuarios: boolean = false;
+  public roles: boolean = false;
 
   constructor(
     public dataService: DataService,
@@ -21,13 +30,10 @@ export class NavComponent implements OnInit {
     private authService: AuthService
   ) { }
 
-  canView(menuId: string): boolean {
-    return this.authService.canAccess(menuId);
-  }
-
   ngOnInit() {
     this.cacheService.clear();
     this.dataInit();
+    this.canView();
   }
 
   private dataInit() {
@@ -52,12 +58,51 @@ export class NavComponent implements OnInit {
   }
 
   public toggleSidenav() {
+    this.canView();
     this.sidenavOpened = !this.sidenavOpened;
   }
 
-  salir() {
+  public salir() {
     this.cacheService.clear();
     this.tokenService.logout();
+  }
+
+  private canView() {
+    this.authService.canAccess('/nav/dashboard').then(puedeVer => {
+      this.dashboard = puedeVer;
+    });
+
+    this.authService.canAccess('/nav/ingresos').then(puedeVer => {
+      this.ingresos = puedeVer;
+    });
+
+    this.authService.canAccess('/nav/egresos').then(puedeVer => {
+      this.egresos = puedeVer;
+    });
+
+    this.authService.canAccess('/nav/inventario').then(puedeVer => {
+      this.inventario = puedeVer;
+    });
+
+    this.authService.canAccess('/nav/proveedores').then(puedeVer => {
+      this.proveedores = puedeVer;
+    });
+
+    this.authService.canAccess('/nav/reportes').then(puedeVer => {
+      this.reportes = puedeVer;
+    });
+
+    this.authService.canAccess('/nav/general').then(puedeVer => {
+      this.general = puedeVer;
+    });
+
+    this.authService.canAccess('/nav/usuarios').then(puedeVer => {
+      this.usuarios = puedeVer;
+    });
+
+    this.authService.canAccess('/nav/roles').then(puedeVer => {
+      this.roles = puedeVer;
+    });
   }
 }
 

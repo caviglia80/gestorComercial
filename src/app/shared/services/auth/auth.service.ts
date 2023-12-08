@@ -30,8 +30,11 @@ export class AuthService {
     ];
   }
 
-  canAccess(ruta: string): boolean {
+  async canAccess(ruta: string): Promise<boolean> {
     if (this.isAdmin) return true;
+    if (this.menus.length === 0)
+      await this.fetchRol();
+
     return this.menus.some(menu => menu.ruta === ruta && menu.habilitado);
   }
 
@@ -54,7 +57,6 @@ export class AuthService {
           this.isAdmin = true;
           return [];
         }
-
         this.menus = JSON.parse(data ? data.menus : '[]');
         return this.menus;
       })

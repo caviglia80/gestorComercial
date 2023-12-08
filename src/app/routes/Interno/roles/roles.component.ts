@@ -193,7 +193,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
   ExportToExcel() {
     const columns = [
       { header: 'Nombre', key: 'nombre', width: 20 },
-      { header: 'Menús', key: 'menus', width: 25 },
+      { header: 'Menús', key: 'menus', width: 80 },
       { header: 'Descripción', key: 'descripcion', width: 30 }
     ];
 
@@ -206,12 +206,11 @@ export class RolesComponent implements OnInit, AfterViewInit {
   }
 
   private menusHabilitados(jsonString: string): string {
-    const lista = JSON.parse(jsonString);
-    // Filtrar los elementos habilitados y extraer sus nombres
-    const nombresHabilitados = lista
+    return JSON
+      .parse(jsonString)
       .filter((item: any) => item.habilitado)
-      .map((item: any) => item.nombre);
-    return nombresHabilitados.join(', ');
+      .map((item: any) => item.nombre)
+      .join(', ');
   }
 }
 
