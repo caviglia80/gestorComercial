@@ -47,7 +47,6 @@ export class User {
   rolId?: number;
   username: string;
   fullname: string;
-  cargo: string;
   phone: string;
   email: string;
   password: string;
@@ -59,7 +58,6 @@ export class User {
     rolId = 0,
     username = '',
     fullname = '',
-    cargo = '',
     phone = '',
     email = '',
     password = '',
@@ -70,7 +68,6 @@ export class User {
     this.rolId = rolId;
     this.username = username;
     this.fullname = fullname;
-    this.cargo = cargo;
     this.phone = phone;
     this.email = email;
     this.password = password;

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '@services/shared/shared.service';
-import { Role } from '@models/mainClasses/main-classes';
 import { firstValueFrom } from 'rxjs';
 interface Menu {
   ruta: string;
@@ -37,18 +36,25 @@ export class AuthService {
   }
 
   getFirstEnabledRoute(): string {
+    if (this.isAdmin) return '/nav/dashboard';
     const firstEnabledMenu = this.menus.find(menu => menu.habilitado);
     return firstEnabledMenu ? firstEnabledMenu.ruta : '/nav/inicio';
   }
 
   availableMenus(): boolean {
+    if (this.isAdmin) return true;
     return this.menus.length > 0;
   }
 
   fetchRol(): Promise<Menu[]> {
     this.menus = [];
-    return firstValueFrom(this.http.get<Role>(SharedService.host + 'DB/guard.php'))
+    return firstValueFrom(this.http.get<any>(SharedService.host + 'DB/guard.php'))
       .then((data) => {
+        if (data.isAdmin) {
+          this.isAdmin = true;
+          return [];
+        }
+
         this.menus = JSON.parse(data ? data.menus : '[]');
         return this.menus;
       })

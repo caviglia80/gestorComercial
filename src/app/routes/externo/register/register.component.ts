@@ -49,7 +49,6 @@ export class RegisterComponent implements OnInit {
       isNewAdmin: '1',
       username: this.usuario,
       fullname: this.nombreCompleto,
-      cargo: 'Administrador',
       phone: this.telefono,
       email: this.correo,
       password: this.clave

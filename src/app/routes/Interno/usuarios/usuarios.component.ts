@@ -32,7 +32,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     /*     id: 'ID', */
     username: 'Usuario',
     fullname: 'Nombre completo',
-    cargo: 'Cargo',
     phone: 'Teléfono',
     email: 'Correo',
     /*     password: 'Contraseña', */
@@ -135,7 +134,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     this.rol = this.rolesData.find(item => item.id === this.Item.rolId)?.name || 'Desconocido.';
     this.Item.username = item.username;
     this.Item.fullname = item.fullname;
-    this.Item.cargo = item.cargo;
     this.Item.phone = item.phone;
     this.Item.email = item.email;
     this.Item.password = '';
@@ -149,7 +147,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
         rolId: this.Item.rolId,
         username: this.Item.username,
         fullname: this.Item.fullname,
-        cargo: this.Item.cargo,
         phone: this.Item.phone,
         email: this.Item.email,
         password: this.Item.password
@@ -174,7 +171,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     const columns = [
       { header: 'Usuario', key: 'username', width: 20 },
       { header: 'Nombre Completo', key: 'fullname', width: 25 },
-      { header: 'Cargo', key: 'cargo', width: 20 },
       { header: 'Teléfono', key: 'phone', width: 15 },
       { header: 'Email', key: 'email', width: 25 }
     ];
