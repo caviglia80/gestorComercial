@@ -149,6 +149,8 @@ mat-expansion-panel-header {
   }
 }
 
-
-
-
+.right-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}

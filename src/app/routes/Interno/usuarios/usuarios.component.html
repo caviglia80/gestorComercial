@@ -254,6 +254,7 @@
     !Item.username || Item.username == false ||
     !Item.fullname || Item.fullname == false ||
     !Item.email || Item.email == false || !sharedService.isValidEmail(Item.email) && Item.email?.length > 0 ||
+    !Item.rolId || Item.rolId == false ||
     !Item.phone || Item.phone == false ||
     !Item.password || Item.password == false || Item.password?.length <= 7
     ">Guardar</button>

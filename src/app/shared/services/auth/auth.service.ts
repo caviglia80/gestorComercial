@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '@services/shared/shared.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, tap, switchMap, of } from 'rxjs';
+import { DataService } from '@services/data/data.service';
+import { jwtDecode } from 'jwt-decode';
 interface Menu {
   ruta: string;
   nombre: string;
@@ -12,9 +14,13 @@ interface Menu {
 export class AuthService {
   private menus: Menu[];
   private isAdmin: boolean = false;
+  private currentRolName: string = '';
+  private userId: string = '';
+  private username: string = '';
 
   constructor(
     private http: HttpClient,
+    public dataService: DataService,
     public sharedService: SharedService
   ) {
     this.menus = [
@@ -34,8 +40,11 @@ export class AuthService {
     if (this.isAdmin) return true;
     if (this.menus.length === 0)
       await this.fetchRol();
-
     return this.menus.some(menu => menu.ruta === ruta && menu.habilitado);
+  }
+
+  async getRolName(): Promise<string> {
+    return this.currentRolName;
   }
 
   getFirstEnabledRoute(): string {
@@ -58,7 +67,23 @@ export class AuthService {
           return [];
         }
         this.menus = JSON.parse(data ? data.menus : '[]');
+        this.currentRolName = data.nombre || '';
         return this.menus;
+      })
+      .catch((error) => {
+        if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+        this.sharedService.message('Error al intentar obtener registros.');
+        throw error;
+      });
+  }
+
+  async getUsername(): Promise<string> {
+    return firstValueFrom(this.http.get<any>(SharedService.host + 'DB/varios.php'))
+      .then((data) => {
+        if (data && data.length !== 0) {
+          this.username = data.User.username;
+          return data.User.username;
+        }
       })
       .catch((error) => {
         if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));

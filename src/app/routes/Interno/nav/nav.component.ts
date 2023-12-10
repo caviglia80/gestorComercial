@@ -23,6 +23,9 @@ export class NavComponent implements OnInit {
   public usuarios: boolean = false;
   public roles: boolean = false;
 
+  public usuario: string = '';
+  public rol: string = '';
+
   constructor(
     public dataService: DataService,
     public tokenService: TokenService,
@@ -34,6 +37,7 @@ export class NavComponent implements OnInit {
     this.cacheService.clear();
     this.dataInit();
     this.canView();
+    this.getUserInfo();
   }
 
   private dataInit() {
@@ -59,6 +63,7 @@ export class NavComponent implements OnInit {
 
   public toggleSidenav() {
     this.canView();
+    this.getUserInfo();
     this.sidenavOpened = !this.sidenavOpened;
   }
 
@@ -104,6 +109,21 @@ export class NavComponent implements OnInit {
       this.roles = puedeVer;
     });
   }
+
+  public getUserInfo() {
+    Promise.all([
+      this.authService.getRolName(),
+      this.authService.getUsername()
+    ]).then(([rol, username]) => {
+      if (rol)
+        this.rol = rol;
+      if (username)
+        this.usuario = username;
+    }).catch(error => {
+      console.error('Error al obtener la información del usuario: ', error);
+    });
+  }
+
 }
 
 

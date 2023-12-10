@@ -188,7 +188,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
         rolId: this.rolesData.find(rol => rol.id === item.rolId)?.nombre || 'Desconocido'
       };
     });
-
     this.excelExportService.exportToExcel(columns, datosMapeados, 'Usuarios');
   }
 
