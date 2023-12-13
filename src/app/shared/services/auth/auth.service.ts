@@ -50,8 +50,6 @@ export class AuthService {
 
   getFirstEnabledRoute(): string {
     if (this.UserInfo && this.UserInfo.isAdmin) return '/nav/dashboard';
-
-
     if (this.UserInfo)
     if (this.UserInfo.rol) {
       const menus: Menu[] = this.UserInfo.rol.menus;
@@ -62,8 +60,6 @@ export class AuthService {
     }
     else return '/nav/inicio';
   else return '/nav/inicio';
-
-
   }
 
   availableMenus(): boolean {
@@ -80,23 +76,12 @@ export class AuthService {
       this.http.get<any>(`${SharedService.host}DB/guard.php`).subscribe({
         next: (data) => {
           if (data && data.length !== 0) {
-
             this.UserInfo = data;
-
             if (this.UserInfo.rol)
               if (this.UserInfo.rol.menus)
                 this.UserInfo.rol.menus = JSON.parse(this.UserInfo.rol ? this.UserInfo.rol.menus : '[]');
             this.ds_UserInfo.next(this.UserInfo);
-
-
-
-
-
           }
-
-
-          console.log(this.UserInfo);
-
           resolve(this.UserInfo);
         }
       });

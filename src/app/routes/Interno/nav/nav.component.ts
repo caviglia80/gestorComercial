@@ -23,7 +23,6 @@ export class NavComponent implements OnInit {
   public usuarios: boolean = false;
   public roles: boolean = false;
 
-  private UserInfo: any = null;
   public username: string = '';
   public rolName: string = '';
 
@@ -62,7 +61,6 @@ export class NavComponent implements OnInit {
   }
 
   public toggleSidenav() {
-    this.getUserInfo();
     this.sidenavOpened = !this.sidenavOpened;
   }
 
@@ -109,49 +107,18 @@ export class NavComponent implements OnInit {
     });
   }
 
-  // public getUserInfo() {
-  //   Promise.all([
-  //     this.authService.getRolName(),
-  //     this.authService.getUsername()
-  //   ]).then(([rolName, username]) => {
-  //     if (rolName)
-  //       this.rolName = rolName;
-  //     if (username)
-  //       this.username = username;
-  //   }).catch(error => {
-  //     console.error('Error al obtener la información del usuario: ', error);
-  //   });
-  // }
-
   public getUserInfo() {
     this.authService.UserInfo$.subscribe({
       next: (data) => {
-
-
-        console.log(data);
-
         if (data && data.length !== 0) {
-          this.UserInfo = data;
-
-          if (this.UserInfo.username) this.username = this.UserInfo.username; else this.username = '';
-          if (this.UserInfo.rol) this.rolName = this.UserInfo.rol.nombre; else this.rolName = '';
-
-
-
-
-
+          if (data.username) this.username = data.username.trim(); else this.username = '';
+          if (data.rol) this.rolName = data.rol.nombre.trim(); else this.rolName = '';
           this.canView();
-
-
-
-
         }
       }
     });
     this.authService.refreshUserInfo();
   }
-
-
 
 
 }
