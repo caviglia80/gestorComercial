@@ -167,6 +167,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     } finally {
       this.Create(false);
       this.Edit(false);
+      this.authService.refreshUserInfo();
     }
   }
 
