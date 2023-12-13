@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '@services/shared/shared.service';
-import { firstValueFrom, Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { DataService } from '@services/data/data.service';
 interface Menu {
   ruta: string;
@@ -11,8 +11,6 @@ interface Menu {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  // private menus: Menu[];
-
   private ds_UserInfo: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public UserInfo$: Observable<any> = this.ds_UserInfo.asObservable();
   private UserInfo: any = null;
@@ -36,14 +34,9 @@ export class AuthService {
   }
 
   async canAccess(ruta: string): Promise<boolean> {
-    if (this.UserInfo && this.UserInfo.isAdmin) return true;
-
     if (!this.UserInfo)
       await this.refreshUserInfo();
-
-
-    console.log(this.UserInfo);
-
+    if (this.UserInfo && this.UserInfo.isAdmin) return true;
     if (this.UserInfo)
       if (this.UserInfo.rol) {
         const menus: Menu[] = this.UserInfo.rol.menus;
@@ -55,34 +48,25 @@ export class AuthService {
     else return false;
   }
 
-  //  async getRolName(): Promise<string> {
-  //    if (!this.UserInfo || !this.UserInfo.rol || !this.UserInfo.rol.nombre) {
-  //      console.log(this.UserInfo);
-  //      console.log(this.UserInfo.rol);
-  //      console.log(this.UserInfo.rol.nombre);
-  //      await this.refreshUserInfo();
-  //    }
-  //    if (!this.UserInfo || !this.UserInfo.rol || !this.UserInfo.rol.nombre)
-  //      return '';
-  //    else
-  //      return this.UserInfo.rol.nombre;
-  //  }
-
   getFirstEnabledRoute(): string {
-
-
-    console.log(this.UserInfo);
-
     if (this.UserInfo && this.UserInfo.isAdmin) return '/nav/dashboard';
-    const menus: Menu[] = this.UserInfo.rol.menus;
-    const firstEnabledMenu = menus.find(menu => menu.habilitado);
-    return firstEnabledMenu ? firstEnabledMenu.ruta : '/nav/inicio';
+
+
+    if (this.UserInfo)
+    if (this.UserInfo.rol) {
+      const menus: Menu[] = this.UserInfo.rol.menus;
+      const firstEnabledMenu = menus.find(menu => menu.habilitado);
+      if (menus)
+      return firstEnabledMenu ? firstEnabledMenu.ruta : '/nav/inicio';
+      else return '/nav/inicio';
+    }
+    else return '/nav/inicio';
+  else return '/nav/inicio';
+
+
   }
 
   availableMenus(): boolean {
-
-    console.log(this.UserInfo);
-
     if (this.UserInfo.isAdmin) return true;
     if (this.UserInfo)
       if (this.UserInfo.rol)
