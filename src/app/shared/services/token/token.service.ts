@@ -34,7 +34,7 @@ export class TokenService {
         if (!response.jwt) {
           return of(response); // Si no hay JWT, simplemente devuelve la respuesta tal cual.
         }
-        return this.authService.fetchRol().then(() => {
+        return this.authService.refreshUserInfo().then(() => {
           response.rolValido = this.authService.availableMenus();
           const firstRoute = this.authService.getFirstEnabledRoute();
           this.router.navigate([firstRoute]);

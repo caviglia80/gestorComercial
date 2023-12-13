@@ -23,8 +23,9 @@ export class NavComponent implements OnInit {
   public usuarios: boolean = false;
   public roles: boolean = false;
 
-  public usuario: string = '';
-  public rol: string = '';
+  private UserInfo: any = null;
+  public username: string = '';
+  public rolName: string = '';
 
   constructor(
     public dataService: DataService,
@@ -36,7 +37,6 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     this.cacheService.clear();
     this.dataInit();
-    this.canView();
     this.getUserInfo();
   }
 
@@ -62,7 +62,6 @@ export class NavComponent implements OnInit {
   }
 
   public toggleSidenav() {
-    this.canView();
     this.getUserInfo();
     this.sidenavOpened = !this.sidenavOpened;
   }
@@ -110,19 +109,50 @@ export class NavComponent implements OnInit {
     });
   }
 
+  // public getUserInfo() {
+  //   Promise.all([
+  //     this.authService.getRolName(),
+  //     this.authService.getUsername()
+  //   ]).then(([rolName, username]) => {
+  //     if (rolName)
+  //       this.rolName = rolName;
+  //     if (username)
+  //       this.username = username;
+  //   }).catch(error => {
+  //     console.error('Error al obtener la información del usuario: ', error);
+  //   });
+  // }
+
   public getUserInfo() {
-    Promise.all([
-      this.authService.getRolName(),
-      this.authService.getUsername()
-    ]).then(([rol, username]) => {
-      if (rol)
-        this.rol = rol;
-      if (username)
-        this.usuario = username;
-    }).catch(error => {
-      console.error('Error al obtener la información del usuario: ', error);
+    this.authService.UserInfo$.subscribe({
+      next: (data) => {
+
+
+        console.log(data);
+
+        if (data && data.length !== 0) {
+          this.UserInfo = data;
+
+          if (this.UserInfo.username) this.username = this.UserInfo.username; else this.username = '';
+          if (this.UserInfo.rol) this.rolName = this.UserInfo.rol.nombre; else this.rolName = '';
+
+
+
+
+
+          this.canView();
+
+
+
+
+        }
+      }
     });
+    this.authService.refreshUserInfo();
   }
+
+
+
 
 }
 

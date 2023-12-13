@@ -131,8 +131,10 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   private rellenarRecord(item: User) {
     this.Item = {};
     this.Item.id = item.id;
+    this.Item.administrador = item.administrador;
     this.Item.rolId = item.rolId;
-    this.rol = this.rolesData.find(item => item.id === this.Item.rolId)?.nombre || 'Desconocido.';
+    // this.rol = this.rolesData.find(item => item.id === this.Item.rolId)?.nombre || 'Desconocido.';
+    this.rol = item.administrador == '1' ? 'Administrador' : this.rolesData.find(rol => rol.id === item.rolId)?.nombre || 'Desconocido';
     this.Item.username = item.username;
     this.Item.fullname = item.fullname;
     this.Item.phone = item.phone;
@@ -150,6 +152,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
       const body: User = {
         id: this.Item.id,
         empresaId: this.dataEmpresa.id,
+        administrador: this.Item.administrador,
         rolId: this.Item.rolId,
         username: this.Item.username,
         fullname: this.Item.fullname,
@@ -157,13 +160,13 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
         email: this.Item.email,
         password: this.Item.password
       };
+
       this.dataService.fetchUsuarios(method, body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {
       this.Create(false);
       this.Edit(false);
-      this.authService.fetchRol();
     }
   }
 
@@ -185,12 +188,11 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     const datosMapeados = this.dataSource.data.map(item => {
       return {
         ...item,
-        rolId: this.rolesData.find(rol => rol.id === item.rolId)?.nombre || 'Desconocido'
+        rolId: item.administrador == '1' ? 'Administrador' : this.rolesData.find(rol => rol.id === item.rolId)?.nombre || 'Desconocido'
       };
     });
     this.excelExportService.exportToExcel(columns, datosMapeados, 'Usuarios');
   }
-
 }
 
 

@@ -50,7 +50,7 @@
           </th>
           <td [matTooltip]="element.username" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.username)">
-            {{element.username | slice:0:15 }}
+            {{element.username | slice:0:20 }}
           </td>
         </ng-container>
 
@@ -159,7 +159,8 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Rol:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(rol)">
+          <td style="width: 100%;" (dblclick)="sharedService.copy(rol)"
+            [ngClass]="{'fw-bold': Item.administrador == '1'}">
             {{ rol }}
           </td>
         </tr>
@@ -286,8 +287,8 @@
     <input matInput placeholder="{{ Columns['fullname'] }}" [(ngModel)]="Item.fullname" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese rol</p>
+  <mat-form-field class="full-width" *ngIf="Item.administrador != '1'">
+    <p class="form-field-description">Ingrese rol <span class="red-asterisk">*</span></p>
     <mat-select placeholder="Rol" [formControl]="rolesControl" [(ngModel)]="Item.rolId" (focus)="getRoles()">
       <mat-option *ngFor="let rol of rolesData" [value]="rol.id">
         {{ rol.nombre }}
@@ -320,6 +321,7 @@
     !Item.fullname || Item.fullname == false ||
     !Item.email || Item.email == false ||
     !Item.phone || Item.phone == false ||
+    !Item.rolId && Item.administrador != '1' || Item.rolId == false  && Item.administrador != '1' ||
     !Item.password || Item.password == false ||
     Item.password?.length <= 7">Guardar</button>
 </div>

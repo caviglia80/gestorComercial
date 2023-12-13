@@ -70,7 +70,7 @@ export class LandingPageComponent implements AfterViewInit {
     const token = localStorage.getItem('jwt');
     if (token && token.split('.').length === 3)
       if (!this.tokenService.isExpired(token)) {
-        this.authService.fetchRol().then(() => {
+        this.authService.refreshUserInfo().then(() => {
           const firstRoute = this.authService.getFirstEnabledRoute();
           this.router.navigate([firstRoute]);
         });

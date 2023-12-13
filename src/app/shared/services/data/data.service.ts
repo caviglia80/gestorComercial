@@ -161,7 +161,7 @@ export class DataService {
         .subscribe({
           next: () => {
             this.sharedService.message('Usuarios: registro guardado.');
-            if (!JSON.parse(body).isNewAdmin) {
+            if (!JSON.parse(body).administrador) {
               this.cacheService.remove('Usuarios');
               this.fetchUsuarios('GET');
             } else {

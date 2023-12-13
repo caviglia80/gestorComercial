@@ -65,6 +65,7 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
 
     const body: User = {
+      administrador: '1',
       isNewAdmin: '1',
       username: this.sharedService.onlyUser(this.correo).trim(),
       fullname: this.nombreCompleto.trim(),

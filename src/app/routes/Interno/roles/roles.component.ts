@@ -180,7 +180,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
       this.Create(false);
       this.Edit(false);
       this.Double(false);
-      this.authService.fetchRol();
+      this.authService.refreshUserInfo();
     }
   }
 

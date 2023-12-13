@@ -45,33 +45,36 @@ export class User {
   id?: number;
   empresaId?: number;
   rolId?: number;
+  isNewAdmin?: string;
+  administrador?: string;
   username: string;
   fullname: string;
   phone: string;
   email: string;
   password: string;
-  isNewAdmin?: string;
 
   constructor(
     id = 0,
     empresaId = 0,
     rolId = 0,
+    isNewAdmin = '0',
+    administrador = '0',
     username = '',
     fullname = '',
     phone = '',
     email = '',
     password = '',
-    isNewAdmin = '0'
   ) {
     this.id = id;
     this.empresaId = empresaId;
     this.rolId = rolId;
+    this.isNewAdmin = isNewAdmin;
+    this.administrador = administrador;
     this.username = username;
     this.fullname = fullname;
     this.phone = phone;
     this.email = email;
     this.password = password;
-    this.isNewAdmin = isNewAdmin;
   }
 }
 
