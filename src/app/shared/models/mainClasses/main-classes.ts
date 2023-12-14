@@ -262,9 +262,9 @@ export class facturacionAuth {
 
 export class empresa {
   id: number;
-  usuarioId?: number;
+  usuarioId: number | null;
   nombre: string;
-  fechaVencimiento: string;
+  fechaVencimiento: string | null;
   icono: string;
   copyEnabled: string;
   color1: string;
@@ -278,9 +278,9 @@ export class empresa {
 
   constructor(
     id = 0,
-    usuarioId = 0,
+    usuarioId = null,
     nombre = 'Compy',
-    fechaVencimiento = '',
+    fechaVencimiento = null,
     icono = 'assets/logo.png',
     copyEnabled = '1',
     color1 = '#846bf3',

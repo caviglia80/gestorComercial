@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
-import { empresa } from '@models/mainClasses/main-classes';
 import { Router } from '@angular/router';
 interface Menu {
   ruta: string;
@@ -22,7 +21,6 @@ export class AuthService {
   private EmpresaInfo: any = null;
 
   private periodoVencido: boolean = false;
-  //  public dataEmpresa: empresa = new empresa();
 
   constructor(
     private http: HttpClient,
