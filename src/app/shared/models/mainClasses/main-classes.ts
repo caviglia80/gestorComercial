@@ -147,7 +147,7 @@ export class moneyIncome {
   id?: number;
   empresaId?: number;
   date: string;
-  inventarioId?: string;
+  inventarioId?: number;
   moneda?: string;
   monto?: number;
   margenBeneficio?: number;
@@ -162,7 +162,7 @@ export class moneyIncome {
     id = 0,
     empresaId = 0,
     date = '',
-    inventarioId = '',
+    inventarioId = 0,
     moneda = '',
     monto = 0,
     margenBeneficio = 0,

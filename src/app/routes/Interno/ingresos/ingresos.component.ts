@@ -30,9 +30,9 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public edit = false;
   public detail = false;
   public remito = false;
-  public fullNameProducto = '';
   public itemRemito: moneyIncome[] = [];
   public R: Remito = new Remito();
+  public INV: Inventario | undefined;
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -101,7 +101,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     const inventario: Inventario = this._getProduct(event.option.value);
     if (inventario)
       if (inventario.tipo === 'Producto') {
-        if (this.dataEmpresa.permitirStockCeroEnabled === '1') {
+        if (this.dataEmpresa.permitirStockCeroEnabled == '1') {
           this.Item.monto = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
         } else {
           if (inventario.existencias != 0) {
@@ -118,7 +118,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       }
   }
 
-  private _filterProduct(value: string): any[] {
+  private _filterProduct(value: string): Inventario[] {
     this.getInventario();
     if (value != null) {
       const filterValue = value?.toString().toLowerCase();
@@ -186,7 +186,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     // Primer inicio
     if (visible && this.itemRemito.length === 0) {
       this.Item = {};
-      if (this.dataEmpresa.ingresoRapidoEnabled === '1')
+      if (this.dataEmpresa.ingresoRapidoEnabled == '1')
         this.Item = this.sharedService.rellenoCampos_IE('i');
     }
     this.create = visible;
@@ -209,8 +209,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public anularItem(item: moneyIncome) {
     item.anulado = '1';
     this.dataService.fetchIngresos('PUT', item);
-    /*     if (this.dataEmpresa.ingresoAnuladoSumaStockEnabled === '1' && this.dataEmpresa.validarInventarioEnabled === '1')
-          this.sumarStock(this._getProduct(item.inventarioId)); */
+    if (this.dataEmpresa.ingresoAnuladoSumaStockEnabled == '1' && this.dataEmpresa.validarInventarioEnabled == '1')
+      this.sumarStock(this._getProduct(item.inventarioId));
   }
 
   private rellenarRecord(item: moneyIncome) {
@@ -218,12 +218,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.Item.id = item.id;
     this.Item.date = item.date;
     this.Item.inventarioId = item.inventarioId;
-    this.fullNameProducto = item.inventarioId ? item.inventarioId : '';
-    const inv: Inventario = this._getProduct(item.inventarioId);
-    if (inv)
-      this.fullNameProducto = (inv.id + ' - ') + (inv.idExterno ? inv.idExterno + ' - ' : ' - ') + (inv.nombre);
-    else
-      this.fullNameProducto = item.inventarioId + ' (No encontrado en inventario)';
+    if (this.Item.inventarioId)
+      this.INV = this.dataInventario.find(item => item.id == this.Item.inventarioId);
     this.Item.moneda = item.moneda;
     this.Item.monto = item.monto;
     this.Item.margenBeneficio = item.margenBeneficio;
@@ -233,24 +229,32 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.Item.anulado = item.anulado;
     this.Item.cliente = item.cliente;
     this.Item.description = item.description;
-    this.Item.tipo = inv ? inv.tipo : '';
+    this.Item.tipo = this.INV ? this.INV.tipo : '';
   }
 
-  private restarStock(inventario: Inventario) {
-    if (inventario) {
-      if (inventario.tipo === 'Producto') {
-        let existenciasCount: number = inventario.existencias ? inventario.existencias : 0;
-        if (existenciasCount > 0) {
-          existenciasCount--;
-          this.dataService.fetchInventario('PUT', { id: inventario.id, existencias: existenciasCount });
-          this.sharedService.message('Se descontó una unidad del stock.');
-        } else
-          this.sharedService.message('Advertencia: no hay stock para descontar.');
-      }
+  private restarStock(inventario: Inventario[]) {
+    if (inventario.length > 0) {
+      inventario.forEach(item => {
+        if (item && item.tipo === 'Producto') {
+          let existenciasCount: number = item.existencias ? item.existencias : 0;
+          if (existenciasCount > 0) {
+            existenciasCount--;
+            item.existencias = existenciasCount;
+            this.dataService.fetchInventario('PUT', { id: item.id, existencias: existenciasCount });
+            this.sharedService.message('Se descontó una unidad del stock.');
+            if (!SharedService.isProduction) console.log('(' + item.id + ') existencia restada a ' + existenciasCount);
+          } else {
+            this.sharedService.message('Advertencia: no hay stock para descontar.');
+          }
+        } else {
+          this.sharedService.message('Advertencia: no se localizó el ID del producto.');
+        }
+      });
     } else {
-      this.sharedService.message('Advertencia: no se localizó el ID del producto.');
+      this.sharedService.message('Advertencia: no hay productos.');
     }
   }
+
 
   private productoValido(): boolean {
     if (!this._getProduct(this.Item.inventarioId)) {
@@ -275,13 +279,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public getName(inventario: Inventario): string {
-    if (inventario.idExterno)
-      return inventario.id?.toString() + ' - ' + inventario.idExterno?.toString() + ' - ' + inventario.nombre;
-    else
-      return inventario.id?.toString() + ' - ' + inventario.nombre;
-  }
-
   public refresh() {
     this.isLoading = true;
     this.cacheService.remove('Ingresos');
@@ -290,7 +287,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   public remitoCreate(moreItems: boolean) {
-    if (this.dataEmpresa.validarInventarioEnabled === '1' && !this.productoValido()) return;
+    if (this.dataEmpresa.validarInventarioEnabled == '1' && !this.productoValido()) return;
     try {
       const body: moneyIncome = {
         id: this.Item.id,
@@ -326,26 +323,27 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public remitoRecord(descargarRemito: boolean) {
     try {
-
       if (!SharedService.isProduction) console.log(this.itemRemito);
       this.dataService.fetchIngresos('POST', this.itemRemito);
       if (descargarRemito)
         this.R.generateAndDownloadPDF(this.R);
+      if (this.dataEmpresa.ingresoRestaStockEnabled == '1' && this.dataEmpresa.validarInventarioEnabled == '1') {
+        const inventarioIds = this.itemRemito.map(item => item.inventarioId);
+        const coincidencias: Inventario[] = inventarioIds.flatMap(id => this.dataInventario.filter(item => item.id === id));
+        this.restarStock(coincidencias);
+      }
     } catch (error) {
       console.error('Se ha producido un error:', error);
       this.Create(false);
       this.Edit(false);
       this.Remito(false);
-
-      // pagina de error o mensaje
-
     } finally {
       this.Remito(false);
     }
   }
 
   public recordEdit() {
-    if (this.dataEmpresa.validarInventarioEnabled === '1' && !this.productoValido()) return;
+    if (this.dataEmpresa.validarInventarioEnabled == '1' && !this.productoValido()) return;
     try {
       const body: moneyIncome = {
         id: this.Item.id,
@@ -374,7 +372,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     const columns = [
       { header: 'Fecha', key: 'date', width: 15 },
       { header: 'ID Inventario', key: 'inventarioId', width: 20 },
-      { header: 'Moneda', key: 'moneda', width: 15 },
       { header: 'Monto', key: 'monto', width: 15 },
       { header: 'Margen de Beneficio', key: 'margenBeneficio', width: 20 },
       { header: 'Método', key: 'method', width: 15 },
@@ -387,9 +384,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
     const dataCopy = this.dataSource.data.map(row => ({
       ...row,
-      anulado: typeof row.anulado === 'string' ?
-               (row.anulado === '0' ? 'NO' : row.anulado === '1' ? 'SI' : row.anulado) :
-               (row.anulado === 0 ? 'NO' : row.anulado === 1 ? 'SI' : row.anulado),
+      anulado: row.anulado == '0' ? 'NO' : row.anulado == '1' ? 'SI' : row.anulado,
     }));
 
     this.excelExportService.exportToExcel(columns, dataCopy, 'Ingresos');

@@ -201,8 +201,12 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">{{ Columns['inventarioId'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(fullNameProducto)">
-            {{fullNameProducto}}
+          <td style="width: 100%;"
+            (dblclick)="sharedService.copy((INV?.id  || '') + ' - ' + (INV?.idExterno || '') + ' - ' + (INV?.nombre || ''))">
+            <span *ngIf="INV?.id">{{INV?.id}}</span>
+            <span *ngIf="INV?.idExterno"> - {{INV?.idExterno}}</span>
+            <span *ngIf="INV?.nombre"> - {{INV?.nombre}}</span>
+            <span *ngIf="!INV">(No encontrado en inventario)</span>
           </td>
         </tr>
 
@@ -291,7 +295,9 @@
       [matAutocomplete]="auto" [(ngModel)]="Item.inventarioId" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let inventario of filteredInventario | async" [value]="inventario.id">
-        {{ getName(inventario)}}
+        <span *ngIf="inventario?.id">{{inventario?.id}}</span>
+        <span *ngIf="inventario?.idExterno"> - {{inventario?.idExterno}}</span>
+        <span *ngIf="inventario?.nombre"> - {{inventario?.nombre}}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
@@ -375,7 +381,9 @@
       [matAutocomplete]="auto" [(ngModel)]="Item.inventarioId" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let inventario of filteredInventario | async" [value]="inventario.id">
-        {{ getName(inventario)}}
+        <span *ngIf="inventario?.id">{{inventario?.id}}</span>
+        <span *ngIf="inventario?.idExterno"> - {{inventario?.idExterno}}</span>
+        <span *ngIf="inventario?.nombre"> - {{inventario?.nombre}}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
@@ -477,9 +485,9 @@
 
       <div class="col-md-12 col-lg-12 order-md-last">
         <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm overflow-hidden"
-            *ngFor="let item of R.items">
-            <div style="flex-grow: 1; flex-shrink: 1; max-width: 75%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          <li class="list-group-item d-flex justify-content-between lh-sm overflow-hidden" *ngFor="let item of R.items">
+            <div
+              style="flex-grow: 1; flex-shrink: 1; max-width: 75%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
               <h6 class="my-0">{{ item.nombre }} ({{ item.codigo }})</h6>
               <small class="text-body-secondary" style="max-width: 100%;">
                 {{ item.descripcion }}
