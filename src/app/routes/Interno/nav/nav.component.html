@@ -93,6 +93,12 @@
               <span>Roles</span>
             </mat-list-item>
 
+            <mat-list-item *ngIf="renovacion" class="subMenu" routerLinkActive="active-link" routerLink="/nav/renovacion"
+              (click)="toggleSidenav()">
+              <mat-icon>update</mat-icon>
+              <span>Renovación</span>
+            </mat-list-item>
+
           </mat-expansion-panel>
         </mat-accordion>
 

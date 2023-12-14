@@ -264,6 +264,7 @@ export class empresa {
   id: number;
   usuarioId?: number;
   nombre: string;
+  fechaVencimiento: string;
   icono: string;
   copyEnabled: string;
   color1: string;
@@ -279,6 +280,7 @@ export class empresa {
     id = 0,
     usuarioId = 0,
     nombre = 'Compy',
+    fechaVencimiento = '',
     icono = 'assets/logo.png',
     copyEnabled = '1',
     color1 = '#846bf3',
@@ -293,6 +295,7 @@ export class empresa {
     this.id = id;
     this.usuarioId = usuarioId;
     this.nombre = nombre;
+    this.fechaVencimiento = fechaVencimiento;
     this.icono = icono;
     this.copyEnabled = copyEnabled;
     this.color1 = color1;

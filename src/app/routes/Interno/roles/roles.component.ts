@@ -56,6 +56,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
     { "ruta": "/nav/reportes", "nombre": "Reportes", "habilitado": false },
     { "ruta": "/nav/general", "nombre": "General", "habilitado": false },
     { "ruta": "/nav/usuarios", "nombre": "Usuarios", "habilitado": false },
+    { "ruta": "/nav/renovacion", "nombre": "Renovación", "habilitado": false },
     { "ruta": "/nav/roles", "nombre": "Roles", "habilitado": false }
   ];
 

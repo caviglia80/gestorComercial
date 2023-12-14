@@ -21,6 +21,7 @@ export class NavComponent implements OnInit {
   public reportes: boolean = false;
   public general: boolean = false;
   public usuarios: boolean = false;
+  public renovacion: boolean = false;
   public roles: boolean = false;
 
   public username: string = '';
@@ -104,6 +105,10 @@ export class NavComponent implements OnInit {
 
     this.authService.canAccess('/nav/roles').then(puedeVer => {
       this.roles = puedeVer;
+    });
+
+    this.authService.canAccess('/nav/renovacion').then(puedeVer => {
+      this.renovacion = puedeVer;
     });
   }
 
