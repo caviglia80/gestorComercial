@@ -13,9 +13,7 @@ export class SharedService {
   public static host = 'https://francisco-caviglia.com.ar/francisco-caviglia/php/'; /* localhost/ */
   public static proxy = 'https://cors-anywhere.herokuapp.com/';
   public monedas: string[] = [
-    'ARS',
-    'USD',
-    'EUR'
+    'ARS'
   ];
   public paidMethods: string[] = [
     'Efectivo',
