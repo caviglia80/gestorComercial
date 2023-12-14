@@ -1,5 +1,5 @@
 <!-- Vista de Resultados -->
-<div class="tableResultados" [ngClass]="{'noVisible': detail || create  || edit}">
+<div class="tableResultados" [ngClass]="{'noVisible': detail || create || edit}">
 
   <div class="title">
     <div class="col-md-12">
@@ -154,8 +154,8 @@
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
 
-    <mat-paginator *ngIf="dataSource.data.length && !isLoading"  class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons
-      aria-label="Select page of periodic elements">
+    <mat-paginator *ngIf="dataSource.data.length && !isLoading" class="custom-paginator"
+      [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </div>
@@ -300,7 +300,8 @@
     <input matInput placeholder="Observación" [(ngModel)]="Item.observation">
   </mat-form-field>
 
-  <button mat-button (click)="record('POST')" [disabled]="!Item.contactFullname || Item.contactFullname == false">Guardar</button>
+  <button mat-button (click)="record('POST')"
+    [disabled]="!Item.contactFullname || Item.contactFullname == false">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -366,5 +367,6 @@
     <input matInput placeholder="Observación" [(ngModel)]="Item.observation">
   </mat-form-field>
 
-  <button mat-button (click)="record('PUT')" [disabled]="!Item.contactFullname || Item.contactFullname == false">Guardar</button>
+  <button mat-button (click)="record('PUT')"
+    [disabled]="!Item.contactFullname || Item.contactFullname == false">Guardar</button>
 </div>

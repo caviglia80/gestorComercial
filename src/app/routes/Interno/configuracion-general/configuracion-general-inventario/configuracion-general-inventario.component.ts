@@ -15,16 +15,7 @@ export class EmpresaConfiguracionInventarioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataInit();
+
   }
 
-  private dataInit() {
-    this.dataService.Empresa$.subscribe((data) => {
-      this.dataEmpresa = data[0];
-      if (this.dataEmpresa) {
-
-      }
-    });
-    this.dataService.fetchEmpresa('GET');
-  }
 }
