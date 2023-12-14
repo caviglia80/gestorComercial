@@ -13,8 +13,10 @@ export class InicioComponent implements OnInit {
     private authService: AuthService
   ) { }
 
-  ngOnInit(): void {
-    //this.errorMsj = !this.authService.availableMenus();
+  ngOnInit() {
+    this.authService.notAdminAvailableMenus().then((hayMenus) => {
+      this.errorMsj = !hayMenus;
+    });
   }
 
 

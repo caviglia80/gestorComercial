@@ -73,9 +73,22 @@ export class AuthService {
 
   availableMenus(): boolean {
     if (this.UserInfo && this.UserInfo.isAdmin) return true;
-    if (this.UserInfo && this.UserInfo.rol)
-      return this.UserInfo.rol.menus.length > 0;
+    if (this.UserInfo && this.UserInfo.rol) return this.UserInfo.rol.menus.length > 0;
     else return false;
+  }
+
+  async notAdminAvailableMenus(): Promise<boolean> {
+    if (!this.UserInfo) await this.refreshUserInfo();
+    if (!this.EmpresaInfo) await this.refreshEmpresaInfo();
+
+    if (this.UserInfo && this.UserInfo.isAdmin) return true;
+    if (this.UserInfo && !this.UserInfo.isAdmin && this.periodoVencido) return true;
+
+    if (this.UserInfo && this.UserInfo.rol) {
+      const menus: Menu[] = this.UserInfo.rol.menus;
+      if (menus) return menus.some(menu => menu.habilitado);
+    } else return false;
+    return false;
   }
 
   refreshUserInfo(): Promise<any> {
