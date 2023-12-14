@@ -3,15 +3,14 @@ import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
 import { empresa } from '@models/mainClasses/main-classes';
 import { GlobalVariables } from 'src/app/app.component';
-
+import { SharedService } from '@services/shared/shared.service';
 @Component({
   selector: 'app-renovacion',
   templateUrl: './renovacion.component.html',
   styleUrls: ['./renovacion.component.css']
 })
 export class RenovacionComponent implements OnInit {
-  public fechaVencimiento: String = '0000-00-00';
-  public Empresa: empresa | null = null;
+  public fechaVencimiento: String = '00-00-0000';
   public dataEmpresa: empresa = new empresa();
 
   public fechaOk: boolean = false;
@@ -20,6 +19,7 @@ export class RenovacionComponent implements OnInit {
 
   constructor(
     private cacheService: CacheService,
+    public sharedService: SharedService,
     public dataService: DataService
   ) { }
 
@@ -33,7 +33,7 @@ export class RenovacionComponent implements OnInit {
         this.dataEmpresa = data[0];
         if (this.dataEmpresa.fechaVencimiento) {
           this.comprobarVencimiento(this.dataEmpresa.fechaVencimiento);
-          this.fechaVencimiento = this.fechaFormateada(this.dataEmpresa.fechaVencimiento);
+          this.fechaVencimiento = this.sharedService.fechaFormateada(this.dataEmpresa.fechaVencimiento);
         } else {
           this.fechaOk = false;
           this.fechaCercaVencimiento = false;
@@ -50,38 +50,21 @@ export class RenovacionComponent implements OnInit {
   }
 
   comprobarVencimiento(fecha: string) {
-    const fechaObjeto = new Date(fecha);
-    const fechaActual = new Date();
+    const diferenciaDias = this.sharedService.getDiasDeDiferencia(fecha);
 
-    // Diferencia en milisegundos
-    const diferenciaMs = fechaObjeto.getTime() - fechaActual.getTime();
-
-    // Convertir de milisegundos a días
-    const diferenciaDias = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
-
-    if (diferenciaDias <= 1) {
+    if (diferenciaDias <= 0) {
       this.fechaOk = false;
       this.fechaCercaVencimiento = false;
       this.fechaPorVencerOvencido = true;
-    } else if (diferenciaDias <= 2) {
+    } else if (diferenciaDias <= 5) {
       this.fechaOk = false;
       this.fechaCercaVencimiento = true;
       this.fechaPorVencerOvencido = false;
-    } else if (diferenciaDias >= 3) {
+    } else if (diferenciaDias >= 6) {
       this.fechaOk = true;
       this.fechaCercaVencimiento = false;
       this.fechaPorVencerOvencido = false;
     }
-  }
-
-  private fechaFormateada(fecha: string): string {
-    const fechaObjeto = new Date(fecha);
-    const año = fechaObjeto.getFullYear();
-    const mes = fechaObjeto.getMonth() + 1;
-    const dia = fechaObjeto.getDate();
-
-    const fechaFormateada = `${dia.toString().padStart(2, '0')}-${mes.toString().padStart(2, '0')}-${año}`;
-    return fechaFormateada;
   }
 
   abrirWhatsApp(periodo: string) {

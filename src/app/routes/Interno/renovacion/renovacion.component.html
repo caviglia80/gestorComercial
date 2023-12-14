@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<div class="fechaContainer text-center">
+<div class="fechaContainer text-center" [matTooltip]="'Su fecha de vencimiento'">
   <span *ngIf="fechaOk" class="badge rounded-pill bg-success my-2 mx-1 mat-elevation-z4" style="font-size: 1rem;">{{
     fechaVencimiento
     }}</span>
@@ -26,24 +26,24 @@
 </div>
 
 <div *ngIf="fechaOk" class="alert alert-success alert-dismissible fade show my-2" role="alert">
+  <div style="text-align: center;">Todo en orden!</div>
   <span style="vertical-align: inherit;">
-    Todo en orden! <br>
     <mat-icon style="vertical-align: middle; width: 16px; height: 16px; font-size: 15px;">info_outline</mat-icon>
-    Puede actualizar el período en este momento y su tiempo se acumulara con el actual.
+    Si lo desea, puede actualizar su período en este momento ya que el mismo es acumulativo.
   </span>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerca"></button>
 </div>
 
 <div *ngIf="fechaCercaVencimiento" class="alert alert-warning  alert-dismissible fade show my-2" role="alert">
   <span style="vertical-align: inherit;">
-    Su período esta por vencer. Por favor, renueva para continuar disfrutando de nuestros servicios.
+    Su período esta por vencer. Por favor, renueve para continuar disfrutando de nuestros servicios.
   </span>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerca"></button>
 </div>
 
 <div *ngIf="fechaPorVencerOvencido" class="alert alert-danger alert-dismissible fade show my-2" role="alert">
   <span style="vertical-align: inherit;">
-    Su período ha vencido. Por favor, renueva para continuar disfrutando de nuestros servicios.
+    Su período ha vencido. Por favor, renueve para continuar disfrutando de nuestros servicios.
   </span>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerca"></button>
 </div>
@@ -89,5 +89,3 @@
     </div>
   </div>
 </div>
-
-

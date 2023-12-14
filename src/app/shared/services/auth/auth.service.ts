@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SharedService } from '@services/shared/shared.service';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
+import { empresa } from '@models/mainClasses/main-classes';
+import { Router } from '@angular/router';
 interface Menu {
   ruta: string;
   nombre: string;
@@ -15,59 +17,66 @@ export class AuthService {
   public UserInfo$: Observable<any> = this.ds_UserInfo.asObservable();
   private UserInfo: any = null;
 
+  private ds_EmpresaInfo: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public EmpresaInfo$: Observable<any> = this.ds_EmpresaInfo.asObservable();
+  private EmpresaInfo: any = null;
+
+  private periodoVencido: boolean = false;
+  //  public dataEmpresa: empresa = new empresa();
+
   constructor(
     private http: HttpClient,
     public dataService: DataService,
+    private router: Router,
     public sharedService: SharedService
-  ) {
-    //  this.menus = [
-    //  { "ruta": "/nav/dashboard", "nombre": "Panel", "habilitado": false },
-    //  { "ruta": "/nav/ingresos", "nombre": "Ingresos", "habilitado": false },
-    //  { "ruta": "/nav/egresos", "nombre": "Egresos", "habilitado": false },
-    //  { "ruta": "/nav/inventario", "nombre": "Inventario", "habilitado": false },
-    //  { "ruta": "/nav/proveedores", "nombre": "Proveedores", "habilitado": false },
-    //  { "ruta": "/nav/reportes", "nombre": "Reportes", "habilitado": false },
-    //  { "ruta": "/nav/general", "nombre": "General", "habilitado": false },
-    //  { "ruta": "/nav/usuarios", "nombre": "Usuarios", "habilitado": false },
-    //  { "ruta": "/nav/roles", "nombre": "Roles", "habilitado": false }
-    //   ];
-  }
+  ) { }
 
   async canAccess(ruta: string): Promise<boolean> {
-    if (!this.UserInfo)
-      await this.refreshUserInfo();
-    if (this.UserInfo && this.UserInfo.isAdmin) return true;
-    if (this.UserInfo)
-      if (this.UserInfo.rol) {
-        const menus: Menu[] = this.UserInfo.rol.menus;
-        if (menus)
-          return menus.some(menu => menu.ruta === ruta && menu.habilitado);
-        else return false;
+    if (!this.UserInfo) await this.refreshUserInfo();
+    if (!this.EmpresaInfo) await this.refreshEmpresaInfo();
+
+    if (this.UserInfo) {
+      if (this.UserInfo.isAdmin && this.periodoVencido && ruta.includes('renovacion')) return true;
+      if (!this.UserInfo.isAdmin && this.periodoVencido && ruta.includes('inicio')) return true;
+
+      if (this.UserInfo.isAdmin && this.periodoVencido) {
+        this.router.navigate(['/nav/renovacion']);
+        return false;
       }
-      else return false;
-    else return false;
+      if (!this.UserInfo.isAdmin && this.periodoVencido) {
+        this.router.navigate(['/nav/inicio']);
+        return false;
+      }
+
+      if (this.UserInfo.isAdmin) return true;
+      if (!this.UserInfo.isAdmin && this.UserInfo.rol) {
+        const menus: Menu[] = this.UserInfo.rol.menus;
+        if (menus) return menus.some(menu => menu.ruta === ruta && menu.habilitado);
+        else return false;
+      } else return false;
+    } else return false;
   }
 
   getFirstEnabledRoute(): string {
+    if (this.UserInfo && !this.UserInfo.isAdmin && this.periodoVencido) return '/nav/inicio';
+    if (this.UserInfo && this.UserInfo.isAdmin && this.periodoVencido) return '/nav/renovacion';
+
     if (this.UserInfo && this.UserInfo.isAdmin) return '/nav/dashboard';
     if (this.UserInfo)
-    if (this.UserInfo.rol) {
-      const menus: Menu[] = this.UserInfo.rol.menus;
-      const firstEnabledMenu = menus.find(menu => menu.habilitado);
-      if (menus)
-      return firstEnabledMenu ? firstEnabledMenu.ruta : '/nav/inicio';
+      if (this.UserInfo.rol) {
+        const menus: Menu[] = this.UserInfo.rol.menus;
+        const firstEnabledMenu = menus.find(menu => menu.habilitado);
+        if (menus) return firstEnabledMenu ? firstEnabledMenu.ruta : '/nav/inicio';
+        else return '/nav/inicio';
+      }
       else return '/nav/inicio';
-    }
     else return '/nav/inicio';
-  else return '/nav/inicio';
   }
 
   availableMenus(): boolean {
-    if (this.UserInfo.isAdmin) return true;
-    if (this.UserInfo)
-      if (this.UserInfo.rol)
-        return this.UserInfo.rol.menus.length > 0;
-      else return false;
+    if (this.UserInfo && this.UserInfo.isAdmin) return true;
+    if (this.UserInfo && this.UserInfo.rol)
+      return this.UserInfo.rol.menus.length > 0;
     else return false;
   }
 
@@ -88,7 +97,22 @@ export class AuthService {
     });
   }
 
-
+  refreshEmpresaInfo(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get<any>(`${SharedService.host}DB/empresa.php`).subscribe({
+        next: (data) => {
+          if (data[0] && data[0].length !== 0) {
+            this.EmpresaInfo = data[0];
+            if (this.EmpresaInfo.fechaVencimiento)
+              if (this.sharedService.getDiasDeDiferencia(this.EmpresaInfo.fechaVencimiento) <= 0)
+                this.periodoVencido = true; else this.periodoVencido = false;
+            this.ds_EmpresaInfo.next(this.EmpresaInfo);
+          }
+          resolve(this.EmpresaInfo);
+        }
+      });
+    });
+  }
 
 
 

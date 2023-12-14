@@ -212,11 +212,22 @@ export class SharedService {
     return correo.split('@')[0];
   }
 
+  public fechaFormateada(fecha: string): string {
+    const fechaObjeto = new Date(fecha);
+    const año = fechaObjeto.getFullYear();
+    const mes = fechaObjeto.getMonth() + 1;
+    const dia = fechaObjeto.getDate();
 
+    const fechaFormateada = `${dia.toString().padStart(2, '0')}-${mes.toString().padStart(2, '0')}-${año}`;
+    return fechaFormateada;
+  }
 
-
-
-
+  public getDiasDeDiferencia(fecha: string): number {
+    const fechaObjeto = new Date(fecha);
+    const fechaActual = new Date();
+    const diferenciaMs = fechaObjeto.getTime() - fechaActual.getTime();
+    return Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+  }
 }
 
 
