@@ -73,6 +73,7 @@ export class RegisterComponent implements OnInit {
       email: this.correo.trim(),
       password: this.clave
     };
+
     this.dataService.fetchUsuarios('POST', body);
   }
 }
