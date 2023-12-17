@@ -124,12 +124,4 @@ export class AuthService {
       });
     });
   }
-
-
-
-
-
-
-
-
 }

@@ -122,8 +122,8 @@ export class NavComponent implements OnInit {
         }
       }
     });
-    this.authService.refreshUserInfo();
-    this.authService.refreshUserInfo();
+  //  this.authService.refreshUserInfo();
+  //  this.authService.refreshUserInfo();
   }
 }
 

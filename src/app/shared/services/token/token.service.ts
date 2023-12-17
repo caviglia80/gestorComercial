@@ -61,9 +61,9 @@ export class TokenService {
       const decoded = jwtDecode<any>(token);
       const currentTime = Date.now() / 1000; // Tiempo actual en segundos
 
-      if (decoded.exp < currentTime) {
+      if (decoded.exp < currentTime)
         return true; // Token expirado
-      }
+
       return false; // Token válido y no expirado
     } catch (error) {
       return true; // Token inválido o error al decodificar
