@@ -268,16 +268,16 @@ export class empresa {
   usuarioId: number | null;
   nombre: string;
   fechaVencimiento: string | null;
-  icono: string;
-  copyEnabled: string;
-  color1: string;
-  color2: string;
-  ingresoRapidoEnabled: string;
-  egresoRapidoEnabled: string;
-  ingresoRestaStockEnabled: string;
-  ingresoAnuladoSumaStockEnabled: string;
-  permitirStockCeroEnabled: string;
-  validarInventarioEnabled: string;
+  icono?: string;
+  copyEnabled?: string;
+  color1?: string;
+  color2?: string;
+  ingresoRapidoEnabled?: string;
+  egresoRapidoEnabled?: string;
+  ingresoRestaStockEnabled?: string;
+  ingresoAnuladoSumaStockEnabled?: string;
+  permitirStockCeroEnabled?: string;
+  validarInventarioEnabled?: string;
 
   constructor(
     id = 0,

@@ -41,6 +41,9 @@ export class DataService {
   private ds_Remito: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Remito$: Observable<any[]> = this.ds_Remito.asObservable();
 
+  private ds_Sa: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public Sa$: Observable<any> = this.ds_Sa.asObservable();
+
   constructor(
     private http: HttpClient,
     public sharedService: SharedService,
@@ -560,6 +563,62 @@ export class DataService {
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
             this.sharedService.message('Empresa: Error al intentar editar el registro.');
+          }
+        });
+    }
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+  }
+
+  public fetchSa(method = '', body: any = {}, proxy = false): void {
+    body = JSON.stringify(body);
+    const headers: {} = { 'Content-Type': 'application/json' }
+    let url = SharedService.host + 'DB/sa.php';
+    if (proxy) url = SharedService.proxy + url;
+
+    // Verificar si los datos están en caché
+    if (this.cacheService.has('Sa') && method === 'GET') {
+      if (!SharedService.isProduction) console.log(method + ' - Cache');
+      this.ds_Sa.next(this.cacheService.get('Sa'));
+      return;
+    }
+
+    if (method === 'GET') {
+      this.http.get<any>(url)
+        .subscribe({
+          next: (data) => {
+            this.cacheService.set('Sa', data);
+            this.ds_Sa.next(data);
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.ds_Sa.next(null);
+            this.sharedService.message('Sa: Error al intentar obtener registros.');
+          }
+        });
+    } else if (method === 'POST') {
+      this.http.post<any>(url, body, headers)
+        .subscribe({
+          next: (data) => {
+            this.sharedService.message('Configuración actualizada !');
+            this.cacheService.remove('Sa');
+            this.fetchSa('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Sa: Error al intentar guardar el registro.');
+          }
+        });
+    } else if (method === 'PUT') {
+      this.http.put(url, body, headers)
+        .subscribe({
+          next: () => {
+            this.sharedService.message('Configuración actualizada !');
+            this.cacheService.remove('Sa');
+            this.fetchSa('GET');
+          },
+          error: (error) => {
+            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+            this.sharedService.message('Sa: Error al intentar editar el registro.');
           }
         });
     }
