@@ -7,8 +7,8 @@
       </button>
 
       <div class="right-container">
-        <div class="text-white" style="margin-right: 42px; font-weight: 500;">
-          <span *ngIf="username">{{username}}</span>
+        <div class="text-white nav-userInfo">
+          <span *ngIf="username" [ngClass]="{'SA': isSa}">{{username}}</span>
           <span *ngIf="rolName"> ({{rolName}})</span>
         </div>
         <img class="navbar-icon" [src]="icono" alt="logo" *ngIf="icono">
@@ -66,7 +66,8 @@
           <span>Reportes</span>
         </mat-list-item>
 
-        <mat-list-item *ngIf="clientes" routerLinkActive="active-link" routerLink="/nav/clientes" (click)="toggleSidenav()">
+        <mat-list-item *ngIf="clientes" routerLinkActive="active-link" routerLink="/nav/clientes"
+          (click)="toggleSidenav()">
           <mat-icon>person_search</mat-icon>
           <span>Clientes</span>
         </mat-list-item>
