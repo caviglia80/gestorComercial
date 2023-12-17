@@ -26,7 +26,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   public Columns: { [key: string]: string } = {
     id: 'ID',
     nombre: 'Nombre Empresa',
-    usuarioId: 'Usuario',
+    email: 'Administrador',
     fechaVencimiento: 'Vencimiento',
     actions: 'Operaciones'
   };
@@ -52,9 +52,13 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   private dataInit() {
     this.dataService.Sa$.subscribe({
       next: (data) => {
-        if (data && data.lenght !== 0) {
-          this.dataSource.data = data.empresas;
+        if (data && data.length !== 0) {
           this.Administradores = data.administradores;
+          const enrichedData = data.empresas.map((empresa: empresa) => {
+            const admin = this.Administradores.find(admin => admin.id === empresa.usuarioId);
+            return { ...empresa, email: admin ? admin.email : '' };
+          });
+          this.dataSource.data = enrichedData;
           this.loading(false);
         }
       },
@@ -144,6 +148,22 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     this.dataService.fetchSa('GET');
   }
 
+  getAdmin(usuarioId: number): User | null {
+    return this.Administradores.find(user => user.id === usuarioId) || null;
+  }
+
+  colorearFecha(fecha: string): string {
+    const diferenciaDias = this.sharedService.getDiasDeDiferencia(fecha);
+    if (diferenciaDias <= 0) {
+      return 'red';
+    } else if (diferenciaDias <= 5) {
+      return 'orange';
+    } else if (diferenciaDias >= 6) {
+      return '#00C000';
+    } else {
+      return 'black';
+    }
+  }
 }
 
 

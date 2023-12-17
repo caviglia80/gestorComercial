@@ -48,12 +48,12 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="usuarioId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by usuarioId">
-            {{ Columns['usuarioId'] }}
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by email">
+            {{ Columns['email'] }}
           </th>
-          <td [matTooltip]="element.usuarioId" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.usuarioId)"> {{element.usuarioId | slice:0:12 }}
+          <td [matTooltip]="element.email" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.email)"> {{ element.email| slice:0:40 }}
           </td>
         </ng-container>
 
@@ -62,7 +62,9 @@
             {{ Columns['fechaVencimiento'] }}
           </th>
           <td [matTooltip]="element.fechaVencimiento" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.fechaVencimiento)"> {{element.fechaVencimiento | slice:0:15 }} </td>
+            (dblclick)="sharedService.copy(element.fechaVencimiento)"
+            [style.color]="colorearFecha(element.fechaVencimiento)"> {{ element.fechaVencimiento | date:'dd/MM/yyyy'
+            }} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -102,7 +104,6 @@
   </div>
 </div>
 
-
 <!-- Vista de Detalle -->
 <div class="verDetalle" *ngIf="detail">
   <div class="title">
@@ -137,7 +138,8 @@
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">Vencimiento:</td>
-            <td style="width: 100%;" (dblclick)="sharedService.copy(Item.fechaVencimiento)">{{ Item.fechaVencimiento }}
+            <td style="width: 100%;" [style.color]="colorearFecha(Item.fechaVencimiento)"
+              (dblclick)="sharedService.copy(Item.fechaVencimiento)">{{ Item.fechaVencimiento | date:'dd/MM/yyyy' }}
             </td>
           </tr>
         </tbody>
