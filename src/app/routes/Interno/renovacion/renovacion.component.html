@@ -13,15 +13,16 @@
   </div>
 </div>
 
-<div class="fechaContainer text-center" [matTooltip]="'Su fecha de vencimiento'">
-  <span *ngIf="fechaOk" class="badge rounded-pill bg-success my-2 mx-1 mat-elevation-z4" style="font-size: 1rem;">{{
+<div class="fechaContainer text-center">
+  <span *ngIf="fechaOk" [matTooltip]="'Su fecha de vencimiento'"
+    class="badge rounded-pill bg-success my-2 mx-1 mat-elevation-z4" style="font-size: 1rem;">{{
     fechaVencimiento
     }}</span>
-  <span *ngIf="fechaCercaVencimiento" class="badge rounded-pill bg-warning my-2 mx-1 mat-elevation-z4"
-    style="font-size: 1rem;">{{
+  <span *ngIf="fechaCercaVencimiento" [matTooltip]="'Su fecha de vencimiento'"
+    class="badge rounded-pill bg-warning my-2 mx-1 mat-elevation-z4" style="font-size: 1rem;">{{
     fechaVencimiento }}</span>
-  <span *ngIf="fechaPorVencerOvencido" class="badge rounded-pill bg-danger my-2 mx-1 mat-elevation-z4"
-    style="font-size: 1rem;">{{
+  <span *ngIf="fechaPorVencerOvencido" [matTooltip]="'Su fecha de vencimiento'"
+    class="badge rounded-pill bg-danger my-2 mx-1 mat-elevation-z4" style="font-size: 1rem;">{{
     fechaVencimiento }}</span>
 </div>
 
