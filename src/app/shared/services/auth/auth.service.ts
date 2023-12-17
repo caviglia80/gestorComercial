@@ -19,7 +19,6 @@ export class AuthService {
   private ds_EmpresaInfo: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public EmpresaInfo$: Observable<any> = this.ds_EmpresaInfo.asObservable();
   private EmpresaInfo: any = null;
-
   private periodoVencido: boolean = false;
 
   constructor(
@@ -31,31 +30,39 @@ export class AuthService {
 
   async canAccess(ruta: string): Promise<boolean> {
     if (!this.UserInfo) await this.refreshUserInfo();
-    if (!this.EmpresaInfo) await this.refreshEmpresaInfo();
 
     if (this.UserInfo) {
-      if (this.UserInfo.isAdmin && this.periodoVencido && ruta.includes('renovacion')) return true;
-      if (!this.UserInfo.isAdmin && this.periodoVencido && ruta.includes('inicio')) return true;
+      if (this.UserInfo.isSa) {
+        if (ruta.includes('clientes')) return true;
+      } else {
+        if (ruta.includes('clientes')) return false;
+        if (!this.EmpresaInfo) await this.refreshEmpresaInfo();
 
-      if (this.UserInfo.isAdmin && this.periodoVencido) {
-        this.router.navigate(['/nav/renovacion']);
-        return false;
+        if (this.UserInfo.isAdmin) {
+          if (this.periodoVencido && ruta.includes('renovacion')) return true;
+          if (this.periodoVencido) {
+            this.router.navigate(['/nav/renovacion']);
+            return false;
+          }
+          return true;
+        } else {
+          if (this.periodoVencido && ruta.includes('inicio')) return true;
+          if (this.periodoVencido) {
+            this.router.navigate(['/nav/inicio']);
+            return false;
+          }
+          if (this.UserInfo.rol) {
+            const menus: Menu[] = this.UserInfo.rol.menus;
+            if (menus) return menus.some(menu => menu.ruta === ruta && menu.habilitado); else return false;
+          } else return false;
+        }
       }
-      if (!this.UserInfo.isAdmin && this.periodoVencido) {
-        this.router.navigate(['/nav/inicio']);
-        return false;
-      }
-
-      if (this.UserInfo.isAdmin) return true;
-      if (!this.UserInfo.isAdmin && this.UserInfo.rol) {
-        const menus: Menu[] = this.UserInfo.rol.menus;
-        if (menus) return menus.some(menu => menu.ruta === ruta && menu.habilitado);
-        else return false;
-      } else return false;
-    } else return false;
+    }
+    return false;
   }
 
   getFirstEnabledRoute(): string {
+    if (this.UserInfo.isSa) return '/nav/clientes';
     if (this.UserInfo && !this.UserInfo.isAdmin && this.periodoVencido) return '/nav/inicio';
     if (this.UserInfo && this.UserInfo.isAdmin && this.periodoVencido) return '/nav/renovacion';
 
@@ -72,13 +79,15 @@ export class AuthService {
   }
 
   availableMenus(): boolean {
+    if (this.UserInfo.isSa) return true;
     if (this.UserInfo && this.UserInfo.isAdmin) return true;
     if (this.UserInfo && this.UserInfo.rol) return this.UserInfo.rol.menus.length > 0;
     else return false;
   }
 
-  async notAdminAvailableMenus(): Promise<boolean> {
+  async adminAvailableMenus(): Promise<boolean> {
     if (!this.UserInfo) await this.refreshUserInfo();
+    if (this.UserInfo.isSa) return true;
     if (!this.EmpresaInfo) await this.refreshEmpresaInfo();
 
     if (this.UserInfo && this.UserInfo.isAdmin) return true;

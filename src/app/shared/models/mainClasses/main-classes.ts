@@ -52,6 +52,7 @@ export class User {
   phone: string;
   email: string;
   password: string;
+  isSa?: string;
 
   constructor(
     id = 0,
@@ -64,6 +65,7 @@ export class User {
     phone = '',
     email = '',
     password = '',
+    isSa = '0',
   ) {
     this.id = id;
     this.empresaId = empresaId;
@@ -75,6 +77,7 @@ export class User {
     this.phone = phone;
     this.email = email;
     this.password = password;
+    this.isSa = isSa;
   }
 }
 

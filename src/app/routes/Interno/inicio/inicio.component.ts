@@ -14,7 +14,7 @@ export class InicioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.notAdminAvailableMenus().then((hayMenus) => {
+    this.authService.adminAvailableMenus().then((hayMenus) => {
       this.errorMsj = !hayMenus;
     });
   }

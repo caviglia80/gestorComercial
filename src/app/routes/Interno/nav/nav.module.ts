@@ -24,6 +24,7 @@ const routes: Routes = [
       { path: 'renovacion', loadChildren: () => import('@routes/Interno/renovacion/renovacion.module').then((m) => m.RenovacionModule), canActivate: [authGuard] },
       { path: 'roles', loadChildren: () => import('@routes/Interno/roles/roles.module').then((m) => m.RolesModule), canActivate: [authGuard] },
       { path: 'inicio', loadChildren: () => import('@routes/Interno/inicio/inicio.module').then((m) => m.InicioModule) },
+      { path: 'clientes', loadChildren: () => import('@routes/Interno/clientes/clientes.module').then((m) => m.ClientesModule) },
       { path: '**', loadChildren: () => import('@routes/Interno/inicio/inicio.module').then((m) => m.InicioModule) },
     ],
   },

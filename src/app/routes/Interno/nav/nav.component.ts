@@ -23,9 +23,12 @@ export class NavComponent implements OnInit {
   public usuarios: boolean = false;
   public renovacion: boolean = false;
   public roles: boolean = false;
+  public clientes: boolean = false;
 
+  private UserInfo: any = null;
   public username: string = '';
   public rolName: string = '';
+  public isSa: boolean = false;
 
   constructor(
     public dataService: DataService,
@@ -71,6 +74,10 @@ export class NavComponent implements OnInit {
   }
 
   private canView() {
+    this.authService.canAccess('/nav/clientes').then(puedeVer => {
+      this.clientes = puedeVer;
+    });
+
     this.authService.canAccess('/nav/dashboard').then(puedeVer => {
       this.dashboard = puedeVer;
     });
@@ -116,14 +123,15 @@ export class NavComponent implements OnInit {
     this.authService.UserInfo$.subscribe({
       next: (data) => {
         if (data && data.length !== 0) {
+          this.UserInfo = data;
           if (data.username) this.username = data.username.trim(); else this.username = '';
           if (data.rol) this.rolName = data.rol.nombre.trim(); else this.rolName = '';
+          if (data.isSa === 1) this.isSa = true; else this.isSa = false;
           this.canView();
         }
       }
     });
-  //  this.authService.refreshUserInfo();
-  //  this.authService.refreshUserInfo();
+    if (!this.UserInfo) this.authService.refreshUserInfo();
   }
 }
 

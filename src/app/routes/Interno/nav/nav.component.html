@@ -66,6 +66,11 @@
           <span>Reportes</span>
         </mat-list-item>
 
+        <mat-list-item *ngIf="clientes" routerLinkActive="active-link" routerLink="/nav/clientes" (click)="toggleSidenav()">
+          <mat-icon>person_search</mat-icon>
+          <span>Clientes</span>
+        </mat-list-item>
+
         <mat-accordion *ngIf="general || usuarios || roles">
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
@@ -93,8 +98,8 @@
               <span>Roles</span>
             </mat-list-item>
 
-            <mat-list-item *ngIf="renovacion" class="subMenu" routerLinkActive="active-link" routerLink="/nav/renovacion"
-              (click)="toggleSidenav()">
+            <mat-list-item *ngIf="renovacion" class="subMenu" routerLinkActive="active-link"
+              routerLink="/nav/renovacion" (click)="toggleSidenav()">
               <mat-icon>update</mat-icon>
               <span>Renovación</span>
             </mat-list-item>
