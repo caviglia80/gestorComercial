@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class SetJwtInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor() { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
@@ -18,11 +18,10 @@ export class SetJwtInterceptor implements HttpInterceptor {
     const isPublicRoute = publicRoutes.some(route => request.url.includes(route));
     if (isPublicRoute)
       return next.handle(request);
-      const token = localStorage.getItem('jwt');
 
-      const cloned = request.clone({
-        headers: request.headers.set('Authorization', `Bearer ${token}`)
-      });
+    const cloned = request.clone({
+      headers: request.headers.set('Authorization', `Bearer ${localStorage.getItem('jwt')}`)
+    });
 
     return next.handle(cloned);
   }
