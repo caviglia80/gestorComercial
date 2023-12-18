@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { CacheService } from '@services/cache/cache.service';
+import { empresa, Usuario, Rol, Inventario } from '@models/mainClasses/main-classes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  private ds_Inventario: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  public Inventario$: Observable<any[]> = this.ds_Inventario.asObservable();
+  private ds_Inventario: BehaviorSubject<Inventario[]> = new BehaviorSubject<Inventario[]>([]);
+  public Inventario$: Observable<Inventario[]> = this.ds_Inventario.asObservable();
 
   private ds_Usuarios: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Usuarios$: Observable<any[]> = this.ds_Usuarios.asObservable();

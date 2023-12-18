@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, User } from '@models/mainClasses/main-classes';
+import { empresa, Usuario } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
@@ -14,7 +14,7 @@ import { AuthService } from '@services/auth/auth.service';
 })
 
 export class ClientesComponent implements OnInit, AfterViewInit {
-  public Administradores: User[] = [];
+  public Administradores: Usuario[] = [];
   public dataSource = new MatTableDataSource<empresa>;
   public isLoading = true;
   public Item: any = {};
@@ -111,7 +111,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     this.Item.usuarioId = item.usuarioId;
     this.Item.fechaVencimiento = item.fechaVencimiento;
 
-    const admin: User | null = this.Administradores.find(user => user.id === item.usuarioId) || null;
+    const admin: Usuario | null = this.Administradores.find(user => user.id === item.usuarioId) || null;
     if (admin) {
       this.Item.adminId = admin.id;
       this.Item.adminUsername = admin.username;
@@ -154,7 +154,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     this.dataService.fetchSa('GET');
   }
 
-  getAdmin(usuarioId: number): User | null {
+  getAdmin(usuarioId: number): Usuario | null {
     return this.Administradores.find(user => user.id === usuarioId) || null;
   }
 

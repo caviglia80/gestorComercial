@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '@models/mainClasses/main-classes';
+import { Usuario } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 import { Router } from '@angular/router';
 import { SharedService } from '@services/shared/shared.service';
@@ -32,16 +32,20 @@ export class RegisterComponent implements OnInit {
     this.dataService.Usuarios$
       .subscribe({
         next: (data) => {
-          this.loading = false;
-          if (data[0])
-            if (data[0].Estado)
-              if (data[0].Estado === 'generado')
-                this.router.navigate(['/login']);
+          if (data) {
+            if (data[0])
+              if (data[0].Estado)
+                if (data[0].Estado === 'generado')
+                  this.router.navigate(['/login']);
+          } else this.errorMsg = 'Ocurrio un error, intente nuevamente mas tarde.';
 
           if (data[0])
             if (data[0].Estado)
               if (data[0].Estado === 'error')
-                this.errorMsg = data[0].message;
+                if (data[0].message)
+                  this.errorMsg = data[0].message || 'Ocurrio un error, intente nuevamente mas tarde.';
+
+          this.loading = false;
         }
       });
   }
@@ -64,7 +68,7 @@ export class RegisterComponent implements OnInit {
     this.errorMsg = '';
     this.loading = true;
 
-    const body: User = {
+    const body: Usuario = {
       administrador: '1',
       isNewAdmin: '1',
       username: this.sharedService.onlyUser(this.correo).trim(),

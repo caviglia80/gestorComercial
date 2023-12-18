@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, User, Rol } from '@models/mainClasses/main-classes';
+import { empresa, Usuario, Rol } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
@@ -20,7 +20,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   public rolesData: Rol[] = [];
 
   public dataEmpresa: empresa = new empresa();
-  public dataSource = new MatTableDataSource<User>;
+  public dataSource = new MatTableDataSource<Usuario>;
   public isLoading = true;
   public Item: any = {};
   public create = false;
@@ -67,8 +67,10 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
 
     this.dataService.Usuarios$.subscribe({
       next: (data) => {
-        this.dataSource.data = data;
-        this.loading(false);
+        if (data && data.length !== 0) {
+          this.dataSource.data = data;
+          this.loading(false);
+        }
       },
       error: () => {
         this.loading(false);
@@ -114,21 +116,21 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     this.create = visible;
   }
 
-  public viewItem(item: User) {
+  public viewItem(item: Usuario) {
     this.Detail(true);
     this.rellenarRecord(item);
   }
 
-  public editItem(item: User) {
+  public editItem(item: Usuario) {
     this.Edit(true);
     this.rellenarRecord(item);
   }
 
-  public deleteItem(item: User) {
+  public deleteItem(item: Usuario) {
     this.dataService.fetchUsuarios('DELETE', { id: item.id });
   }
 
-  private rellenarRecord(item: User) {
+  private rellenarRecord(item: Usuario) {
     this.Item = {};
     this.Item.id = item.id;
     this.Item.administrador = item.administrador;
@@ -149,7 +151,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
       return;
     }
     try {
-      const body: User = {
+      const body: Usuario = {
         id: this.Item.id,
         empresaId: this.dataEmpresa.id,
         administrador: this.Item.administrador,

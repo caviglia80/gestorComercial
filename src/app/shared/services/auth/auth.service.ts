@@ -4,6 +4,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { Router } from '@angular/router';
+import { TokenService } from '@services/token/token.service';
+import { inject } from '@angular/core';
 interface Menu {
   ruta: string;
   nombre: string;
@@ -29,6 +31,7 @@ export class AuthService {
   ) { }
 
   async canAccess(ruta: string): Promise<boolean> {
+    if (ruta.includes('login')) return true;
     if (!this.UserInfo) await this.refreshUserInfo();
 
     if (this.UserInfo) {
@@ -112,6 +115,9 @@ export class AuthService {
             this.ds_UserInfo.next(this.UserInfo);
           }
           resolve(this.UserInfo);
+        }, error: (error) => {
+          localStorage.removeItem('jwt');
+          this.router.navigate(['']);
         }
       });
     });

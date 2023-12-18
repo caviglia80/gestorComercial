@@ -41,7 +41,7 @@ export class Inventario {
   }
 }
 
-export class User {
+export class Usuario {
   id?: number;
   empresaId?: number;
   rolId?: number;

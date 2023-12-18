@@ -76,6 +76,6 @@ export class LandingPageComponent implements AfterViewInit {
         });
         return;
       }
-    this.router.navigate(['/login']);
+    this.tokenService.logout();
   }
 }
