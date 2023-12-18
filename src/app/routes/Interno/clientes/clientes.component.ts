@@ -135,8 +135,8 @@ export class ClientesComponent implements OnInit, AfterViewInit {
 
         usuarioId: this.Item.usuarioId || null,
         email: this.Item.adminEmail !== this.ItemTmp.adminEmail
-        ? this.Item.adminEmail || null
-        : null,
+          ? this.Item.adminEmail || null
+          : null,
         password: this.Item.clave || null
       };
 
@@ -171,8 +171,8 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  mostrarDiferenciaDeFechas(fechaHasta: string) {
-    this.difFechaMsj = this.sharedService.getDiasMesesDiferencia(fechaHasta);
+  mostrarDiferenciaDeFechas(ultimaFecha: string, fechaHasta: string) {
+    this.difFechaMsj = this.sharedService.getDiasMesesDiferencia(ultimaFecha, fechaHasta);
   }
 }
 
