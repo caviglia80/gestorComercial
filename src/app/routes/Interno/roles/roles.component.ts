@@ -31,10 +31,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
   public detail = false;
 
   public Columns: { [key: string]: string } = {
-    /*     id: 'ID', */
     nombre: 'Nombre',
-    /*     menus: 'Menús', */
-    /*     permisos: 'Permisos', */
     descripcion: 'Descripción',
     actions: 'Operaciones'
   };
