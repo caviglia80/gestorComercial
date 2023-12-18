@@ -6,8 +6,6 @@ import { empresa, User } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
-import { ExcelExportService } from '@services/excel-export/excel-export.service';
-import { FormControl } from '@angular/forms';
 import { AuthService } from '@services/auth/auth.service';
 @Component({
   selector: 'app-clientes',
