@@ -22,3 +22,9 @@ td {
   padding: 8px;
   border-bottom: 1px solid #ddd;
 }
+
+.form-field-description span {
+  color: #00C000;
+  font-weight: bold;
+  white-space: nowrap;
+}

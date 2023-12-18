@@ -179,3 +179,44 @@
 
   </div>
 </div>
+
+<!-- Vista de edicion de registros -->
+<div class="editarRegistro" *ngIf="edit">
+  <div class="title">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header-danger">
+          <h4 class="card-title">Cliente / Editar</h4>
+          <button (click)="Edit(false)">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Empresa:</p>
+    <input matInput [(ngModel)]="Item.nombre" disabled>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Fecha actual: {{ ItemTmp.fechaVencimiento | date:'dd/MM/yyyy' }}
+      <span *ngIf="this.difFechaMsj"> + {{ this.difFechaMsj }}</span>
+    </p>
+    <input class="my-2" type="date" matInput [(ngModel)]="Item.fechaVencimiento"
+      (ngModelChange)="mostrarDiferenciaDeFechas(Item.fechaVencimiento)">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Email actual: {{ ItemTmp.adminEmail }}</p>
+    <input matInput placeholder="Nuevo email" [(ngModel)]="Item.adminEmail">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <p class="form-field-description">Cambiar contraseña:</p>
+    <input matInput placeholder="Nueva Contraseña" type="password" [(ngModel)]="Item.clave">
+  </mat-form-field>
+
+  <button mat-button (click)="record()">Guardar</button>
+</div>

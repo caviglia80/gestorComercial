@@ -228,6 +228,23 @@ export class SharedService {
     const diferenciaMs = fechaObjeto.getTime() - fechaActual.getTime();
     return Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
   }
+
+  public getDiasMesesDiferencia(fecha: string): string {
+    const fechaObjeto = new Date(fecha);
+    const fechaActual = new Date();
+    const diferenciaMs = fechaObjeto.getTime() - fechaActual.getTime();
+    const diferenciaDias = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+
+    const meses = Math.floor(diferenciaDias / 30);
+    const dias = diferenciaDias % 30;
+
+    let resultado = "";
+    if (meses > 0) resultado += `${meses} mes${meses > 1 ? 'es' : ''} `;
+    if (dias > 0) resultado += `${dias} día${dias > 1 ? 's' : ''}`;
+
+    return resultado.trim();
+  }
+
 }
 
 

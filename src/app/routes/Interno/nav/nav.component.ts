@@ -126,7 +126,11 @@ export class NavComponent implements OnInit {
           this.UserInfo = data;
           if (data.username) this.username = data.username.trim(); else this.username = '';
           if (data.rol) this.rolName = data.rol.nombre.trim(); else this.rolName = '';
-          if (data.isSa === 1) this.isSa = true; else this.isSa = false;
+          if (data.isSa === 1) {
+            this.isSa = true;
+            this.rolName = 'Super Admin';
+          }
+          else this.isSa = false;
           this.canView();
         }
       }

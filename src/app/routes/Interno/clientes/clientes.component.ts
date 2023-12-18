@@ -20,8 +20,10 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<empresa>;
   public isLoading = true;
   public Item: any = {};
+  public ItemTmp: any = {};
   public detail = false;
   public edit = false;
+  public difFechaMsj: string = '';
 
   public Columns: { [key: string]: string } = {
     id: 'ID',
@@ -89,6 +91,8 @@ export class ClientesComponent implements OnInit, AfterViewInit {
 
   public Edit(visible: boolean) {
     this.Item = {};
+    this.ItemTmp = {};
+    this.difFechaMsj = '';
     this.edit = visible;
   }
 
@@ -118,28 +122,32 @@ export class ClientesComponent implements OnInit, AfterViewInit {
       this.Item.adminEmpresaId = admin.empresaId;
       this.Item.adminPhone = admin.phone;
     }
+
+    this.ItemTmp.fechaVencimiento = item.fechaVencimiento;
+    this.ItemTmp.adminEmail = this.Item.adminEmail;
   }
 
-  public record(method: string) {
-    //  try {
-    //    const body: User = {
-    //      id: this.Item.id,
-    //      empresaId: this.dataEmpresa.id,
-    //      administrador: this.Item.administrador,
-    //      rolId: this.Item.rolId,
-    //      username: this.Item.username,
-    //      fullname: this.Item.fullname,
-    //      phone: this.Item.phone,
-    //      email: this.Item.email,
-    //      password: this.Item.password
-    //    };
-    //
-    //    this.dataService.fetchUsuarios(method, body);
-    //  } catch (error) {
-    //    console.error('Se ha producido un error:', error);
-    //  } finally {
-    //    this.Edit(false);
-    //  }
+  public record() {
+    try {
+      const body: any = {
+        empresaId: this.Item.id || null,
+        fechaVencimiento: this.Item.fechaVencimiento !== this.ItemTmp.fechaVencimiento
+          ? this.Item.fechaVencimiento || null
+          : null,
+
+        usuarioId: this.Item.usuarioId || null,
+        email: this.Item.adminEmail !== this.ItemTmp.adminEmail
+        ? this.Item.adminEmail || null
+        : null,
+        password: this.Item.clave || null
+      };
+
+      this.dataService.fetchSa('PUT', body);
+    } catch (error) {
+      console.error('Se ha producido un error:', error);
+    } finally {
+      this.Edit(false);
+    }
   }
 
   refresh() {
@@ -163,6 +171,10 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     } else {
       return 'black';
     }
+  }
+
+  mostrarDiferenciaDeFechas(fechaHasta: string) {
+    this.difFechaMsj = this.sharedService.getDiasMesesDiferencia(fechaHasta);
   }
 }
 

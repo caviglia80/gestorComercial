@@ -238,7 +238,7 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese contraseña <span class="red-asterisk">*</span></p>
-    <input matInput placeholder="Contraseña" [(ngModel)]="Item.password" required>
+    <input matInput placeholder="Contraseña" type="password" [(ngModel)]="Item.password" required>
     <div *ngIf="Item.password?.length >= 1 && Item.password?.length <= 7" style="color: red; font-size: small;">
       La contraseña debe tener al menos 8 caracteres.
     </div>
@@ -304,7 +304,7 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese contraseña <span class="red-asterisk">*</span></p>
-    <input matInput placeholder="Contraseña" [(ngModel)]="Item.password" required>
+    <input matInput placeholder="Contraseña" type="password" [(ngModel)]="Item.password" required>
     <div *ngIf="Item.password?.length >= 1 && Item.password?.length <= 7" style="color: red; font-size: small;">
       La contraseña debe tener al menos 8 caracteres.
     </div>

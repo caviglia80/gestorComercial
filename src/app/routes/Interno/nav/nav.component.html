@@ -8,8 +8,8 @@
 
       <div class="right-container">
         <div class="text-white nav-userInfo">
-          <span *ngIf="username" [ngClass]="{'SA': isSa}">{{username}}</span>
-          <span *ngIf="rolName"> ({{rolName}})</span>
+          <span *ngIf="username" [ngClass]="{'SA': isSa}">{{ username }}</span>
+          <span *ngIf="rolName" [ngClass]="{'SA': isSa}"> ({{ rolName }})</span>
         </div>
         <img class="navbar-icon" [src]="icono" alt="logo" *ngIf="icono">
       </div>
