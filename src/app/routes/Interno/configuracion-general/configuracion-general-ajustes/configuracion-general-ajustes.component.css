@@ -21,7 +21,7 @@
 }
 
 .color-container input::placeholder {
-  color: black;
+  color: #ccc;
   font-weight: bold;
 }
 

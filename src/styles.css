@@ -15,7 +15,7 @@
   --sideBar-background-image-opacity: .1;
   --sideBar-Background-color: var(--color-1);
   --sideBar-Background-opacity: .4;
-  --sideBar-ActiveButton: var(--color-2);
+  --sideBar-ActiveButton: var(--color-1);
   /* navBar */
   --navBar-Background: linear-gradient(60deg, var(--color-1), var(--color-2));
   --navBar-Background-opacity: 1;
