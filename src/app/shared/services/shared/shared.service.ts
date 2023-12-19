@@ -94,27 +94,51 @@ export class SharedService {
     return btoa(text);
   }
 
-  public encodeImgToBase64(file: File): Observable<string> {
-    return from(this.ng2ImgMax.compressImage(file, 0.03))
-      .pipe(
-        switchMap(result => {
-          const reader = new FileReader();
-          reader.readAsDataURL(result);
-          return from(new Promise<string>((resolve, reject) => {
-            reader.onload = () => {
-              resolve(reader.result as string);
-            };
-            reader.onerror = () => {
-              reject('Error al leer la imagen');
-            };
-          }));
-        }),
-        catchError(error => {
-          console.error('Error al comprimir la imagen:', error);
-          return '' + error;
-        })
-      );
-  }
+ // public encodeImgToBase64(file: File): Observable<string> {
+ //   return new Observable<string>(observer => {
+ //     const img = new Image();
+ //     const reader = new FileReader();
+//
+ //     reader.onload = (e) => {
+ //       if (e.target) {
+ //         img.src = e.target.result as string;
+ //       } else {
+ //         observer.error('Error al leer el archivo: el evento no tiene target.');
+ //       }
+ //     };
+//
+ //     img.onload = () => {
+ //       const canvas = document.createElement('canvas');
+ //       const ctx = canvas.getContext('2d');
+ //       if (!ctx) {
+ //         observer.error('Error al crear el contexto del canvas.');
+ //         return;
+ //       }
+//
+ //       const maxWidth = 800; // Define aquí el ancho máximo deseado
+ //       const scaleFactor = maxWidth / img.width;
+//
+ //       canvas.width = maxWidth;
+ //       canvas.height = img.height * scaleFactor;
+//
+ //       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+ //       const base64 = canvas.toDataURL('image/jpeg'); // Usa 'image/png' para PNG
+//
+ //       observer.next(base64);
+ //       observer.complete();
+ //     };
+//
+ //     img.onerror = error => {
+ //       observer.error('Error al cargar la imagen: ' + error);
+ //     };
+//
+ //     reader.onerror = error => {
+ //       observer.error('Error al leer el archivo: ' + error);
+ //     };
+//
+ //     reader.readAsDataURL(file);
+ //   });
+ // }
 
   public decodeBase64(base64String: string): string {
     return atob(base64String);

@@ -43,18 +43,42 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
       this.fileInput.nativeElement.value = '';
   }
 
-  public onFileSelected(event: any, fileType: string) {
+  // public onFileSelected(event: any, fileType: string) {
+  //   const selectedFile = event.target.files[0];
+  //   if (selectedFile) {
+  //     if (selectedFile.name.split('.').pop() !== fileType) {
+  //       this.errorMessageImg = true;
+  //       this.clearFileInput();
+  //     } else {
+  //       this.errorMessageImg = false;
+  //       this.sharedService.encodeImgToBase64(selectedFile).subscribe((Base64) => {
+  //
+  //
+  //         console.log(Base64);
+  //
+  //         this.dataService.fetchEmpresa('PUT', { icono: Base64 });
+  //       });
+  //     }
+  //   }
+  // }
+
+  // En tu componente Angular
+  public onFileSelected(event: any) {
     const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      if (selectedFile.name.split('.').pop() !== fileType) {
-        this.errorMessageImg = true;
-        this.clearFileInput();
-      } else {
-        this.errorMessageImg = false;
-        this.sharedService.encodeImgToBase64(selectedFile).subscribe((Base64) => {
-          this.dataService.fetchEmpresa('PUT', { icono: Base64 });
-        });
-      }
+    if (selectedFile && selectedFile.type === 'image/png') {
+      this.errorMessageImg = false;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const base64 = e.target.result as string;
+
+      //  console.log(base64);
+
+        this.dataService.fetchEmpresa('PUT', { icono: base64 });
+      };
+      reader.readAsDataURL(selectedFile);
+    } else {
+      this.errorMessageImg = true;
+      this.clearFileInput();
     }
   }
 
