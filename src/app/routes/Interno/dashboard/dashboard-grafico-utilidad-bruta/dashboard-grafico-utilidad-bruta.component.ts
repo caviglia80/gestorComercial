@@ -79,6 +79,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach(month => {
       data.push({ date: this.selectedYear + '-' + month + '-01', monto: 0 });
     });
+
     const groupedData: { [key: string]: any } = {};
     for (const entry of data) {
       const month = entry.date.substring(0, 7);
@@ -127,7 +128,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
   }
 
   private setYears(data: any) {
-     if (!data) return;
+    if (!data) return;
     const years = new Set<string>();
     for (const entry of this.incomeData)
       years.add(entry.date.substring(0, 4));
@@ -136,7 +137,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
   }
 
   private setCategories(data: any) {
-     if (!data) return;
+    if (!data) return;
     const filteredCategoriesSet = new Set<string>();
     for (const entry of data)
       filteredCategoriesSet.add(entry.category);

@@ -1,7 +1,7 @@
 <body class="text-center d-flex align-items-center justify-content-center">
   <form class="form-signin" #loginForm="ngForm" (ngSubmit)="onLogin()">
     <a routerLink="/">
-      <img class="mb-3 logo" src="assets/logo.png" alt="" width="72" height="72" *ngIf="!loading">
+      <img class="mb-3 logo" src="assets/img/logo.png" alt="" width="72" height="72" *ngIf="!loading">
     </a>
     <div class="mb-4 spinner-border text-primary" role="status" *ngIf="loading">
       <span class="visually-hidden">Loading...</span>

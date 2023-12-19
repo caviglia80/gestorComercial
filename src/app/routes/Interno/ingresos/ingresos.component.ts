@@ -185,7 +185,9 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
     // Primer inicio
     if (visible && this.itemRemito.length === 0) {
+      this.R = new Remito()
       this.Item = {};
+      this.itemRemito = [];
       if (this.dataEmpresa.ingresoRapidoEnabled == '1')
         this.Item = this.sharedService.rellenoCampos_IE('i');
     }

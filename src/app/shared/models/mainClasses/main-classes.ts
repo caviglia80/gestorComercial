@@ -284,7 +284,7 @@ export class empresa {
     usuarioId = null,
     nombre = 'Compy',
     fechaVencimiento = null,
-    icono = 'assets/logo.png',
+    icono = 'assets/img/logo.png',
     copyEnabled = '1',
     color1 = '#846bf3',
     color2 = '#4c28ec',
