@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
-import { empresa } from '@models/mainClasses/main-classes';
+import { empresa, Usuario } from '@models/mainClasses/main-classes';
 import { GlobalVariables } from 'src/app/app.component';
 import { SharedService } from '@services/shared/shared.service';
 @Component({
@@ -16,6 +16,9 @@ export class RenovacionComponent implements OnInit {
   public fechaOk: boolean = false;
   public fechaCercaVencimiento: boolean = false;
   public fechaPorVencerOvencido: boolean = false;
+
+  public usuario: Usuario | undefined = new Usuario();
+  public usuarios: Usuario[] = [];
 
   constructor(
     private cacheService: CacheService,
@@ -42,6 +45,16 @@ export class RenovacionComponent implements OnInit {
       }
     });
     this.refresh();
+
+    this.dataService.Usuarios$.subscribe({
+      next: (data) => {
+        if (data && data.length !== 0) {
+          this.usuarios = data;
+          this.usuario = this.usuarios.find(user => user.id == this.dataEmpresa.usuarioId && user.administrador);
+        }
+      }
+    });
+    this.dataService.fetchUsuarios('GET');
   }
 
   refresh() {
@@ -68,8 +81,8 @@ export class RenovacionComponent implements OnInit {
   }
 
   abrirWhatsApp(periodo: string) {
-    const mensaje = `Hola, estoy interesado en extender mi periodo de licencia a ${periodo} mas.`;
-    const referencia = `Codigo: EM${this.dataEmpresa.id}`;
+    const mensaje = `Hola, estoy interesado en extender mi periodo de licencia a ${periodo} más.`;
+    const referencia = `(E${this.dataEmpresa.id}${this.usuario && this.usuario.email ? ` - Administrador: ${this.usuario.email})` : ')'}`;
     const wsp = `https://wa.me/${GlobalVariables.wspNumer}?text=${encodeURIComponent(mensaje + ' ' + referencia)}`;
     window.open(wsp, '_blank', 'noopener,noreferrer');
   }
