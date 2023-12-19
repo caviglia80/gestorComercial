@@ -10,7 +10,7 @@ import { empresa } from '@models/mainClasses/main-classes';
 })
 export class EmpresaConfiguracionAjustesComponent implements OnInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
-  public errorMessageImg = false;
+  public errorMessageImg: string = '';
   public dataEmpresa: empresa = new empresa();
   public Color1 = '#000000';
   public Color2 = '#000000';
@@ -18,8 +18,7 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
   public nombre = '';
 
   constructor(
-    public dataService: DataService,
-    private sharedService: SharedService
+    public dataService: DataService
   ) { }
 
   ngOnInit() {
@@ -65,21 +64,28 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
   // En tu componente Angular
   public onFileSelected(event: any) {
     const selectedFile = event.target.files[0];
-    if (selectedFile && selectedFile.type === 'image/png') {
-      this.errorMessageImg = false;
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const base64 = e.target.result as string;
+    const maxFileSize = 501 * 1024; // 500 KB en bytes
 
-      //  console.log(base64);
-
-        this.dataService.fetchEmpresa('PUT', { icono: base64 });
-      };
-      reader.readAsDataURL(selectedFile);
+    if (selectedFile) {
+      if (selectedFile.type === 'image/png') {
+        if (selectedFile.size <= maxFileSize) {
+          this.errorMessageImg = '';
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            const base64 = e.target.result as string;
+            this.dataService.fetchEmpresa('PUT', { icono: base64 });
+          };
+          reader.readAsDataURL(selectedFile);
+        } else {
+          this.errorMessageImg = 'La imagen debe tener un peso menor o igual a 500kb';
+        }
+      } else {
+        this.errorMessageImg = 'Solo se permiten imagenes con extensión .png';
+      }
     } else {
-      this.errorMessageImg = true;
-      this.clearFileInput();
+      this.errorMessageImg = 'Error al intentar cargar la imagen.';
     }
+    this.clearFileInput();
   }
 
   public restauracionDeFabrica() {

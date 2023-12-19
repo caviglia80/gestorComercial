@@ -45,21 +45,18 @@ export class NavComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      if (data[0]) {
+      if (data[0] && data[0].lenght !== 0) {
         this.Empresa = data[0];
-        if (this.Empresa!.icono) {
-          this.icono = this.Empresa!.icono;
-          const link = document.querySelector('#page-icon') as HTMLLinkElement;
-          link.href = this.Empresa!.icono;
-        }
-        if (this.Empresa!.color1 && this.Empresa!.color2) {
-          document.documentElement.style.setProperty('--color-1', this.Empresa!.color1);
-          document.documentElement.style.setProperty('--color-2', this.Empresa!.color2);
-        }
-        if (this.Empresa!.nombre) {
-          document.title = this.Empresa!.nombre;
-        }
+
+        this.icono = this.Empresa!.icono || new empresa().icono || '';
+        const link = document.querySelector('#page-icon') as HTMLLinkElement;
+        link.href = this.icono;
+
+        document.documentElement.style.setProperty('--color-1', this.Empresa!.color1 || '#000000');
+        document.documentElement.style.setProperty('--color-2', this.Empresa!.color2 || '#000000');
+        document.title = this.Empresa!.nombre || '';
       }
+
     });
     this.dataService.fetchEmpresa('GET');
   }

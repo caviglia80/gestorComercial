@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth/auth.service';
 import { switchMap, catchError, Observable, of } from 'rxjs';
-
+import { empresa } from '@models/mainClasses/main-classes';
 @Injectable({
   providedIn: 'root'
 })
@@ -53,6 +53,9 @@ export class TokenService {
 
   public logout(): void {
     localStorage.removeItem('jwt');
+    const link = document.querySelector('#page-icon') as HTMLLinkElement;
+    link.href = new empresa().icono || '';
+    document.title = new empresa().nombre || '';
     this.router.navigate(['/login']);
   }
 
