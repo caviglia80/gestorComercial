@@ -121,35 +121,14 @@ export class Remito {
     else return null!;
   }
 
+
   public generateAndDownloadPDF(remito: Remito) {
+    // Define un estilo base para el documento
     const docDefinition: TDocumentDefinitions = {
       content: [
         { text: 'Remito', style: 'header' },
-        {
-          columns: [
-            {
-              width: '50%',
-              text: `Fecha: ${remito.fecha}\nCliente: ${remito.cliente || ''}\nMétodo de Pago: ${remito.metodoPago}\nComprobante: ${remito.comprobante || ''}\nDescripción: ${remito.descripcion || ''}`,
-            },
-            {
-              // Columna derecha vacía para mantener la alineación
-              width: '50%',
-              text: ''
-            }
-          ]
-        },
-        { text: 'Ítems', style: 'subheader' },
-        {
-          // Lista de ítems
-          table: {
-            headerRows: 1,
-            widths: ['*', 'auto', 'auto', 'auto'],
-            body: [
-              ['Nombre', 'Código', 'Cantidad', 'Precio'],
-              ...remito.items.map(item => [item.nombre, item.codigo, 'x' + item.cantidad, '$' + item.precio.toFixed(2)])
-            ]
-          }
-        },
+        ...this.getDetails(remito),
+        this.getTable(remito),
         {
           // Total al final y alineado a la derecha
           text: `Total (${remito.moneda}): $${remito.total.toFixed(2)}`,
@@ -159,17 +138,17 @@ export class Remito {
       ],
       styles: {
         header: {
-          fontSize: 24,
+          fontSize: 16,
           bold: true,
           margin: [0, 0, 0, 10]
         },
         subheader: {
-          fontSize: 18,
+          fontSize: 12,
           bold: true,
           margin: [0, 10, 0, 5]
         },
         totalStyle: {
-          fontSize: 16,
+          fontSize: 14,
           bold: true,
           margin: [0, 10, 0, 0]
         }
@@ -178,6 +157,54 @@ export class Remito {
 
     const pdf = pdfMake.createPdf(docDefinition, undefined, pdfMake.fonts, pdfFonts.pdfMake.vfs);
     pdf.download('R-' + Date.now().toString() + '.pdf');
+  }
+
+  private getDetails(remito: Remito) {
+    const details = [
+      { text: `Fecha: ${remito.fecha}`, style: 'normal' },
+      { text: `Cliente: ${remito.cliente || ''}`, style: 'normal' },
+      { text: `Método de Pago: ${remito.metodoPago}`, style: 'normal' },
+      { text: `Comprobante: ${remito.comprobante || ''}`, style: 'normal' },
+      { text: `Descripción: ${remito.descripcion || ''}`, style: 'normal' },
+      { text: `Moneda: ${remito.moneda}`, style: 'normal' }
+    ];
+    return details;
+  }
+
+  private getTable(remito: Remito) {
+    return {
+      style: 'normal',
+      table: {
+        headerRows: 1,
+        widths: ['*', '*', 'auto', 'auto'],
+        body: [
+          [
+            { text: 'Nombre', style: 'subheader' },
+            { text: 'Código', style: 'subheader' },
+            { text: 'Cantidad', style: 'subheader' },
+            { text: 'Precio', style: 'subheader' }
+          ],
+          ...remito.items.map(item => [
+            this.truncateText(item.nombre, 30), // Ajusta el 25 según sea necesario
+            this.truncateText(item.codigo, 30), // Ajusta el 15 según sea necesario
+            item.cantidad.toString(),
+            `$${item.precio.toFixed(2)}`
+          ])
+        ],
+      },
+      layout: {
+        hLineWidth: (i: number, node: any) => (i === 0 || i === node.table.body.length ? 2 : 1),
+        vLineWidth: (i: number, node: any) => (i === 0 || i === node.table.widths.length ? 2 : 1),
+        hLineColor: (i: number) => (i === 0 || i === 1 ? 'black' : 'gray'),
+        vLineColor: (i: number) => (i === 0 || i === 1 ? 'black' : 'gray'),
+      }
+    };
+  }
+
+  private truncateText(text: string, maxLength: number): string {
+    if (text.length > maxLength)
+      return text.substring(0, maxLength - 3) + '...';
+    return text;
   }
 }
 

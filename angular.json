@@ -13,7 +13,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["pica"],
+            "allowedCommonJsDependencies": [
+              "pdfmake",
+              "exceljs"
+            ],
             "outputPath": "dist/gestor-comercial",
             "index": "src/index.html",
             "main": "src/main.ts",

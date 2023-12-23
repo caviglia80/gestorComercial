@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
-import { Ng2ImgMaxService } from 'ng2-img-max';
-import { Observable, from } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +45,6 @@ export class SharedService {
   private snackBarRef: MatSnackBarRef<any> | null = null;
 
   constructor(
-    private ng2ImgMax: Ng2ImgMaxService,
     private snackBar: MatSnackBar
   ) { }
 

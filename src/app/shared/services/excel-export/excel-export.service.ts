@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as ExcelJS from 'exceljs';
-import * as FileSaver from 'file-saver';
 
 interface Column {
   header: string;
@@ -42,7 +41,17 @@ export class ExcelExportService {
 
     // Escribir archivo
     const buffer = await workbook.xlsx.writeBuffer();
+    this.downloadExcel(buffer, fileName);
+  }
+
+  private downloadExcel(buffer: ArrayBuffer, fileName: string): void {
     const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    FileSaver.saveAs(blob, `${fileName}.xlsx`);
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${fileName}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
   }
 }
