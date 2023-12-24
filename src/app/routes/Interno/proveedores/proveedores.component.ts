@@ -15,6 +15,8 @@ import { ExcelExportService } from '@services/excel-export/excel-export.service'
 })
 
 export class ProveedoresComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
   public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<proveedor>;
   public isLoading = true;
@@ -48,11 +50,11 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
     this.dataInit();
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.paginator && this.sort) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   private dataInit() {
@@ -64,13 +66,18 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
 
     this.dataService.Proveedores$.subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        if (data && data.length) {
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
         this.loading(false);
       },
       error: () => {
         this.loading(false);
       }
     });
+    this.loading(true);
     this.dataService.fetchProveedores('GET');
   }
 

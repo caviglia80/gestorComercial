@@ -16,6 +16,8 @@ import { AuthService } from '@services/auth/auth.service';
 })
 
 export class UsuariosComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
   public rolesControl = new FormControl();
   public rolesData: Rol[] = [];
 
@@ -51,11 +53,11 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     this.dataInit();
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.paginator && this.sort) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   private dataInit() {
@@ -67,15 +69,18 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
 
     this.dataService.Usuarios$.subscribe({
       next: (data) => {
-        if (data && data.length !== 0) {
+        if (data && data.length) {
           this.dataSource.data = data;
-          this.loading(false);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         }
+        this.loading(false);
       },
       error: () => {
         this.loading(false);
       }
     });
+    this.loading(true);
     this.dataService.fetchUsuarios('GET');
 
     this.dataService.Roles$.subscribe((data) => {

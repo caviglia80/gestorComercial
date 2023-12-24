@@ -35,7 +35,7 @@
 
     <div class="table-wrapper" [ngClass]="{'noVisible': !dataSource.data.length || isLoading }">
 
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort #sort class="mat-elevation-z8">
 
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id">
@@ -169,8 +169,8 @@
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
 
-    <mat-paginator *ngIf="dataSource.data.length && !isLoading" class="custom-paginator"
-      [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
+    <mat-paginator #paginator [hidden]="isLoading" class="custom-paginator"
+      [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons>
     </mat-paginator>
   </div>
 </div>
@@ -306,7 +306,7 @@
   </mat-form-field>
 
   <mat-form-field class="full-width" *ngIf="itemRemito.length === 0">
-    <p class="form-field-description">Ingrese {{ Columns[ 'cliente'] | lowercase }}</p>
+    <p class="form-field-description">Ingrese {{ Columns['cliente'] | lowercase }}</p>
     <input matInput placeholder="{{ Columns['cliente'] }}" [formControl]="Item.cliente">
   </mat-form-field>
 
@@ -408,7 +408,7 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['monto'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['monto'] }}" [formControl]="Item.monto.value" type="number" required>
+    <input matInput placeholder="{{ Columns['monto'] }}" [formControl]="Item.monto" type="number" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
@@ -437,7 +437,9 @@
   </mat-form-field>
 
   <button mat-button (click)="recordEdit()"
-    [disabled]="!Item.date || !Item.inventarioId || !Item.monto || !Item.method || !Item.category">Guardar</button>
+    [disabled]="!Item.date.valid || !Item.inventarioId.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid">
+    Guardar
+  </button>
 </div>
 
 <!-- Vista de Remito -->

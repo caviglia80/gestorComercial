@@ -19,6 +19,8 @@ import { ExcelExportService } from '@services/excel-export/excel-export.service'
 })
 
 export class IngresosComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
   public dataEmpresa: empresa = new empresa();
   public inventarioControl = new FormControl();
   public filteredInventario: Observable<any[]>;
@@ -87,11 +89,11 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.dataInit();
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.paginator && this.sort) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   private dataInit() {
@@ -103,13 +105,21 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+
+        if (data && data.length) {
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+
         this.loading(false);
       },
       error: () => {
         this.loading(false);
       }
     });
+
+    this.loading(true);
     this.dataService.fetchIngresos('GET');
 
     this.dataService.Inventario$.subscribe((data) => {

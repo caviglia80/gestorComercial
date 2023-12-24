@@ -13,6 +13,8 @@ import { CacheService } from '@services/cache/cache.service';
   styleUrls: ['./reportes-egresos-rubro.component.css']
 })
 export class ReportesEgresosRubroComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
   public dataSource = new MatTableDataSource<reportesEgresosRubro>;
   @Output() variableChange = new EventEmitter<MatTableDataSource<reportesEgresosRubro>>();
 
@@ -39,24 +41,30 @@ export class ReportesEgresosRubroComponent implements OnInit, AfterViewInit {
     this.dataInit();
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.paginator && this.sort) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   private dataInit() {
     this.dataService.ReporteEgresoRubro$.subscribe({
       next: (data) => {
-        this.dataSource.data = data;
-        this.variableChange.emit(this.dataSource);
+        if (data && data.length) {
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.variableChange.emit(this.dataSource);
+        }
         this.loading(false);
       },
       error: () => {
         this.loading(false);
       }
     });
+    this.loading(true);
     this.dataService.fetchReporteEgresoRubro(`?reporte=3&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
   }
 

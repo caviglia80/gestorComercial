@@ -6,7 +6,6 @@ import { empresa, Usuario } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
-import { AuthService } from '@services/auth/auth.service';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -14,6 +13,8 @@ import { AuthService } from '@services/auth/auth.service';
 })
 
 export class ClientesComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
   public Administradores: Usuario[] = [];
   public dataSource = new MatTableDataSource<empresa>;
   public isLoading = true;
@@ -34,31 +35,32 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   constructor(
     public dataService: DataService,
     public sharedService: SharedService,
-    private cacheService: CacheService,
-    private authService: AuthService
+    private cacheService: CacheService
   ) { }
 
   ngOnInit() {
     this.dataInit();
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.paginator && this.sort) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   private dataInit() {
     this.dataService.Sa$.subscribe({
       next: (data) => {
-        if (data && data.length !== 0) {
+        if (data && data.length) {
           this.Administradores = data.administradores;
           const enrichedData = data.empresas.map((empresa: empresa) => {
             const admin = this.Administradores.find(admin => admin.id === empresa.usuarioId);
             return { ...empresa, email: admin ? admin.email : '' };
           });
           this.dataSource.data = enrichedData;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
           this.loading(false);
         }
       },
@@ -66,6 +68,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
         this.loading(false);
       }
     });
+    this.loading(true);
     this.dataService.fetchSa('GET');
   }
 
