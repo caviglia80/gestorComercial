@@ -122,11 +122,11 @@ export class Remito {
   }
 
 
-  public generateAndDownloadPDF(remito: Remito) {
+  public generateAndDownloadPDF(remito: Remito, comprobante: string = '') {
     // Define un estilo base para el documento
     const docDefinition: TDocumentDefinitions = {
       content: [
-        { text: 'Remito', style: 'header' },
+        { text: 'Remito' + (comprobante ? ('-' + comprobante) : ''), style: 'header' },
         ...this.getDetails(remito),
         this.getTable(remito),
         {
@@ -156,7 +156,7 @@ export class Remito {
     };
 
     const pdf = pdfMake.createPdf(docDefinition, undefined, pdfMake.fonts, pdfFonts.pdfMake.vfs);
-    pdf.download('R-' + Date.now().toString() + '.pdf');
+    pdf.download('R-' + comprobante + '.pdf');
   }
 
   private getDetails(remito: Remito) {
@@ -164,7 +164,6 @@ export class Remito {
       { text: `Fecha: ${remito.fecha}`, style: 'normal' },
       { text: `Cliente: ${remito.cliente || ''}`, style: 'normal' },
       { text: `Método de Pago: ${remito.metodoPago}`, style: 'normal' },
-      { text: `Comprobante: ${remito.comprobante || ''}`, style: 'normal' },
       { text: `Descripción: ${remito.descripcion || ''}`, style: 'normal' },
       { text: `Moneda: ${remito.moneda}`, style: 'normal' }
     ];

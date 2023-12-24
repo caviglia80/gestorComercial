@@ -179,7 +179,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-    this.isLoading = true;
+     this.loading(true);
     this.cacheService.remove('Usuarios');
     this.dataService.fetchUsuarios('GET');
   }

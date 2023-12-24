@@ -190,7 +190,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-    this.isLoading = true;
+     this.loading(true);
     this.cacheService.remove('Roles');
     this.dataService.fetchRoles('GET');
   }

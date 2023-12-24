@@ -162,7 +162,7 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-    this.isLoading = true;
+     this.loading(true);
     this.cacheService.remove('Proveedores');
     this.dataService.fetchProveedores('GET');
   }

@@ -195,7 +195,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-    this.isLoading = true;
+     this.loading(true);
     this.cacheService.remove('Egresos');
     this.dataService.fetchEgresos('GET');
     this.getProveedor();

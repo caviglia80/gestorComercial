@@ -152,7 +152,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-    this.isLoading = true;
+     this.loading(true);
     this.cacheService.remove('Sa');
     this.dataService.fetchSa('GET');
   }

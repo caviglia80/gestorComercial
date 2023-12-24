@@ -99,7 +99,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
       if (data[0])
-        this.dataEmpresa = data[0];
+        this.dataEmpresa = data[0] || [];
     });
     this.dataService.fetchEmpresa('GET');
 
@@ -123,7 +123,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.dataService.fetchIngresos('GET');
 
     this.dataService.Inventario$.subscribe((data) => {
-      this.dataInventario = data;
+      this.dataInventario = data || [];
     });
     this.getInventario();
   }
@@ -198,35 +198,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.edit = visible;
   }
 
-  public Remito(visible: boolean) {
-    if (!visible) {
-      this.R = new Remito()
-      this.resetItemFormControls();
-      this.itemRemito = [];
-    } else {
-      this.R = this.R.getRemito(this.itemRemito, this.dataInventario);
-    }
-    this.remito = visible;
-  }
-
-  public Create(visible: boolean) {
-    if (visible) {
-      this.Item.inventarioId.setValue('');
-      this.Item.monto.setValue(0);
-    }
-    // Primer inicio
-    if (visible && this.itemRemito.length === 0) {
-      this.R = new Remito()
-      this.resetItemFormControls();
-      this.itemRemito = [];
-      if (this.dataEmpresa.ingresoRapidoEnabled == '1')
-        Object.keys(this.Item).forEach(key => {
-          this.Item[key].patchValue(this.sharedService.rellenoCampos_IE('i')[key] || '');
-        });
-    }
-    this.create = visible;
-  }
-
   public viewItem(item: moneyIncome) {
     this.Detail(true);
     this.rellenarRecord(item);
@@ -239,6 +210,17 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public deleteItem(item: moneyIncome) {
     this.dataService.fetchIngresos('DELETE', { id: item.id });
+  }
+
+  public Remito(visible: boolean) {
+    if (visible) {
+      this.R = this.R.getRemito(this.itemRemito, this.dataInventario);
+    } else {
+      this.R = new Remito();
+      this.itemRemito = [];
+      this.resetItemFormControls();
+    }
+    this.remito = visible;
   }
 
   public anularItem(item: moneyIncome) {
@@ -283,7 +265,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   private productoValido(): boolean {
     if (!this._getProduct(this.Item.inventarioId.value)) {
       this.sharedService.message('Advertencia: seleccione un producto válido.');
@@ -308,66 +289,10 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   public refresh() {
-    this.isLoading = true;
+    this.loading(true);
     this.cacheService.remove('Ingresos');
     this.dataService.fetchIngresos('GET');
     this.getInventario();
-  }
-
-  public remitoCreate(moreItems: boolean) {
-    if (this.dataEmpresa.validarInventarioEnabled == '1' && !this.productoValido()) return;
-    try {
-      const body: moneyIncome = {
-        id: this.Item.id.value,
-        empresaId: this.dataEmpresa.id,
-        date: this.Item.date.value,
-        inventarioId: this.Item.inventarioId.value,
-        moneda: this.Item.moneda.value,
-        monto: this.Item.monto.value,
-        margenBeneficio: this._getProduct(this.Item.inventarioId.value) ? (this._getProduct(this.Item.inventarioId.value).tipo === 'Producto' ? this.Item.margenBeneficio.value : 0) : 0,
-        method: this.Item.method.value,
-        category: this.Item.category.value,
-        comprobante: this.Item.comprobante.value,
-        anulado: '0',
-        cliente: this.Item.cliente.value,
-        description: this.Item.description.value
-      };
-
-      this.itemRemito.push(body);
-
-      if (!moreItems) {
-        this.Create(false);
-        this.Remito(true);
-      } else {
-        this.Create(true);
-      }
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-      this.Create(false);
-      this.Edit(false);
-      this.Remito(false);
-    } finally { }
-  }
-
-  public remitoRecord(descargarRemito: boolean) {
-    try {
-      if (!SharedService.isProduction) console.log(this.itemRemito);
-      this.dataService.fetchIngresos('POST', this.itemRemito);
-      if (descargarRemito)
-        this.R.generateAndDownloadPDF(this.R);
-      if (this.dataEmpresa.ingresoRestaStockEnabled == '1' && this.dataEmpresa.validarInventarioEnabled == '1') {
-        const inventarioIds = this.itemRemito.map(item => item.inventarioId);
-        const coincidencias: Inventario[] = inventarioIds.flatMap(id => this.dataInventario.filter(item => item.id === id));
-        this.restarStock(coincidencias);
-      }
-    } catch (error) {
-      console.error('Se ha producido un error:', error);
-      this.Create(false);
-      this.Edit(false);
-      this.Remito(false);
-    } finally {
-      this.Remito(false);
-    }
   }
 
   public recordEdit() {
@@ -416,6 +341,82 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     }));
 
     this.excelExportService.exportToExcel(columns, dataCopy, 'Ingresos');
+  }
+
+  public Create(visible: boolean) {
+    if (visible)
+      this.Remito(false);
+    if (visible && this.itemRemito.length === 0) {   // Primer inicio
+      if (this.dataEmpresa.ingresoRapidoEnabled == '1')
+        Object.keys(this.Item).forEach(key => {
+          this.Item[key].patchValue(this.sharedService.rellenoCampos_IE('i')[key] || '');
+        });
+    }
+    this.create = visible;
+  }
+
+  public remitoCreate(addMore: boolean) {
+    if (this.dataEmpresa.validarInventarioEnabled == '1' && !this.productoValido()) return;
+    try {
+      const body: moneyIncome = {
+        id: this.Item.id.value,
+        empresaId: this.dataEmpresa.id,
+        date: this.Item.date.value,
+        inventarioId: this.Item.inventarioId.value,
+        moneda: this.Item.moneda.value,
+        monto: this.Item.monto.value,
+        margenBeneficio: this._getProduct(this.Item.inventarioId.value) ? (this._getProduct(this.Item.inventarioId.value).tipo === 'Producto' ? this.Item.margenBeneficio.value : 0) : 0,
+        method: this.Item.method.value,
+        category: this.Item.category.value,
+        comprobante: this.Item.comprobante.value,
+        anulado: '0',
+        cliente: this.Item.cliente.value,
+        description: this.Item.description.value
+      };
+
+      this.itemRemito.push(body);
+
+      if (addMore) {
+        this.Item.inventarioId.setValue('');
+        this.Item.monto.setValue(0);
+      } else {
+        this.Create(false);
+        this.Remito(true);
+      }
+    } catch (error) {
+      console.error('Se ha producido un error:', error);
+      this.Create(false);
+      this.Edit(false);
+      this.Remito(false);
+    } finally { }
+  }
+
+  public async remitoRecord(descargarRemito: boolean) {
+    try {
+      if (!SharedService.isProduction) console.log(this.itemRemito);
+
+      const response = await this.dataService.fetchIngresos('POST', this.itemRemito);
+      if (response && response.comprobante && response.comprobante.length === 10) {
+        if (!SharedService.isProduction) console.log('Remito generado: ' + response.comprobante);
+        if (descargarRemito)
+          this.R.generateAndDownloadPDF(this.R, response.comprobante);
+        if (this.dataEmpresa.ingresoRestaStockEnabled == '1' && this.dataEmpresa.validarInventarioEnabled == '1') {
+          const inventarioIds = this.itemRemito.map(item => item.inventarioId);
+          const coincidencias: Inventario[] = inventarioIds.flatMap(id => this.dataInventario.filter(item => item.id === id));
+          this.restarStock(coincidencias);
+        }
+      } else {
+        if (!SharedService.isProduction) console.log('Error al generar el remito.');
+      }
+
+    } catch (error) {
+      console.error('Se ha producido un error:', error);
+      this.Create(false);
+      this.Edit(false);
+      this.Remito(false);
+    } finally {
+      this.Remito(false);
+    }
   }
 }
 

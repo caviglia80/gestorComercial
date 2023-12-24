@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, firstValueFrom } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { CacheService } from '@services/cache/cache.service';
 import { empresa, Usuario, Rol, Inventario } from '@models/mainClasses/main-classes';
@@ -333,7 +333,7 @@ export class DataService {
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 
-  public fetchIngresos(method = '', body: any = {}, proxy = false): void {
+  public async fetchIngresos(method = '', body: any = {}, proxy = false) {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/ingresos.php';
@@ -347,7 +347,7 @@ export class DataService {
     }
 
     if (method === 'GET') {
-      this.http.get<any[]>(url)
+      return await this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
             this.cacheService.set('Ingresos', data);
@@ -360,7 +360,7 @@ export class DataService {
           }
         });
     } else if (method === 'DELETE') {
-      this.http.delete<any[]>(url, { body: body })
+      return await this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
             this.sharedService.message('Ingresos: registro eliminado.');
@@ -373,21 +373,14 @@ export class DataService {
           }
         });
     } else if (method === 'POST') {
-      this.http.post<any[]>(url, body, headers)
-        .subscribe({
-          next: (data) => {
-            if (!SharedService.isProduction) console.log(data);
-            this.sharedService.message('Ingresos: registro guardado.');
-            this.cacheService.remove('Ingresos');
-            this.fetchIngresos('GET');
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Error al intentar guardar el registro.');
-          }
-        });
+      const response = await firstValueFrom(this.http.post<any>(url, body, headers));
+      if (!SharedService.isProduction) console.log(response);
+      this.sharedService.message('Ingresos: registro guardado.');
+      this.cacheService.remove('Ingresos');
+      await this.fetchIngresos('GET');
+      return response;
     } else if (method === 'PUT') {
-      this.http.put<any[]>(url, body, headers)
+      return await this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
             this.sharedService.message('Ingresos: registro actualizado.');
@@ -401,6 +394,7 @@ export class DataService {
         });
     }
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+    return;
   }
 
   public fetchEgresos(method = '', body: any = {}, proxy = false): void {
@@ -705,42 +699,19 @@ export class DataService {
   }
 
   public fetchRemito(method = '', body: any = {}, proxy = false): void {
-    body = JSON.stringify(body);
-    const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/remito.php';
     if (proxy) url = SharedService.proxy + url;
-
-    // Verificar si los datos están en caché
-    if (this.cacheService.has('Remito') && method === 'GET') {
-      if (!SharedService.isProduction) console.log(method + ' - Cache');
-      this.ds_Remito.next(this.cacheService.get('Remito'));
-      return;
-    }
 
     if (method === 'GET') {
       this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
-            this.cacheService.set('Remito', data);
             this.ds_Remito.next(data);
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
             this.ds_Remito.next([]);
             this.sharedService.message('Error al intentar obtener registros.');
-          }
-        });
-    } else if (method === 'POST') {
-      this.http.post<any[]>(url, body, headers)
-        .subscribe({
-          next: () => {
-            this.sharedService.message('Remito: registro guardado.');
-            this.cacheService.remove('Remito');
-            this.fetchRemito('GET');
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Error al intentar guardar el registro.');
           }
         });
     }
