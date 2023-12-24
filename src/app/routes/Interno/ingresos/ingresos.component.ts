@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CacheService } from '@services/cache/cache.service';
 import { empresa, moneyIncome, Inventario } from '@models/mainClasses/main-classes';
@@ -25,14 +25,35 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<moneyIncome>;
   public dataInventario: Inventario[] = [];
   public isLoading = true;
-  public Item: any = {};
   public create = false;
   public edit = false;
   public detail = false;
   public remito = false;
   public itemRemito: moneyIncome[] = [];
   public R: Remito = new Remito();
-  public INV: Inventario | undefined;
+
+  public Item: any = {
+    id: new FormControl('',),
+    date: new FormControl('', Validators.required),
+    inventarioId: new FormControl('', Validators.required),
+    cliente: new FormControl(''),
+    moneda: new FormControl(''),
+    monto: new FormControl(0, [Validators.required, Validators.min(1)]),
+    margenBeneficio: new FormControl(''),
+    method: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    comprobante: new FormControl(''),
+    anulado: new FormControl(''),
+    tipo: new FormControl(''),
+    description: new FormControl(''),
+    inventario: new FormControl()
+  };
+
+  resetItemFormControls() {
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].reset();
+    });
+  }
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -99,22 +120,23 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public onProductoSeleccionado(event: any): void {
     const inventario: Inventario = this._getProduct(event.option.value);
+
     if (inventario)
       if (inventario.tipo === 'Producto') {
         if (this.dataEmpresa.permitirStockCeroEnabled == '1') {
-          this.Item.monto = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
+          this.Item.monto.setValue(this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio));
         } else {
           if (inventario.existencias != 0) {
-            this.Item.monto = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
+            this.Item.monto.setValue(this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio));
           } else {
             this.sharedService.message('Advertencia: el producto no tiene stock');
-            this.Item.monto = 0;
+            this.Item.monto.setValue(0);
             this.inventarioControl.reset();
           }
         }
-        this.Item.margenBeneficio = inventario.margenBeneficio;
+        this.Item.margenBeneficio.setValue(inventario.margenBeneficio);
       } else {
-        this.Item.monto = this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio);
+        this.Item.monto.setValue(this.sharedService.getPrecioLista(inventario.costo, inventario.margenBeneficio));
       }
   }
 
@@ -157,19 +179,19 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   public Detail(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.detail = visible;
   }
 
   public Edit(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.edit = visible;
   }
 
   public Remito(visible: boolean) {
     if (!visible) {
       this.R = new Remito()
-      this.Item = {};
+      this.resetItemFormControls();
       this.itemRemito = [];
     } else {
       this.R = this.R.getRemito(this.itemRemito, this.dataInventario);
@@ -179,17 +201,18 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   public Create(visible: boolean) {
     if (visible) {
-      this.Item.inventarioId = '';
-      this.Item.monto = 0;
+      this.Item.inventarioId.setValue('');
+      this.Item.monto.setValue(0);
     }
-
     // Primer inicio
     if (visible && this.itemRemito.length === 0) {
       this.R = new Remito()
-      this.Item = {};
+      this.resetItemFormControls();
       this.itemRemito = [];
       if (this.dataEmpresa.ingresoRapidoEnabled == '1')
-        this.Item = this.sharedService.rellenoCampos_IE('i');
+        Object.keys(this.Item).forEach(key => {
+          this.Item[key].patchValue(this.sharedService.rellenoCampos_IE('i')[key] || '');
+        });
     }
     this.create = visible;
   }
@@ -215,23 +238,16 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       this.sumarStock(this._getProduct(item.inventarioId));
   }
 
-  private rellenarRecord(item: moneyIncome) {
-    this.Item = {};
-    this.Item.id = item.id;
-    this.Item.date = item.date;
-    this.Item.inventarioId = item.inventarioId;
-    if (this.Item.inventarioId)
-      this.INV = this.dataInventario.find(item => item.id == this.Item.inventarioId);
-    this.Item.moneda = item.moneda;
-    this.Item.monto = item.monto;
-    this.Item.margenBeneficio = item.margenBeneficio;
-    this.Item.method = item.method;
-    this.Item.category = item.category;
-    this.Item.comprobante = item.comprobante;
-    this.Item.anulado = item.anulado;
-    this.Item.cliente = item.cliente;
-    this.Item.description = item.description;
-    this.Item.tipo = this.INV ? this.INV.tipo : '';
+  private rellenarRecord(item: any) {
+    this.resetItemFormControls();
+    Object.keys(this.Item).forEach(key => {
+      if (key === 'inventario')
+        this.Item[key].patchValue(this.dataInventario.find(i => i.id == item.inventarioId) || '');
+      else if (key === 'tipo')
+        this.Item[key].patchValue(this.dataInventario.find(i => i.id == item.inventarioId)?.tipo || '');
+      else
+        this.Item[key].patchValue(item[key] || '');
+    });
   }
 
   private restarStock(inventario: Inventario[]) {
@@ -259,9 +275,9 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
 
   private productoValido(): boolean {
-    if (!this._getProduct(this.Item.inventarioId)) {
+    if (!this._getProduct(this.Item.inventarioId.value)) {
       this.sharedService.message('Advertencia: seleccione un producto válido.');
-      this.Item.monto = 0;
+      this.Item.monto.setValue(0);
       this.inventarioControl.reset();
       return false;
     }
@@ -292,19 +308,19 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     if (this.dataEmpresa.validarInventarioEnabled == '1' && !this.productoValido()) return;
     try {
       const body: moneyIncome = {
-        id: this.Item.id,
+        id: this.Item.id.value,
         empresaId: this.dataEmpresa.id,
-        date: this.Item.date,
-        inventarioId: this.Item.inventarioId,
-        moneda: this.Item.moneda,
-        monto: this.Item.monto,
-        margenBeneficio: this._getProduct(this.Item.inventarioId) ? (this._getProduct(this.Item.inventarioId).tipo === 'Producto' ? this.Item.margenBeneficio : 0) : 0,
-        method: this.Item.method,
-        category: this.Item.category,
-        comprobante: this.Item.comprobante,
+        date: this.Item.date.value,
+        inventarioId: this.Item.inventarioId.value,
+        moneda: this.Item.moneda.value,
+        monto: this.Item.monto.value,
+        margenBeneficio: this._getProduct(this.Item.inventarioId.value) ? (this._getProduct(this.Item.inventarioId.value).tipo === 'Producto' ? this.Item.margenBeneficio.value : 0) : 0,
+        method: this.Item.method.value,
+        category: this.Item.category.value,
+        comprobante: this.Item.comprobante.value,
         anulado: '0',
-        cliente: this.Item.cliente,
-        description: this.Item.description
+        cliente: this.Item.cliente.value,
+        description: this.Item.description.value
       };
 
       this.itemRemito.push(body);
@@ -348,19 +364,19 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     if (this.dataEmpresa.validarInventarioEnabled == '1' && !this.productoValido()) return;
     try {
       const body: moneyIncome = {
-        id: this.Item.id,
+        id: this.Item.id.value,
         empresaId: this.dataEmpresa.id,
-        date: this.Item.date,
-        inventarioId: this.Item.inventarioId,
-        moneda: this.Item.moneda,
-        monto: this.Item.monto,
-        margenBeneficio: this.Item.margenBeneficio,
-        method: this.Item.method,
-        category: this.Item.category,
-        comprobante: this.Item.comprobante,
-        anulado: this.Item.anulado,
-        cliente: this.Item.cliente,
-        description: this.Item.description
+        date: this.Item.date.value,
+        inventarioId: this.Item.inventarioId.value,
+        moneda: this.Item.moneda.value,
+        monto: this.Item.monto.value,
+        margenBeneficio: this.Item.margenBeneficio.value,
+        method: this.Item.method.value,
+        category: this.Item.category.value,
+        comprobante: this.Item.comprobante.value,
+        anulado: this.Item.anulado.value,
+        cliente: this.Item.cliente.value,
+        description: this.Item.description.value
       };
       this.dataService.fetchIngresos('PUT', body);
     } catch (error) {
