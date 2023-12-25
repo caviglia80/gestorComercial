@@ -3,11 +3,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { empresa, proveedor } from '@models/mainClasses/main-classes';
-import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
+import { SharedService } from '@services/shared/shared.service';
 import { CacheService } from '@services/cache/cache.service';
 import { ExcelExportService } from '@services/excel-export/excel-export.service';
-
+import { FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-proveedores',
   templateUrl: './proveedores.component.html',
@@ -20,10 +20,23 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
   public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<proveedor>;
   public isLoading = true;
-  public Item: any = {};
   public create = false;
   public edit = false;
   public detail = false;
+
+  public Item: any = {
+    id: new FormControl(0),
+    empresaId: new FormControl(0),
+    company: new FormControl(''),
+    contactFullname: new FormControl('', Validators.required),
+    phone: new FormControl(''),
+    email: new FormControl(''),
+    address: new FormControl(''),
+    website: new FormControl(''),
+    accountNumber: new FormControl(''),
+    tipoSuministro: new FormControl(''),
+    observation: new FormControl('')
+  };
 
   public Columns: { [key: string]: string } = {
     /* id: 'ID', */
@@ -95,17 +108,17 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
   }
 
   public Detail(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.detail = visible;
   }
 
   public Edit(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.edit = visible;
   }
 
   public Create(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.create = visible;
   }
 
@@ -123,34 +136,33 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
     this.dataService.fetchProveedores('DELETE', { id: item.id, company: item.company });
   }
 
-  private rellenarRecord(item: proveedor) {
-    this.Item = {};
-    this.Item.id = item.id;
-    this.Item.company = item.company;
-    this.Item.contactFullname = item.contactFullname;
-    this.Item.phone = item.phone;
-    this.Item.email = item.email;
-    this.Item.address = item.address;
-    this.Item.website = item.website;
-    this.Item.accountNumber = item.accountNumber;
-    this.Item.tipoSuministro = item.tipoSuministro;
-    this.Item.observation = item.observation;
+  resetItemFormControls() {
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].reset();
+    });
+  }
+
+  private rellenarRecord(item: any) {
+    this.resetItemFormControls();
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].patchValue(item[key] || '');
+    });
   }
 
   public record(method: string) {
     try {
       const body: proveedor = {
-        id: this.Item.id,
+        id: this.Item.id.value,
         empresaId: this.dataEmpresa.id,
-        company: this.Item.company,
-        contactFullname: this.Item.contactFullname,
-        phone: this.Item.phone,
-        email: this.Item.email,
-        address: this.Item.address,
-        website: this.Item.website,
-        accountNumber: this.Item.accountNumber,
-        tipoSuministro: this.Item.tipoSuministro,
-        observation: this.Item.observation
+        company: this.Item.company.value,
+        contactFullname: this.Item.contactFullname.value,
+        phone: this.Item.phone.value,
+        email: this.Item.email.value,
+        address: this.Item.address.value,
+        website: this.Item.website.value,
+        accountNumber: this.Item.accountNumber.value,
+        tipoSuministro: this.Item.tipoSuministro.value,
+        observation: this.Item.observation.value,
       };
       this.dataService.fetchProveedores(method, body);
     } catch (error) {
@@ -162,7 +174,7 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-     this.loading(true);
+    this.loading(true);
     this.cacheService.remove('Proveedores');
     this.dataService.fetchProveedores('GET');
   }
