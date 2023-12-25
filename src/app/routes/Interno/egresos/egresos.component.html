@@ -147,8 +147,8 @@
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
 
-    <mat-paginator #paginator [hidden]="isLoading" class="custom-paginator"
-      [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons>
+    <mat-paginator #paginator [hidden]="isLoading" class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]"
+      showFirstLastButtons>
     </mat-paginator>
   </div>
 </div>
@@ -170,56 +170,54 @@
   <div class="table-container mt-3">
     <div class="table-wrapper">
       <table>
-        <!--         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">ID:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['id'])">{{ Item['id'] }}</td>
-        </tr> -->
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['date'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['date'])">{{ Item['date'] | date:'dd/MM/yyyy' }}
+          <td style="font-weight: bold; white-space: nowrap;">Fecha:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.date.value )">{{ Item.date.value |
+            date:'dd/MM/yyyy' }}
           </td>
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['beneficiario'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['beneficiario'])">{{
-            Item['beneficiario'] }}
+          <td style="font-weight: bold; white-space: nowrap;">Beneficiario:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.beneficiario.value )">{{
+            Item.beneficiario.value }}
           </td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Moneda:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['moneda'])">{{ Item['moneda'] }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.moneda.value )">{{ Item.moneda.value }}</td>
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['monto'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['monto'])">{{ Item['monto'] |
+          <td style="font-weight: bold; white-space: nowrap;">Monto:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.monto.value )">{{ Item.monto.value |
             currency:'$':'symbol' }}</td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Método de Gasto:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['method'])">{{ Item['method'] }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.method.value )">{{ Item.method.value }}
           </td>
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['category'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['category'])">{{ Item['category'] }}
+          <td style="font-weight: bold; white-space: nowrap;">Rubro:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.category.value )">{{ Item.category.value }}
           </td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Comprobante:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['comprobante'])">{{
-            Item['comprobante'] }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.comprobante.value )">{{
+            Item.comprobante.value }}</td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Descripción:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['description'])">{{ Item['description'] }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.description.value )">{{ Item.description.value
+            }}
           </td>
         </tr>
 
@@ -245,12 +243,12 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['date'] | lowercase }} <span class="red-asterisk">*</span></p>
-    <input class="my-2" type="date" matInput [(ngModel)]="Item.date" required>
+    <input class="my-2" type="date" matInput [formControl]="Item.date" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese moneda</p>
-    <mat-select placeholder="Moneda" [(ngModel)]="Item.moneda">
+    <mat-select placeholder="Moneda" [formControl]="Item.moneda">
       <mat-option *ngFor="let moneda of sharedService.monedas" [value]="moneda">{{ moneda }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -258,12 +256,12 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['monto'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['monto'] }}" [(ngModel)]="Item.monto" type="number" required>
+    <input matInput placeholder="{{ Columns['monto'] }}" [formControl]="Item.monto" type="number" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese método de gasto <span class="red-asterisk">*</span></p>
-    <mat-select placeholder="Método de gasto" [(ngModel)]="Item.method" required>
+    <mat-select placeholder="Método de gasto" [formControl]="Item.method" required>
       <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -271,39 +269,38 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category" required>
+    <mat-select placeholder="{{ Columns['category'] }}" [formControl]="Item.category" required>
       <mat-option *ngFor="let category of sharedService.rubrosEgresos" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese comprobante</p>
-    <input matInput placeholder="Comprobante" [(ngModel)]="Item.comprobante">
+    <input matInput placeholder="Comprobante" [formControl]="Item.comprobante">
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingresar proveedor/beneficiario <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="{{ Columns['beneficiario'] }}" matInput [formControl]="proveedorControl"
-      [matAutocomplete]="auto" [(ngModel)]="Item.beneficiario" (focus)="getProveedor()" required>
+    <input type="text" placeholder="{{ Columns['beneficiario'] }}" matInput [matAutocomplete]="auto"
+      [formControl]="Item.beneficiario" (focus)="getProveedor()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
-      <mat-option *ngFor="let proveedor of proveedorFiltered | async" [value]="
-      ((proveedor?.company ? proveedor.company : '') +
-      (proveedor?.company && proveedor?.contactFullname ? ' - ' : '') +
-      (proveedor?.contactFullname ? proveedor.contactFullname : '')).trim()">
-        <span *ngIf="proveedor?.company">{{proveedor?.company}}</span>
-        <span *ngIf="proveedor?.company && proveedor?.contactFullname"> - </span>
-        <span *ngIf="proveedor?.contactFullname">{{proveedor?.contactFullname}}</span>
+      <mat-option *ngFor="let proveedor of proveedorFiltered | async"
+        [value]="(proveedor?.company || '') +  (proveedor?.contactFullname ? ((proveedor?.company && proveedor?.company ? ' - ' : '') + proveedor?.contactFullname) : '')">
+        <span *ngIf="proveedor?.company">{{ proveedor?.company }}</span>
+        <span *ngIf="proveedor?.contactFullname && proveedor?.company"> - </span>
+        <span *ngIf="proveedor?.contactFullname">{{ proveedor?.contactFullname }}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese descripción</p>
-    <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
+    <input matInput placeholder="Descripción" [formControl]="Item.description">
   </mat-form-field>
 
   <button mat-button (click)="record('POST')"
-    [disabled]="!Item.date || !Item.monto || Item.monto < 1 || !Item.method|| !Item.category || !Item.beneficiario || Item.beneficiario == false">Guardar</button>
+    [disabled]="!Item.date.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid || !Item.beneficiario.valid">
+    Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -323,12 +320,12 @@
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['date'] | lowercase }} <span class="red-asterisk">*</span></p>
-    <input class="my-2" type="date" matInput [(ngModel)]="Item.date" required>
+    <input class="my-2" type="date" matInput [formControl]="Item.date" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese moneda</p>
-    <mat-select placeholder="Moneda" [(ngModel)]="Item.moneda">
+    <mat-select placeholder="Moneda" [formControl]="Item.moneda">
       <mat-option *ngFor="let moneda of sharedService.monedas" [value]="moneda">{{ moneda }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -336,12 +333,12 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['monto'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['monto'] }}" [(ngModel)]="Item.monto" type="number" required>
+    <input matInput placeholder="{{ Columns['monto'] }}" [formControl]="Item.monto" type="number" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese método de gasto <span class="red-asterisk">*</span></p>
-    <mat-select placeholder="Método de gasto" [(ngModel)]="Item.method" required>
+    <mat-select placeholder="Método de gasto" [formControl]="Item.method" required>
       <mat-option *ngFor="let method of sharedService.paidMethods" [value]="method">{{ method }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -349,33 +346,35 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese {{ Columns['category'] | lowercase }} <span class="red-asterisk">*</span>
     </p>
-    <mat-select placeholder="{{ Columns['category'] }}" [(ngModel)]="Item.category" required>
+    <mat-select placeholder="{{ Columns['category'] }}" [formControl]="Item.category" required>
       <mat-option *ngFor="let category of sharedService.rubrosEgresos" [value]="category">{{ category }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese comprobante</p>
-    <input matInput placeholder="Comprobante" [(ngModel)]="Item.comprobante">
+    <input matInput placeholder="Comprobante" [formControl]="Item.comprobante">
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingresar proveedor/beneficiario <span class="red-asterisk">*</span></p>
-    <input type="text" placeholder="{{ Columns['beneficiario'] }}" matInput [formControl]="proveedorControl"
-      [matAutocomplete]="auto" [(ngModel)]="Item.beneficiario" (focus)="getProveedor()" required>
+    <input type="text" placeholder="{{ Columns['beneficiario'] }}" matInput [matAutocomplete]="auto"
+      [formControl]="Item.beneficiario" (focus)="getProveedor()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
       <mat-option *ngFor="let proveedor of proveedorFiltered | async"
-        [value]="proveedor.company + ' - ' + proveedor.contactFullname">
-        {{ proveedor.company }} - {{ proveedor.contactFullname }}
+        [value]="(proveedor?.company || '') +  (proveedor?.contactFullname ? ((proveedor?.company && proveedor?.company ? ' - ' : '') + proveedor?.contactFullname) : '')">
+        <span *ngIf="proveedor?.company">{{ proveedor?.company }}</span>
+        <span *ngIf="proveedor?.contactFullname && proveedor?.company"> - </span>
+        <span *ngIf="proveedor?.contactFullname">{{ proveedor?.contactFullname }}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese descripción</p>
-    <input matInput placeholder="Descripción" [(ngModel)]="Item.description">
+    <input matInput placeholder="Descripción" [formControl]="Item.description">
   </mat-form-field>
 
   <button mat-button (click)="record('PUT')"
-    [disabled]="!Item.date || !Item.monto || Item.monto < 1 || !Item.method|| !Item.category || !Item.beneficiario || Item.beneficiario == false">Guardar</button>
+    [disabled]="!Item.date.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid || !Item.beneficiario.valid">Guardar</button>
 </div>

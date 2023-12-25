@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { moneyOutlays, proveedor, empresa } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { CacheService } from '@services/cache/cache.service';
@@ -21,16 +21,25 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   public dataEmpresa: empresa = new empresa();
-  public proveedorControl = new FormControl();
   public proveedorFiltered: Observable<any[]>;
   public proveedorData: proveedor[] = [];
   public dataSource = new MatTableDataSource<moneyOutlays>;
   public isLoading = true;
-  public Item: any = {};
   public create = false;
   public edit = false;
   public detail = false;
-  /*   private currentEmpresa: any; */
+
+  public Item: any = {
+    id: new FormControl(''),
+    date: new FormControl('', Validators.required),
+    moneda: new FormControl('', Validators.required),
+    monto: new FormControl(0, [Validators.required, Validators.min(1)]),
+    method: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    comprobante: new FormControl(''),
+    description: new FormControl(''),
+    beneficiario: new FormControl('', Validators.required)
+  };
 
   public Columns: { [key: string]: string } = {
     /*     id: 'ID', */
@@ -51,7 +60,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     private cacheService: CacheService,
     private excelExportService: ExcelExportService
   ) {
-    this.proveedorFiltered = this.proveedorControl.valueChanges.pipe(
+    this.proveedorFiltered = this.Item.beneficiario.valueChanges.pipe(
       startWith(''),
       map(value => this._filterProveedor(value))
     );
@@ -97,7 +106,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     this.getProveedor();
   }
 
-  private _filterProveedor(value: string): any[] {
+  private _filterProveedor(value: any): any[] {
     this.getProveedor();
     if (value) {
       const filterValue = value?.toString().toLowerCase();
@@ -128,19 +137,21 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   }
 
   public Detail(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.detail = visible;
   }
 
   public Edit(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.edit = visible;
   }
 
   public Create(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     if (this.dataEmpresa.egresoRapidoEnabled === '1')
-      this.Item = this.sharedService.rellenoCampos_IE('e');
+      Object.keys(this.Item).forEach(key => {
+        this.Item[key].patchValue(this.sharedService.rellenoCampos_IE('e')[key] || '');
+      });
     this.create = visible;
   }
 
@@ -158,32 +169,32 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     this.dataService.fetchEgresos('DELETE', { id: item.id });
   }
 
-  private rellenarRecord(item: moneyOutlays) {
-    this.Item = {};
-    this.Item.id = item.id;
-    this.Item.date = item.date;
-    this.Item.moneda = item.moneda;
-    this.Item.monto = item.monto;
-    this.Item.method = item.method;
-    this.Item.category = item.category;
-    this.Item.comprobante = item.comprobante;
-    this.Item.beneficiario = item.beneficiario;
-    this.Item.description = item.description;
+  resetItemFormControls() {
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].reset();
+    });
+  }
+
+  private rellenarRecord(item: any) {
+    this.resetItemFormControls();
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].patchValue(item[key] || '');
+    });
   }
 
   public record(method: string) {
     try {
       const body: moneyOutlays = {
-        id: this.Item.id,
+        id: this.Item.id.value,
         empresaId: this.dataEmpresa.id,
-        date: this.Item.date,
-        moneda: this.Item.moneda,
-        monto: this.Item.monto,
-        method: this.Item.method,
-        category: this.Item.category,
-        comprobante: this.Item.comprobante,
-        beneficiario: this.Item.beneficiario,
-        description: this.Item.description
+        date: this.Item.date.value,
+        moneda: this.Item.moneda.value,
+        monto: this.Item.monto.value,
+        method: this.Item.method.value,
+        category: this.Item.category.value,
+        comprobante: this.Item.comprobante.value,
+        beneficiario: this.Item.beneficiario.value,
+        description: this.Item.description.value
       };
       this.dataService.fetchEgresos(method, body);
     } catch (error) {
@@ -195,7 +206,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-     this.loading(true);
+    this.loading(true);
     this.cacheService.remove('Egresos');
     this.dataService.fetchEgresos('GET');
     this.getProveedor();
