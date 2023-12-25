@@ -377,7 +377,7 @@ export class DataService {
       if (!SharedService.isProduction) console.log(response);
       this.sharedService.message('Ingresos: registro guardado.');
       this.cacheService.remove('Ingresos');
-      await this.fetchIngresos('GET');
+      this.fetchIngresos('GET');
       return response;
     } else if (method === 'PUT') {
       return await this.http.put<any[]>(url, body, headers)
