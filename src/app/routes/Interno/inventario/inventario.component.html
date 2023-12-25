@@ -46,7 +46,7 @@
 
         <ng-container matColumnDef="idExterno">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActiondescripcion="Sort by idExterno">
-            {{ Columns['idExterno'] }}
+            ID Externo
           </th>
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.idExterno)">
             {{element.idExterno}} </td>
@@ -54,7 +54,7 @@
 
         <ng-container matColumnDef="nombre">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActiondescripcion="Sort by nombre">
-            {{ Columns['nombre'] }}
+            Nombre
           </th>
           <td [matTooltip]="element.nombre" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.nombre)">
@@ -69,22 +69,6 @@
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.tipo)">
             {{element.tipo}} </td>
         </ng-container>
-
-        <!--         <ng-container matColumnDef="costo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActiondescripcion="Sort by costo">
-            {{ Columns['costo'] }}
-          </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.costo)"> {{element.costo
-            | currency:'$':'symbol' }} </td>
-        </ng-container> -->
-
-        <!--         <ng-container matColumnDef="listPrice">
-          <th mat-header-cell *matHeaderCellDef>{{ Columns['listPrice'] }}</th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(dataService.getPvp(element.costo))">
-            {{ element.costo
-            | pvp
-            | currency:'$':'symbol' }}</td>
-        </ng-container> -->
 
         <ng-container matColumnDef="listPrice">
           <th mat-header-cell *matHeaderCellDef>{{ Columns['listPrice'] }}</th>
@@ -101,25 +85,6 @@
           <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.existencias)">
             {{element.existencias}} </td>
         </ng-container>
-
-        <!--         <ng-container matColumnDef="margenBeneficio">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActiondescripcion="Sort by margenBeneficio">
-            {{ Columns['margenBeneficio'] }}
-          </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.margenBeneficio)">
-            {{element.margenBeneficio
-            }} </td>
-        </ng-container> -->
-
-        <!--         <ng-container matColumnDef="descripcion">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActiondescripcion="Sort by descripcion">
-            {{ Columns['descripcion'] }}
-          </th>
-          <td [matTooltip]="element.descripcion" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.descripcion)">
-            {{element.descripcion | slice:0:12 }}
-          </td>
-        </ng-container> -->
 
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Operaciones </th>
@@ -158,8 +123,8 @@
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
 
-    <mat-paginator #paginator [hidden]="isLoading" class="custom-paginator"
-      [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons>
+    <mat-paginator #paginator [hidden]="isLoading" class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]"
+      showFirstLastButtons>
     </mat-paginator>
   </div>
 </div>
@@ -182,64 +147,68 @@
     <div class="table-wrapper">
       <table>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['id'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['id'])">{{ Item['id'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">ID:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.id.value )">{{ Item.id.value }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['idExterno'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['idExterno'])">{{ Item['idExterno'] }}</td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['tipo'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['tipo'])">{{ Item['tipo'] }}
+          <td style="font-weight: bold; white-space: nowrap;">ID Externo:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.idExterno.value )">{{ Item.idExterno.value }}
           </td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['nombre'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['nombre'])">{{ Item['nombre'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">Tipo:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.tipo.value )">{{ Item.tipo.value }}
+          </td>
         </tr>
-        <tr *ngIf="Item.tipo==='Producto'">
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">Nombre:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.nombre.value )">{{ Item.nombre.value }}</td>
+        </tr>
+        <tr *ngIf="Item.tipo.value === 'Producto'">
           <td style="font-weight: bold; white-space: nowrap;">Existencias:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['existencias'])">{{ Item['existencias'] }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.existencias.value )">{{ Item.existencias.value
+            }}</td>
         </tr>
-        <tr *ngIf="Item.tipo==='Producto'">
+        <tr *ngIf="Item.tipo.value === 'Producto'">
           <td style="font-weight: bold; white-space: nowrap;">Precio Costo:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['costo'])">{{ Item['costo'] |
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.costo.value )">{{ Item.costo.value |
             currency:'$':'symbol' }}</td>
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Precio Lista:</td>
           <td style="width: 100%;"
-            (dblclick)="sharedService.copy(sharedService.getPrecioLista(Item['costo'], Item['margenBeneficio']))">
+            (dblclick)="sharedService.copy(sharedService.getPrecioLista(Item.costo.value, Item.margenBeneficio.value))">
             {{
-            sharedService.getPrecioLista(Item['costo'], Item['margenBeneficio'])
+            sharedService.getPrecioLista(Item.costo.value, Item.margenBeneficio.value)
             | currency:'$':'symbol' }}
           </td>
         </tr>
-        <tr *ngIf="Item.tipo==='Producto'">
+        <tr *ngIf="Item.tipo.value === 'Producto'">
           <td style="font-weight: bold; white-space: nowrap;">Margen-Beneficio:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['margenBeneficio'])">{{ Item['margenBeneficio']
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.margenBeneficio.value )">{{
+            Item.margenBeneficio.value
             }}%
           </td>
         </tr>
-        <tr *ngIf="Item.tipo==='Producto'">
+        <tr *ngIf="Item.tipo.value === 'Producto'">
           <td style="font-weight: bold; white-space: nowrap;">Proveedor:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['proveedor'])">{{ Item['proveedor'] }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.proveedor.value )">{{ Item.proveedor.value }}
           </td>
         </tr>
-        <tr *ngIf="Item.tipo==='Servicio'">
+        <tr *ngIf="Item.tipo.value === 'Servicio'">
           <td style="font-weight: bold; white-space: nowrap;">Duración:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['duracion'])">{{ Item['duracion'] }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.duracion.value )">{{ Item.duracion.value }}
           </td>
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Categoría:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['categoria'])">{{ Item['categoria'] }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.categoria.value )">{{ Item.categoria.value }}
           </td>
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Descripción:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['descripcion'])">{{ Item['descripcion'] }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.descripcion.value )">{{ Item.descripcion.value
+            }}
           </td>
         </tr>
       </table>
@@ -263,56 +232,68 @@
   </div>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese ID Externo</p>
-    <input matInput placeholder="{{ Columns['idExterno'] }}" [(ngModel)]="Item.idExterno">
+    <input matInput placeholder="ID Externo" [formControl]="Item.idExterno">
   </mat-form-field>
+
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['nombre'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese nombre <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['nombre'] }}" [(ngModel)]="Item.nombre" required>
+    <input matInput placeholder="Nombre" [formControl]="Item.nombre" required>
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese tipo <span class="red-asterisk">*</span></p>
-    <mat-select placeholder="Tipo" [(ngModel)]="Item.tipo" required>
+    <mat-select placeholder="Tipo" [formControl]="Item.tipo" required>
       <mat-option *ngFor="let tipo of sharedService.inventarioTipos" [value]="tipo">{{ tipo }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Producto'">
     <p class="form-field-description">Ingrese existencias</p>
-    <input matInput placeholder="Existencias" [(ngModel)]="Item.existencias" type="number">
+    <input matInput placeholder="Existencias" [formControl]="Item.existencias" type="number">
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese costo</p>
-    <input matInput placeholder="Costo" [(ngModel)]="Item.costo" type="number">
+    <input matInput placeholder="Costo" [formControl]="Item.costo" type="number">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Producto'">
     <p class="form-field-description">Ingrese Margen-Beneficio %</p>
-    <input matInput placeholder="Margen-Beneficio %" [(ngModel)]="Item.margenBeneficio" type="number">
+    <input matInput placeholder="Margen-Beneficio %" [formControl]="Item.margenBeneficio" type="number">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Servicio'">
-    <p class="form-field-description">Ingrese Ingrese duración</p>
-    <input matInput placeholder="Duración" [(ngModel)]="Item.duracion">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Servicio'">
+    <p class="form-field-description">Ingrese duración</p>
+    <input matInput placeholder="Duración" [formControl]="Item.duracion">
   </mat-form-field>
+
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese Ingrese categoría</p>
-    <input matInput placeholder="Categoría" [(ngModel)]="Item.categoria">
+    <p class="form-field-description">Ingrese categoría</p>
+    <input matInput placeholder="Categoría" [formControl]="Item.categoria">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Producto'">
     <p class="form-field-description">Ingresar proveedor</p>
-    <input type="text" placeholder="Proveedor" matInput [formControl]="proveedorControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.proveedor" (focus)="getProveedor()">
+    <input type="text" placeholder="Proveedor" matInput [matAutocomplete]="auto" [formControl]="Item.proveedor"
+      (focus)="getProveedor()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
       <mat-option *ngFor="let proveedor of proveedorFiltered | async"
-        [value]="proveedor.company + ' - ' + proveedor.contactFullname">
-        {{ proveedor.company }} - {{ proveedor.contactFullname }}
+        [value]="(proveedor?.company || '') +  (proveedor?.contactFullname ? ((proveedor?.company && proveedor?.company ? ' - ' : '') + proveedor?.contactFullname) : '')">
+        <span *ngIf="proveedor?.company">{{ proveedor?.company }}</span>
+        <span *ngIf="proveedor?.contactFullname && proveedor?.company"> - </span>
+        <span *ngIf="proveedor?.contactFullname">{{ proveedor?.contactFullname }}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese descripción</p>
-    <input matInput placeholder="Descripción" [(ngModel)]="Item.descripcion">
+    <input matInput placeholder="Descripción" [formControl]="Item.descripcion">
   </mat-form-field>
+
   <button mat-button (click)="record('POST')"
-    [disabled]="!Item.nombre || Item.nombre == false || !Item.tipo">Guardar</button>
+  [disabled]="!Item.nombre.valid || !Item.tipo.valid">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -331,56 +312,67 @@
   </div>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese ID Externo</p>
-    <input matInput placeholder="{{ Columns['idExterno'] }}" [(ngModel)]="Item.idExterno">
+    <input matInput placeholder="ID Externo" [formControl]="Item.idExterno">
   </mat-form-field>
+
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['nombre'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese nombre <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['nombre'] }}" [(ngModel)]="Item.nombre" required>
+    <input matInput placeholder="Nombre" [formControl]="Item.nombre" required>
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese tipo <span class="red-asterisk">*</span></p>
-    <mat-select placeholder="Tipo" [(ngModel)]="Item.tipo" required disabled>
-      <mat-option *ngFor="let tipo of sharedService.inventarioTipos" [value]="tipo">{{ tipo }}</mat-option>
+    <mat-select placeholder="Tipo" [formControl]="Item.tipo" required>
+      <mat-option disabled *ngFor="let tipo of sharedService.inventarioTipos" [value]="tipo">{{ tipo }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Producto'">
     <p class="form-field-description">Ingrese existencias</p>
-    <input matInput placeholder="Existencias" [(ngModel)]="Item.existencias" type="number">
+    <input matInput placeholder="Existencias" [formControl]="Item.existencias" type="number">
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese costo</p>
-    <input matInput placeholder="Costo" [(ngModel)]="Item.costo" type="number">
+    <input matInput placeholder="Costo" [formControl]="Item.costo" type="number">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Producto'">
     <p class="form-field-description">Ingrese Margen-Beneficio %</p>
-    <input matInput placeholder="Margen-Beneficio %" [(ngModel)]="Item.margenBeneficio" type="number">
+    <input matInput placeholder="Margen-Beneficio %" [formControl]="Item.margenBeneficio" type="number">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Servicio'">
-    <p class="form-field-description">Ingrese Ingrese duración</p>
-    <input matInput placeholder="Duración" [(ngModel)]="Item.duracion">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Servicio'">
+    <p class="form-field-description">Ingrese duración</p>
+    <input matInput placeholder="Duración" [formControl]="Item.duracion">
   </mat-form-field>
+
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese Ingrese categoría</p>
-    <input matInput placeholder="Categoría" [(ngModel)]="Item.categoria">
+    <p class="form-field-description">Ingrese categoría</p>
+    <input matInput placeholder="Categoría" [formControl]="Item.categoria">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Producto'">
     <p class="form-field-description">Ingresar proveedor</p>
-    <input type="text" placeholder="Proveedor" matInput [formControl]="proveedorControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.proveedor" (focus)="getProveedor()">
+    <input type="text" placeholder="Proveedor" matInput [matAutocomplete]="auto" [formControl]="Item.proveedor"
+      (focus)="getProveedor()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
       <mat-option *ngFor="let proveedor of proveedorFiltered | async"
-        [value]="proveedor.company + ' - ' + proveedor.contactFullname">
-        {{ proveedor.company }} - {{ proveedor.contactFullname }}
+        [value]="(proveedor?.company || '') +  (proveedor?.contactFullname ? ((proveedor?.company && proveedor?.company ? ' - ' : '') + proveedor?.contactFullname) : '')">
+        <span *ngIf="proveedor?.company">{{ proveedor?.company }}</span>
+        <span *ngIf="proveedor?.contactFullname && proveedor?.company"> - </span>
+        <span *ngIf="proveedor?.contactFullname">{{ proveedor?.contactFullname }}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese descripción</p>
-    <input matInput placeholder="Descripción" [(ngModel)]="Item.descripcion">
+    <input matInput placeholder="Descripción" [formControl]="Item.descripcion">
   </mat-form-field>
   <button mat-button (click)="record('PUT')"
-    [disabled]="!Item.nombre || Item.nombre == false || !Item.tipo">Guardar</button>
+  [disabled]="!Item.nombre.valid || !Item.tipo.valid">Guardar</button>
 </div>
 
 <!-- Vista de duplicado de registros -->
@@ -399,54 +391,66 @@
   </div>
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese ID Externo</p>
-    <input matInput placeholder="{{ Columns['idExterno'] }}" [(ngModel)]="Item.idExterno">
+    <input matInput placeholder="ID Externo" [formControl]="Item.idExterno">
   </mat-form-field>
+
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['nombre'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese nombre <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['nombre'] }}" [(ngModel)]="Item.nombre" required>
+    <input matInput placeholder="Nombre" [formControl]="Item.nombre" required>
   </mat-form-field>
-  <mat-form-field class="full-width">
+
+  <mat-form-field class="full-width" disabled>
     <p class="form-field-description">Ingrese tipo <span class="red-asterisk">*</span></p>
-    <mat-select placeholder="Tipo" [(ngModel)]="Item.tipo" required disabled>
-      <mat-option *ngFor="let tipo of sharedService.inventarioTipos" [value]="tipo">{{ tipo }}</mat-option>
+    <mat-select placeholder="Tipo" [formControl]="Item.tipo" required>
+      <mat-option disabled *ngFor="let tipo of sharedService.inventarioTipos" [value]="tipo">{{ tipo }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Producto'">
     <p class="form-field-description">Ingrese existencias</p>
-    <input matInput placeholder="Existencias" [(ngModel)]="Item.existencias" type="number">
+    <input matInput placeholder="Existencias" [formControl]="Item.existencias" type="number">
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese costo</p>
-    <input matInput placeholder="Costo" [(ngModel)]="Item.costo" type="number">
+    <input matInput placeholder="Costo" [formControl]="Item.costo" type="number">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Producto'">
     <p class="form-field-description">Ingrese Margen-Beneficio %</p>
-    <input matInput placeholder="Margen-Beneficio %" [(ngModel)]="Item.margenBeneficio" type="number">
+    <input matInput placeholder="Margen-Beneficio %" [formControl]="Item.margenBeneficio" type="number">
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Producto'">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Producto'">
     <p class="form-field-description">Ingresar proveedor</p>
-    <input type="text" placeholder="Proveedor" matInput [formControl]="proveedorControl" [matAutocomplete]="auto"
-      [(ngModel)]="Item.proveedor" (focus)="getProveedor()">
+    <input type="text" placeholder="Proveedor" matInput [matAutocomplete]="auto" [formControl]="Item.proveedor"
+      (focus)="getProveedor()" required>
     <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete">
       <mat-option *ngFor="let proveedor of proveedorFiltered | async"
-        [value]="proveedor.company + ' - ' + proveedor.contactFullname">
-        {{ proveedor.company }} - {{ proveedor.contactFullname }}
+        [value]="(proveedor?.company || '') +  (proveedor?.contactFullname ? ((proveedor?.company && proveedor?.company ? ' - ' : '') + proveedor?.contactFullname) : '')">
+        <span *ngIf="proveedor?.company">{{ proveedor?.company }}</span>
+        <span *ngIf="proveedor?.contactFullname && proveedor?.company"> - </span>
+        <span *ngIf="proveedor?.contactFullname">{{ proveedor?.contactFullname }}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <mat-form-field class="full-width" *ngIf="Item.tipo==='Servicio'">
-    <p class="form-field-description">Ingrese Ingrese duración</p>
-    <input matInput placeholder="Duración" [(ngModel)]="Item.duracion">
+
+  <mat-form-field class="full-width" *ngIf="Item.tipo.value === 'Servicio'">
+    <p class="form-field-description">Ingrese duración</p>
+    <input matInput placeholder="Duración" [formControl]="Item.duracion">
   </mat-form-field>
+
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese Ingrese categoría</p>
-    <input matInput placeholder="Categoría" [(ngModel)]="Item.categoria">
+    <p class="form-field-description">Ingrese categoría</p>
+    <input matInput placeholder="Categoría" [formControl]="Item.categoria">
   </mat-form-field>
+
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese descripción</p>
-    <input matInput placeholder="Descripción" [(ngModel)]="Item.descripcion">
+    <input matInput placeholder="Descripción" [formControl]="Item.descripcion">
   </mat-form-field>
+
   <button mat-button (click)="record('POST')"
-    [disabled]="!Item.nombre || Item.nombre == false || !Item.tipo">Guardar</button>
+  [disabled]="!Item.nombre.valid || !Item.tipo.valid">Guardar</button>
 </div>

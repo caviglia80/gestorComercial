@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { empresa, Inventario, proveedor } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { CacheService } from '@services/cache/cache.service';
@@ -21,17 +21,28 @@ export class inventarioComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   public dataEmpresa: empresa = new empresa();
-  public proveedorControl = new FormControl();
   public proveedorFiltered: Observable<any[]>;
   public proveedorData: proveedor[] = [];
-
   public dataSource = new MatTableDataSource<Inventario>;
   public isLoading = true;
-  public Item: any = {};
   public create = false;
   public edit = false;
   public double = false;
   public detail = false;
+
+  public Item: any = {
+    id: new FormControl(''),
+    idExterno: new FormControl(''),
+    nombre: new FormControl('', Validators.required),
+    existencias: new FormControl(0),
+    costo: new FormControl(0),
+    margenBeneficio: new FormControl(0),
+    tipo: new FormControl('', Validators.required),
+    proveedor: new FormControl(''),
+    duracion: new FormControl(''),
+    categoria: new FormControl(''),
+    descripcion: new FormControl('')
+  };
 
   public Columns: { [key: string]: string } = {
     id: 'ID',
@@ -49,7 +60,7 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     private cacheService: CacheService,
     private excelExportService: ExcelExportService
   ) {
-    this.proveedorFiltered = this.proveedorControl.valueChanges.pipe(
+    this.proveedorFiltered = this.Item.proveedor.valueChanges.pipe(
       startWith(''),
       map(value => this._filterProveedor(value))
     );
@@ -99,7 +110,7 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     this.dataService.fetchProveedores('GET');
   }
 
-  private _filterProveedor(value: string): any[] {
+  private _filterProveedor(value: any): any[] {
     this.getProveedor();
     if (value) {
       const filterValue = value?.toString().toLowerCase();
@@ -126,22 +137,22 @@ export class inventarioComponent implements OnInit, AfterViewInit {
   }
 
   public Detail(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.detail = visible;
   }
 
   public Edit(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.edit = visible;
   }
 
   public Double(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.double = visible;
   }
 
   public Create(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.create = visible;
   }
 
@@ -167,36 +178,34 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     this.dataService.fetchInventario('DELETE', { id: item.id, nombre: item.nombre });
   }
 
-  private rellenarRecord(item: Inventario) {
-    this.Item = {};
-    this.Item.id = item.id;
-    this.Item.idExterno = item.idExterno;
-    this.Item.nombre = item.nombre;
-    this.Item.existencias = item.existencias;
-    this.Item.costo = item.costo;
-    this.Item.margenBeneficio = item.margenBeneficio;
-    this.Item.tipo = item.tipo;
-    this.Item.proveedor = item.proveedor;
-    this.Item.duracion = item.duracion;
-    this.Item.categoria = item.categoria;
-    this.Item.descripcion = item.descripcion;
+  resetItemFormControls() {
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].reset();
+    });
+  }
+
+  private rellenarRecord(item: any) {
+    this.resetItemFormControls();
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].patchValue(item[key] || '');
+    });
   }
 
   public record(method: string) {
     try {
       const body: Inventario = {
-        id: this.Item.id,
+        id: this.Item.id.value,
         empresaId: this.dataEmpresa.id,
-        idExterno: this.Item.idExterno,
-        nombre: this.Item.nombre,
-        existencias: this.Item.existencias ? this.Item.existencias : 0,
-        costo: this.Item.costo ? this.Item.costo : 0,
-        margenBeneficio: this.Item.margenBeneficio ? this.Item.margenBeneficio : 0,
-        tipo: this.Item.tipo,
-        proveedor: this.Item.proveedor,
-        duracion: this.Item.duracion,
-        categoria: this.Item.categoria,
-        descripcion: this.Item.descripcion
+        idExterno: this.Item.idExterno.value,
+        nombre: this.Item.nombre.value,
+        existencias: this.Item.existencias.value ? this.Item.existencias.value : 0,
+        costo: this.Item.costo.value ? this.Item.costo.value : 0,
+        margenBeneficio: this.Item.margenBeneficio.value ? this.Item.margenBeneficio.value : 0,
+        tipo: this.Item.tipo.value,
+        proveedor: this.Item.proveedor.value,
+        duracion: this.Item.duracion.value,
+        categoria: this.Item.categoria.value,
+        descripcion: this.Item.descripcion.value
       };
       this.dataService.fetchInventario(method, body);
     } catch (error) {
@@ -209,7 +218,7 @@ export class inventarioComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-     this.loading(true);
+    this.loading(true);
     this.cacheService.remove('Inventario');
     this.dataService.fetchInventario('GET');
     this.getProveedor();
