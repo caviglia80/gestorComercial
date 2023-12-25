@@ -21,12 +21,12 @@
   <mat-tab label="Egresos">
 
     <div class="mat-elevation-z4 m-4 rounded">
-      <mat-radio-group [(ngModel)]="filtro">
+      <mat-radio-group [formControl]="filtro">
         <mat-radio-button value="rubro">Egresos por Rubro</mat-radio-button>
         <mat-radio-button value="bp">Egresos por Beneficiario</mat-radio-button>
       </mat-radio-group>
     </div>
-    <app-reportes-egresos-rubro *ngIf="filtro==='rubro'" (variableChange)="getDataERubro($event)"></app-reportes-egresos-rubro>
-    <app-reportes-egresos-bp *ngIf="filtro==='bp'" (variableChange)="getDataEBP($event)"></app-reportes-egresos-bp>
+    <app-reportes-egresos-rubro *ngIf="filtro.value === 'rubro'" (variableChange)="getDataERubro($event)"></app-reportes-egresos-rubro>
+    <app-reportes-egresos-bp *ngIf="filtro.value === 'bp'" (variableChange)="getDataEBP($event)"></app-reportes-egresos-bp>
   </mat-tab>
 </mat-tab-group>

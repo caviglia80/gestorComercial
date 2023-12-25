@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit, EventEmitter, Output  } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -6,7 +6,7 @@ import { reportesEgresosBP } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
-
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-reportes-egresos-bp',
   templateUrl: './reportes-egresos-bp.component.html',
@@ -19,8 +19,8 @@ export class ReportesEgresosBPComponent implements OnInit, AfterViewInit {
   @Output() variableChange = new EventEmitter<MatTableDataSource<reportesEgresosBP>>();
 
   public isLoading = true;
-  public fechaDesde = ''
-  public fechaHasta = ''
+  public fechaDesde = new FormControl('');
+  public fechaHasta = new FormControl('');
 
   public Columns: { [key: string]: string } = {
     bp: 'Beneficiario',
@@ -33,11 +33,13 @@ export class ReportesEgresosBPComponent implements OnInit, AfterViewInit {
     public sharedService: SharedService,
     private cacheService: CacheService
   ) {
-    this.fechaDesde = this.sharedService.obtenerFechaPrimerDiaDelMes();
-    this.fechaHasta = this.sharedService.obtenerFechaUltimoDiaDelMes();
+    this.fechaDesde.setValue(this.sharedService.obtenerFechaPrimerDiaDelMes());
+    this.fechaHasta.setValue(this.sharedService.obtenerFechaUltimoDiaDelMes());
   }
 
   ngOnInit() {
+    this.fechaDesde.valueChanges.subscribe(() => { this.onFechaChange(); });
+    this.fechaHasta.valueChanges.subscribe(() => { this.onFechaChange(); });
     this.dataInit();
   }
 
@@ -64,7 +66,7 @@ export class ReportesEgresosBPComponent implements OnInit, AfterViewInit {
       }
     });
     this.loading(true);
-    this.dataService.fetchReporteEgresoBP(`?reporte=4&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
+    this.dataService.fetchReporteEgresoBP(`?reporte=4&startd=${this.fechaDesde.value}&endd=${this.fechaHasta.value}`);
   }
 
   private loading(state: boolean) {
@@ -81,10 +83,10 @@ export class ReportesEgresosBPComponent implements OnInit, AfterViewInit {
   }
 
   public onFechaChange() {
-    if (this.sharedService.isValidDate(this.fechaDesde) && this.sharedService.isValidDate(this.fechaHasta)) {
+    if (this.sharedService.isValidDate(this.fechaDesde.value!) && this.sharedService.isValidDate(this.fechaDesde.value!)) {
       this.cacheService.remove('ReporteEgresoBP');
       this.loading(true);
-      this.dataService.fetchReporteEgresoBP(`?reporte=4&startd=${this.fechaDesde}&endd=${this.fechaHasta}`);
+      this.dataService.fetchReporteEgresoBP(`?reporte=4&startd=${this.fechaDesde.value}&endd=${this.fechaHasta.value}`);
     }
   }
 }
