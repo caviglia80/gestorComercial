@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SharedService {
   public static isProduction = environment.production;
-  public static host = 'https://francisco-caviglia.com.ar/francisco-caviglia/php/'; /* localhost/ */
+  public static host = environment.production ? 'localhost/' : 'https://francisco-caviglia.com.ar/francisco-caviglia/php/'; /* localhost/ */
   public static proxy = 'https://cors-anywhere.herokuapp.com/';
   public monedas: string[] = [
     'ARS'
@@ -21,10 +21,8 @@ export class SharedService {
     'Cheque',
     'Pago Fácil',
     'Rapipago',
-    'Débito automático',
     'PayPal',
     'Ualá',
-    'Bitcoin',
     'Otro'
   ];
   public rubrosIngresos: string[] = [
@@ -35,7 +33,8 @@ export class SharedService {
   public rubrosEgresos: string[] = [
     'Compras',
     'Extraordinarios',
-    'Otra Actividad'];
+    'Otra Actividad'
+  ];
   public inventarioTipos: string[] = [
     'Producto',
     'Servicio'
@@ -49,7 +48,7 @@ export class SharedService {
   ) { }
 
   public message(text: string, action = 'Cerrar') {
-    if (!SharedService.isProduction) {
+    if (!environment.production) {
       this.notificationQueue.push({ text, action });
       if (!this.isNotificationDisplayed)
         this.showNextNotification();
@@ -73,107 +72,11 @@ export class SharedService {
     }
   }
 
-  public copy(textToCopy: any) {
-    const TA = document.createElement('textarea');
-    TA.value = String(textToCopy);
-    document.body.appendChild(TA);
-    TA.select();
+  public async copy(textToCopy: any) {
     try {
-      document.execCommand('copy');
+      await navigator.clipboard.writeText(textToCopy)
       this.message('Texto copiado !');
-    } finally {
-      document.body.removeChild(TA);
-    }
-  }
-
-  public encodeBase64(text: string): string {
-    return btoa(text);
-  }
-
- // public encodeImgToBase64(file: File): Observable<string> {
- //   return new Observable<string>(observer => {
- //     const img = new Image();
- //     const reader = new FileReader();
-//
- //     reader.onload = (e) => {
- //       if (e.target) {
- //         img.src = e.target.result as string;
- //       } else {
- //         observer.error('Error al leer el archivo: el evento no tiene target.');
- //       }
- //     };
-//
- //     img.onload = () => {
- //       const canvas = document.createElement('canvas');
- //       const ctx = canvas.getContext('2d');
- //       if (!ctx) {
- //         observer.error('Error al crear el contexto del canvas.');
- //         return;
- //       }
-//
- //       const maxWidth = 800; // Define aquí el ancho máximo deseado
- //       const scaleFactor = maxWidth / img.width;
-//
- //       canvas.width = maxWidth;
- //       canvas.height = img.height * scaleFactor;
-//
- //       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
- //       const base64 = canvas.toDataURL('image/jpeg'); // Usa 'image/png' para PNG
-//
- //       observer.next(base64);
- //       observer.complete();
- //     };
-//
- //     img.onerror = error => {
- //       observer.error('Error al cargar la imagen: ' + error);
- //     };
-//
- //     reader.onerror = error => {
- //       observer.error('Error al leer el archivo: ' + error);
- //     };
-//
- //     reader.readAsDataURL(file);
- //   });
- // }
-
-  public decodeBase64(base64String: string): string {
-    return atob(base64String);
-  }
-
-  public getDateNow(): Date {
-    const options = { timeZone: 'America/Argentina/Buenos_Aires' };
-    const fecha = new Date().toLocaleString('en-US', options);
-    return new Date(fecha);
-  }
-
-  public stringToDate(date: string): Date {
-    return new Date(date);
-  }
-
-  public isFAuthExpired(expirationTime: string): boolean {
-    if (expirationTime) {
-      const fechaActual: Date = this.getDateNow();
-      const fechaVencimiento: Date = this.stringToDate(expirationTime);
-      if (fechaActual > fechaVencimiento) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  public needNewFAuth(expirationTime: string): boolean {
-    if (expirationTime) {
-      const fechaActual: Date = this.getDateNow().addHours(1);
-      const fechaVencimiento: Date = this.stringToDate(expirationTime);
-      if (fechaActual > fechaVencimiento) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return true;
+    } catch { }
   }
 
   public rellenoCampos_IE(type: string): any {
@@ -247,22 +150,6 @@ export class SharedService {
     const fechaActual = new Date();
     const diferenciaMs = fechaObjeto.getTime() - fechaActual.getTime();
     return Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
-  }
-
-  public getDiasMesesDiferenciaDesdeHoy(fecha: string): string {
-    const fechaObjeto = new Date(fecha);
-    const fechaActual = new Date();
-    const diferenciaMs = fechaObjeto.getTime() - fechaActual.getTime();
-    const diferenciaDias = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
-
-    const meses = Math.floor(diferenciaDias / 30);
-    const dias = diferenciaDias % 30;
-
-    let resultado = "";
-    if (meses > 0) resultado += `${meses} mes${meses > 1 ? 'es' : ''} `;
-    if (dias > 0) resultado += `${dias} día${dias > 1 ? 's' : ''}`;
-
-    return resultado.trim();
   }
 
   public getDiasMesesDiferencia(ultimaFecha: string, fechaHasta: string): string {
