@@ -39,16 +39,11 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
   };
 
   public Columns: { [key: string]: string } = {
-    /* id: 'ID', */
     company: 'Empresa',
     contactFullname: 'Nombre contacto',
     phone: 'Teléfono',
-    /* email: 'Correo', */
-    /*  address: 'Dirección', */
     website: 'Sitio web',
-    /* accountNumber: 'Número de cuenta', */
     tipoSuministro: 'Suministro',
-    /* observation: 'Observación', */
     actions: 'Operaciones'
   };
 

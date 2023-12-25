@@ -46,7 +46,7 @@
 
         <ng-container matColumnDef="username">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by username">
-            {{ Columns['username'] }}
+            Usuario
           </th>
           <td [matTooltip]="element.username" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.username)">
@@ -56,7 +56,7 @@
 
         <ng-container matColumnDef="fullname">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by fullname">
-            {{ Columns['fullname'] }}
+            Nombre completo
           </th>
           <td [matTooltip]="element.fullname" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.fullname)"> {{element.fullname | slice:0:15 }}
@@ -65,7 +65,7 @@
 
         <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by phone">
-            {{ Columns['phone'] }}
+            Telefono
           </th>
           <td [matTooltip]="element.phone" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.phone)"> {{element.phone | slice:0:15 }} </td>
@@ -73,7 +73,7 @@
 
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by email">
-            {{ Columns['email'] }}
+            Correo
           </th>
           <td [matTooltip]="element.email" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.email)">{{ element.email | slice:0:15 }}</td>
@@ -143,36 +143,33 @@
   <div class="table-container mt-3">
     <div class="table-wrapper">
       <table>
-        <!--         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['id'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['id'])">{{ Item['id'] }}</td>
-        </tr> -->
+
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['username'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['username'])">{{ Item['username'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">Usuario:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.username.value )">{{ Item.username.value }}</td>
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['fullname'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['fullname'])">{{ Item['fullname'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">Nombre completo:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.fullname.value )">{{ Item.fullname.value }}</td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Rol:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(rol)"
-            [ngClass]="{'fw-bold': Item.administrador == '1'}">
-            {{ rol }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.rol.value )"
+            [ngClass]="{'fw-bold': Item.administrador.value == '1'}">
+            {{ Item.rol.value }}
           </td>
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['phone'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['phone'])">{{ Item['phone'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">Telefono:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.phone.value )">{{ Item.phone.value }}</td>
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['email'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['email'])">{{ Item['email'] }}
+          <td style="font-weight: bold; white-space: nowrap;">Correo:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.email.value )">{{ Item.email.value }}
           </td>
         </tr>
 
@@ -196,20 +193,20 @@
     </div>
   </div>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['username'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese usuario <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['username'] }}" [(ngModel)]="Item.username" required>
+    <input matInput placeholder="Usuario" [formControl]="Item.username" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['fullname'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese nombre completo <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['fullname'] }}" [(ngModel)]="Item.fullname" required>
+    <input matInput placeholder="Nombre completo" [formControl]="Item.fullname" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese rol <span class="red-asterisk">*</span></p>
-    <mat-select placeholder="Rol" [formControl]="rolesControl" [(ngModel)]="Item.rolId" (focus)="getRoles()">
+    <mat-select placeholder="Rol" [formControl]="Item.rolId" (focus)="getRoles()">
       <mat-option *ngFor="let rol of rolesData" [value]="rol.id">
         {{ rol.nombre }}
         <span *ngIf="rol.descripcion"> - {{ rol.descripcion }}</span>
@@ -218,10 +215,10 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['email'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese correo <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['email'] }}" [(ngModel)]="Item.email" (keyup)="correoEnUso=false" required>
-    <div *ngIf="!sharedService.isValidEmail(Item.email) && Item.email?.length > 0"
+    <input matInput placeholder="Correo" [formControl]="Item.email" (keyup)="correoEnUso = false" required>
+    <div *ngIf="!sharedService.isValidEmail(Item.email.value) && Item.email.value?.length > 0"
       style="color: red; font-size: small;">
       Correo invalido.
     </div>
@@ -231,27 +228,28 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['phone'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese telefono <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['phone'] }}" [(ngModel)]="Item.phone" required>
+    <input matInput placeholder="Telefono" [formControl]="Item.phone" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese contraseña <span class="red-asterisk">*</span></p>
-    <input matInput placeholder="Contraseña" type="password" [(ngModel)]="Item.password" required>
-    <div *ngIf="Item.password?.length >= 1 && Item.password?.length <= 7" style="color: red; font-size: small;">
+    <input matInput placeholder="Contraseña" type="password" [formControl]="Item.password" required>
+    <div *ngIf="Item.password.value?.length >= 1 && Item.password.value?.length <= 7"
+      style="color: red; font-size: small;">
       La contraseña debe tener al menos 8 caracteres.
     </div>
   </mat-form-field>
 
   <button mat-button (click)="record('POST')" [disabled]="
-    !Item.username || Item.username == false ||
-    !Item.fullname || Item.fullname == false ||
-    !Item.email || Item.email == false || !sharedService.isValidEmail(Item.email) && Item.email?.length > 0 ||
-    !Item.rolId || Item.rolId == false ||
-    !Item.phone || Item.phone == false ||
-    !Item.password || Item.password == false || Item.password?.length <= 7
-    ">Guardar</button>
+  !Item.username.valid  ||
+  !Item.fullname.valid  ||
+  !Item.email.valid ||
+  !Item.rolId.valid ||
+  !Item.phone.valid  ||
+  !Item.password.valid
+  ">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -269,20 +267,20 @@
     </div>
   </div>
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['username'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese usuario <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['username'] }}" [(ngModel)]="Item.username" required>
+    <input matInput placeholder="Usuario" [formControl]="Item.username" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['fullname'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese nombre completo <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['fullname'] }}" [(ngModel)]="Item.fullname" required>
+    <input matInput placeholder="Nombre completo" [formControl]="Item.fullname" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width" *ngIf="Item.administrador != '1'">
+  <mat-form-field class="full-width" *ngIf="Item.administrador.value != '1'">
     <p class="form-field-description">Ingrese rol <span class="red-asterisk">*</span></p>
-    <mat-select placeholder="Rol" [formControl]="rolesControl" [(ngModel)]="Item.rolId" (focus)="getRoles()">
+    <mat-select placeholder="Rol" [formControl]="Item.rolId" (focus)="getRoles()">
       <mat-option *ngFor="let rol of rolesData" [value]="rol.id">
         {{ rol.nombre }}
         <span *ngIf="rol.descripcion"> - {{ rol.descripcion }}</span>
@@ -290,31 +288,33 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['email'] | lowercase }} <span class="red-asterisk">*</span>
+  <mat-form-field class="full-width" disabled>
+    <p class="form-field-description">Ingrese correo <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['email'] }}" [(ngModel)]="Item.email" required disabled>
+    <input matInput placeholder="Correo" [formControl]="Item.email" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['phone'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese telefono <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['phone'] }}" [(ngModel)]="Item.phone" required>
+    <input matInput placeholder="Telefono" [formControl]="Item.phone" required>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese contraseña <span class="red-asterisk">*</span></p>
-    <input matInput placeholder="Contraseña" type="password" [(ngModel)]="Item.password" required>
-    <div *ngIf="Item.password?.length >= 1 && Item.password?.length <= 7" style="color: red; font-size: small;">
+    <input matInput placeholder="Contraseña" type="password" [formControl]="Item.password" required>
+    <div *ngIf="Item.password.value?.length >= 1 && Item.password.value?.length <= 7"
+      style="color: red; font-size: small;">
       La contraseña debe tener al menos 8 caracteres.
     </div>
   </mat-form-field>
 
-  <button mat-button (click)="record('PUT')" [disabled]="!Item.username || Item.username == false ||
-    !Item.fullname || Item.fullname == false ||
-    !Item.email || Item.email == false ||
-    !Item.phone || Item.phone == false ||
-    !Item.rolId && Item.administrador != '1' || Item.rolId == false  && Item.administrador != '1' ||
-    !Item.password || Item.password == false ||
-    Item.password?.length <= 7">Guardar</button>
+  <button mat-button (click)="record('PUT')" [disabled]="
+  !Item.username.valid  ||
+  !Item.fullname.valid  ||
+  !Item.email.valid  ||
+  !Item.phone.valid  ||
+  !Item.password.valid  ||
+  !Item.rolId.valid && Item.administrador.value != '1' || Item.rolId.value == false  && Item.administrador.value != '1'
+  ">Guardar</button>
 </div>

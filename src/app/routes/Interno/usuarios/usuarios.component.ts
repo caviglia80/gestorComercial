@@ -7,7 +7,7 @@ import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
 import { ExcelExportService } from '@services/excel-export/excel-export.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@services/auth/auth.service';
 @Component({
   selector: 'app-usuarios',
@@ -18,26 +18,33 @@ import { AuthService } from '@services/auth/auth.service';
 export class UsuariosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
-  public rolesControl = new FormControl();
   public rolesData: Rol[] = [];
 
   public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<Usuario>;
   public isLoading = true;
-  public Item: any = {};
   public create = false;
   public edit = false;
   public detail = false;
   public correoEnUso = false;
-  public rol = '';
+
+  public Item: any = {
+    id: new FormControl(0),
+    administrador: new FormControl(''),
+    rolId: new FormControl(0),
+    rol: new FormControl(''),
+    username: new FormControl('', Validators.required),
+    fullname: new FormControl('', Validators.required),
+    phone: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(7)]),
+  };
 
   public Columns: { [key: string]: string } = {
-    /*     id: 'ID', */
     username: 'Usuario',
     fullname: 'Nombre completo',
     phone: 'Teléfono',
     email: 'Correo',
-    /*     password: 'Contraseña', */
     actions: 'Operaciones'
   };
 
@@ -107,17 +114,17 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   }
 
   public Detail(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.detail = visible;
   }
 
   public Edit(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.edit = visible;
   }
 
   public Create(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.create = visible;
   }
 
@@ -135,18 +142,20 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     this.dataService.fetchUsuarios('DELETE', { id: item.id });
   }
 
-  private rellenarRecord(item: Usuario) {
-    this.Item = {};
-    this.Item.id = item.id;
-    this.Item.administrador = item.administrador;
-    this.Item.rolId = item.rolId;
-    // this.rol = this.rolesData.find(item => item.id === this.Item.rolId)?.nombre || 'Desconocido.';
-    this.rol = item.administrador == '1' ? 'Administrador' : this.rolesData.find(rol => rol.id === item.rolId)?.nombre || 'Desconocido';
-    this.Item.username = item.username;
-    this.Item.fullname = item.fullname;
-    this.Item.phone = item.phone;
-    this.Item.email = item.email;
-    this.Item.password = '';
+  resetItemFormControls() {
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].reset();
+    });
+  }
+
+  private rellenarRecord(item: any) {
+    this.resetItemFormControls();
+    Object.keys(this.Item).forEach(key => {
+      if (key === 'rol')
+        this.Item[key].patchValue(item.administrador == '1' ? 'Administrador' : this.rolesData.find(rol => rol.id === item.rolId)?.nombre || 'Desconocido');
+      else
+        this.Item[key].patchValue(item[key] || '');
+    });
   }
 
   public record(method: string) {
@@ -157,16 +166,16 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     }
     try {
       const body: Usuario = {
-        id: this.Item.id,
-        empresaId: this.dataEmpresa.id,
-        administrador: this.Item.administrador,
-        rolId: this.Item.rolId,
-        username: this.Item.username,
-        fullname: this.Item.fullname,
-        phone: this.Item.phone,
-        email: this.Item.email,
-        password: this.Item.password
+        id: this.Item.id.value,
+        username: this.Item.username.value,
+        fullname: this.Item.fullname.value,
+        phone: this.Item.phone.value,
+        email: this.Item.email.value,
+        password: this.Item.password.value
       };
+
+      if (!this.Item.administrador.value)
+        body.rolId = this.Item.rolId.value;
 
       this.dataService.fetchUsuarios(method, body);
     } catch (error) {
@@ -179,7 +188,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-     this.loading(true);
+    this.loading(true);
     this.cacheService.remove('Usuarios');
     this.dataService.fetchUsuarios('GET');
   }

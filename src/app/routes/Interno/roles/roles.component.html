@@ -46,7 +46,7 @@
 
         <ng-container matColumnDef="nombre">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by nombre">
-            {{ Columns['nombre'] }}
+            Nombre
           </th>
           <td [matTooltip]="element.nombre" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.nombre)">
@@ -73,7 +73,7 @@
 
         <ng-container matColumnDef="descripcion">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by descripcion">
-            {{ Columns['descripcion'] }}
+            Descripcion
           </th>
           <td [matTooltip]="element.descripcion" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.descripcion)"> {{element.descripcion | slice:0:60 }} </td>
@@ -121,8 +121,8 @@
       <p><mat-icon>error_outline</mat-icon><br>Sin datos</p>
     </div>
 
-    <mat-paginator #paginator [hidden]="isLoading" class="custom-paginator"
-      [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons>
+    <mat-paginator #paginator [hidden]="isLoading" class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]"
+      showFirstLastButtons>
     </mat-paginator>
   </div>
 </div>
@@ -146,12 +146,13 @@
       <table>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['nombre'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['nombre'])">{{ Item['nombre'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">Nombre:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.nombre.value )">{{ Item.nombre.value }}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['descripcion'] }}:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy(Item['descripcion'])">{{ Item['descripcion'] }}</td>
+          <td style="font-weight: bold; white-space: nowrap;">Descripcion:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.descripcion.value )">{{ Item.descripcion.value
+            }}</td>
         </tr>
       </table>
 
@@ -195,9 +196,8 @@
   </div>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['nombre'] | lowercase }} <span class="red-asterisk">*</span>
-    </p>
-    <input matInput placeholder="{{ Columns['nombre'] }}" [(ngModel)]="Item.nombre" required>
+    <p class="form-field-description">Ingrese nombre <span class="red-asterisk">*</span> </p>
+    <input matInput placeholder="Nombre" [formControl]="Item.nombre" required>
   </mat-form-field>
 
   <table class="table">
@@ -216,12 +216,11 @@
   </table>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['descripcion'] | lowercase }}
-    </p>
-    <input matInput placeholder="{{ Columns['descripcion'] }}" [(ngModel)]="Item.descripcion">
+    <p class="form-field-description">Ingrese descripcion </p>
+    <input matInput placeholder="Descripcion" [formControl]="Item.descripcion">
   </mat-form-field>
 
-  <button mat-button (click)="record('POST')" [disabled]="!Item.nombre || Item.nombre == false">Guardar</button>
+  <button mat-button (click)="record('POST')" [disabled]="!Item.nombre.valid">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -240,9 +239,9 @@
   </div>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['nombre'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese nombre <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['nombre'] }}" [(ngModel)]="Item.nombre" required>
+    <input matInput placeholder="Nombre" [formControl]="Item.nombre" required>
   </mat-form-field>
 
   <table class="table">
@@ -261,12 +260,12 @@
   </table>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['descripcion'] | lowercase }}
+    <p class="form-field-description">Ingrese descripcion
     </p>
-    <input matInput placeholder="{{ Columns['descripcion'] }}" [(ngModel)]="Item.descripcion">
+    <input matInput placeholder="Descripcion" [formControl]="Item.descripcion">
   </mat-form-field>
 
-  <button mat-button (click)="record('PUT')" [disabled]="!Item.nombre || Item.nombre == false">Guardar</button>
+  <button mat-button (click)="record('PUT')" [disabled]="!Item.nombre.valid">Guardar</button>
 </div>
 
 <!-- Vista de duplicado de registros -->
@@ -285,9 +284,9 @@
   </div>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['nombre'] | lowercase }} <span class="red-asterisk">*</span>
+    <p class="form-field-description">Ingrese nombre <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="{{ Columns['nombre'] }}" [(ngModel)]="Item.nombre" required>
+    <input matInput placeholder="Nombre" [formControl]="Item.nombre" required>
   </mat-form-field>
 
   <table class="table">
@@ -306,10 +305,10 @@
   </table>
 
   <mat-form-field class="full-width">
-    <p class="form-field-description">Ingrese {{ Columns['descripcion'] | lowercase }}
+    <p class="form-field-description">Ingrese descripcion
     </p>
-    <input matInput placeholder="{{ Columns['descripcion'] }}" [(ngModel)]="Item.descripcion">
+    <input matInput placeholder="Descripcion" [formControl]="Item.descripcion">
   </mat-form-field>
 
-  <button mat-button (click)="record('POST')" [disabled]="!Item.nombre || Item.nombre == false">Guardar</button>
+  <button mat-button (click)="record('POST')" [disabled]="!Item.nombre.valid">Guardar</button>
 </div>

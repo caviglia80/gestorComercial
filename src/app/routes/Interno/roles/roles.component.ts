@@ -8,12 +8,12 @@ import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
 import { ExcelExportService } from '@services/excel-export/excel-export.service';
 import { AuthService } from '@services/auth/auth.service';
+import { FormControl, Validators } from '@angular/forms';
 interface Menu {
   ruta: string;
   nombre: string;
   habilitado: boolean;
 }
-
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
@@ -26,11 +26,18 @@ export class RolesComponent implements OnInit, AfterViewInit {
   public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<Rol>;
   public isLoading = true;
-  public Item: any = {};
+
   public create = false;
   public edit = false;
   public double = false;
   public detail = false;
+
+  public Item: any = {
+    id: new FormControl(0),
+    nombre: new FormControl('', Validators.required),
+    permisos: new FormControl(''),
+    descripcion: new FormControl('')
+  };
 
   public Columns: { [key: string]: string } = {
     nombre: 'Nombre',
@@ -114,23 +121,23 @@ export class RolesComponent implements OnInit, AfterViewInit {
   }
 
   public Detail(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.detail = visible;
   }
 
   public Edit(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.edit = visible;
   }
 
   public Double(visible: boolean) {
-    this.Item = {};
+    this.resetItemFormControls();
     this.double = visible;
   }
 
   public Create(visible: boolean) {
     this.menusHabilitacion_reset();
-    this.Item = {};
+    this.resetItemFormControls();
     this.create = visible;
   }
 
@@ -159,24 +166,29 @@ export class RolesComponent implements OnInit, AfterViewInit {
     this.dataService.fetchRoles('DELETE', { id: item.id, nombre: item.nombre });
   }
 
-  private rellenarRecord(item: Rol) {
-    this.Item = {};
-    this.Item.id = item.id;
-    this.Item.nombre = item.nombre;
+  resetItemFormControls() {
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].reset();
+    });
+  }
+
+  private rellenarRecord(item: any) {
+    this.resetItemFormControls();
+    Object.keys(this.Item).forEach(key => {
+      this.Item[key].patchValue(item[key] || '');
+    });
     this.menusHabilitacion = JSON.parse(item.menus);
-    this.Item.permisos = '';
-    this.Item.descripcion = item.descripcion;
   }
 
   public record(method: string) {
     try {
       const body: Rol = {
-        id: this.Item.id,
+        id: this.Item.id.value,
         empresaId: this.dataEmpresa.id,
-        nombre: this.Item.nombre,
+        nombre: this.Item.nombre.value,
         menus: JSON.stringify(this.menusHabilitacion),
-        permisos: this.Item.permisos,
-        descripcion: this.Item.descripcion
+        permisos: this.Item.permisos.value,
+        descripcion: this.Item.descripcion.value
       };
       this.dataService.fetchRoles(method, body);
     } catch (error) {
@@ -190,7 +202,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
-     this.loading(true);
+    this.loading(true);
     this.cacheService.remove('Roles');
     this.dataService.fetchRoles('GET');
   }
