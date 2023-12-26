@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 import { Router } from '@angular/router';
@@ -9,75 +10,66 @@ import { SharedService } from '@services/shared/shared.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
-  public nombreCompleto: string = "";
-  public telefono: string = "";
-
-  public correo: string = "";
-  public confirmarCorreo: string = "";
-
-  public clave: string = "";
-  public confirmarClave: string = "";
-
+export class RegisterComponent {
+  public registerForm: FormGroup;
   public errorMsg: string = '';
   public loading: boolean = false;
 
   constructor(
+    private fb: FormBuilder,
     public dataService: DataService,
     public sharedService: SharedService,
     private router: Router
-  ) { }
-
-  ngOnInit(): void {
-    this.dataService.Usuarios$
-      .subscribe({
-        next: (data) => {
-          if (data) {
-            if (data[0])
-              if (data[0].Estado)
-                if (data[0].Estado === 'generado')
-                  this.router.navigate(['/login']);
-          } else this.errorMsg = 'Ocurrio un error, intente nuevamente mas tarde.';
-
-          if (data[0])
-            if (data[0].Estado)
-              if (data[0].Estado === 'error')
-                if (data[0].message)
-                  this.errorMsg = data[0].message || 'Ocurrio un error, intente nuevamente mas tarde.';
-
-          this.loading = false;
-        }
-      });
+  ) {
+    this.registerForm = this.fb.group({
+      nombreCompleto: ['', Validators.required],
+      telefono: ['', Validators.required],
+      correo: ['', Validators.required],
+      confirmarCorreo: ['', Validators.required],
+      clave: ['', Validators.required],
+      confirmarClave: ['', Validators.required],
+    });
   }
 
-  public Registro() {
-    if (this.correo !== this.confirmarCorreo) {
+  public async Registro() {
+    this.errorMsg = '';
+
+    const { nombreCompleto, telefono, correo, confirmarCorreo, clave, confirmarClave } = this.registerForm.value;
+
+    if (correo !== confirmarCorreo) {
       this.errorMsg = 'Ingreso mal el correo.';
       return;
-    } else if (!this.sharedService.isValidEmail(this.correo)) {
+    } else if (!this.sharedService.isValidEmail(correo)) {
       this.errorMsg = 'Ingreso un correo invalido.';
       return;
-    } else if (this.clave !== this.confirmarClave) {
+    } else if (clave !== confirmarClave) {
       this.errorMsg = 'Ingreso mal la contraseña.';
       return;
-    } else if (this.clave.length < 8) {
+    } else if (clave.length < 8) {
       this.errorMsg = 'Debe ingresar una contraseña igual o mayor a 8 caracteres.';
       return;
     }
 
-    this.errorMsg = '';
     this.loading = true;
 
-    const body: Usuario = {
-      administrador: '1',
-      isNewAdmin: '1',
-      username: this.sharedService.onlyUser(this.correo).trim(),
-      fullname: this.nombreCompleto.trim(),
-      phone: this.telefono.trim(),
-      email: this.correo.trim(),
-      password: this.clave
-    };
+    try {
+      const usuarioNuevo: Usuario = {
+        administrador: '1',
+        isNewAdmin: '1',
+        username: this.sharedService.onlyUser(correo).trim(),
+        fullname: nombreCompleto.trim(),
+        phone: telefono.trim(),
+        email: correo.trim(),
+        password: clave
+      };
 
-    this.dataService.fetchUsuarios('POST', body);
+      const response = await this.dataService.fetchUsuarios('POST', usuarioNuevo);
+      if (response.message === 'Registros generados')
+        this.router.navigate(['/login']);
+      else
+        this.errorMsg = response.message;
+    } finally {
+      this.loading = false;
+    }
   }
 }

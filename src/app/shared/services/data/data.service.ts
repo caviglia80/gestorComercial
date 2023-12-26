@@ -121,7 +121,7 @@ export class DataService {
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
   }
 
-  public fetchUsuarios(method = '', body: any = {}, proxy = false): void {
+  public async fetchUsuarios(method = '', body: any = {}, proxy = false) {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/usuarios.php';
@@ -135,7 +135,7 @@ export class DataService {
     }
 
     if (method === 'GET') {
-      this.http.get<any[]>(url)
+      return await this.http.get<any[]>(url)
         .subscribe({
           next: (data) => {
             this.cacheService.set('Usuarios', data);
@@ -148,7 +148,7 @@ export class DataService {
           }
         });
     } else if (method === 'DELETE') {
-      this.http.delete<any[]>(url, { body: body })
+      return await this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
             this.sharedService.message('Usuarios: registro eliminado.');
@@ -161,25 +161,25 @@ export class DataService {
           }
         });
     } else if (method === 'POST') {
-      this.http.post<any[]>(url, body, headers)
-        .subscribe({
-          next: () => {
-            this.sharedService.message('Usuarios: registro guardado.');
-            if (!JSON.parse(body).administrador) {
-              this.cacheService.remove('Usuarios');
-              this.fetchUsuarios('GET');
-            } else {
-              this.ds_Usuarios.next([{ "Estado": "generado" }]);
-            }
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Error al intentar guardar el registro.');
-            this.ds_Usuarios.next([{ "Estado": "error", "message": error ? (error.error ? (error.error.message ? error.error.message : error) : 'Error desconocido.') : 'Error desconocido.' }]);
-          }
-        });
+      try {
+        const response = await firstValueFrom(this.http.post<any>(url, body, headers));
+        if (!SharedService.isProduction) console.log(response);
+        this.sharedService.message('Usuarios: registro guardado.');
+        if (!JSON.parse(body).administrador) {
+          this.cacheService.remove('Usuarios');
+          this.fetchUsuarios('GET');
+        }
+        return response;
+      } catch (errorResponse: any) {
+        const response: any = {};
+        if (errorResponse.status === 400)
+          response.message = errorResponse.error.message || 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        else
+          response.message = 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        return response;
+      }
     } else if (method === 'PUT') {
-      this.http.put<any[]>(url, body, headers)
+      return await this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
             this.sharedService.message('Usuarios: registro actualizado.');
@@ -193,6 +193,7 @@ export class DataService {
         });
     }
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+    return;
   }
 
   public fetchRoles(method = '', body: any = {}, proxy = false): void {
