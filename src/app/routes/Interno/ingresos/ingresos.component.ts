@@ -22,7 +22,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   public dataEmpresa: empresa = new empresa();
-  public inventarioControl = new FormControl();
   public filteredInventario: Observable<any[]>;
   public dataSource = new MatTableDataSource<moneyIncome>;
   public dataInventario: Inventario[] = [];
@@ -79,7 +78,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     private cacheService: CacheService,
     private excelExportService: ExcelExportService
   ) {
-    this.filteredInventario = this.inventarioControl.valueChanges.pipe(
+    this.filteredInventario = this.Item.inventarioId.valueChanges.pipe(
       startWith(''),
       map(value => this._filterProduct(value))
     );
@@ -129,7 +128,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   public onProductoSeleccionado(event: any): void {
-    const inventario: Inventario = this._getProduct(event.option.value);
+    const inventario: Inventario = this._getProduct(event.option.value!.split(' - ')[0]);
+  //  this.Item.inventarioId.setValue(event.option.value);
 
     if (inventario)
       if (inventario.tipo === 'Producto') {
@@ -141,7 +141,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
           } else {
             this.sharedService.message('Advertencia: el producto no tiene stock');
             this.Item.monto.setValue(0);
-            this.inventarioControl.reset();
+            this.Item.inventarioId.reset();
           }
         }
         this.Item.margenBeneficio.setValue(inventario.margenBeneficio);
@@ -150,7 +150,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       }
   }
 
-  private _filterProduct(value: string): Inventario[] {
+  private _filterProduct(value: any): Inventario[] {
     this.getInventario();
     if (value != null) {
       const filterValue = value?.toString().toLowerCase();
@@ -269,7 +269,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     if (!this._getProduct(this.Item.inventarioId.value)) {
       this.sharedService.message('Advertencia: seleccione un producto válido.');
       this.Item.monto.setValue(0);
-      this.inventarioControl.reset();
+      this.Item.inventarioId.reset();
       return false;
     }
     return true;

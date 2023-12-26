@@ -120,11 +120,13 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
 
   public Edit(visible: boolean) {
     this.resetItemFormControls();
+    if (visible) this.Item.email.disable(); else this.Item.email.enable();
     this.edit = visible;
   }
 
   public Create(visible: boolean) {
     this.resetItemFormControls();
+    this.Item.email.enable();
     this.create = visible;
   }
 

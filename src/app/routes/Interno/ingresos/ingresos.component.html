@@ -288,10 +288,11 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Buscar en inventario (ID / ID Externo / Nombre) <span
         class="red-asterisk">*</span></p>
-    <input type="text" placeholder="ID Producto / ID Servicio" matInput [formControl]="inventarioControl"
-      [matAutocomplete]="auto" [formControl]="Item.inventarioId" (focus)="getInventario()" required>
-    <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
-      <mat-option *ngFor="let inventario of filteredInventario | async" [value]="inventario.id">
+    <input type="text" placeholder="ID Producto / ID Servicio" matInput [matAutocomplete]="auto"
+      [formControl]="Item.inventarioId" (focus)="getInventario()" required>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
+      <mat-option *ngFor="let inventario of filteredInventario | async"
+        [value]="inventario.id + ' - ' + inventario.idExterno + ' - ' + inventario.nombre">
         <span *ngIf="inventario?.id">{{inventario?.id}}</span>
         <span *ngIf="inventario?.idExterno"> - {{inventario?.idExterno}}</span>
         <span *ngIf="inventario?.nombre"> - {{inventario?.nombre}}</span>
@@ -371,10 +372,11 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Buscar en inventario (ID / ID Externo / Nombre) <span
         class="red-asterisk">*</span></p>
-    <input type="text" placeholder="ID Producto / ID Servicio" matInput [formControl]="inventarioControl"
-      [matAutocomplete]="auto" [formControl]="Item.inventarioId" (focus)="getInventario()" required>
-    <mat-autocomplete #auto="matAutocomplete" auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
-      <mat-option *ngFor="let inventario of filteredInventario | async" [value]="inventario.id">
+    <input type="text" placeholder="ID Producto / ID Servicio" matInput [matAutocomplete]="auto"
+      [formControl]="Item.inventarioId" (focus)="getInventario()" required>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
+      <mat-option *ngFor="let inventario of filteredInventario | async"
+        [value]="inventario.id + ' - ' + inventario.idExterno + ' - ' + inventario.nombre">
         <span *ngIf="inventario?.id">{{inventario?.id}}</span>
         <span *ngIf="inventario?.idExterno"> - {{inventario?.idExterno}}</span>
         <span *ngIf="inventario?.nombre"> - {{inventario?.nombre}}</span>
