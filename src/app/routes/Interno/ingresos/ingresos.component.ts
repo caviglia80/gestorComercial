@@ -369,6 +369,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     if (this.dataEmpresa.validarInventarioEnabled == '1' && !this.productoValido()) return;
     try {
       const i = this._getProduct(this.Item.inventarioId.value);
+      const margenBeneficio = i ? (i.tipo === 'Producto' ? this.Item.margenBeneficio.value : 0) : 0;
 
       const body: Ingreso = {
         id: this.Item.id.value,
@@ -378,7 +379,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         inventarioId: this.Item.inventarioId.value,
         moneda: this.Item.moneda.value,
         monto: this.Item.monto.value,
-        margenBeneficio: i ? (i.tipo === 'Producto' ? this.Item.margenBeneficio.value : 0) : 0,
+        margenBeneficio: margenBeneficio,
         method: this.Item.method.value,
         category: this.Item.category.value,
         comprobante: this.Item.comprobante.value,
@@ -390,6 +391,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       this.itemRemito.push(body);
 
       if (addMore) {
+        this.Item.nombre.setValue('');
         this.Item.inventarioId.setValue('');
         this.Item.monto.setValue(0);
       } else {
