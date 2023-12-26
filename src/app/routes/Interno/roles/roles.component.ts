@@ -92,7 +92,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
 
     this.dataService.Roles$.subscribe({
       next: (data) => {
-        if (data && data.length) {
+        if (data) {
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;

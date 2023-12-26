@@ -119,7 +119,7 @@ export class NavComponent implements OnInit {
   public getUserInfo() {
     this.authService.UserInfo$.subscribe({
       next: (data) => {
-        if (data && data.length !== 0) {
+        if (data) {
           this.UserInfo = data;
           if (data.username) this.username = data.username.trim(); else this.username = '';
           if (data.rol) this.rolName = data.rol.nombre.trim(); else this.rolName = '';

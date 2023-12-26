@@ -107,7 +107,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.http.get<any>(`${SharedService.host}DB/guard.php`).subscribe({
         next: (data) => {
-          if (data && data.length !== 0) {
+          if (data) {
             this.UserInfo = data;
             if (this.UserInfo.rol)
               if (this.UserInfo.rol.menus)

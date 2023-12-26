@@ -171,6 +171,7 @@ export class DataService {
         }
         return response;
       } catch (errorResponse: any) {
+        this.sharedService.message('Error al intentar guardar registro.');
         const response: any = {};
         if (errorResponse.status === 400)
           response.message = errorResponse.error.message || 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
@@ -362,18 +363,18 @@ export class DataService {
           }
         });
     } else if (method === 'DELETE') {
-      return await this.http.delete<any[]>(url, { body: body })
-        .subscribe({
-          next: () => {
-            this.sharedService.message('Ingresos: registro eliminado.');
-            this.cacheService.remove('Ingresos');
-            this.fetchIngresos('GET');
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Error al intentar borrar el registro.');
-          }
-        });
+      try {
+        const response = await firstValueFrom(this.http.delete<any[]>(url, { body: body }));
+        this.sharedService.message('Ingresos: registro eliminado.');
+        this.cacheService.remove('Ingresos');
+        this.fetchIngresos('GET');
+        return response;
+      } catch (errorResponse: any) {
+        this.sharedService.message('Error al intentar eliminar registro.');
+        const response: any = {};
+        response.message = 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        return response;
+      }
     } else if (method === 'POST') {
       const response = await firstValueFrom(this.http.post<any>(url, body, headers));
       if (!SharedService.isProduction) console.log(response);
@@ -382,18 +383,18 @@ export class DataService {
       this.fetchIngresos('GET');
       return response;
     } else if (method === 'PUT') {
-      return await this.http.put<any[]>(url, body, headers)
-        .subscribe({
-          next: () => {
-            this.sharedService.message('Ingresos: registro actualizado.');
-            this.cacheService.remove('Ingresos');
-            this.fetchIngresos('GET');
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Error al intentar editar el registro.');
-          }
-        });
+      try {
+        const response = await firstValueFrom(this.http.put<any>(url, body, headers));
+        this.sharedService.message('Ingresos: registro actualizado.');
+        this.cacheService.remove('Ingresos');
+        this.fetchIngresos('GET');
+        return response;
+      } catch (errorResponse: any) {
+        this.sharedService.message('Error al intentar editar el registro.');
+        const response: any = {};
+        response.message = 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        return response;
+      }
     }
     return;
   }

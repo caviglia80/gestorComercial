@@ -52,7 +52,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   private dataInit() {
     this.dataService.Sa$.subscribe({
       next: (data) => {
-        if (data && data.length) {
+        if (data) {
           this.Administradores = data.administradores;
           const enrichedData = data.empresas.map((empresa: empresa) => {
             const admin = this.Administradores.find(admin => admin.id === empresa.usuarioId);

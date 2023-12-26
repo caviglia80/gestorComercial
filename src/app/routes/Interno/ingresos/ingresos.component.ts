@@ -105,7 +105,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
 
-        if (data && data.length) {
+        if (data) {
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -300,7 +300,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.getInventario();
   }
 
-  public recordEdit() {
+  public async recordEdit() {
     try {
       this.Item.inventarioId.setValue((this.dataInventario.find(i => i.nombre == this.Item.nombre.value)?.id === this.Item.inventarioId.value) ? this.Item.inventarioId.value : null);
 
@@ -321,7 +321,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         description: this.Item.description.value
       };
 
-      this.dataService.fetchIngresos('PUT', body);
+      await this.dataService.fetchIngresos('PUT', body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
     } finally {

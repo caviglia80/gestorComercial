@@ -48,7 +48,7 @@ export class RenovacionComponent implements OnInit {
 
     this.dataService.Usuarios$.subscribe({
       next: (data) => {
-        if (data && data.length !== 0) {
+        if (data) {
           this.usuarios = data;
           this.usuario = this.usuarios.find(user => user.id == this.dataEmpresa.usuarioId && user.administrador);
         }
