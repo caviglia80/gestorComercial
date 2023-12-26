@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
-import { moneyOutlays, empresa } from '@models/mainClasses/main-classes';
+import { Egreso, empresa } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
   public lineChartLabels: string[] = [];
   public lineChartType: ChartType = 'line';
 
-  public incomeData: moneyOutlays[] = [];
+  public incomeData: Egreso[] = [];
   public groupedIncomeData: any[] = [];
   public filteredData: any[] = [];
 

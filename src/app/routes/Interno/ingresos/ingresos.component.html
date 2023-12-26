@@ -54,13 +54,13 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="inventarioId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by inventarioId">
-            {{ Columns['inventarioId'] }}
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by nombre">
+            {{ Columns['nombre'] }}
           </th>
-          <td [matTooltip]="element.inventarioId" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.inventarioId)">
-            {{ element.inventarioId == false ? '-' : element.inventarioId }}
+          <td [matTooltip]="element.nombre" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
+            (dblclick)="sharedService.copy(element.nombre)">
+            {{ element.nombre == false ? '-' : element.nombre }}
           </td>
         </ng-container>
 
@@ -195,13 +195,17 @@
         </tr>
 
         <tr>
-          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['inventarioId'] }}:</td>
-          <td style="width: 100%;"
-            (dblclick)="sharedService.copy((Item.inventario.value?.id  || '') + ' - ' + (Item.inventario.value?.idExterno || '') + ' - ' + (Item.inventario.value?.nombre || ''))">
-            <span *ngIf="Item.inventario.value?.id">{{Item.inventario.value?.id}}</span>
-            <span *ngIf="Item.inventario.value?.idExterno"> - {{Item.inventario.value?.idExterno}}</span>
-            <span *ngIf="Item.inventario.value?.nombre"> - {{Item.inventario.value?.nombre}}</span>
-            <span *ngIf="!Item.inventario.value">(No encontrado en inventario)</span>
+          <td style="font-weight: bold; white-space: nowrap;">{{ Columns['nombre'] }}:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item.nombre.value)">
+            {{ Item.nombre.value }}
+          </td>
+        </tr>
+
+        <tr>
+          <td style="font-weight: bold; white-space: nowrap;">ID Inventario:</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy(Item.inventarioId.value)">
+            <span *ngIf="Item.inventarioId.value != false">{{ Item.inventarioId.value }}</span>
+            <span *ngIf="Item.inventarioId.value == false">(No encontrado en inventario)</span>
           </td>
         </tr>
 
@@ -289,7 +293,7 @@
     <p class="form-field-description">Buscar en inventario (ID / ID Externo / Nombre) <span
         class="red-asterisk">*</span></p>
     <input type="text" placeholder="ID Producto / ID Servicio" matInput [matAutocomplete]="auto"
-      [formControl]="Item.inventarioId" (focus)="getInventario()" required>
+      [formControl]="Item.nombre" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let inventario of filteredInventario | async"
         [value]="inventario.id + ' - ' + inventario.idExterno + ' - ' + inventario.nombre">
@@ -339,12 +343,12 @@
   </mat-form-field>
 
   <button mat-button (click)="remitoCreate(false)"
-    [disabled]="!Item.date.valid || !Item.inventarioId.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid">
+    [disabled]="!Item.date.valid || !Item.nombre.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid">
     Continuar
   </button>
 
   <button mat-button (click)="remitoCreate(true)"
-    [disabled]="!Item.date.valid || !Item.inventarioId.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid">
+    [disabled]="!Item.date.valid || !Item.nombre.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid">
     <mat-icon>add</mat-icon>
   </button>
 </div>
@@ -373,7 +377,7 @@
     <p class="form-field-description">Buscar en inventario (ID / ID Externo / Nombre) <span
         class="red-asterisk">*</span></p>
     <input type="text" placeholder="ID Producto / ID Servicio" matInput [matAutocomplete]="auto"
-      [formControl]="Item.inventarioId" (focus)="getInventario()" required>
+      [formControl]="Item.nombre" (focus)="getInventario()" required>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onProductoSeleccionado($event)">
       <mat-option *ngFor="let inventario of filteredInventario | async"
         [value]="inventario.id + ' - ' + inventario.idExterno + ' - ' + inventario.nombre">
@@ -423,7 +427,7 @@
   </mat-form-field>
 
   <button mat-button (click)="recordEdit()"
-    [disabled]="!Item.date.valid || !Item.inventarioId.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid">
+    [disabled]="!Item.date.valid || !Item.nombre.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid">
     Guardar
   </button>
 </div>

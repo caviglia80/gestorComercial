@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { moneyOutlays, proveedor, empresa } from '@models/mainClasses/main-classes';
+import { Egreso, proveedor, empresa } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { FormControl, Validators } from '@angular/forms';
@@ -23,7 +23,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
   public dataEmpresa: empresa = new empresa();
   public proveedorFiltered: Observable<any[]>;
   public proveedorData: proveedor[] = [];
-  public dataSource = new MatTableDataSource<moneyOutlays>;
+  public dataSource = new MatTableDataSource<Egreso>;
   public isLoading = true;
   public create = false;
   public edit = false;
@@ -155,17 +155,17 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     this.create = visible;
   }
 
-  public viewItem(item: moneyOutlays) {
+  public viewItem(item: Egreso) {
     this.Detail(true);
     this.rellenarRecord(item);
   }
 
-  public editItem(item: moneyOutlays) {
+  public editItem(item: Egreso) {
     this.Edit(true);
     this.rellenarRecord(item);
   }
 
-  public deleteItem(item: moneyOutlays) {
+  public deleteItem(item: Egreso) {
     this.dataService.fetchEgresos('DELETE', { id: item.id });
   }
 
@@ -184,7 +184,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
 
   public record(method: string) {
     try {
-      const body: moneyOutlays = {
+      const body: Egreso = {
         id: this.Item.id.value,
         empresaId: this.dataEmpresa.id,
         date: this.Item.date.value,

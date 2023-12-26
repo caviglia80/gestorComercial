@@ -346,6 +346,7 @@ export class DataService {
       this.ds_Ingresos.next(this.cacheService.get('Ingresos'));
       return;
     }
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
 
     if (method === 'GET') {
       return await this.http.get<any[]>(url)
@@ -394,7 +395,6 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
     return;
   }
 

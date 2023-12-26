@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, LabelItem } from 'chart.js';
-import { moneyIncome } from '@models/mainClasses/main-classes';
+import { Ingreso } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
   public chartLabels: LabelItem[] = [];
   public chartType: ChartType = 'pie';
 
-  public incomeData: moneyIncome[] = [];
+  public incomeData: Ingreso[] = [];
   public groupedIncomeData: any[] = [];
   public filteredData: any[] = [];
 

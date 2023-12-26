@@ -146,10 +146,11 @@ export class proveedor {
   }
 }
 
-export class moneyIncome {
+export class Ingreso {
   id?: number;
   empresaId?: number;
   date: string;
+  nombre?: string;
   inventarioId?: number;
   moneda?: string;
   monto?: number;
@@ -165,6 +166,7 @@ export class moneyIncome {
     id = 0,
     empresaId = 0,
     date = '',
+    nombre = '',
     inventarioId = 0,
     moneda = '',
     monto = 0,
@@ -179,6 +181,7 @@ export class moneyIncome {
     this.id = id;
     this.empresaId = empresaId;
     this.date = date;
+    this.nombre = nombre;
     this.inventarioId = inventarioId;
     this.moneda = moneda;
     this.monto = monto;
@@ -192,7 +195,7 @@ export class moneyIncome {
   }
 }
 
-export class moneyOutlays {
+export class Egreso {
   id?: number;
   empresaId?: number;
   date: string;
@@ -229,39 +232,39 @@ export class moneyOutlays {
   }
 }
 
-export class facturacionAuth {
-  id: number;
-  empresaId: number;
-  cuit: string | null;
-  sign: string | null;
-  token: string | null;
-  expirationTime: string | null;
-  uniqueId: string | null;
-  certificado: string | null;
-  llave: string | null;
-
-  constructor(
-    id = 1,
-    empresaId = 0,
-    cuit = '',
-    sign = '',
-    token = '',
-    expirationTime = '',
-    uniqueId = '',
-    certificado = '',
-    llave = ''
-  ) {
-    this.id = id;
-    this.empresaId = empresaId;
-    this.cuit = cuit;
-    this.sign = sign;
-    this.token = token;
-    this.expirationTime = expirationTime;
-    this.uniqueId = uniqueId;
-    this.certificado = certificado;
-    this.llave = llave;
-  }
-}
+//export class facturacionAuth {
+//  id: number;
+//  empresaId: number;
+//  cuit: string | null;
+//  sign: string | null;
+//  token: string | null;
+//  expirationTime: string | null;
+//  uniqueId: string | null;
+//  certificado: string | null;
+//  llave: string | null;
+//
+//  constructor(
+//    id = 1,
+//    empresaId = 0,
+//    cuit = '',
+//    sign = '',
+//    token = '',
+//    expirationTime = '',
+//    uniqueId = '',
+//    certificado = '',
+//    llave = ''
+//  ) {
+//    this.id = id;
+//    this.empresaId = empresaId;
+//    this.cuit = cuit;
+//    this.sign = sign;
+//    this.token = token;
+//    this.expirationTime = expirationTime;
+//    this.uniqueId = uniqueId;
+//    this.certificado = certificado;
+//    this.llave = llave;
+//  }
+//}
 
 export class empresa {
   id: number;

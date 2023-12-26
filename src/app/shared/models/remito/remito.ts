@@ -1,4 +1,4 @@
-import { moneyIncome, Inventario } from '@models/mainClasses/main-classes';
+import { Ingreso, Inventario } from '@models/mainClasses/main-classes';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
@@ -40,7 +40,7 @@ export class Remito {
     this.items = items;
   }
 
-  public getRemito(itemRemito: moneyIncome[], inventario: Inventario[]): Remito {
+  public getRemito(itemRemito: Ingreso[], inventario: Inventario[]): Remito {
     let remito: Remito = new Remito();
 
     const itemsConsolidados = this.consolidateItems(itemRemito);
@@ -54,7 +54,7 @@ export class Remito {
     remito.moneda = primerItem.moneda;
 
     remito.items = itemsConsolidados.map(item => ({
-      nombre: this.getInventario_Nombre(item.inventarioId, inventario),
+      nombre: item.nombre,
       codigo: this.getInventario_Codigos(item.inventarioId, inventario),
       descripcion: this.getInventario_Descripcion(item.inventarioId, inventario),
       cantidad: item.cantidad,
@@ -65,7 +65,7 @@ export class Remito {
     return remito;
   }
 
-  private consolidateItems(itemRemito: moneyIncome[]): any[] {
+  private consolidateItems(itemRemito: Ingreso[]): any[] {
     const consolidatedItems: any[] = [];
     for (const ingreso of itemRemito) {
       const existingItem = consolidatedItems.find((item) => item.inventarioId === ingreso.inventarioId && item.monto === ingreso.monto);
@@ -105,7 +105,7 @@ export class Remito {
       return '...';
   }
 
-  private TotalRemito(itemRemito: moneyIncome[]): string {
+  private TotalRemito(itemRemito: Ingreso[]): string {
     let total = 0;
     for (const ingreso of itemRemito) {
       total += ingreso.monto ? ingreso.monto : 0;
@@ -164,8 +164,7 @@ export class Remito {
       { text: `Fecha: ${remito.fecha}`, style: 'normal' },
       { text: `Cliente: ${remito.cliente || ''}`, style: 'normal' },
       { text: `Método de Pago: ${remito.metodoPago}`, style: 'normal' },
-      { text: `Descripción: ${remito.descripcion || ''}`, style: 'normal' },
-      { text: `Moneda: ${remito.moneda}`, style: 'normal' }
+      { text: `Descripción: ${remito.descripcion || ''}`, style: 'normal' }
     ];
     return details;
   }
