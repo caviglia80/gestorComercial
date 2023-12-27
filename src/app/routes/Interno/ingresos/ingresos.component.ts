@@ -368,6 +368,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public remitoCreate(addMore: boolean) {
     if (this.dataEmpresa.validarInventarioEnabled == '1' && !this.productoValido()) return;
     try {
+      this.Item.inventarioId.setValue((this.dataInventario.find(i => i.nombre == this.Item.nombre.value)?.id === this.Item.inventarioId.value) ? this.Item.inventarioId.value : null);
       const i = this._getProduct(this.Item.inventarioId.value);
       const margenBeneficio = i ? (i.tipo === 'Producto' ? this.Item.margenBeneficio.value : 0) : 0;
 
