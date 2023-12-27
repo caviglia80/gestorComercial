@@ -18,3 +18,7 @@
 .sinDatos {
   background-color: transparent;
 }
+
+canvas {
+  padding-bottom: 2px;
+}
