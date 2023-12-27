@@ -238,7 +238,7 @@
     <input class="my-2" type="date" matInput [formControl]="Item.date" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" [hidden]="true">
     <p class="form-field-description">Ingrese moneda</p>
     <mat-select placeholder="Moneda" [formControl]="Item.moneda">
       <mat-option *ngFor="let moneda of sharedService.monedas" [value]="moneda">{{ moneda }}</mat-option>
@@ -315,7 +315,7 @@
     <input class="my-2" type="date" matInput [formControl]="Item.date" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" [hidden]="true">
     <p class="form-field-description">Ingrese moneda</p>
     <mat-select placeholder="Moneda" [formControl]="Item.moneda">
       <mat-option *ngFor="let moneda of sharedService.monedas" [value]="moneda">{{ moneda }}</mat-option>
