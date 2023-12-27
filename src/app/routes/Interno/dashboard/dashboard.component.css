@@ -5,5 +5,10 @@
   justify-content: stretch;
   flex-grow: 1;
   width: 100%;
-  max-width: 100%; 
+  max-width: 100%;
+}
+
+.container-fluid {
+  padding-right: 70px;
+  padding-left: 70px;
 }

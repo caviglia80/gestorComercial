@@ -104,7 +104,7 @@
           </th>
           <td [matTooltip]="element.category" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
             (dblclick)="sharedService.copy(element.category)">
-            {{ element.category ? (element.category | slice:0:12) : '-' }}
+            {{ element.category ? (element.category | slice:0:20) : '-' }}
           </td>
         </ng-container>
 
