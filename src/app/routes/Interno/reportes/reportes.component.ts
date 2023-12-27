@@ -34,11 +34,11 @@ export class ReportsComponent {
 
     if (this.selectedTabIndex === 0) {                                             // INGRESOS
       columns = [
-        { header: 'ID', key: 'id', width: 5 },
-        { header: 'Nombre', key: 'name', width: 50 },
-        { header: 'Cantidad de ingresos', key: 'cantidadIngresos', width: 20 },
-        { header: 'Total de ingresos', key: 'totalIngresos', width: 20 },
-        { header: 'Margen de ganancias', key: 'margenGanancias', width: 20 }
+        { header: 'ID Inventario', key: 'id', width: 5 },
+        { header: 'Nombre Inventario', key: 'name', width: 50 },
+        { header: 'Cantidad Ingresos ', key: 'cantidadIngresos', width: 20 },
+        { header: 'Total Ingresos', key: 'totalIngresos', width: 20 },
+        { header: 'Margen Ganancias', key: 'margenGanancias', width: 20 }
       ];
       this.excelExportService.exportToExcel(columns, this.dataSourceIngresos.data, name + '-Ingresos');
     } else if (this.selectedTabIndex === 1 && this.filtro.value === 'rubro') {    // Egresos por Rubro

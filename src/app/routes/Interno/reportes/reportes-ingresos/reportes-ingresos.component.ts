@@ -23,11 +23,11 @@ export class ReportesIngresosComponent implements OnInit, AfterViewInit {
   public fechaHasta = new FormControl('');
 
   public Columns: { [key: string]: string } = {
-    id: 'ID',
-    name: 'Nombre',
-    cantidadIngresos: 'Cantidad de ingresos',
-    totalIngresos: 'Total de ingresos',
-    margenGanancias: 'Margen de ganancias'
+    id: 'ID Inventario',
+    name: 'Nombre Inventario',
+    cantidadIngresos: 'Cantidad Ingresos',
+    totalIngresos: 'Total Ingresos',
+    margenGanancias: 'Margen Ganancias'
   };
 
   constructor(
