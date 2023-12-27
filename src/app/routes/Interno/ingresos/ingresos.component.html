@@ -351,6 +351,8 @@
     [disabled]="!Item.date.valid || !Item.nombre.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid">
     <mat-icon>add</mat-icon>
   </button>
+
+  <span *ngIf="errorMsg" style="color: red; font-size: small;"> {{ errorMsg }} </span>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -430,6 +432,8 @@
     [disabled]="!Item.date.valid || !Item.nombre.valid || !Item.monto.valid || !Item.method.valid || !Item.category.valid">
     Guardar
   </button>
+
+  <span *ngIf="errorMsg" style="color: red; font-size: small;"> {{ errorMsg }} </span>
 </div>
 
 <!-- Vista de Remito -->
@@ -500,4 +504,6 @@
   </div>
   <button mat-button (click)="remitoRecord(false)">Confirmar</button>
   <button mat-button (click)="remitoRecord(true)">Confirmar y Descargar Remito</button>
+
+  <span *ngIf="errorMsg" style="color: red; font-size: small;"> {{ errorMsg }} </span>
 </div>

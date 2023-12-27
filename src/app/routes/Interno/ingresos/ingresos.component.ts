@@ -32,6 +32,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public remito = false;
   public itemRemito: Ingreso[] = [];
   public R: Remito = new Remito();
+  public errorMsg = '';
 
   public Item: any = {
     id: new FormControl(0),
@@ -238,8 +239,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   private rellenarRecord(item: any) {
     this.resetItemFormControls();
     Object.keys(this.Item).forEach(key => {
-      if (key === 'inventario')
-        this.Item[key].patchValue(this.dataInventario.find(i => i.id == item.inventarioId) || '');
+      if (key === 'inventarioId')
+        this.Item[key].patchValue(this.dataInventario.find(i => i.id == item.inventarioId)?.id || '');
       else if (key === 'tipo')
         this.Item[key].patchValue(this.dataInventario.find(i => i.id == item.inventarioId)?.tipo || '');
       else
@@ -301,6 +302,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   }
 
   public async recordEdit() {
+    let response: any;
     try {
       this.Item.inventarioId.setValue((this.dataInventario.find(i => i.nombre == this.Item.nombre.value)?.id === this.Item.inventarioId.value) ? this.Item.inventarioId.value : null);
 
@@ -320,13 +322,17 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         cliente: this.Item.cliente.value,
         description: this.Item.description.value
       };
-
-      await this.dataService.fetchIngresos('PUT', body);
+      response = await this.dataService.fetchIngresos('PUT', body);
+      if (!SharedService.isProduction) console.log(response);
     } catch (error) {
       console.error('Se ha producido un error:', error);
-    } finally {
-      this.Edit(false);
     }
+
+    if (response.message === 'Registro editado.') {
+      this.errorMsg = '';
+      this.Edit(false);
+    } else
+      this.errorMsg = response.message;
   }
 
   ExportToExcel() {
