@@ -180,18 +180,22 @@ export class DataService {
         return response;
       }
     } else if (method === 'PUT') {
-      return await this.http.put<any[]>(url, body, headers)
-        .subscribe({
-          next: () => {
-            this.sharedService.message('Usuarios: registro actualizado.');
-            this.cacheService.remove('Usuarios');
-            this.fetchUsuarios('GET');
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Error al intentar editar el registro.');
-          }
-        });
+      try {
+        const response = await firstValueFrom(this.http.put<any>(url, body, headers));
+        if (!SharedService.isProduction) console.log(response);
+        this.sharedService.message('Usuarios: registro actualizado.');
+        this.cacheService.remove('Usuarios');
+        this.fetchUsuarios('GET');
+        return response;
+      } catch (errorResponse: any) {
+        this.sharedService.message('Error al intentar editar el registro.');
+        const response: any = {};
+        if (errorResponse.status === 400)
+          response.message = errorResponse.error.message || 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        else
+          response.message = 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        return response;
+      }
     }
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
     return;

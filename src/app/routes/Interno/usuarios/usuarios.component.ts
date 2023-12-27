@@ -26,7 +26,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   public create = false;
   public edit = false;
   public detail = false;
-  public correoEnUso = false;
+  public errorMsg = '';
 
   public Item: any = {
     id: new FormControl(0),
@@ -160,12 +160,10 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public record(method: string) {
-    this.correoEnUso = false;
-    if (this.dataSource.data.some(usuario => usuario.email === this.Item.email) && method === 'POST') {
-      this.correoEnUso = true;
-      return;
-    }
+  public async record(method: string) {
+    this.errorMsg = '';
+    let response: any;
+
     try {
       const body: Usuario = {
         id: this.Item.id.value,
@@ -179,13 +177,19 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
       if (!this.Item.administrador.value)
         body.rolId = this.Item.rolId.value;
 
-      this.dataService.fetchUsuarios(method, body);
+      response = await this.dataService.fetchUsuarios(method, body);
+      if (!SharedService.isProduction) console.log(response);
+
     } catch (error) {
       console.error('Se ha producido un error:', error);
-    } finally {
+    }
+
+    if (response.message === 'Registros generados') {
       this.Create(false);
       this.Edit(false);
       this.authService.refreshUserInfo();
+    } else {
+      this.errorMsg = response.message;
     }
   }
 

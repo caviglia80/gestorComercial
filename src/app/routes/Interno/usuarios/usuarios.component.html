@@ -217,13 +217,10 @@
   <mat-form-field class="full-width">
     <p class="form-field-description">Ingrese correo <span class="red-asterisk">*</span>
     </p>
-    <input matInput placeholder="Correo" [formControl]="Item.email" (keyup)="correoEnUso = false" required>
+    <input matInput placeholder="Correo" [formControl]="Item.email" required>
     <div *ngIf="!sharedService.isValidEmail(Item.email.value) && Item.email.value?.length > 0"
       style="color: red; font-size: small;">
       Correo invalido.
-    </div>
-    <div *ngIf="correoEnUso" style="color: red; font-size: small;">
-      Correo en uso.
     </div>
   </mat-form-field>
 
@@ -250,6 +247,9 @@
   !Item.phone.valid  ||
   !Item.password.valid
   ">Guardar</button>
+
+  <span *ngIf="errorMsg" style="color: red; font-size: small;"> {{ errorMsg }} </span>
+
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -317,4 +317,7 @@
   !Item.password.valid  ||
   !Item.rolId.valid && Item.administrador.value != '1' || Item.rolId.value == false  && Item.administrador.value != '1'
   ">Guardar</button>
+
+  <span *ngIf="errorMsg" style="color: red; font-size: small;"> {{ errorMsg }} </span>
+
 </div>
