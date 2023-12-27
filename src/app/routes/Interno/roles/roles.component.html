@@ -63,20 +63,13 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="permisos">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by permisos">
-            {{ Columns['permisos'] }}
-          </th>
-          <td [matTooltip]="element.permisos" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.permisos)"> {{element.permisos }} </td>
-        </ng-container>
-
         <ng-container matColumnDef="descripcion">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by descripcion">
             Descripcion
           </th>
           <td [matTooltip]="element.descripcion" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.descripcion)"> {{element.descripcion | slice:0:60 }} </td>
+            (dblclick)="sharedService.copy(element.descripcion || '-' )"> {{element.descripcion || '-' | slice:0:60 }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -151,8 +144,8 @@
         </tr>
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Descripcion:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.descripcion.value )">{{ Item.descripcion.value
-            }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.descripcion.value || '-' )">{{
+            Item.descripcion.value || '-' }}</td>
         </tr>
       </table>
 

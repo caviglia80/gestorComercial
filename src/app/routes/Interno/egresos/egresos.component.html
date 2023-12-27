@@ -54,14 +54,6 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="moneda">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by moneda">
-            {{ Columns['moneda'] }}
-          </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.moneda)"> {{element.moneda}}
-          </td>
-        </ng-container>
-
         <ng-container matColumnDef="monto">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by monto">
             {{ Columns['monto'] }}
@@ -93,8 +85,8 @@
             {{ Columns['comprobante'] }}
           </th>
           <td [matTooltip]="element.comprobante" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.comprobante)">
-            {{element.comprobante}} </td>
+            (dblclick)="sharedService.copy(element.comprobante || '-')">
+            {{element.comprobante || '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="beneficiario">
@@ -109,8 +101,8 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
             {{ Columns['description'] }}
           </th>
-          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.description)">
-            {{element.description}} </td>
+          <td mat-cell *matCellDef="let element" (dblclick)="sharedService.copy(element.description || '-')">
+            {{element.description || '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -210,14 +202,14 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Comprobante:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.comprobante.value )">{{
-            Item.comprobante.value }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.comprobante.value || '-' )">{{
+            Item.comprobante.value || '-' }}</td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Descripción:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.description.value )">{{ Item.description.value
-            }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.description.value || '-' )">{{
+            Item.description.value || '-' }}
           </td>
         </tr>
 

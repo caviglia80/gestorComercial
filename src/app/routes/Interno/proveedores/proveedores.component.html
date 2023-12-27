@@ -49,8 +49,8 @@
             {{ Columns['company'] }}
           </th>
           <td [matTooltip]="element.company" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.company)">
-            {{ element.company | slice:0:15 }}
+            (dblclick)="sharedService.copy(element.company || '-' )">
+            {{ element.company || '-' | slice:0:15 }}
           </td>
         </ng-container>
 
@@ -68,7 +68,7 @@
             {{ Columns['phone'] }}
           </th>
           <td [matTooltip]="element.phone" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.phone)"> {{ element.phone | slice:0:15 }}
+            (dblclick)="sharedService.copy(element.phone || '-' )"> {{ element.phone || '-' | slice:0:15 }}
           </td>
         </ng-container>
 
@@ -77,7 +77,7 @@
             correo
           </th>
           <td [matTooltip]="element.email" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.email)"> {{ element.email | slice:0:15 }} </td>
+            (dblclick)="sharedService.copy(element.email || '-' )"> {{ element.email || '-' | slice:0:15 }} </td>
         </ng-container>
 
         <ng-container matColumnDef="address">
@@ -85,7 +85,7 @@
             {{ Columns['address'] }}
           </th>
           <td [matTooltip]="element.address" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.address)">{{ element.address | slice:0:15 }}</td>
+            (dblclick)="sharedService.copy(element.address || '-' )">{{ element.address || '-' | slice:0:15 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="website">
@@ -93,7 +93,7 @@
             {{ Columns['website'] }}
           </th>
           <td [matTooltip]="element.website" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.website)">{{ element.website | slice:0:15 }}</td>
+            (dblclick)="sharedService.copy(element.website || '-' )">{{ element.website || '-' | slice:0:15 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="accountNumber">
@@ -101,7 +101,8 @@
             {{ Columns['accountNumber'] }}
           </th>
           <td [matTooltip]="element.accountNumber" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.accountNumber)">{{ element.accountNumber | slice:0:15 }}</td>
+            (dblclick)="sharedService.copy(element.accountNumber || '-' )">{{ element.accountNumber || '-' | slice:0:15
+            }}</td>
         </ng-container>
 
         <ng-container matColumnDef="tipoSuministro">
@@ -109,7 +110,8 @@
             {{ Columns['tipoSuministro'] }}
           </th>
           <td [matTooltip]="element.tipoSuministro" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.tipoSuministro)">{{ element.tipoSuministro | slice:0:15 }}</td>
+            (dblclick)="sharedService.copy(element.tipoSuministro || '-' )">{{ element.tipoSuministro || '-' |
+            slice:0:15 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="observation">
@@ -117,7 +119,8 @@
             {{ Columns['observation'] }}
           </th>
           <td [matTooltip]="element.observation" [matTooltipShowDelay]="500" mat-cell *matCellDef="let element"
-            (dblclick)="sharedService.copy(element.observation)">{{ element.observation | slice:0:15 }}</td>
+            (dblclick)="sharedService.copy(element.observation || '-' )">{{ element.observation || '-' | slice:0:15 }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -180,7 +183,8 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Empresa:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.company.value )">{{ Item.company.value }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.company.value || '-'  )">{{ Item.company.value
+            || '-' }}</td>
         </tr>
 
         <tr>
@@ -191,43 +195,48 @@
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Telefono:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.phone.value )">{{ Item.phone.value }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.phone.value || '-'  )">{{ Item.phone.value ||
+            '-' }}</td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Correo:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.email.value )">{{ Item.email.value }}</td>
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.email.value || '-'  )">{{ Item.email.value ||
+            '-' }}</td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Dirección:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.address.value )">{{ Item.address.value }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.address.value || '-'  )">{{ Item.address.value
+            || '-' }}
           </td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Pagina web:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.website.value )">{{ Item.website.value }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.website.value || '-'  )">{{ Item.website.value
+            || '-' }}
           </td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Número de cuenta:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.accountNumber.value )">{{
-            Item.accountNumber.value }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.accountNumber.value || '-'  )">{{
+            Item.accountNumber.value || '-' }}
           </td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Suministro:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.tipoSuministro.value )">{{
-            Item.tipoSuministro.value }}
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.tipoSuministro.value || '-'  )">{{
+            Item.tipoSuministro.value || '-' }}
           </td>
         </tr>
 
         <tr>
           <td style="font-weight: bold; white-space: nowrap;">Observación:</td>
-          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.observation.value )">{{ Item.observation.value
+          <td style="width: 100%;" (dblclick)="sharedService.copy( Item.observation.value || '-'  )">{{
+            Item.observation.value || '-'
             }}
           </td>
         </tr>
@@ -296,8 +305,7 @@
     <input matInput placeholder="Observación" [formControl]="Item.observation">
   </mat-form-field>
 
-  <button mat-button (click)="record('POST')"
-    [disabled]="!Item.contactFullname.valid">Guardar</button>
+  <button mat-button (click)="record('POST')" [disabled]="!Item.contactFullname.valid">Guardar</button>
 </div>
 
 <!-- Vista de edicion de registros -->
@@ -359,6 +367,5 @@
     <input matInput placeholder="Observación" [formControl]="Item.observation">
   </mat-form-field>
 
-  <button mat-button (click)="record('PUT')"
-    [disabled]="!Item.contactFullname.valid">Guardar</button>
+  <button mat-button (click)="record('PUT')" [disabled]="!Item.contactFullname.valid">Guardar</button>
 </div>
