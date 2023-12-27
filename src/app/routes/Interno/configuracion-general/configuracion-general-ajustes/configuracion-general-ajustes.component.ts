@@ -27,8 +27,8 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      if (data[0] && data[0].lenght !== 0) {
-        this.dataEmpresa = data[0];
+      if (data) {
+        this.dataEmpresa = data;
         this.Color1 = this.dataEmpresa.color1 || this.Color1;
         this.Color2 = this.dataEmpresa.color2 || this.Color2;
         this.nombre = this.dataEmpresa.nombre || '';

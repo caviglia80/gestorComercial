@@ -21,8 +21,8 @@ export class EmpresaConfiguracionEgresoComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.dataEmpresa = data[0];
-      if (this.dataEmpresa) {
+      if (data) {
+        this.dataEmpresa = data;
         this.egresoRapidoEnabled = this.dataEmpresa.egresoRapidoEnabled === '1';
       }
     });

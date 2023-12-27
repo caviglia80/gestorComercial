@@ -98,8 +98,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      if (data[0])
-        this.dataEmpresa = data[0] || [];
+      if (data)
+        this.dataEmpresa = data;
     });
     this.dataService.fetchEmpresa('GET');
 

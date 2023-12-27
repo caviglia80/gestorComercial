@@ -27,8 +27,8 @@ export class DataService {
   private ds_Egresos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public Egresos$: Observable<any[]> = this.ds_Egresos.asObservable();
 
-  private ds_Empresa: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  public Empresa$: Observable<any[]> = this.ds_Empresa.asObservable();
+  private ds_Empresa: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public Empresa$: Observable<any> = this.ds_Empresa.asObservable();
 
   private ds_ReporteIngreso: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public ReporteIngreso$: Observable<any[]> = this.ds_ReporteIngreso.asObservable();
@@ -513,7 +513,7 @@ export class DataService {
      if (!SharedService.isProduction) console.log(method + ' - Solicitud');
    } */
 
-  public fetchEmpresa(method = '', body: any = {}, proxy = false): void {
+  public async fetchEmpresa(method = '', body: any = {}, proxy = false) {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/empresa.php';
@@ -527,26 +527,25 @@ export class DataService {
     }
 
     if (method === 'GET') {
-      this.http.get<any[]>(url)
-        .subscribe({
-          next: (data) => {
-            this.cacheService.set('Empresa', data);
-            this.ds_Empresa.next(data);
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.ds_Empresa.next([]);
-            this.sharedService.message('Empresa: Error al intentar obtener registros.');
-          }
-        });
+      try {
+        const response = await firstValueFrom(this.http.get<any[]>(url));
+        this.cacheService.set('Empresa', response[0]);
+        this.ds_Empresa.next(response[0]);
+        return response[0];
+      } catch (errorResponse: any) {
+        this.ds_Empresa.next(null);
+        this.sharedService.message('Empresa: Error al intentar obtener registros.');
+        const response: any = {};
+        response.message = 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        return response;
+      }
     } else if (method === 'POST') {
-      this.http.post<any>(url, body, headers)
+      return await this.http.post<any>(url, body, headers)
         .subscribe({
           next: (data) => {
             this.sharedService.message('Configuración actualizada !');
             this.cacheService.remove('Empresa');
             if (!data.empresaId) this.fetchEmpresa('GET');
-            //      this.ds_NewEmpresa.next(data);
           },
           error: (error) => {
             if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
@@ -554,7 +553,7 @@ export class DataService {
           }
         });
     } else if (method === 'PUT') {
-      this.http.put(url, body, headers)
+      return await this.http.put(url, body, headers)
         .subscribe({
           next: () => {
             this.sharedService.message('Configuración actualizada !');
@@ -568,6 +567,7 @@ export class DataService {
         });
     }
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+    return;
   }
 
   public fetchSa(method = '', body: any = {}, proxy = false): void {

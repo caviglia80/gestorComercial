@@ -9,7 +9,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-egresos.component.css']
 })
 export class DashboardGraficoEgresosComponent implements OnInit {
-  public Empresa: empresa | null = null;
+  public dataEmpresa: empresa | null = null;
   public loading: boolean = true;
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -44,8 +44,8 @@ export class DashboardGraficoEgresosComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      if (data[0])
-        this.Empresa = data[0];
+      if (data)
+        this.dataEmpresa = data;
     });
     this.dataService.fetchEmpresa('GET');
 
@@ -95,7 +95,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
   }
 
   public globalFilter() {
-    if (!this.Empresa) return;
+    if (!this.dataEmpresa) return;
     if (!this.incomeData.length) return;
     if (!this.selectedYear.length || !this.selectedCategory.length) return;
     this.filteredData = this.incomeData.filter(entry => entry.date.startsWith(this.selectedYear));
@@ -108,10 +108,10 @@ export class DashboardGraficoEgresosComponent implements OnInit {
     this.lineChartData = [{
       label: 'Egresos',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.Empresa.color2 || 'transparent',
-      borderColor: this.Empresa.color1 || 'transparent',
-      pointBackgroundColor: this.Empresa.color2 || 'transparent',
-      pointBorderColor: this.Empresa.color1 || 'transparent',
+      backgroundColor: this.dataEmpresa.color2 || 'transparent',
+      borderColor: this.dataEmpresa.color1 || 'transparent',
+      pointBackgroundColor: this.dataEmpresa.color2 || 'transparent',
+      pointBorderColor: this.dataEmpresa.color1 || 'transparent',
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,

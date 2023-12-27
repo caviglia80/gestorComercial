@@ -8,7 +8,6 @@ import { empresa } from '@models/mainClasses/main-classes';
   styleUrls: ['./configuracion-general-ingreso.component.css']
 })
 export class EmpresaConfiguracionIngresoComponent implements OnInit {
-
   public dataEmpresa: empresa = new empresa();
   public ingresoRestaStockEnabled = false;
   public ingresoRapidoEnabled = false;
@@ -26,8 +25,8 @@ export class EmpresaConfiguracionIngresoComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      this.dataEmpresa = data[0];
-      if (this.dataEmpresa) {
+      if (data) {
+        this.dataEmpresa = data;
         this.ingresoRestaStockEnabled = this.dataEmpresa.ingresoRestaStockEnabled === '1';
         this.ingresoRapidoEnabled = this.dataEmpresa.ingresoRapidoEnabled === '1';
         this.ingresoAnuladoSumaStockEnabled = this.dataEmpresa.ingresoAnuladoSumaStockEnabled === '1';

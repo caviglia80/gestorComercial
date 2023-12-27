@@ -6,7 +6,7 @@
     </div>
   </div>
 
-  <div class="chart mat-elevation-z3 m-1 text-start" *ngIf="incomeData && Empresa && !loading">
+  <div class="chart mat-elevation-z3 m-1 text-start" *ngIf="incomeData && dataEmpresa && !loading">
     <mat-select [(ngModel)]="selectedYear" (selectionChange)="globalFilter()">
       <mat-option *ngFor="let year of Years" [value]="year">{{ year }}</mat-option>
     </mat-select>

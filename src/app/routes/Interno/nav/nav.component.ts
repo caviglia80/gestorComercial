@@ -10,7 +10,7 @@ import { AuthService } from '@services/auth/auth.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  public Empresa: empresa | null = null;
+  public dataEmpresa: empresa | null = null;
   public sidenavOpened = true;
   public icono: any = '';
   public dashboard: boolean = false;
@@ -37,28 +37,25 @@ export class NavComponent implements OnInit {
     private authService: AuthService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.cacheService.clear();
-    this.dataInit();
+    await this.dataInit();
     this.getUserInfo();
   }
 
-  private dataInit() {
-    this.dataService.Empresa$.subscribe((data) => {
-      if (data[0] && data[0].lenght !== 0) {
-        this.Empresa = data[0];
+  private async dataInit() {
+    const data = await this.dataService.fetchEmpresa('GET');
+    if (data) {
+      this.dataEmpresa = data;
 
-        this.icono = this.Empresa!.icono || new empresa().icono || '';
-        const link = document.querySelector('#page-icon') as HTMLLinkElement;
-        link.href = this.icono;
+      this.icono = this.dataEmpresa!.icono || new empresa().icono || '';
+      const link = document.querySelector('#page-icon') as HTMLLinkElement;
+      link.href = this.icono;
 
-        document.documentElement.style.setProperty('--color-1', this.Empresa!.color1 || '#000000');
-        document.documentElement.style.setProperty('--color-2', this.Empresa!.color2 || '#000000');
-        document.title = this.Empresa!.nombre || '';
-      }
-
-    });
-    this.dataService.fetchEmpresa('GET');
+      document.documentElement.style.setProperty('--color-1', this.dataEmpresa!.color1 || '#000000');
+      document.documentElement.style.setProperty('--color-2', this.dataEmpresa!.color2 || '#000000');
+      document.title = this.dataEmpresa!.nombre || '';
+    }
   }
 
   public toggleSidenav() {

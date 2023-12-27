@@ -9,7 +9,7 @@ import { DataService } from '@services/data/data.service';
   styleUrls: ['./dashboard-grafico-utilidad-operativa.component.css']
 })
 export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
-  public Empresa: empresa | null = null;
+  public dataEmpresa: empresa | null = null;
   public loading: boolean = true;
   public chartTootilp = 'Ingresos Totales: son todos los ingresos generados por las ventas de productos o servicios. Costos Operativos: incluyen todos los gastos directamente relacionados con las operaciones del negocio. Utilidad Operativa = Ingresos Totales - Costos Operativos';
   public lineChartOptions: ChartOptions = {
@@ -49,8 +49,8 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
 
   private dataInit() {
     this.dataService.Empresa$.subscribe((data) => {
-      if (data[0])
-        this.Empresa = data[0];
+      if (data)
+        this.dataEmpresa = data;
     });
     this.dataService.fetchEmpresa('GET');
 
@@ -134,7 +134,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
   }
 
   public globalFilter() {
-    if (!this.Empresa) return;
+    if (!this.dataEmpresa) return;
     if (!this.ingresosData.length || !this.egresosData.length) return;
     if (!this.selectedYear.length || !this.selectedCategory.length) return;
 
@@ -154,10 +154,10 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     this.lineChartData = [{
       label: 'Utilidad Operativa',
       data: this.groupedIncomeData.map(item => item.total),
-      backgroundColor: this.Empresa.color2 || 'transparent',
-      borderColor: this.Empresa.color1 || 'transparent',
-      pointBackgroundColor: this.Empresa.color2 || 'transparent',
-      pointBorderColor: this.Empresa.color1 || 'transparent',
+      backgroundColor: this.dataEmpresa.color2 || 'transparent',
+      borderColor: this.dataEmpresa.color1 || 'transparent',
+      pointBackgroundColor: this.dataEmpresa.color2 || 'transparent',
+      pointBorderColor: this.dataEmpresa.color1 || 'transparent',
       pointRadius: 2,
       fill: false,
       lineTension: 0.1,
