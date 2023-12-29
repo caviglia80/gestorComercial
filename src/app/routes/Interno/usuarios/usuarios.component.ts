@@ -36,7 +36,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     username: new FormControl('', Validators.required),
     fullname: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(7)]),
   };
 
@@ -163,7 +163,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   public async record(method: string) {
     this.errorMsg = '';
     let response: any;
-
     try {
       const body: Usuario = {
         id: this.Item.id.value,
@@ -182,14 +181,14 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
 
     } catch (error) {
       console.error('Se ha producido un error:', error);
-    }
-
-    if (response.message === 'Registros generados') {
-      this.Create(false);
-      this.Edit(false);
-      this.authService.refreshUserInfo();
-    } else {
-      this.errorMsg = response.message;
+    } finally {
+      if (response.message === 'Registros generados' || response.message === 'Registro editado.') {
+        this.Create(false);
+        this.Edit(false);
+        this.authService.refreshUserInfo();
+      } else {
+        this.errorMsg = response.message;
+      }
     }
   }
 

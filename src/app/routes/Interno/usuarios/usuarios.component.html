@@ -312,9 +312,8 @@
   <button mat-button (click)="record('PUT')" [disabled]="
   !Item.username.valid  ||
   !Item.fullname.valid  ||
-  !Item.email.valid  ||
   !Item.phone.valid  ||
-  !Item.password.valid  ||
+  !Item.password.valid ||
   !Item.rolId.valid && Item.administrador.value != '1' || Item.rolId.value == false  && Item.administrador.value != '1'
   ">Guardar</button>
 
