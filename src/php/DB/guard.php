@@ -1,9 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT, OPTIONS");
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header("Content-Type: application/json; charset=UTF-8");
+require_once 'config.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'OPTIONS')
@@ -34,13 +30,6 @@ $userId = $decoded->userId;
 if (!$userId || !$empresaId) {
   http_response_code(401);
   die();
-}
-
-try {
-  require_once 'config.php';
-} catch (\Throwable $e) {
-  http_response_code(500);
-  echo json_encode(['message' => 'Error: ' . $e->getMessage(), 'extra' => 'config']);
 }
 
 try {

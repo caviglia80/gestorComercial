@@ -1,14 +1,10 @@
 <?php
+require_once '../DB/config.php';
+
 ini_set('log_errors', 1);
 ini_set('error_log', 'JWT_error.txt');
 ini_set('display_errors', 0); // Desactiva la visualización de errores
 error_reporting(E_ALL);
-
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT, OPTIONS");
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header("Content-Type: application/json; charset=UTF-8");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS')
   exit;
@@ -25,14 +21,8 @@ use \Firebase\JWT\JWT;
 $secretKey = "H;l=/$7k[{_L[0p)RSB^[?Q?pGZ94yP7R+Y=1/<vmE-KaGJhbd6a>0mdGpY6Ly~i";
 // Expiration time
 define("JWT_EXPIRATION_HOURS", 12);
-// Database configuration
-$dbHost = 'localhost';
-$dbUser = 'c2411522_gc';
-$dbPass = 'tuPA95mala';
-$dbName = 'c2411522_gc';
 
-// Database connection
-$conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+$conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die('Connection failed: ' . $conn->connect_error);
 }

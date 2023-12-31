@@ -1,9 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT, OPTIONS");
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header("Content-Type: application/json; charset=UTF-8");
+require_once 'config.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'OPTIONS')
@@ -33,8 +29,6 @@ if (!$decoded->userId || !$decoded->empresaId) {
 
 $id = $decoded->empresaId;
 $data = json_decode(file_get_contents("php://input"));
-
-require_once 'config.php';
 
 try {
   $options = [

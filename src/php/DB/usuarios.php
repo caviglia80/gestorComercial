@@ -1,9 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT, OPTIONS");
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header("Content-Type: application/json; charset=UTF-8");
+require_once 'config.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'OPTIONS')
@@ -35,7 +31,6 @@ try {
     $empresaId = $decoded->empresaId;
   }
 
-  require_once 'config.php';
   $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_PERSISTENT => true,
