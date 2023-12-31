@@ -2,11 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from '@guards/auth/auth.guard';
-
 import { NavComponent } from '@routes/Interno/nav/nav.component';
+
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MaterialModule } from '@app/shared/modules/material/material.module';
+//import { MaterialModule } from '@app/shared/modules/material/material.module';
 import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+
 
 const routes: Routes = [
   {
@@ -37,9 +40,11 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MaterialModule,
+    //  MaterialModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule,
+    MatIconModule
   ]
 })
 export class InternoModule { }
