@@ -208,8 +208,6 @@ export class inventarioComponent implements OnInit, AfterViewInit {
         descripcion: this.Item.descripcion.value
       };
 
-      console.log(body);
-
       this.dataService.fetchInventario(method, body);
     } catch (error) {
       console.error('Se ha producido un error:', error);
