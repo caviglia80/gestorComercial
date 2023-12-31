@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
-import { DataService } from '@services/data/data.service';
 import { Router } from '@angular/router';
-import { TokenService } from '@services/token/token.service';
-import { inject } from '@angular/core';
 interface Menu {
   ruta: string;
   nombre: string;
@@ -25,7 +22,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    public dataService: DataService,
     private router: Router,
     public sharedService: SharedService
   ) { }
