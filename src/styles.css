@@ -1,6 +1,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~material-icons/iconfont/material-icons.css';
-@import '~roboto-font/css/fonts.css';
+/* @import '~roboto-font/css/fonts.css'; */
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
 
 :root {
   /* colores globales - de mas claro a mas oscuro */
@@ -50,7 +51,7 @@ body {
 h4 {
   font-size: 1.125rem;
   line-height: 1.4em;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 @keyframes spin {

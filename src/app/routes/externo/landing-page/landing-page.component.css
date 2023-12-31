@@ -17,7 +17,7 @@
 }
 
 .about-section p a:hover,
-.feature-section p a:hover{
+.feature-section p a:hover {
   color: white !important;
 }
 
@@ -49,12 +49,6 @@ body {
   outline: none;
 }
 
-#mainNav .navbar-brand {
-  color: #000;
-  font-weight: 700;
-  padding: 0.9rem 0;
-}
-
 #mainNav .navbar-nav .nav-item:hover {
   color: fade(#fff, 80%);
   outline: none;
@@ -76,11 +70,6 @@ body {
     transition: background-color 0.3s ease-in-out;
   }
 
-  #mainNav .navbar-brand {
-    padding: 0.5rem 0;
-    color: rgba(255, 255, 255, 0.5);
-  }
-
   #mainNav .nav-link {
     transition: none;
     padding: 2rem 1.5rem;
@@ -98,10 +87,6 @@ body {
 
   #mainNav.navbar-shrink {
     background-color: #fff;
-  }
-
-  #mainNav.navbar-shrink .navbar-brand {
-    color: #000;
   }
 
   #mainNav.navbar-shrink .nav-link {
