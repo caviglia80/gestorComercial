@@ -6,8 +6,8 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header("Content-Type: application/json; charset=UTF-8");
 
 $method = $_SERVER['REQUEST_METHOD'];
-if ($method === 'OPTIONS') 
-    exit;
+if ($method === 'OPTIONS')
+  exit;
 
 // NOTA: se debe configurar el .htaccess para que se acepte el encabezado de Autorization
 require_once '../JWT/tokenVerifier.php';
@@ -22,9 +22,9 @@ error_reporting(E_ALL);
 $headers = apache_request_headers();
 $token = str_replace('Bearer ', '', $headers['Authorization'] ?? '');
 if (!$token || $token === '') {
-    http_response_code(401);
-    echo json_encode(['Error' => 'No se encontro el token','Mensaje' => 'Falta configurar el .htaccess ?']); 
-    die();
+  http_response_code(401);
+  echo json_encode(['Error' => 'No se encontro el token', 'Mensaje' => 'Falta configurar el .htaccess ?']);
+  die();
 }
 
 $decoded = verifyToken($token);
@@ -32,83 +32,91 @@ $empresaId = $decoded->empresaId;
 $userId = $decoded->userId;
 
 if (!$userId || !$empresaId) {
-    http_response_code(401);
-    die();
+  http_response_code(401);
+  die();
 }
 
 require_once 'config.php';
 
 try {
-    $options = [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_PERSISTENT => true, // Habilitar conexiones persistentes
-        PDO::ATTR_EMULATE_PREPARES => false, // Desactivar emulación de sentencias preparadas
-    ];
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password, $options);
+  $options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_PERSISTENT => true, // Habilitar conexiones persistentes
+    PDO::ATTR_EMULATE_PREPARES => false, // Desactivar emulación de sentencias preparadas
+  ];
+  $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password, $options);
 
-    if ($method === 'GET') {
+  if ($method === 'GET') {
 
-// Preparar y ejecutar la consulta para obtener el nombre de usuario
-        $stmt = $conn->prepare("SELECT username, isSa FROM usuarios WHERE id = :usuarioId AND empresaId = :empresaId");
-        $stmt->execute(['usuarioId' => $userId, 'empresaId' => $empresaId]);
-        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Preparar y ejecutar la consulta para obtener el nombre de usuario
+    $stmt = $conn->prepare("SELECT username, isSa FROM usuarios WHERE id = :usuarioId AND empresaId = :empresaId");
+    $stmt->execute(['usuarioId' => $userId, 'empresaId' => $empresaId]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Preparar y ejecutar la consulta para verificar si el usuario es administrador
-        $stmt->closeCursor();
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM empresa WHERE usuarioId = :usuarioId AND id = :empresaId");
-        $stmt->execute(['usuarioId' => $userId, 'empresaId' => $empresaId]);
-        $isAdmin = ($stmt->fetchColumn() > 0);
+    // Preparar y ejecutar la consulta para verificar si el usuario es administrador
+    $stmt->closeCursor();
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM empresa WHERE usuarioId = :usuarioId AND id = :empresaId");
+    $stmt->execute(['usuarioId' => $userId, 'empresaId' => $empresaId]);
+    $isAdmin = ($stmt->fetchColumn() > 0);
 
-        if ($isAdmin && $usuario['isSa'] == 1) {
-            echo json_encode(
-                ["username" => $usuario['username'],
-                "isSa" => $usuario['isSa'],
-                "isAdmin" => $isAdmin]);
-            die();
-        } else if ($isAdmin) {
-            echo json_encode(
-                ["username" => $usuario['username'],
-                "isAdmin" => $isAdmin]);
-            die();
-        }
+    if ($isAdmin && $usuario['isSa'] == 1) {
+      echo json_encode(
+        [
+          "username" => $usuario['username'],
+          "isSa" => $usuario['isSa'],
+          "isAdmin" => $isAdmin
+        ]
+      );
+      die();
+    } else if ($isAdmin) {
+      echo json_encode(
+        [
+          "username" => $usuario['username'],
+          "isAdmin" => $isAdmin
+        ]
+      );
+      die();
+    }
 
-        // Preparar y ejecutar la consulta para obtener rolId
-        $stmt->closeCursor();
-        $stmt = $conn->prepare("SELECT rolId FROM usuarios WHERE id = :id AND empresaId = :empresaId");
-        $stmt->execute(['id' => $userId, 'empresaId' => $empresaId]);
-        $resultadoUsuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Preparar y ejecutar la consulta para obtener rolId
+    $stmt->closeCursor();
+    $stmt = $conn->prepare("SELECT rolId FROM usuarios WHERE id = :id AND empresaId = :empresaId");
+    $stmt->execute(['id' => $userId, 'empresaId' => $empresaId]);
+    $resultadoUsuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($resultadoUsuario) {
-            $rolId = $resultadoUsuario['rolId'];
+    if ($resultadoUsuario) {
+      $rolId = $resultadoUsuario['rolId'];
 
-            // Preparar y ejecutar la consulta para obtener los detalles del rol
-            $stmt->closeCursor();
-            $stmt = $conn->prepare("SELECT * FROM roles WHERE id = :rolId AND empresaId = :empresaId");
-            $stmt->execute(['rolId' => $rolId, 'empresaId' => $empresaId]);
-            $rol = $stmt->fetch(PDO::FETCH_ASSOC);
+      // Preparar y ejecutar la consulta para obtener los detalles del rol
+      $stmt->closeCursor();
+      $stmt = $conn->prepare("SELECT * FROM roles WHERE id = :rolId AND empresaId = :empresaId");
+      $stmt->execute(['rolId' => $rolId, 'empresaId' => $empresaId]);
+      $rol = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($rol) {
-                echo json_encode(
-                    ["username" => $usuario['username'], 
-                    "isAdmin" => $isAdmin, 
-                    "rol" => $rol]);
-            } else {
-               http_response_code(400);
-               echo json_encode(["error" => "No se encontró el rol"]);
-           }
-       } else {
-           http_response_code(400);
-           echo json_encode(["error" => "No se encontró el usuario"]);
-       }
+      if ($rol) {
+        echo json_encode(
+          [
+            "username" => $usuario['username'],
+            "isAdmin" => $isAdmin,
+            "rol" => $rol
+          ]
+        );
+      } else {
+        http_response_code(400);
+        echo json_encode(["error" => "No se encontró el rol"]);
+      }
+    } else {
+      http_response_code(400);
+      echo json_encode(["error" => "No se encontró el usuario"]);
+    }
 
-   } else {
+  } else {
     http_response_code(400);
     echo json_encode(array('message' => 'Metodo incorrecto.'));
-}
-}
-catch (PDOException $e) {
-    http_response_code(500); // Error interno del servidor
-    echo json_encode(array('message' => 'Error: ' . $e->getMessage()));
+  }
+} catch (PDOException $e) {
+  http_response_code(500); // Error interno del servidor
+  echo json_encode(array('message' => 'Error: ' . $e->getMessage()));
 }
 $conn = null;
 ?>
