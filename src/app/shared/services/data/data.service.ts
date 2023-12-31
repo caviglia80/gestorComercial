@@ -553,18 +553,19 @@ export class DataService {
           }
         });
     } else if (method === 'PUT') {
-      return await this.http.put(url, body, headers)
-        .subscribe({
-          next: () => {
-            this.sharedService.message('Configuración actualizada !');
-            this.cacheService.remove('Empresa');
-            this.fetchEmpresa('GET');
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.sharedService.message('Empresa: Error al intentar editar el registro.');
-          }
-        });
+      try {
+        const response = await firstValueFrom(this.http.put<any>(url, body, headers));
+        this.sharedService.message('Configuración actualizada !');
+        this.cacheService.remove('Empresa');
+        this.fetchEmpresa('GET');
+        return response[0];
+      } catch (errorResponse: any) {
+        this.ds_Empresa.next(null);
+        this.sharedService.message('Empresa: Error al intentar editar el registro.');
+        const response: any = {};
+        response.message = 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        return response;
+      }
     }
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
     return;

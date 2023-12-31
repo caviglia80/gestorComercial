@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# PASA EL ENCABEZADO DE AUTORIZACIÓN
+# Esta línea es necesaria para que las aplicaciones basadas en PHP (como Laravel o Symfony) puedan acceder al encabezado de autorización.
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Redirige todas las solicitudes al index.html
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+RewriteRule ^ /index.html

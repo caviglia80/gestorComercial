@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { empresa } from '@models/mainClasses/main-classes';
 
@@ -42,27 +41,8 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
       this.fileInput.nativeElement.value = '';
   }
 
-  // public onFileSelected(event: any, fileType: string) {
-  //   const selectedFile = event.target.files[0];
-  //   if (selectedFile) {
-  //     if (selectedFile.name.split('.').pop() !== fileType) {
-  //       this.errorMessageImg = true;
-  //       this.clearFileInput();
-  //     } else {
-  //       this.errorMessageImg = false;
-  //       this.sharedService.encodeImgToBase64(selectedFile).subscribe((Base64) => {
-  //
-  //
-  //         console.log(Base64);
-  //
-  //         this.dataService.fetchEmpresa('PUT', { icono: Base64 });
-  //       });
-  //     }
-  //   }
-  // }
-
   // En tu componente Angular
-  public onFileSelected(event: any) {
+  public async onFileSelected(event: any) {
     const selectedFile = event.target.files[0];
     const maxFileSize = 501 * 1024; // 500 KB en bytes
 
@@ -70,12 +50,22 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
       if (selectedFile.type === 'image/png') {
         if (selectedFile.size <= maxFileSize) {
           this.errorMessageImg = '';
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            const base64 = e.target.result as string;
-            this.dataService.fetchEmpresa('PUT', { icono: base64 });
-          };
-          reader.readAsDataURL(selectedFile);
+
+          const base64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e: any) => resolve(e.target.result);
+            reader.onerror = (e) => reject(e);
+            reader.readAsDataURL(selectedFile);
+          });
+
+          try {
+            await this.dataService.fetchEmpresa('PUT', { icono: base64 });
+            window.location.reload();
+          } catch (error) {
+            console.error("Hubo un error al actualizar el icono:", error);
+            this.errorMessageImg = 'Hubo un error al actualizar el icono';
+          }
+
         } else {
           this.errorMessageImg = 'La imagen debe tener un peso menor o igual a 500kb';
         }
@@ -88,8 +78,9 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
     this.clearFileInput();
   }
 
-  public restauracionDeFabrica() {
-    this.dataService.fetchEmpresa('PUT', new empresa());
+  public async restauracionDeFabrica() {
+    await this.dataService.fetchEmpresa('PUT', new empresa());
+    window.location.reload();
   }
 
   public color1(color: string) {
@@ -114,8 +105,10 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
     document.documentElement.style.setProperty('--color-2', color);
   }
 
-  public setNombre(nombre: string) {
-    if (nombre !== this.dataEmpresa.nombre)
-      this.dataService.fetchEmpresa('PUT', { nombre: nombre });
+  public async setNombre(nombre: string) {
+    if (nombre.trim() !== this.dataEmpresa.nombre) {
+      await this.dataService.fetchEmpresa('PUT', { nombre: nombre.trim() });
+      window.location.reload();
+    }
   }
 }
