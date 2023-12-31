@@ -36,7 +36,12 @@ if (!$userId || !$empresaId) {
   die();
 }
 
-require_once 'config.php';
+try {
+  require_once 'config.php';
+} catch (\Throwable $e) {
+  http_response_code(500);
+  echo json_encode(['message' => 'Error: ' . $e->getMessage(), 'extra' => 'config']);
+}
 
 try {
   $options = [
