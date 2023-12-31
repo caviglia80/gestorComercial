@@ -12,7 +12,7 @@
   --content-Background-opacity: .07;
   /* sideBar */
   --sidebar-exitButton: rgba(255, 0, 0, 0.658);
-  --sidebar-background-image: url(./assets/img/sidebar-1.jpg);
+  --sidebar-background-image: url(./assets/img/sidebar-1.webp);
   --sideBar-background-image-opacity: .1;
   --sideBar-Background-color: var(--color-1);
   --sideBar-Background-opacity: .4;

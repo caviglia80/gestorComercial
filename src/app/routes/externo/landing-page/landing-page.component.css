@@ -128,7 +128,7 @@ body {
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .8) 25%,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .3) 50%,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 100%),
-    url("/assets/img/landing-1.jpg");
+    url("/assets/img/landing-1.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
