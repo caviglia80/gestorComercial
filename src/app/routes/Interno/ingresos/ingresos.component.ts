@@ -101,7 +101,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       if (data)
         this.dataEmpresa = data;
     });
-    this.dataService.fetchEmpresa('GET');
 
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
@@ -119,13 +118,11 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.loading(true);
-    this.dataService.fetchIngresos('GET');
-
     this.dataService.Inventario$.subscribe((data) => {
       this.dataInventario = data || [];
     });
-    this.getInventario();
+
+    this.refresh();
   }
 
   public onProductoSeleccionado(event: any): void {
@@ -294,10 +291,11 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public refresh() {
+  public async refresh(force: boolean = false) {
     this.loading(true);
-    this.cacheService.remove('Ingresos');
-    this.dataService.fetchIngresos('GET');
+    this.dataService.fetchEmpresa('GET');
+    if (force) this.cacheService.remove('Ingresos');
+    await this.dataService.fetchIngresos('GET');
     this.getInventario();
   }
 

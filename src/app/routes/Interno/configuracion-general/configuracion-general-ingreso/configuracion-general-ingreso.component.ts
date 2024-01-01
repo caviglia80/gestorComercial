@@ -34,7 +34,7 @@ export class EmpresaConfiguracionIngresoComponent implements OnInit {
         this.validarInventarioEnabled = this.dataEmpresa.validarInventarioEnabled === '1';
       }
     });
-    this.dataService.fetchEmpresa('GET');
+    // this.dataService.fetchEmpresa('GET');
   }
 
   public habilitarIngresoRestaStock(isChecked: boolean) {

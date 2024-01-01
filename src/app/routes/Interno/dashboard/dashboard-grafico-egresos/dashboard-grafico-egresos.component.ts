@@ -47,7 +47,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
       if (data)
         this.dataEmpresa = data;
     });
-    this.dataService.fetchEmpresa('GET');
+    // this.dataService.fetchEmpresa('GET');
 
     this.dataService.Egresos$.subscribe({
       next: (data) => {
@@ -64,7 +64,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
         console.error(error)
       }
     });
-    this.dataService.fetchEgresos('GET');
+    // this.dataService.fetchEgresos('GET');
   }
 
   private init() {

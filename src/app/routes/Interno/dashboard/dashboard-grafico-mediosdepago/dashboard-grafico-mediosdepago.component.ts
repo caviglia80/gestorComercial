@@ -54,7 +54,7 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
         console.error(error)
       }
     });
-    this.dataService.fetchIngresos('GET');
+    //    this.dataService.fetchIngresos('GET');
   }
 
   private init() {

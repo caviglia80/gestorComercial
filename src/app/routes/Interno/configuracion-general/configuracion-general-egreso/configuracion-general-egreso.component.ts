@@ -26,7 +26,7 @@ export class EmpresaConfiguracionEgresoComponent implements OnInit {
         this.egresoRapidoEnabled = this.dataEmpresa.egresoRapidoEnabled === '1';
       }
     });
-    this.dataService.fetchEmpresa('GET');
+    // this.dataService.fetchEmpresa('GET');
   }
 
   public habilitarEgresoRapido(isChecked: boolean) {

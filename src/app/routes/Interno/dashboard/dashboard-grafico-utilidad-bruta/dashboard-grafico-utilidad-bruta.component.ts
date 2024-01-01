@@ -48,7 +48,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
       if (data)
         this.dataEmpresa = data;
     });
-    this.dataService.fetchEmpresa('GET');
+    // this.dataService.fetchEmpresa('GET');
 
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
@@ -67,7 +67,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
         console.error(error)
       }
     });
-    this.dataService.fetchIngresos('GET');
+    //   this.dataService.fetchIngresos('GET');
   }
 
   private init() {
