@@ -35,10 +35,11 @@ export class NavComponent implements OnInit {
     public tokenService: TokenService,
     private cacheService: CacheService,
     private authService: AuthService
-  ) { }
+  ) {
+    this.cacheService.clear();
+  }
 
   async ngOnInit() {
-    this.cacheService.clear();
     await this.dataInit();
     this.getUserInfo();
   }
