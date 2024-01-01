@@ -114,7 +114,7 @@ export class NavComponent implements OnInit {
     });
   }
 
-  public getUserInfo() {
+  public async getUserInfo() {
     this.authService.UserInfo$.subscribe({
       next: (data) => {
         if (data) {
@@ -130,7 +130,7 @@ export class NavComponent implements OnInit {
         }
       }
     });
-    if (!this.UserInfo) this.authService.refreshUserInfo();
+    if (!this.UserInfo) await this.authService.refreshUserInfo();
   }
 }
 

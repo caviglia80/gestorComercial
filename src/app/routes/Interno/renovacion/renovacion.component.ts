@@ -44,7 +44,6 @@ export class RenovacionComponent implements OnInit {
         }
       }
     });
-    this.refresh();
 
     this.dataService.Usuarios$.subscribe({
       next: (data) => {
@@ -54,12 +53,15 @@ export class RenovacionComponent implements OnInit {
         }
       }
     });
-    this.dataService.fetchUsuarios('GET');
+
+    this.refresh();
   }
 
-  refresh() {
+  public async refresh() {
+    this.cacheService.remove('Usuarios');
+    await this.dataService.fetchUsuarios('GET');
     this.cacheService.remove('Empresa');
-    this.dataService.fetchEmpresa('GET');
+    await this.dataService.fetchEmpresa('GET');
   }
 
   comprobarVencimiento(fecha: string) {

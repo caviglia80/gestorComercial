@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, proveedor } from '@models/mainClasses/main-classes';
+import { proveedor } from '@models/mainClasses/main-classes';
 import { DataService } from '@services/data/data.service';
 import { SharedService } from '@services/shared/shared.service';
 import { CacheService } from '@services/cache/cache.service';
@@ -17,7 +17,6 @@ import { FormControl, Validators } from '@angular/forms';
 export class ProveedoresComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
-  public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<proveedor>;
   public isLoading = true;
   public create = false;
@@ -66,12 +65,6 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
   }
 
   private dataInit() {
-    this.dataService.Empresa$.subscribe((data) => {
-      if (data)
-        this.dataEmpresa = data;
-    });
-    this.dataService.fetchEmpresa('GET');
-
     this.dataService.Proveedores$.subscribe({
       next: (data) => {
         if (data) {
@@ -85,8 +78,8 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
         this.loading(false);
       }
     });
-    this.loading(true);
-    this.dataService.fetchProveedores('GET');
+
+    this.refresh();
   }
 
   private loading(state: boolean) {
@@ -148,7 +141,6 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
     try {
       const body: proveedor = {
         id: this.Item.id.value,
-        empresaId: this.dataEmpresa.id,
         company: this.Item.company.value,
         contactFullname: this.Item.contactFullname.value,
         phone: this.Item.phone.value,
@@ -168,9 +160,9 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
     }
   }
 
-  refresh() {
+  public async refresh(force: boolean = false) {
     this.loading(true);
-    this.cacheService.remove('Proveedores');
+    if (force) this.cacheService.remove('Proveedores');
     this.dataService.fetchProveedores('GET');
   }
 

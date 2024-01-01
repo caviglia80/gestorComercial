@@ -39,8 +39,8 @@ export class DataService {
   private ds_ReporteEgresoBP: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public ReporteEgresoBP$: Observable<any[]> = this.ds_ReporteEgresoBP.asObservable();
 
-  private ds_Remito: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  public Remito$: Observable<any[]> = this.ds_Remito.asObservable();
+  // private ds_Remito: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  // public Remito$: Observable<any[]> = this.ds_Remito.asObservable();
 
   private ds_Sa: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public Sa$: Observable<any> = this.ds_Sa.asObservable();
@@ -52,7 +52,7 @@ export class DataService {
   ) {
   }
 
-  public fetchInventario(method = '', body: any = {}, proxy = false): void {
+  public async fetchInventario(method = '', body: any = {}, proxy = false) {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/inventario.php';
@@ -64,22 +64,23 @@ export class DataService {
       this.ds_Inventario.next(this.cacheService.get('Inventario'));
       return;
     }
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
 
     if (method === 'GET') {
-      this.http.get<any[]>(url)
-        .subscribe({
-          next: (data) => {
-            this.cacheService.set('Inventario', data);
-            this.ds_Inventario.next(data);
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.ds_Inventario.next([]);
-            this.sharedService.message('Error al intentar obtener registros.');
-          }
-        });
+      try {
+        const response = await firstValueFrom(this.http.get<any[]>(url));
+        this.cacheService.set('Inventario', response);
+        this.ds_Inventario.next(response);
+        return response;
+      } catch (errorResponse: any) {
+        this.ds_Inventario.next([]);
+        this.sharedService.message('Empresa: Error al intentar obtener registros.');
+        const response: any = {};
+        response.message = 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        return response;
+      }
     } else if (method === 'DELETE') {
-      this.http.delete<any[]>(url, { body: body })
+      return await this.http.delete<any[]>(url, { body: body })
         .subscribe({
           next: () => {
             this.sharedService.message('Inventario: registro eliminado.');
@@ -92,7 +93,7 @@ export class DataService {
           }
         });
     } else if (method === 'POST') {
-      this.http.post<any[]>(url, body, headers)
+      return await this.http.post<any[]>(url, body, headers)
         .subscribe({
           next: () => {
             this.sharedService.message('Inventario: registro guardado.');
@@ -105,7 +106,7 @@ export class DataService {
           }
         });
     } else if (method === 'PUT') {
-      this.http.put<any[]>(url, body, headers)
+      return await this.http.put<any[]>(url, body, headers)
         .subscribe({
           next: () => {
             this.sharedService.message('Inventario: registro actualizado.');
@@ -118,7 +119,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+    return;
   }
 
   public async fetchUsuarios(method = '', body: any = {}, proxy = false) {
@@ -133,6 +134,7 @@ export class DataService {
       this.ds_Usuarios.next(this.cacheService.get('Usuarios'));
       return;
     }
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
 
     if (method === 'GET') {
       return await this.http.get<any[]>(url)
@@ -197,7 +199,6 @@ export class DataService {
         return response;
       }
     }
-    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
     return;
   }
 
@@ -525,6 +526,7 @@ export class DataService {
       this.ds_Empresa.next(this.cacheService.get('Empresa'));
       return;
     }
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
 
     if (method === 'GET') {
       try {
@@ -567,7 +569,6 @@ export class DataService {
         return response;
       }
     }
-    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
     return;
   }
 
@@ -705,23 +706,23 @@ export class DataService {
     if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
   }
 
-  public fetchRemito(method = '', body: any = {}, proxy = false): void {
-    let url = SharedService.host + 'DB/remito.php';
-    if (proxy) url = SharedService.proxy + url;
+  // public fetchRemito(method = '', body: any = {}, proxy = false): void {
+  //   let url = SharedService.host + 'DB/remito.php';
+  //   if (proxy) url = SharedService.proxy + url;
 
-    if (method === 'GET') {
-      this.http.get<any[]>(url)
-        .subscribe({
-          next: (data) => {
-            this.ds_Remito.next(data);
-          },
-          error: (error) => {
-            if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-            this.ds_Remito.next([]);
-            this.sharedService.message('Error al intentar obtener registros.');
-          }
-        });
-    }
-    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
-  }
+  //   if (method === 'GET') {
+  //     this.http.get<any[]>(url)
+  //       .subscribe({
+  //         next: (data) => {
+  //           this.ds_Remito.next(data);
+  //         },
+  //         error: (error) => {
+  //           if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
+  //           this.ds_Remito.next([]);
+  //           this.sharedService.message('Error al intentar obtener registros.');
+  //         }
+  //       });
+  //   }
+  //   if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+  // }
 }

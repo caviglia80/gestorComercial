@@ -23,7 +23,6 @@ interface Menu {
 export class RolesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
-  public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<Rol>;
   public isLoading = true;
 
@@ -84,12 +83,6 @@ export class RolesComponent implements OnInit, AfterViewInit {
   }
 
   private dataInit() {
-    this.dataService.Empresa$.subscribe((data) => {
-      if (data)
-        this.dataEmpresa = data;
-    });
-    this.dataService.fetchEmpresa('GET');
-
     this.dataService.Roles$.subscribe({
       next: (data) => {
         if (data) {
@@ -103,8 +96,8 @@ export class RolesComponent implements OnInit, AfterViewInit {
         this.loading(false);
       }
     });
-    this.loading(true);
-    this.dataService.fetchRoles('GET');
+
+    this.refresh();
   }
 
   private loading(state: boolean) {
@@ -180,14 +173,12 @@ export class RolesComponent implements OnInit, AfterViewInit {
     this.menusHabilitacion = JSON.parse(item.menus);
   }
 
-  public record(method: string) {
+  public async record(method: string) {
     try {
       const body: Rol = {
         id: this.Item.id.value,
-        empresaId: this.dataEmpresa.id,
         nombre: this.Item.nombre.value,
         menus: JSON.stringify(this.menusHabilitacion),
-        permisos: this.Item.permisos.value,
         descripcion: this.Item.descripcion.value
       };
       this.dataService.fetchRoles(method, body);
@@ -197,13 +188,14 @@ export class RolesComponent implements OnInit, AfterViewInit {
       this.Create(false);
       this.Edit(false);
       this.Double(false);
-      this.authService.refreshUserInfo();
+      await this.authService.refreshUserInfo();
     }
   }
 
-  refresh() {
+  public async refresh(force: boolean = false) {
     this.loading(true);
-    this.cacheService.remove('Roles');
+    this.dataService.fetchEmpresa('GET');
+    if (force) this.cacheService.remove('Roles');
     this.dataService.fetchRoles('GET');
   }
 

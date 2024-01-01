@@ -82,7 +82,6 @@ export class EgresosComponent implements OnInit, AfterViewInit {
       if (data)
         this.dataEmpresa = data;
     });
-    this.dataService.fetchEmpresa('GET');
 
     this.dataService.Egresos$.subscribe({
       next: (data) => {
@@ -97,13 +96,12 @@ export class EgresosComponent implements OnInit, AfterViewInit {
         this.loading(false);
       }
     });
-    this.loading(true);
-    this.dataService.fetchEgresos('GET');
 
     this.dataService.Proveedores$.subscribe((data) => {
       this.proveedorData = data;
     });
-    this.getProveedor();
+
+    this.refresh();
   }
 
   private _filterProveedor(value: any): any[] {
@@ -186,7 +184,6 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     try {
       const body: Egreso = {
         id: this.Item.id.value,
-        empresaId: this.dataEmpresa.id,
         date: this.Item.date.value,
         moneda: this.Item.moneda.value,
         monto: this.Item.monto.value,
@@ -205,11 +202,12 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     }
   }
 
-  refresh() {
+  public async refresh(force: boolean = false) {
     this.loading(true);
-    this.cacheService.remove('Egresos');
+    this.dataService.fetchEmpresa('GET');
+    if (force) this.cacheService.remove('Egresos');
     this.dataService.fetchEgresos('GET');
-    this.getProveedor();
+    this.dataService.fetchProveedores('GET');
   }
 
   ExportToExcel() {

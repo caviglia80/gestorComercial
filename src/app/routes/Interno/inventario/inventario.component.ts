@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, Inventario, proveedor } from '@models/mainClasses/main-classes';
+import { Inventario, proveedor } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { FormControl, Validators } from '@angular/forms';
@@ -20,7 +20,6 @@ import { ExcelExportService } from '@services/excel-export/excel-export.service'
 export class inventarioComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
-  public dataEmpresa: empresa = new empresa();
   public proveedorFiltered: Observable<any[]>;
   public proveedorData: proveedor[] = [];
   public dataSource = new MatTableDataSource<Inventario>;
@@ -78,12 +77,6 @@ export class inventarioComponent implements OnInit, AfterViewInit {
   }
 
   private dataInit() {
-    this.dataService.Empresa$.subscribe((data) => {
-      if (data)
-        this.dataEmpresa = data;
-    });
-    this.dataService.fetchEmpresa('GET');
-
     this.dataService.Inventario$.subscribe({
       next: (data) => {
         if (data) {
@@ -97,13 +90,12 @@ export class inventarioComponent implements OnInit, AfterViewInit {
         this.loading(false);
       }
     });
-    this.loading(true);
-    this.dataService.fetchInventario('GET');
 
     this.dataService.Proveedores$.subscribe((data) => {
       this.proveedorData = data;
     });
-    this.getProveedor();
+
+    this.refresh();
   }
 
   public getProveedor() {
@@ -195,7 +187,6 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     try {
       const body: Inventario = {
         id: this.Item.id.value,
-        empresaId: this.dataEmpresa.id,
         idExterno: this.Item.idExterno.value,
         nombre: this.Item.nombre.value,
         existencias: this.Item.existencias.value ? this.Item.existencias.value : 0,
@@ -218,11 +209,12 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     }
   }
 
-  refresh() {
+  public async refresh(force: boolean = false) {
     this.loading(true);
-    this.cacheService.remove('Inventario');
+    this.dataService.fetchEmpresa('GET');
+    if (force) this.cacheService.remove('Inventario');
     this.dataService.fetchInventario('GET');
-    this.getProveedor();
+    this.dataService.fetchProveedores('GET');
   }
 
   ExportToExcel() {

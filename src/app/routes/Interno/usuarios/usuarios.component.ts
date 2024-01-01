@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empresa, Usuario, Rol } from '@models/mainClasses/main-classes';
+import { Usuario, Rol } from '@models/mainClasses/main-classes';
 import { SharedService } from '@services/shared/shared.service';
 import { DataService } from '@services/data/data.service';
 import { CacheService } from '@services/cache/cache.service';
@@ -20,7 +20,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   public rolesData: Rol[] = [];
 
-  public dataEmpresa: empresa = new empresa();
   public dataSource = new MatTableDataSource<Usuario>;
   public isLoading = true;
   public create = false;
@@ -68,12 +67,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   }
 
   private dataInit() {
-    this.dataService.Empresa$.subscribe((data) => {
-      if (data)
-        this.dataEmpresa = data;
-    });
-    this.dataService.fetchEmpresa('GET');
-
     this.dataService.Usuarios$.subscribe({
       next: (data) => {
         if (data) {
@@ -87,13 +80,11 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
         this.loading(false);
       }
     });
-    this.loading(true);
-    this.dataService.fetchUsuarios('GET');
 
     this.dataService.Roles$.subscribe((data) => {
       this.rolesData = data;
     });
-    this.getRoles();
+    this.refresh();
   }
 
   public getRoles() {
@@ -185,16 +176,17 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
       if (response.message === 'Registros generados' || response.message === 'Registro editado.') {
         this.Create(false);
         this.Edit(false);
-        this.authService.refreshUserInfo();
+        await this.authService.refreshUserInfo();
       } else {
         this.errorMsg = response.message;
       }
     }
   }
 
-  refresh() {
+  public async refresh(force: boolean = false) {
     this.loading(true);
-    this.cacheService.remove('Usuarios');
+    this.dataService.fetchRoles('GET');
+    if (force) this.cacheService.remove('Usuarios');
     this.dataService.fetchUsuarios('GET');
   }
 

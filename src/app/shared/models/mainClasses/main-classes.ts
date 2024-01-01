@@ -1,6 +1,6 @@
 export class Inventario {
   id: number;
-  empresaId: number;
+  empresaId?: number;
   idExterno: string;
   nombre: string;
   existencias?: number;
@@ -83,10 +83,10 @@ export class Usuario {
 
 export class Rol {
   id: number;
-  empresaId: number;
+  empresaId?: number;
   nombre: string;
   menus: string;
-  permisos: string;
+  permisos?: string;
   descripcion: string;
 
   constructor(
@@ -108,7 +108,7 @@ export class Rol {
 
 export class proveedor {
   id: number;
-  empresaId: number;
+  empresaId?: number;
   company: string;
   contactFullname: string;
   phone: string;

@@ -245,7 +245,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private restarStock(inventario: Inventario[]) {
+  private async restarStock(inventario: Inventario[]) {
     if (inventario.length > 0) {
       inventario.forEach(item => {
         if (item && item.tipo === 'Producto') {
@@ -278,7 +278,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     return true;
   }
 
-  private sumarStock(inventario: Inventario) {
+  private async sumarStock(inventario: Inventario) {
     if (inventario) {
       if (inventario.tipo === 'Producto') {
         let existenciasCount: number = inventario.existencias ? inventario.existencias : 0;
@@ -306,7 +306,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
       const body: Ingreso = {
         id: this.Item.id.value,
-        empresaId: this.dataEmpresa.id,
         date: this.Item.date.value,
         inventarioId: this.Item.inventarioId.value,
         nombre: this.Item.nombre.value,
@@ -378,7 +377,6 @@ export class IngresosComponent implements OnInit, AfterViewInit {
 
       const body: Ingreso = {
         id: this.Item.id.value,
-        empresaId: this.dataEmpresa.id,
         date: this.Item.date.value,
         nombre: this.Item.nombre.value,
         inventarioId: this.Item.inventarioId.value,
