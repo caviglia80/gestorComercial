@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # Proyecto
-dbConfig.php
+/src/storagedir
