@@ -34,7 +34,7 @@ export class ReportsComponent {
 
     if (this.selectedTabIndex === 0) {                                             // INGRESOS
       columns = [
-        { header: 'ID Inventario', key: 'id', width: 5 },
+        { header: 'ID Inventario', key: 'id', width: 15 },
         { header: 'Nombre Inventario', key: 'name', width: 50 },
         { header: 'Cantidad Ingresos ', key: 'cantidadIngresos', width: 20 },
         { header: 'Total Ingresos', key: 'totalIngresos', width: 20 },

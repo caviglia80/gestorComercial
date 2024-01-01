@@ -146,7 +146,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1);
+  background: rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .8);
   z-index: 1;
   animation: fadeOutSolidBackground 3s ease forwards;
 }
