@@ -33,7 +33,6 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
         this.nombre = this.dataEmpresa.nombre || '';
       }
     });
-    // this.dataService.fetchEmpresa('GET');
   }
 
   private clearFileInput() {

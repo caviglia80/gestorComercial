@@ -47,7 +47,6 @@ export class DashboardGraficoIngresosComponent implements OnInit {
       if (data)
         this.dataEmpresa = data;
     });
-    // this.dataService.fetchEmpresa('GET');
 
     this.dataService.Ingresos$.subscribe({
       next: (data) => {
