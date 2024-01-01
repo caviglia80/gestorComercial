@@ -7,6 +7,8 @@ import { ReportesEgresosBPComponent } from './reportes-egresos-bp/reportes-egres
 import { ReportesIngresosComponent } from './reportes-ingresos/reportes-ingresos.component';
 import { MaterialModule } from '@app/shared/modules/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatRadioModule } from '@angular/material/radio';
 
 const routes: Routes = [
   { path: '', component: ReportsComponent },
@@ -20,10 +22,12 @@ const routes: Routes = [
     ReportesEgresosBPComponent
   ],
   imports: [
-  CommonModule,
-  RouterModule.forChild(routes),
-  MaterialModule,
-  FlexLayoutModule
+    CommonModule,
+    RouterModule.forChild(routes),
+    MaterialModule,
+    FlexLayoutModule,
+    MatTabsModule,
+    MatRadioModule
   ],
 })
 export class ReportsModule { }

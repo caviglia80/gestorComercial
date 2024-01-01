@@ -9,6 +9,7 @@ import { DashboardGraficoMargenMenosEgresosComponent } from './dashboard-grafico
 import { DashboardGraficoMediosdepagoComponent } from './dashboard-grafico-mediosdepago/dashboard-grafico-mediosdepago.component';
 import { MaterialModule } from '@app/shared/modules/material/material.module';
 import { NgChartsModule } from 'ng2-charts';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -27,7 +28,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModule,
-    NgChartsModule
+    NgChartsModule,
+    MatButtonToggleModule
   ],
 })
 export class DashboardModule { }

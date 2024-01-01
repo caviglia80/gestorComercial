@@ -8,6 +8,9 @@ import { EmpresaConfiguracionIngresoComponent } from './configuracion-general-in
 import { EmpresaConfiguracionInventarioComponent } from './configuracion-general-inventario/configuracion-general-inventario.component';
 import { MaterialModule } from '@app/shared/modules/material/material.module';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const routes: Routes = [
   { path: '', component: EmpresaConfiguracionComponent },
@@ -25,7 +28,10 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatCheckboxModule
   ],
 })
 export class EmpresaConfiguracionModule { }

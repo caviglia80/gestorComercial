@@ -129,11 +129,57 @@ body {
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), .3) 50%,
       rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1) 100%),
     url("/assets/img/landing-1.webp");
+
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-size: cover;
   height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.masthead::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(var(--externo-color-2-R), var(--externo-color-2-G), var(--externo-color-2-B), 1);
+  z-index: 1;
+  animation: fadeOutSolidBackground 3s ease forwards;
+}
+
+@keyframes fadeOutSolidBackground {
+  to {
+    opacity: 0;
+  }
+}
+
+.masthead::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom,
+      /* Tus colores de gradiente aquí */
+    ), url("/assets/img/landing-1.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  z-index: 0;
+  opacity: 0;
+  animation: fadeInBackground 3s ease forwards;
+}
+
+@keyframes fadeInBackground {
+  to {
+    opacity: 1;
+  }
 }
 
 .masthead h1,

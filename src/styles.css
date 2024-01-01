@@ -1,7 +1,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~material-icons/iconfont/material-icons.css';
 /* @import '~roboto-font/css/fonts.css'; */
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
 
 :root {
   /* colores globales - de mas claro a mas oscuro */

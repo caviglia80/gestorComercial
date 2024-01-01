@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   onCheckboxChange(event: any) {
-    this.loginForm.get('remember')?.setValue(event.target.checked);
+    this.loginForm.get('remember')?.setValue(event.checked);
   }
 
   onLogin() {
