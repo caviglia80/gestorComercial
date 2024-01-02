@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, firstValueFrom } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { CacheService } from '@services/cache/cache.service';
-import { empresa, Usuario, Rol, Inventario } from '@models/mainClasses/main-classes';
-
+import { Inventario } from '@models/mainClasses/main-classes';
+import { RequestCancelService } from '@services/requestCancel/request-cancel.service';
+import { takeUntil } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -48,7 +49,8 @@ export class DataService {
   constructor(
     private http: HttpClient,
     public sharedService: SharedService,
-    private cacheService: CacheService
+    private cacheService: CacheService,
+    private cancelService: RequestCancelService
   ) {
   }
 
@@ -66,9 +68,11 @@ export class DataService {
     }
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
 
+    const cancelToken = this.cancelService.onNewRequest(`${url}-${method}-${body.length}`);
+
     if (method === 'GET') {
       try {
-        const response = await firstValueFrom(this.http.get<any[]>(url));
+        const response = await firstValueFrom(this.http.get<any[]>(url).pipe(takeUntil(cancelToken)));
         this.cacheService.set('Inventario', response);
         this.ds_Inventario.next(response);
         return response;
@@ -136,8 +140,10 @@ export class DataService {
     }
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
 
+    const cancelToken = this.cancelService.onNewRequest(`${url}-${method}-${body.length}`);
+
     if (method === 'GET') {
-      return await this.http.get<any[]>(url)
+      return await this.http.get<any[]>(url).pipe(takeUntil(cancelToken))
         .subscribe({
           next: (data) => {
             this.cacheService.set('Usuarios', data);
@@ -226,7 +232,7 @@ export class DataService {
     return;
   }
 
-  public fetchRoles(method = '', body: any = {}, proxy = false): void {
+  public async fetchRoles(method = '', body: any = {}, proxy = false) {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/roles.php';
@@ -239,8 +245,12 @@ export class DataService {
       return;
     }
 
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+
+    const cancelToken = this.cancelService.onNewRequest(`${url}-${method}-${body.length}`);
+
     if (method === 'GET') {
-      this.http.get<any[]>(url)
+      return await this.http.get<any[]>(url).pipe(takeUntil(cancelToken))
         .subscribe({
           next: (data) => {
             this.cacheService.set('Roles', data);
@@ -292,10 +302,10 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+    return;
   }
 
-  public fetchProveedores(method = '', body: any = {}, proxy = false): void {
+  public async fetchProveedores(method = '', body: any = {}, proxy = false) {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/proveedores.php';
@@ -308,8 +318,12 @@ export class DataService {
       return;
     }
 
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+
+    const cancelToken = this.cancelService.onNewRequest(`${url}-${method}-${body.length}`);
+
     if (method === 'GET') {
-      this.http.get<any[]>(url)
+      return await this.http.get<any[]>(url).pipe(takeUntil(cancelToken))
         .subscribe({
           next: (data) => {
             this.cacheService.set('Proveedores', data);
@@ -361,7 +375,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+    return;
   }
 
   public async fetchIngresos(method = '', body: any = {}, proxy = false) {
@@ -376,10 +390,13 @@ export class DataService {
       this.ds_Ingresos.next(this.cacheService.get('Ingresos'));
       return;
     }
+
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
 
+    const cancelToken = this.cancelService.onNewRequest(`${url}-${method}-${body.length}`);
+
     if (method === 'GET') {
-      return await this.http.get<any[]>(url)
+      return await this.http.get<any[]>(url).pipe(takeUntil(cancelToken))
         .subscribe({
           next: (data) => {
             this.cacheService.set('Ingresos', data);
@@ -428,7 +445,7 @@ export class DataService {
     return;
   }
 
-  public fetchEgresos(method = '', body: any = {}, proxy = false): void {
+  public async fetchEgresos(method = '', body: any = {}, proxy = false) {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/egresos.php';
@@ -441,8 +458,12 @@ export class DataService {
       return;
     }
 
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+
+    const cancelToken = this.cancelService.onNewRequest(`${url}-${method}-${body.length}`);
+
     if (method === 'GET') {
-      this.http.get<any[]>(url)
+      return await this.http.get<any[]>(url).pipe(takeUntil(cancelToken))
         .subscribe({
           next: (data) => {
             this.cacheService.set('Egresos', data);
@@ -494,7 +515,7 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+    return;
   }
 
   /*  public fetchFacturacionAuth(method = '', body: any = {}, proxy = false): void {
@@ -550,11 +571,14 @@ export class DataService {
       this.ds_Empresa.next(this.cacheService.get('Empresa'));
       return;
     }
+
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+
+    const cancelToken = this.cancelService.onNewRequest(`${url}-${method}-${body.length}-DS`);
 
     if (method === 'GET') {
       try {
-        const response = await firstValueFrom(this.http.get<any[]>(url));
+        const response = await firstValueFrom(this.http.get<any[]>(url).pipe(takeUntil(cancelToken)));
         this.cacheService.set('Empresa', response[0]);
         this.ds_Empresa.next(response[0]);
         return response[0];
@@ -596,7 +620,7 @@ export class DataService {
     return;
   }
 
-  public fetchSa(method = '', body: any = {}, proxy = false): void {
+  public async fetchSa(method = '', body: any = {}, proxy = false) {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }
     let url = SharedService.host + 'DB/sa.php';
@@ -608,6 +632,8 @@ export class DataService {
       this.ds_Sa.next(this.cacheService.get('Sa'));
       return;
     }
+
+    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
 
     if (method === 'GET') {
       this.http.get<any>(url)
@@ -649,10 +675,10 @@ export class DataService {
           }
         });
     }
-    if (!SharedService.isProduction) console.log(method + ' - Solicitud');
+    return;
   }
 
-  public fetchReporteIngreso(params: string, proxy = false): void {
+  public async fetchReporteIngreso(params: string, proxy = false) {
     let url = SharedService.host + 'DB/reportes.php' + params;
     if (proxy) url = SharedService.proxy + url;
 
@@ -663,7 +689,11 @@ export class DataService {
       return;
     }
 
-    this.http.get<any[]>(url)
+    if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
+
+    const cancelToken = this.cancelService.onNewRequest(`${url}`);
+
+    return await this.http.get<any[]>(url).pipe(takeUntil(cancelToken))
       .subscribe({
         next: (data) => {
           this.cacheService.set('ReporteIngreso', data);
@@ -675,10 +705,9 @@ export class DataService {
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
-    if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
   }
 
-  public fetchReporteEgresoRubro(params: string, proxy = false): void {
+  public async fetchReporteEgresoRubro(params: string, proxy = false) {
     let url = SharedService.host + 'DB/reportes.php' + params;
     if (proxy) url = SharedService.proxy + url;
 
@@ -689,7 +718,11 @@ export class DataService {
       return;
     }
 
-    this.http.get<any[]>(url)
+    if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
+
+    const cancelToken = this.cancelService.onNewRequest(`${url}`);
+
+    return await this.http.get<any[]>(url).pipe(takeUntil(cancelToken))
       .subscribe({
         next: (data) => {
           this.cacheService.set('ReporteEgresoRubro', data);
@@ -701,10 +734,9 @@ export class DataService {
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
-    if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
   }
 
-  public fetchReporteEgresoBP(params: string, proxy = false): void {
+  public async fetchReporteEgresoBP(params: string, proxy = false) {
     let url = SharedService.host + 'DB/reportes.php' + params;
     if (proxy) url = SharedService.proxy + url;
 
@@ -715,7 +747,11 @@ export class DataService {
       return;
     }
 
-    this.http.get<any[]>(url)
+    if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
+
+    const cancelToken = this.cancelService.onNewRequest(`${url}`);
+
+    return await this.http.get<any[]>(url).pipe(takeUntil(cancelToken))
       .subscribe({
         next: (data) => {
           this.cacheService.set('ReporteEgresoBP', data);
@@ -727,26 +763,5 @@ export class DataService {
           this.sharedService.message('Error al intentar obtener registros.');
         }
       });
-    if (!SharedService.isProduction) console.log('GET' + ' - Solicitud');
   }
-
-  // public fetchRemito(method = '', body: any = {}, proxy = false): void {
-  //   let url = SharedService.host + 'DB/remito.php';
-  //   if (proxy) url = SharedService.proxy + url;
-
-  //   if (method === 'GET') {
-  //     this.http.get<any[]>(url)
-  //       .subscribe({
-  //         next: (data) => {
-  //           this.ds_Remito.next(data);
-  //         },
-  //         error: (error) => {
-  //           if (!SharedService.isProduction) console.error(JSON.stringify(error, null, 2));
-  //           this.ds_Remito.next([]);
-  //           this.sharedService.message('Error al intentar obtener registros.');
-  //         }
-  //       });
-  //   }
-  //   if (!SharedService.isProduction) console.log(method + ' - Solicitud');
-  // }
 }
