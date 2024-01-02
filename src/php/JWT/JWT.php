@@ -1,13 +1,6 @@
 <?php
-require_once '../DB/config.php';
-
-ini_set('log_errors', 1);
-ini_set('error_log', 'JWT_error.txt');
-ini_set('display_errors', 0); // Desactiva la visualización de errores
-error_reporting(E_ALL);
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS')
-  exit;
+require_once 'sHeaders.php';
+require_once '../config.php';
 
 require_once __DIR__ . '/src/JWTExceptionWithPayloadInterface.php';
 require_once __DIR__ . '/src/BeforeValidException.php';
@@ -17,9 +10,7 @@ require_once __DIR__ . '/src/JWT.php';
 
 use \Firebase\JWT\JWT;
 
-// Secret key for JWT (should be stored securely and not regenerated every request)
 $secretKey = "H;l=/$7k[{_L[0p)RSB^[?Q?pGZ94yP7R+Y=1/<vmE-KaGJhbd6a>0mdGpY6Ly~i";
-// Expiration time
 define("JWT_EXPIRATION_HOURS", 12);
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -34,7 +25,6 @@ if (isset($data->email) && isset($data->password)) {
   $email = $data->email;
   $password = $data->password;
 
-  // Prepared statement to prevent SQL injection
   $stmt = $conn->prepare("SELECT id, email, password, empresaId FROM usuarios WHERE email = ?");
   $stmt->bind_param("s", $email);
   $stmt->execute();

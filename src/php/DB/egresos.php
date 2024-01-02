@@ -1,42 +1,17 @@
 <?php
-require_once 'config.php';
-
-$method = $_SERVER['REQUEST_METHOD'];
-if ($method === 'OPTIONS')
-  exit;
-
-// NOTA: se debe configurar el .htaccess para que se acepte el encabezado de Autorization
+require_once '../headers.php';
+require_once '../config.php';
 require_once '../JWT/tokenVerifier.php';
 
-ini_set('log_errors', 1);
-ini_set('error_log', 'egresos_error.txt');
-ini_set('display_errors', 0); // Desactiva la visualización de errores
-error_reporting(E_ALL);
-
-$headers = apache_request_headers();
-$token = str_replace('Bearer ', '', $headers['Authorization'] ?? '');
-if (!$token || $token === '') {
-  http_response_code(401);
-  echo json_encode(['Error' => 'No se encontro el token', 'Mensaje' => 'Falta configurar el .htaccess ?']);
-  die();
-}
-
-$decoded = verifyToken($token);
-if (!$decoded->userId || !$decoded->empresaId) {
-  http_response_code(401);
-  die();
-}
-
-$empresaId = $decoded->empresaId;
-
 try {
+  $data = json_decode(file_get_contents("php://input"));
+  $method = $_SERVER['REQUEST_METHOD'];
   $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_PERSISTENT => true, // Habilitar conexiones persistentes
     PDO::ATTR_EMULATE_PREPARES => false, // Desactivar emulación de sentencias preparadas
   ];
   $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password, $options);
-  $data = json_decode(file_get_contents("php://input"));
 
   if ($method === 'GET') {
     $stmt = $conn->prepare("SELECT * FROM egresos WHERE empresaId = ?");

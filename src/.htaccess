@@ -1,4 +1,5 @@
 RewriteEngine On
+SetEnvIf Origin "(.*)" HTTP_ORIGIN=$1
 
 # PASA EL ENCABEZADO DE AUTORIZACIÓN
 # Esta línea es necesaria para que las aplicaciones basadas en PHP (como Laravel o Symfony) puedan acceder al encabezado de autorización.

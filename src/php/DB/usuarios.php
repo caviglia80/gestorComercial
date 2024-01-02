@@ -1,36 +1,11 @@
 <?php
-require_once 'config.php';
-
-$method = $_SERVER['REQUEST_METHOD'];
-if ($method === 'OPTIONS')
-  exit;
-
-// NOTA: se debe configurar el .htaccess para que se acepte el encabezado de Autorization
+require_once '../headers.php';
+require_once '../config.php';
 require_once '../JWT/tokenVerifier.php';
 
-ini_set('log_errors', 1);
-ini_set('error_log', 'usuarios_error.txt');
-ini_set('display_errors', 0); // Desactiva la visualización de errores
-error_reporting(E_ALL);
-
-$data = json_decode(file_get_contents("php://input"));
-$empresaId = 0; //inicializar si o si con 0 (si es admin despues se edita con la nueva empresa, si es empleado se agarra del jwt de la empresa que lo creo)
-
 try {
-  if (!isset($data->isNewAdmin) || $data->isNewAdmin === '0') {
-    $headers = apache_request_headers();
-    $token = str_replace('Bearer ', '', $headers['Authorization'] ?? '');
-    if (!$token || $token === '') {
-      throw new Exception('No se encontró el token o está vacío', 401);
-    }
-
-    $decoded = verifyToken($token);
-    if (!$decoded->userId || !$decoded->empresaId) {
-      throw new Exception('Token inválido', 401);
-    }
-    $empresaId = $decoded->empresaId;
-  }
-
+  $data = json_decode(file_get_contents("php://input"));
+  $method = $_SERVER['REQUEST_METHOD'];
   $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_PERSISTENT => true,
@@ -49,11 +24,10 @@ try {
   } elseif ($method === 'DELETE') {
     if (isset($data->id) && !empty($data->id)) {
 
-      $currentUserId = $decoded->userId;
       $id = $data->id;
 
       // Comprobar si el ID del usuario a eliminar es el mismo que el del usuario actual
-      if ($id == $currentUserId) {
+      if ($id == $userId) {
         http_response_code(400);
         die("No es posible eliminar el usuario actual.");
       }
@@ -121,31 +95,6 @@ try {
           throw new Exception('Error al intentar crear usuario.');
 
         $usuarioId = $conn->lastInsertId();
-
-        // Procesar si es isNewAdmin
-        if (isset($data->isNewAdmin) && $data->isNewAdmin === '1') {
-          $administrador = '1';
-
-          $fechaActual = new DateTime();
-          $fechaActual->modify('+1 month');
-          $fechaVencimiento = $fechaActual->format('Y-m-d');
-
-          $stmt->closeCursor();
-          $stmt = $conn->prepare("INSERT INTO `empresa` (`usuarioId`, `fechaVencimiento`) VALUES (:usuarioId, :fechaVencimiento);");
-          $stmt->bindParam(':usuarioId', $usuarioId, PDO::PARAM_INT);
-          $stmt->bindParam(':fechaVencimiento', $fechaVencimiento, PDO::PARAM_STR);
-          if (!$stmt->execute())
-            throw new Exception('Error al intentar crear empresa.');
-          $empresaId = $conn->lastInsertId();
-
-          $stmt->closeCursor();
-          $stmt = $conn->prepare("UPDATE `usuarios` SET `empresaId` = :empresaId, `administrador` = :administrador WHERE `id` = :id;");
-          $stmt->bindParam(':empresaId', $empresaId, PDO::PARAM_INT);
-          $stmt->bindParam(':administrador', $administrador, PDO::PARAM_STR);
-          $stmt->bindParam(':id', $usuarioId, PDO::PARAM_INT);
-          if (!$stmt->execute())
-            throw new Exception('Error al intentar configurar usuario.');
-        }
 
         $conn->commit();
         echo json_encode(['message' => 'Registros generados', 'usuarioId' => $usuarioId, 'empresaId' => isset($empresaId) ? $empresaId : null]);

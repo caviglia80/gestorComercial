@@ -202,6 +202,30 @@ export class DataService {
     return;
   }
 
+  public async fetchNewAdmin(method = '', body: any = {}) {
+    body = JSON.stringify(body);
+    const headers: {} = { 'Content-Type': 'application/json' }
+    let url = SharedService.host + 'DB/newAdmin.php';
+
+    if (method === 'POST') {
+      try {
+        const response = await firstValueFrom(this.http.post<any>(url, body, headers));
+        if (!SharedService.isProduction) console.log(response);
+        return response;
+      } catch (errorResponse: any) {
+        if (!SharedService.isProduction) console.log(errorResponse);
+        this.sharedService.message('Error al intentar guardar registro.');
+        const response: any = {};
+        if (errorResponse.status === 400)
+          response.message = errorResponse.error.message || 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        else
+          response.message = 'Ocurrio un error, intente nuevamente mas tarde o contacte con soporte.';
+        return response;
+      }
+    }
+    return;
+  }
+
   public fetchRoles(method = '', body: any = {}, proxy = false): void {
     body = JSON.stringify(body);
     const headers: {} = { 'Content-Type': 'application/json' }

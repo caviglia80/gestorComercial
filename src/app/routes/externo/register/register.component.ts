@@ -54,8 +54,6 @@ export class RegisterComponent {
 
     try {
       const usuarioNuevo: Usuario = {
-        administrador: '1',
-        isNewAdmin: '1',
         username: this.sharedService.onlyUser(correo).trim(),
         fullname: nombreCompleto.trim(),
         phone: telefono.trim(),
@@ -63,7 +61,7 @@ export class RegisterComponent {
         password: clave
       };
 
-      const response = await this.dataService.fetchUsuarios('POST', usuarioNuevo);
+      const response = await this.dataService.fetchNewAdmin('POST', usuarioNuevo);
       if (response.message === 'Registros generados')
         this.router.navigate(['/login']);
       else

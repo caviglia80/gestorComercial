@@ -1,14 +1,4 @@
 <?php
-require_once '../DB/config.php';
-
-ini_set('log_errors', 1);
-ini_set('error_log', 'tokenVerifier_error.txt');
-ini_set('display_errors', 0); // Desactiva la visualización de errores
-error_reporting(E_ALL);
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS')
-  exit;
-
 require_once __DIR__ . '/src/JWTExceptionWithPayloadInterface.php';
 require_once __DIR__ . '/src/BeforeValidException.php';
 require_once __DIR__ . '/src/ExpiredException.php';
@@ -26,25 +16,42 @@ function verifyToken($token)
 
   try {
     $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
-    $decoded = $decoded ? $decoded : null;
+    $decoded = $decoded ?: null;
 
     return $decoded;
   } catch (Firebase\JWT\ExpiredException $e) {
     http_response_code(401);
     echo json_encode(['Error' => $e->getMessage()]);
-    return null;
+    die();
   } catch (Firebase\JWT\SignatureInvalidException $e) {
     http_response_code(401);
     echo json_encode(['Error' => $e->getMessage()]);
-    return null;
+    die();
   } catch (Firebase\JWT\BeforeValidException $e) {
     http_response_code(401);
     echo json_encode(['Error' => $e->getMessage()]);
-    return null;
+    die();
   } catch (Exception $e) {
     http_response_code(401);
     echo json_encode(['Error' => $e->getMessage()]);
-    return null;
+    die();
   }
+}
+
+$headers = apache_request_headers();
+$token = str_replace('Bearer ', '', $headers['Authorization'] ?? '');
+if (!$token || $token === '') {
+  http_response_code(401);
+  echo json_encode(['Error' => 'No se encontró el token.', 'Mensaje' => 'Falta configurar el .htaccess?']);
+  die(); // Detiene la ejecución si no se encuentra el token
+}
+
+$decoded = verifyToken($token);
+$empresaId = $decoded->empresaId ?? null;
+$userId = $decoded->userId ?? null;
+
+if (!$userId || !$empresaId) {
+  http_response_code(401);
+  die(); // Detiene la ejecución si no se obtienen los IDs necesarios
 }
 ?>
