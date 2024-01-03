@@ -9,7 +9,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
@@ -22,23 +22,46 @@
       "dom"
     ],
     "paths": {
-      "@app/*": ["src/app/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@modules/*": ["src/app/shared/modules/*"],
-      "@components/*": ["src/app/shared/components/*"],
-      "@services/*": ["src/app/shared/services/*"],
-      "@guards/*": ["src/app/shared/guards/*"],
-      "@interceptors*": ["src/app/shared/interceptors/*"],
-      "@environments/*": ["src/environments/*"],
-      "@routes/*": ["src/app/routes/*"],
-      "@models/*": ["src/app/shared/models/*"],
-      "@pipes/*": ["src/app/core/pipes/*"]
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@modules/*": [
+        "src/app/shared/modules/*"
+      ],
+      "@components/*": [
+        "src/app/shared/components/*"
+      ],
+      "@services/*": [
+        "src/app/shared/services/*"
+      ],
+      "@guards/*": [
+        "src/app/shared/guards/*"
+      ],
+      "@interceptors*": [
+        "src/app/shared/interceptors/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
+      "@routes/*": [
+        "src/app/routes/*"
+      ],
+      "@models/*": [
+        "src/app/shared/models/*"
+      ],
+      "@pipes/*": [
+        "src/app/core/pipes/*"
+      ]
     }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "aot": true
   }
 }

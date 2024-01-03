@@ -4,6 +4,9 @@ import { TokenService } from '@services/token/token.service';
 import { CacheService } from '@services/cache/cache.service';
 import { empresa } from '@models/mainClasses/main-classes';
 import { AuthService } from '@services/auth/auth.service';
+import { Router, Event, NavigationEnd } from '@angular/router';
+import { LoadingService } from '@services/loading/loading.service';
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -34,9 +37,16 @@ export class NavComponent implements OnInit {
     public dataService: DataService,
     public tokenService: TokenService,
     private cacheService: CacheService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
+    public loadingService: LoadingService
   ) {
     this.cacheService.clear();
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.loadingService.isLoading.next(false);
+      }
+    });
   }
 
   async ngOnInit() {

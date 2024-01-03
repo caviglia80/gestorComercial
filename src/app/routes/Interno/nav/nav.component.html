@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" [ngClass]="{'mat-elevation-z6': !sidenavOpened}">
     <div class="backgroundColor"></div>
     <div class="container-fluid"> <!-- mt-lg-2 -->
-      <button class="toggle-button mt-2" (click)="toggleSidenav()">
+      <button class="toggle-button mt-2" (click)="toggleSidenav();">
         <mat-icon>{{ sidenavOpened ? 'arrow_back_ios' : 'menu' }}</mat-icon>
       </button>
 
@@ -26,48 +26,43 @@
         </div>
 
         <mat-list-item *ngIf="dashboard" routerLinkActive="active-link" routerLink="/nav/dashboard"
-          (click)="toggleSidenav()">
+          (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/dashboard')">
           <mat-icon>dashboard</mat-icon>
           <span>Panel</span>
         </mat-list-item>
 
         <mat-list-item *ngIf="ingresos" routerLinkActive="active-link" routerLink="/nav/ingresos"
-          (click)="toggleSidenav()">
+          (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/ingresos')">
           <mat-icon>attach_money</mat-icon>
           <span>Ingresos</span>
         </mat-list-item>
 
         <mat-list-item *ngIf="egresos" routerLinkActive="active-link" routerLink="/nav/egresos"
-          (click)="toggleSidenav()">
+          (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/egresos')">
           <mat-icon>money_off</mat-icon>
           <span>Egresos</span>
         </mat-list-item>
 
         <mat-list-item *ngIf="inventario" routerLinkActive="active-link" routerLink="/nav/inventario"
-          (click)="toggleSidenav()">
+          (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/inventario')">
           <mat-icon>playlist_add_check</mat-icon>
           <span>Inventario</span>
         </mat-list-item>
 
         <mat-list-item *ngIf="proveedores" routerLinkActive="active-link" routerLink="/nav/proveedores"
-          (click)="toggleSidenav()">
+          (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/proveedores')">
           <mat-icon>assignment_ind</mat-icon>
           <span>Proveedores</span>
         </mat-list-item>
 
-        <!--       <mat-list-item routerLinkActive="active-link" routerLink="/nav/billing" (click)="toggleSidenav()">
-          <mat-icon>list_alt</mat-icon>
-          <span>Facturación</span>
-        </mat-list-item> -->
-
         <mat-list-item *ngIf="reportes" routerLinkActive="active-link" routerLink="/nav/reportes"
-          (click)="toggleSidenav()">
+          (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/reportes')">
           <mat-icon>show_chart</mat-icon>
           <span>Reportes</span>
         </mat-list-item>
 
         <mat-list-item *ngIf="clientes" routerLinkActive="active-link" routerLink="/nav/clientes"
-          (click)="toggleSidenav()">
+          (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/clientes')">
           <mat-icon>person_search</mat-icon>
           <span>Clientes</span>
         </mat-list-item>
@@ -82,25 +77,26 @@
             </mat-expansion-panel-header>
 
             <mat-list-item *ngIf="general" class="subMenu" routerLinkActive="active-link" routerLink="/nav/general"
-              (click)="toggleSidenav()">
+              (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/general')">
               <mat-icon>build</mat-icon>
               <span>General</span>
             </mat-list-item>
 
             <mat-list-item *ngIf="usuarios" class="subMenu" routerLinkActive="active-link" routerLink="/nav/usuarios"
-              (click)="toggleSidenav()">
+              (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/usuarios')">
               <mat-icon>group</mat-icon>
               <span>Usuarios</span>
             </mat-list-item>
 
             <mat-list-item *ngIf="roles" class="subMenu" routerLinkActive="active-link" routerLink="/nav/roles"
-              (click)="toggleSidenav()">
+              (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/roles')">
               <mat-icon>verified_user</mat-icon>
               <span>Roles</span>
             </mat-list-item>
 
             <mat-list-item *ngIf="renovacion" class="subMenu" routerLinkActive="active-link"
-              routerLink="/nav/renovacion" (click)="toggleSidenav()">
+              routerLink="/nav/renovacion"
+              (click)="toggleSidenav(); loadingService.setLoading(true, '/nav/renovacion')">
               <mat-icon>update</mat-icon>
               <span>Renovación</span>
             </mat-list-item>
@@ -117,7 +113,8 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <div class="overlay" [ngClass]="{'showOverlay': sidenavOpened}" (click)="toggleSidenav()"></div>
+      <div class="overlay" [ngClass]="{'showOverlay': sidenavOpened}" (click)="toggleSidenav();"></div>
+      <app-loading></app-loading>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

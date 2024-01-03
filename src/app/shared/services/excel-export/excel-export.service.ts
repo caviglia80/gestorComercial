@@ -11,11 +11,20 @@ interface Column {
   providedIn: 'root'
 })
 export class ExcelExportService {
+  private exceljs: typeof ExcelJS | undefined;
+
+  async loadExceljs(): Promise<typeof ExcelJS> {
+    if (!this.exceljs)
+      this.exceljs = await import('exceljs');
+    return this.exceljs;
+  }
 
   constructor() { }
 
   async exportToExcel(columns: Column[], data: any[], fileName: string): Promise<void> {
-    const workbook = new ExcelJS.Workbook();
+    const ExcelJS2 = await this.loadExceljs();
+
+    const workbook = new ExcelJS2.Workbook();
     const worksheet = workbook.addWorksheet(fileName);
 
     // Añadir cabeceras de columna
