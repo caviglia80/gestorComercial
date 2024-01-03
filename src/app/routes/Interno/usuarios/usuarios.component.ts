@@ -55,11 +55,11 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     private authService: AuthService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -190,7 +190,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     this.dataService.fetchUsuarios('GET');
   }
 
-  ExportToExcel() {
+  async ExportToExcel() {
     const columns = [
       { header: 'Usuario', key: 'username', width: 20 },
       { header: 'Nombre Completo', key: 'fullname', width: 30 },

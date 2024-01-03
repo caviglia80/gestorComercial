@@ -71,11 +71,11 @@ export class RolesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -199,7 +199,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
     this.dataService.fetchRoles('GET');
   }
 
-  ExportToExcel() {
+  async ExportToExcel() {
     const columns = [
       { header: 'Nombre', key: 'nombre', width: 20 },
       { header: 'Menús', key: 'menus', width: 80 },

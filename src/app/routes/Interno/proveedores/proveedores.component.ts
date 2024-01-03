@@ -53,11 +53,11 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
     private excelExportService: ExcelExportService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -166,7 +166,7 @@ export class ProveedoresComponent implements OnInit, AfterViewInit {
     this.dataService.fetchProveedores('GET');
   }
 
-  ExportToExcel() {
+  async ExportToExcel() {
     const columns = [
       { header: 'Empresa', key: 'company', width: 20 },
       { header: 'Nombre Completo del Contacto', key: 'contactFullname', width: 25 },

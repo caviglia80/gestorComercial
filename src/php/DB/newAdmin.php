@@ -5,7 +5,6 @@ require_once '../config.php';
 try {
   $data = json_decode(file_get_contents("php://input"));
   $method = $_SERVER['REQUEST_METHOD'];
-
   $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_PERSISTENT => true,

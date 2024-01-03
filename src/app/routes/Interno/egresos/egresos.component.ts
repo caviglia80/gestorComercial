@@ -66,11 +66,11 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -210,7 +210,7 @@ export class EgresosComponent implements OnInit, AfterViewInit {
     this.dataService.fetchProveedores('GET');
   }
 
-  ExportToExcel() {
+  async ExportToExcel() {
     const columns = [
       { header: 'Fecha', key: 'date', width: 15 },
       { header: 'Moneda', key: 'moneda', width: 15 },

@@ -85,11 +85,11 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -226,7 +226,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     this.remito = visible;
   }
 
-  public anularItem(item: Ingreso) {
+  public async anularItem(item: Ingreso) {
     item.anulado = '1';
     this.dataService.fetchIngresos('PUT', item);
     if (this.dataEmpresa.ingresoAnuladoSumaStockEnabled == '1' && this.dataEmpresa.validarInventarioEnabled == '1')
@@ -332,7 +332,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
       this.errorMsg = response.message;
   }
 
-  ExportToExcel() {
+  async ExportToExcel() {
     const columns = [
       { header: 'Fecha', key: 'date', width: 15 },
       { header: 'Nombre', key: 'nombre', width: 15 },

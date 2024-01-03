@@ -34,7 +34,7 @@ export class DashboardGraficoMediosdepagoComponent implements OnInit {
   constructor(
     public dataService: DataService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 

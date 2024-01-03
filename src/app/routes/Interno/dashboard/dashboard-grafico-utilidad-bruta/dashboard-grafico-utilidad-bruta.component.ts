@@ -39,7 +39,7 @@ export class DashboardGraficoMargenComponent implements OnInit {
     public dataService: DataService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 

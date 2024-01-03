@@ -28,7 +28,7 @@ export class ReportsComponent {
     this.dataSourceEBP = valor;
   }
 
-  ExportToExcel() {
+  async ExportToExcel() {
     let name = 'Reporte';
     let columns;
 

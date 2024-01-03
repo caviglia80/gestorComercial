@@ -38,7 +38,7 @@ export class DashboardGraficoEgresosComponent implements OnInit {
     public dataService: DataService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 

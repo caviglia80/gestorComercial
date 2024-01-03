@@ -38,11 +38,11 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     private cacheService: CacheService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

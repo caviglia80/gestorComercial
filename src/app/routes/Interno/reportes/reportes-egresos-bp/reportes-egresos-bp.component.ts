@@ -37,13 +37,13 @@ export class ReportesEgresosBPComponent implements OnInit, AfterViewInit {
     this.fechaHasta.setValue(this.sharedService.obtenerFechaUltimoDiaDelMes());
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.fechaDesde.valueChanges.subscribe(() => { this.onFechaChange(); });
     this.fechaHasta.valueChanges.subscribe(() => { this.onFechaChange(); });
     this.dataInit();
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

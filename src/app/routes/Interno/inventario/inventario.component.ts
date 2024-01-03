@@ -65,11 +65,11 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -217,7 +217,7 @@ export class inventarioComponent implements OnInit, AfterViewInit {
     this.dataService.fetchProveedores('GET');
   }
 
-  ExportToExcel() {
+  async ExportToExcel() {
     const columns = [
       { header: 'ID', key: 'id', width: 10 },
       { header: 'ID Externo', key: 'idExterno', width: 20 },

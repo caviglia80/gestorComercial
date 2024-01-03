@@ -43,7 +43,7 @@ export class DashboardGraficoMargenMenosEgresosComponent implements OnInit {
     public dataService: DataService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 

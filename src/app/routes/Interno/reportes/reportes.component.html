@@ -26,7 +26,9 @@
         <mat-radio-button value="bp">Egresos por Beneficiario</mat-radio-button>
       </mat-radio-group>
     </div>
-    <app-reportes-egresos-rubro *ngIf="filtro.value === 'rubro'" (variableChange)="getDataERubro($event)"></app-reportes-egresos-rubro>
-    <app-reportes-egresos-bp *ngIf="filtro.value === 'bp'" (variableChange)="getDataEBP($event)"></app-reportes-egresos-bp>
+    <app-reportes-egresos-rubro *ngIf="filtro.value === 'rubro'"
+      (variableChange)="getDataERubro($event)"></app-reportes-egresos-rubro>
+    <app-reportes-egresos-bp *ngIf="filtro.value === 'bp'"
+      (variableChange)="getDataEBP($event)"></app-reportes-egresos-bp>
   </mat-tab>
 </mat-tab-group>

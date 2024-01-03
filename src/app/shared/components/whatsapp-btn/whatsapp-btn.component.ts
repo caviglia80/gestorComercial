@@ -9,7 +9,7 @@ import { GlobalVariables } from 'src/app/app.component';
 export class WhatsappBtnComponent implements AfterViewInit, OnDestroy {
   private onScroll: (() => void) | undefined;
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     try {
       const button: HTMLElement | null = document.getElementById('whatsapp-btn');
       this.onScroll = () => {
@@ -28,7 +28,7 @@ export class WhatsappBtnComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     try {
       if (this.onScroll)
-      window.removeEventListener('scroll', this.onScroll);
+        window.removeEventListener('scroll', this.onScroll);
     } catch (error) {
       console.log(error);
     }

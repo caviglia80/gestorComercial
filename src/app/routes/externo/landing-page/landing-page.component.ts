@@ -21,7 +21,7 @@ export class LandingPageComponent implements AfterViewInit {
   ) {
   }
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit() {
     // Navbar shrink function
     const navbarShrink = () => {
       const navbarCollapsible = document.body.querySelector('#mainNav');

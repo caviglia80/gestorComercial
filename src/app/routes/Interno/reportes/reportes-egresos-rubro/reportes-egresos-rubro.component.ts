@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit, EventEmitter, Output  } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -37,14 +37,14 @@ export class ReportesEgresosRubroComponent implements OnInit, AfterViewInit {
     this.fechaHasta.setValue(this.sharedService.obtenerFechaUltimoDiaDelMes());
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.fechaDesde.valueChanges.subscribe(() => { this.onFechaChange(); });
     this.fechaHasta.valueChanges.subscribe(() => { this.onFechaChange(); });
     this.dataInit();
   }
 
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.paginator && this.sort) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

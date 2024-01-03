@@ -20,7 +20,7 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
     public dataService: DataService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataInit();
   }
 
@@ -59,7 +59,7 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
 
           try {
             await this.dataService.fetchEmpresa('PUT', { icono: base64 });
-            window.location.reload();
+            location.reload();
           } catch (error) {
             console.error("Hubo un error al actualizar el icono:", error);
             this.errorMessageImg = 'Hubo un error al actualizar el icono';
@@ -79,7 +79,7 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
 
   public async restauracionDeFabrica() {
     await this.dataService.fetchEmpresa('PUT', new empresa());
-    window.location.reload();
+    location.reload();
   }
 
   public color1(color: string) {
@@ -107,7 +107,7 @@ export class EmpresaConfiguracionAjustesComponent implements OnInit {
   public async setNombre(nombre: string) {
     if (nombre.trim() !== this.dataEmpresa.nombre) {
       await this.dataService.fetchEmpresa('PUT', { nombre: nombre.trim() });
-      window.location.reload();
+      location.reload();
     }
   }
 }
