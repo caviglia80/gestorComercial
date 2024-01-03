@@ -36,8 +36,13 @@ export class TokenService {
         }
         return this.authService.refreshUserInfo().then(() => {
           response.rolValido = this.authService.availableMenus();
-          const firstRoute = this.authService.getFirstEnabledRoute();
-          this.router.navigate([firstRoute]);
+
+          this.authService.getFirstEnabledRoute().then((firstRoute) => {
+            this.router.navigate([firstRoute]);
+          });
+
+          // const firstRoute = this.authService.getFirstEnabledRoute();
+          // this.router.navigate([firstRoute]);
           return response;
         }).catch(() => {
           this.logout();

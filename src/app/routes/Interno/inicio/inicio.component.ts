@@ -6,22 +6,13 @@ import { AuthService } from '@services/auth/auth.service';
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
-  public errorMsj: boolean = false;
-
+  public errorMsj: string = '';
 
   constructor(
     private authService: AuthService
   ) { }
 
-  ngOnInit() {
-    this.authService.adminAvailableMenus().then((hayMenus) => {
-      this.errorMsj = !hayMenus;
-    });
+  async ngOnInit() {
+    this.errorMsj = await this.authService.getPeriodoVencido() ? 'Contacte con su administrador.' : '';
   }
-
-
-
-
-
-
 }

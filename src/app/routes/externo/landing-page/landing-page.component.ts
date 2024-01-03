@@ -71,8 +71,13 @@ export class LandingPageComponent implements AfterViewInit {
     if (token && token.split('.').length === 3)
       if (!this.tokenService.isExpired(token)) {
         this.authService.refreshUserInfo().then(() => {
-          const firstRoute = this.authService.getFirstEnabledRoute();
-          this.router.navigate([firstRoute]);
+
+          this.authService.getFirstEnabledRoute().then((firstRoute) => {
+            this.router.navigate([firstRoute]);
+          });
+
+          // const firstRoute = this.authService.getFirstEnabledRoute();
+          // this.router.navigate([firstRoute]);
         });
         return;
       }

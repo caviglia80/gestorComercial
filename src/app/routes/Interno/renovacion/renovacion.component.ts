@@ -4,6 +4,7 @@ import { CacheService } from '@services/cache/cache.service';
 import { empresa, Usuario } from '@models/mainClasses/main-classes';
 import { GlobalVariables } from 'src/app/app.component';
 import { SharedService } from '@services/shared/shared.service';
+import { AuthService } from '@services/auth/auth.service';
 @Component({
   selector: 'app-renovacion',
   templateUrl: './renovacion.component.html',
@@ -21,6 +22,7 @@ export class RenovacionComponent implements OnInit {
   public usuarios: Usuario[] = [];
 
   constructor(
+    private authService: AuthService,
     private cacheService: CacheService,
     public sharedService: SharedService,
     public dataService: DataService
@@ -58,10 +60,11 @@ export class RenovacionComponent implements OnInit {
   }
 
   public async refresh() {
-    this.cacheService.remove('Usuarios');
+    // this.cacheService.remove('Usuarios');
     await this.dataService.fetchUsuarios('GET');
     this.cacheService.remove('Empresa');
-    await this.dataService.fetchEmpresa('GET');
+    // await this.dataService.fetchEmpresa('GET');
+    await this.authService.refreshEmpresaInfo();
   }
 
   comprobarVencimiento(fecha: string) {

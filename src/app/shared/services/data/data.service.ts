@@ -569,7 +569,7 @@ export class DataService {
     if (this.cacheService.has('Empresa') && method === 'GET') {
       if (!SharedService.isProduction) console.log(method + ' - Cache');
       this.ds_Empresa.next(this.cacheService.get('Empresa'));
-      return;
+      return this.cacheService.get('Empresa');
     }
 
     if (!SharedService.isProduction) console.log(method + ' - Solicitud');

@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { SharedService } from '@services/shared/shared.service';
 import { Router } from '@angular/router';
 import { DataService } from '@services/data/data.service';
+
 interface Menu {
   ruta: string;
   nombre: string;
@@ -16,12 +17,13 @@ export class AuthService {
   public UserInfo$: Observable<any> = this.ds_UserInfo.asObservable();
   private UserInfo: any = null;
 
-  private ds_EmpresaInfo: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public EmpresaInfo$: Observable<any> = this.ds_EmpresaInfo.asObservable();
+  // private ds_EmpresaInfo: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  // public EmpresaInfo$: Observable<any> = this.ds_EmpresaInfo.asObservable();
   private EmpresaInfo: any = null;
   private periodoVencido: boolean = false;
 
   constructor(
+    public dataService: DataService,
     private http: HttpClient,
     private router: Router,
     public sharedService: SharedService
@@ -32,28 +34,43 @@ export class AuthService {
     if (!this.UserInfo) await this.refreshUserInfo();
 
     if (this.UserInfo) {
-      if (this.UserInfo.isSa) {
+      if (this.UserInfo.isSa) {                                    //SA
         if (ruta.includes('clientes')) return true;
-      } else {
+
+      } else {                                                     //Admin y Empleado
         if (ruta.includes('clientes')) return false;
         if (!this.EmpresaInfo) await this.refreshEmpresaInfo();
 
-        if (this.UserInfo.isAdmin) {
+        if (this.UserInfo.isAdmin) {                               //Admin
           if (this.periodoVencido && ruta.includes('renovacion')) return true;
           if (this.periodoVencido) {
             this.router.navigate(['/nav/renovacion']);
             return false;
           }
           return true;
-        } else {
-          if (this.periodoVencido && ruta.includes('inicio')) return true;
-          if (this.periodoVencido) {
-            this.router.navigate(['/nav/inicio']);
-            return false;
-          }
+        } else {                                                   //Empleado
+
           if (this.UserInfo.rol) {
             const menus: Menu[] = this.UserInfo.rol.menus;
-            if (menus) return menus.some(menu => menu.ruta === ruta && menu.habilitado); else return false;
+            const tieneRenovacionHabilitado = menus.some(menu => menu.ruta.includes('renovacion') && menu.habilitado);
+
+            if (this.periodoVencido) {
+
+              if (tieneRenovacionHabilitado && ruta.includes('renovacion')) return true;
+              if (tieneRenovacionHabilitado) {           //es empleado pero con renovacion habilitado
+                this.router.navigate(['/nav/renovacion']);
+                return false;
+              }
+
+              if (ruta.includes('inicio')) return true;  //es empleado pero no tiene habilitado renovacion
+              this.router.navigate(['/nav/inicio']);
+              return false;
+
+            }
+
+            // este es el mas importante, le dice a los empleados que puede ver/acceder
+            if (menus) return menus.some(menu => menu.ruta === ruta && menu.habilitado);
+            else return false;
           } else return false;
         }
       }
@@ -61,7 +78,7 @@ export class AuthService {
     return false;
   }
 
-  getFirstEnabledRoute(): string {
+  async getFirstEnabledRoute(): Promise<string> {
     if (this.UserInfo.isSa) return '/nav/clientes';
     if (this.UserInfo && !this.UserInfo.isAdmin && this.periodoVencido) return '/nav/inicio';
     if (this.UserInfo && this.UserInfo.isAdmin && this.periodoVencido) return '/nav/renovacion';
@@ -100,7 +117,7 @@ export class AuthService {
     return false;
   }
 
-  refreshUserInfo(): Promise<any> {
+  async refreshUserInfo(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.get<any>(`${SharedService.host}DB/guard.php`).subscribe({
         next: (data) => {
@@ -120,20 +137,22 @@ export class AuthService {
     });
   }
 
-  refreshEmpresaInfo(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.http.get<any>(`${SharedService.host}DB/empresa.php`).subscribe({
-        next: (data) => {
-          if (data[0] && data[0].length !== 0) {
-            this.EmpresaInfo = data[0];
-            if (this.EmpresaInfo.fechaVencimiento)
-              if (this.sharedService.getDiasDeDiferencia(this.EmpresaInfo.fechaVencimiento) <= 0)
-                this.periodoVencido = true; else this.periodoVencido = false;
-            this.ds_EmpresaInfo.next(this.EmpresaInfo);
-          }
-          resolve(this.EmpresaInfo);
+  async refreshEmpresaInfo() {
+    const data = await this.dataService.fetchEmpresa('GET');
+    if (data) {
+      this.EmpresaInfo = data;
+      if (this.EmpresaInfo.fechaVencimiento)
+        if (this.sharedService.getDiasDeDiferencia(this.EmpresaInfo.fechaVencimiento) <= 0) {
+          this.periodoVencido = true;
+          await this.refreshUserInfo();
+        } else {
+          this.periodoVencido = false;
+          await this.refreshUserInfo();
         }
-      });
-    });
+    }
+  }
+
+  async getPeriodoVencido(): Promise<boolean> {
+    return this.periodoVencido;
   }
 }

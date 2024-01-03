@@ -68,7 +68,7 @@ export class NavComponent implements OnInit {
     this.tokenService.logout();
   }
 
-  private canView() {
+  private async canView() {
     this.authService.canAccess('/nav/clientes').then(puedeVer => {
       this.clientes = puedeVer;
     });
@@ -119,9 +119,9 @@ export class NavComponent implements OnInit {
       next: (data) => {
         if (data) {
           this.UserInfo = data;
-          if (data.username) this.username = data.username.trim(); else this.username = '';
-          if (data.rol) this.rolName = data.rol.nombre.trim(); else this.rolName = '';
-          if (data.isSa === 1) {
+          if (this.UserInfo.username) this.username = this.UserInfo.username.trim(); else this.username = '';
+          if (this.UserInfo.rol) this.rolName = this.UserInfo.rol.nombre.trim(); else this.rolName = '';
+          if (this.UserInfo.isSa === 1) {
             this.isSa = true;
             this.rolName = 'Super Admin';
           }
@@ -130,7 +130,8 @@ export class NavComponent implements OnInit {
         }
       }
     });
-    if (!this.UserInfo) await this.authService.refreshUserInfo();
+    //if (!this.UserInfo) await this.authService.refreshUserInfo();
+    this.authService.refreshEmpresaInfo();
   }
 }
 
