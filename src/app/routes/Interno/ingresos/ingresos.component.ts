@@ -42,6 +42,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     cliente: new FormControl(''),
     moneda: new FormControl(''),
     monto: new FormControl(0, [Validators.required, Validators.min(1)]),
+    costo: new FormControl(0),
     margenBeneficio: new FormControl(''),
     method: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
@@ -240,9 +241,14 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         this.Item[key].patchValue(this.dataInventario.find(i => i.id == item.inventarioId)?.id || '');
       else if (key === 'tipo')
         this.Item[key].patchValue(this.dataInventario.find(i => i.id == item.inventarioId)?.tipo || '');
+      // else if (key === 'costo')
+      //   this.Item[key].patchValue(this.dataInventario.find(i => i.id == item.inventarioId)?.costo || '');
       else
         this.Item[key].patchValue(item[key] || '');
     });
+
+
+    console.log(this.Item);
   }
 
   private async restarStock(inventario: Inventario[]) {
@@ -272,6 +278,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
     if (!this._getProduct(this.Item.inventarioId.value)) {
       this.sharedService.message('Advertencia: seleccione un producto válido.');
       this.Item.monto.setValue(0);
+      this.Item.costo.setValue(0);
       this.Item.inventarioId.reset();
       return false;
     }
@@ -302,7 +309,10 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public async recordEdit() {
     let response: any;
     try {
+      const i = this._getProduct(this.Item.inventarioId.value);
+
       this.Item.inventarioId.setValue((this.dataInventario.find(i => i.nombre == this.Item.nombre.value)?.id === this.Item.inventarioId.value) ? this.Item.inventarioId.value : null);
+      this.Item.costo.setValue(i.costo ? i.costo : 0);
 
       const body: Ingreso = {
         id: this.Item.id.value,
@@ -311,6 +321,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         nombre: this.Item.nombre.value,
         moneda: this.Item.moneda.value,
         monto: this.Item.monto.value,
+        costo: this.Item.costo.value,
         margenBeneficio: this.Item.margenBeneficio.value,
         method: this.Item.method.value,
         category: this.Item.category.value,
@@ -371,9 +382,11 @@ export class IngresosComponent implements OnInit, AfterViewInit {
   public remitoCreate(addMore: boolean) {
     if (this.dataEmpresa.validarInventarioEnabled == '1' && !this.productoValido()) return;
     try {
-      this.Item.inventarioId.setValue((this.dataInventario.find(i => i.nombre == this.Item.nombre.value)?.id === this.Item.inventarioId.value) ? this.Item.inventarioId.value : null);
       const i = this._getProduct(this.Item.inventarioId.value);
-      const margenBeneficio = i ? (i.tipo === 'Producto' ? this.Item.margenBeneficio.value : 0) : 0;
+
+      this.Item.inventarioId.setValue((this.dataInventario.find(i => i.nombre == this.Item.nombre.value)?.id === this.Item.inventarioId.value) ? this.Item.inventarioId.value : null);
+      this.Item.margenBeneficio.setValue(i ? (i.tipo === 'Producto' ? this.Item.margenBeneficio.value : 0) : 0);
+      this.Item.costo.setValue(i.costo ? i.costo : 0);
 
       const body: Ingreso = {
         id: this.Item.id.value,
@@ -382,7 +395,8 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         inventarioId: this.Item.inventarioId.value,
         moneda: this.Item.moneda.value,
         monto: this.Item.monto.value,
-        margenBeneficio: margenBeneficio,
+        costo: this.Item.costo.value,
+        margenBeneficio: this.Item.margenBeneficio.value,
         method: this.Item.method.value,
         category: this.Item.category.value,
         comprobante: this.Item.comprobante.value,
@@ -397,6 +411,7 @@ export class IngresosComponent implements OnInit, AfterViewInit {
         this.Item.nombre.setValue('');
         this.Item.inventarioId.setValue('');
         this.Item.monto.setValue(0);
+        this.Item.costo.setValue(0);
       } else {
         this.Create(false);
         this.Remito(true);

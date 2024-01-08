@@ -53,7 +53,7 @@ try {
 
       try {
         // Preparar la consulta SQL para 'ingresos'
-        $stmt = $conn->prepare("INSERT INTO `ingresos` (`id`, `date`, `inventarioId`, `nombre`, `moneda`, `monto`, `method`, `category`, `comprobante`, `cliente`, `margenBeneficio`, `description`, `empresaId`) VALUES (NULL, :date, :inventarioId, :nombre, :moneda, :monto, :method, :category, :comprobante, :cliente, :margenBeneficio, :description, :empresaId)");
+        $stmt = $conn->prepare("INSERT INTO `ingresos` (`id`, `date`, `inventarioId`, `nombre`, `moneda`, `monto`, `costo`, `method`, `category`, `comprobante`, `cliente`, `margenBeneficio`, `description`, `empresaId`) VALUES (NULL, :date, :inventarioId, :nombre, :moneda, :monto, :costo, :method, :category, :comprobante, :cliente, :margenBeneficio, :description, :empresaId)");
 
         // Recorrer cada registro
         foreach ($data as $registro) {
@@ -63,6 +63,7 @@ try {
           $stmt->bindParam(':nombre', $registro->nombre, PDO::PARAM_STR);
           $stmt->bindParam(':moneda', $registro->moneda, PDO::PARAM_STR);
           $stmt->bindParam(':monto', $registro->monto, PDO::PARAM_STR);
+          $stmt->bindParam(':costo', $registro->costo, PDO::PARAM_STR);
           $stmt->bindParam(':method', $registro->method, PDO::PARAM_STR);
           $stmt->bindParam(':category', $registro->category, PDO::PARAM_STR);
           $stmt->bindParam(':comprobante', $comprobante, PDO::PARAM_STR);
@@ -124,6 +125,7 @@ try {
       $nombre = $data->nombre;
       $moneda = $data->moneda;
       $monto = $data->monto;
+      $costo = $data->costo;
       $method = $data->method;
       $category = $data->category;
       $comprobante = $data->comprobante;
@@ -132,13 +134,14 @@ try {
       $margenBeneficio = $data->margenBeneficio;
       $description = $data->description;
 
-      $stmt = $conn->prepare("UPDATE `ingresos` SET `date` = :date, `inventarioId` = :inventarioId, `nombre` = :nombre, `moneda` = :moneda, `monto` = :monto, `method` = :method, `category` = :category, `comprobante` = :comprobante, `anulado` = :anulado, `cliente` = :cliente, `margenBeneficio` = :margenBeneficio, `description` = :description WHERE `id` = :id AND `empresaId` = :empresaId;");
+      $stmt = $conn->prepare("UPDATE `ingresos` SET `date` = :date, `inventarioId` = :inventarioId, `nombre` = :nombre, `moneda` = :moneda, `monto` = :monto, `costo` = :costo, `method` = :method, `category` = :category, `comprobante` = :comprobante, `anulado` = :anulado, `cliente` = :cliente, `margenBeneficio` = :margenBeneficio, `description` = :description WHERE `id` = :id AND `empresaId` = :empresaId;");
       $stmt->bindParam(':id', $id, PDO::PARAM_INT);
       $stmt->bindParam(':date', $date, PDO::PARAM_STR);
       $stmt->bindParam(':inventarioId', $inventarioId, PDO::PARAM_STR);
       $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
       $stmt->bindParam(':moneda', $moneda, PDO::PARAM_STR);
       $stmt->bindParam(':monto', $monto, PDO::PARAM_STR);
+      $stmt->bindParam(':costo', $costo, PDO::PARAM_STR);
       $stmt->bindParam(':method', $method, PDO::PARAM_STR);
       $stmt->bindParam(':category', $category, PDO::PARAM_STR);
       $stmt->bindParam(':comprobante', $comprobante, PDO::PARAM_STR);

@@ -154,6 +154,7 @@ export class Ingreso {
   inventarioId?: number;
   moneda?: string;
   monto?: number;
+  costo?: number;
   margenBeneficio?: number;
   method?: string;
   category: string;
@@ -170,6 +171,7 @@ export class Ingreso {
     inventarioId = 0,
     moneda = '',
     monto = 0,
+    costo = 0,
     margenBeneficio = 0,
     method = '',
     category = '',
@@ -185,6 +187,7 @@ export class Ingreso {
     this.inventarioId = inventarioId;
     this.moneda = moneda;
     this.monto = monto;
+    this.costo = costo;
     this.margenBeneficio = margenBeneficio;
     this.method = method;
     this.category = category;

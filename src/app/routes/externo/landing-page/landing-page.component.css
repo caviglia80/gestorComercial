@@ -139,6 +139,11 @@ body {
   overflow: hidden;
 }
 
+.masthead a {
+  z-index: 2 !important;
+  position: relative;
+}
+
 .masthead::before {
   content: '';
   position: absolute;
@@ -157,7 +162,7 @@ body {
   }
 }
 
-.masthead::after {
+/* .masthead::after {
   content: '';
   position: absolute;
   top: 0;
@@ -179,7 +184,7 @@ body {
   to {
     opacity: 1;
   }
-}
+} */
 
 .masthead h1,
 .masthead .h1 {

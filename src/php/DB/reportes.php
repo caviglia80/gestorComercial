@@ -28,8 +28,11 @@ try {
                     SUM(CASE WHEN i.anulado = 0 THEN 1 ELSE 0 END) AS cantidadIngresos,
                     SUM(CASE WHEN i.anulado = 0 THEN i.monto ELSE 0 END) AS totalIngresos,
                     ROUND(SUM(CASE WHEN i.anulado = 0 THEN
-                        (CASE WHEN i.margenBeneficio IS NOT NULL THEN (i.monto - ((i.margenBeneficio / 2) * i.monto / 100))
-                        ELSE i.monto END) ELSE 0 END), 2) AS margenGanancias
+                        (CASE WHEN i.margenBeneficio IS NOT NULL THEN
+                        (i.monto - i.costo)
+                        ELSE
+                        i.costo END)
+                        ELSE 0 END), 2) AS margenGanancias
                 FROM inventario inv
                 LEFT JOIN ingresos i ON inv.id = i.inventarioId AND i.empresaId = :empresaId
                 GROUP BY inv.id, inv.nombre;';
@@ -44,8 +47,11 @@ try {
                     SUM(CASE WHEN i.anulado = 0 THEN 1 ELSE 0 END) AS cantidadIngresos,
                     SUM(CASE WHEN i.anulado = 0 THEN i.monto ELSE 0 END) AS totalIngresos,
                     ROUND(SUM(CASE WHEN i.anulado = 0 THEN
-                        (CASE WHEN i.margenBeneficio IS NOT NULL THEN (i.monto - ((i.margenBeneficio / 2) * i.monto / 100))
-                        ELSE i.monto END) ELSE 0 END), 2) AS margenGanancias
+                        (CASE WHEN i.margenBeneficio IS NOT NULL THEN
+                        (i.monto - i.costo)
+                        ELSE
+                        i.costo END)
+                        ELSE 0 END), 2) AS margenGanancias
                 FROM inventario inv
                 LEFT JOIN ingresos i ON inv.id = i.inventarioId
                 WHERE i.date BETWEEN :startd AND :endd AND i.empresaId = :empresaId
